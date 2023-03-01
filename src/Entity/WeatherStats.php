@@ -29,9 +29,6 @@ class WeatherStats
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $wind = null;
 
-    #[ORM\Column(length: 255, nullable: true)]
-    private ?string $wind_direction = null;
-
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     private ?\DateTimeInterface $created = null;
 
@@ -96,18 +93,6 @@ class WeatherStats
     public function setWind(?string $wind): self
     {
         $this->wind = $wind;
-
-        return $this;
-    }
-
-    public function getWindDirection(): ?string
-    {
-        return $this->wind_direction;
-    }
-
-    public function setWindDirection(?string $wind_direction): self
-    {
-        $this->wind_direction = $wind_direction;
 
         return $this;
     }

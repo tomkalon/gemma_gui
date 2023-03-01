@@ -1,26 +1,33 @@
-<?php
+<?php /** @noinspection PhpParamsInspection */
 
 namespace App\DataFixtures;
 
 use App\Entity\GlobalSettings;
 use App\Entity\Objects;
 use App\Entity\Settings;
+use App\Entity\Stats;
+use App\Entity\Users;
 use App\Entity\Weather;
+use DateTime;
+use DateTimeZone;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
 
 class AppFixtures extends Fixture
 {
-    private int $quantity = 5;
+    private int $object_quantity = 5;
+    private int $number_of_stats = 50;
 
     public function load(ObjectManager $manager): void
     {
-        for ($i = 1; $i <= $this->quantity; $i++ ) {
+        for ($i = 1; $i <= $this->object_quantity; $i++) {
             $this->setObjects($i, $manager);
             $this->setSettings($i, $manager);
         }
         $this->setGlobalSettings($manager);
         $this->setWeather($manager);
+        $this->setUser($manager);
+        $this->setStats($this->number_of_stats, $manager);
 
         $manager->flush();
     }
@@ -34,12 +41,12 @@ class AppFixtures extends Fixture
         $temp_diff = $this->randFloat(0, 2);
         $object[$i]->setTemp($temp);
         $object[$i]->setTemp2($temp - $temp_diff);
-        $object[$i]->setHumid(rand(30,100));
-        $object[$i]->setVent(rand(1,100));
-        $object[$i]->setVent(rand(1,100));
-        $object[$i]->setShadow(rand(1,100));
-        $object[$i]->setBlow(rand(0,1));
-        $object[$i]->setHeat(rand(0,1));
+        $object[$i]->setHumid(rand(30, 100));
+        $object[$i]->setVent(rand(1, 100));
+        $object[$i]->setVent(rand(1, 100));
+        $object[$i]->setShadow(rand(1, 100));
+        $object[$i]->setBlow(rand(0, 1));
+        $object[$i]->setHeat(rand(0, 1));
 
         $manager->persist($object[$i]);
     }
@@ -53,22 +60,19 @@ class AppFixtures extends Fixture
         $settings[$i]->setTempNight($temp - $this->randFloat(0, 15));
         $settings[$i]->setTempHysteresis(rand(0, 5));
         $settings[$i]->setTempControlDay(1);
-        $settings[$i]->setTempControlNight(rand(0,1));
+        $settings[$i]->setTempControlNight(rand(0, 1));
         $settings[$i]->setTempVentClose(rand(0, 10));
         $tempAlarmFlag = rand(0, 1);
         $settings[$i]->setTempAlarmFlag($tempAlarmFlag);
-        if ($tempAlarmFlag)
-        {
+        if ($tempAlarmFlag) {
             $settings[$i]->setTempAlarm(rand(30, 40));
-        }
-        else
-        {
+        } else {
             $settings[$i]->setTempAlarm(rand(-20, 0));
         }
         $settings[$i]->setHumid(rand(30, 99));
         $settings[$i]->setHumidHysteresis(rand(0, 30));
-        $settings[$i]->setHumidControlDay(rand(0,1));
-        $settings[$i]->setHumidControlNight(rand(0,1));
+        $settings[$i]->setHumidControlDay(rand(0, 1));
+        $settings[$i]->setHumidControlNight(rand(0, 1));
         $settings[$i]->setHumidVentStep(rand(0, 30));
         $settings[$i]->setHumidVentPause(rand(0, 30));
         $settings[$i]->setHumidVentPauseOpen(rand(0, 100));
@@ -94,8 +98,7 @@ class AppFixtures extends Fixture
         $settings[$i]->setShadow(rand(0, 100));
         $settings[$i]->setShadowManual(rand(0, 1));
         $shadow = array();
-        for ($n = 0; $n < 5; $n++)
-        {
+        for ($n = 0; $n < 5; $n++) {
             $shadow[$n] = ($n) ? rand(0, 15) + $shadow[$n - 1] : rand(0, 10);
         }
         $settings[$i]->setShadow1($shadow[0]);
@@ -106,6 +109,7 @@ class AppFixtures extends Fixture
 
         $manager->persist($settings[$i]);
     }
+
     public function setGlobalSettings($manager): void
     {
         $global_settings = new GlobalSettings();
@@ -115,8 +119,7 @@ class AppFixtures extends Fixture
         $global_settings->setWeakWind($wind);
         $global_settings->setStrongWind($wind + rand(5, 20));
         $sun_threshold = array();
-        for ($n = 0; $n < 5; $n++)
-        {
+        for ($n = 0; $n < 5; $n++) {
             $sun_threshold[$n] = ($n) ? 1000 + $sun_threshold[$n - 1] : 1000;
         }
         $global_settings->setSunThreshold1($sun_threshold[0]);
@@ -127,7 +130,7 @@ class AppFixtures extends Fixture
 
         $manager->persist($global_settings);
     }
-    
+
     public function setWeather($manager): void
     {
         $weather = new Weather();
@@ -135,15 +138,97 @@ class AppFixtures extends Fixture
         $weather->setHumid(rand(10, 99));
         $weather->setSun(rand(0, 6000));
         $weather->setRain(rand(0, 1));
-        $weather->setWind(rand(0,100));
+        $weather->setWind(rand(0, 100));
         $wind_direction = ["N", "NE", "E", "SE", "S", "SW", "W", "NW"];
         $weather->setWindDirection($wind_direction[rand(0, 7)]);
 
         $manager->persist($weather);
     }
 
+    public function setUser($manager): void
+    {
+        $admin = new Users();
+        $admin->setUsername("admin");
+        $admin->setPassword("password");
+        $admin->setDescription("NAZWA FIRMY");
+        $admin->setRole("ADMIN");
+        $admin->setEmail("admin@email.com");
+        $user = new Users();
+        $user->setUsername("user");
+        $user->setPassword("password");
+        $user->setDescription("Jan Kowalski");
+        $user->setRole("USER");
+        $user->setEmail("user@email.com");
+
+        $manager->persist($admin);
+        $manager->persist($user);
+    }
+
+
+    public function setStats(int $limit, $manager): void
+    {
+        $temp = 10.5;
+        $humid = 50;
+        $time_of_day = 1;
+        $day_temp = rand(18, 32);
+        $night_temp = rand(5, 15);
+
+        for ($id = 0; $id < $limit; $id++) {
+            $stats[$id] = new Stats();
+            if ($id) {
+                if ($id % 12 == 0) {
+                    $time_of_day = !$time_of_day;
+                    $day_temp = rand(18, 32);
+                    $night_temp = rand(5, 15);
+                }
+
+                if ($time_of_day) {
+                    $temp = $this->differ($temp, 1, $day_temp);
+                } else {
+                    $temp = $this->differ($temp, 0, $night_temp);
+                }
+
+                $stats[$id]->setBlow($time_of_day);
+                $stats[$id]->setShadow($day_temp);
+                $stats[$id]->setVent($night_temp);
+                $stats[$id]->setTemp($temp);
+
+            } else {
+                $stats[$id]->setTemp($temp);
+                $stats[$id]->setHumid($humid);
+            }
+
+            $date = $this->getDateTime($id);
+            $stats[$id]->setCreated($date);
+            $manager->persist($stats[$id]);
+        }
+    }
+
     public function randFloat(int $min, int $max): string
     {
         return rand($min, $max) . '.' . rand(0, 9);
+    }
+
+    public function differ($value, bool $trend, int $target): string
+    {
+        if ($trend) {
+            if ($value < $target) $value += $this->randFloat(1, 2);
+            else $value -= $this->randFloat(0, 1);
+
+        } else {
+            if ($value > $target) $value -= $this->randFloat(1, 2);
+            else $value += $this->randFloat(0, 1);
+        }
+        return $value;
+    }
+
+    public function getDateTime(int $interval) : DateTime
+    {
+        $date = new DateTime();
+        $date->format('Y-m-d : H');
+        $date->setTimezone(new DateTimeZone('Europe/Warsaw'));
+        $date->getTimestamp();
+        $date->modify('+' . $interval . 'hour');
+        return $date;
     }
 }
