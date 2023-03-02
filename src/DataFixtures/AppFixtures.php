@@ -8,6 +8,7 @@ use App\Entity\Settings;
 use App\Entity\Stats;
 use App\Entity\Users;
 use App\Entity\Weather;
+use App\Entity\WeatherStats;
 use DateTime;
 use DateTimeZone;
 use Doctrine\Bundle\FixturesBundle\Fixture;
@@ -37,8 +38,8 @@ class AppFixtures extends Fixture
     {
         $object[$i] = new Objects();
         $object[$i]->setName('Tunel ' . $i);
-        $temp = $this->randFloat(-15, 35);
-        $temp_diff = $this->randFloat(0, 2);
+        $temp = $this->randFloat(-150, 350);
+        $temp_diff = $this->randFloat(0, 20);
         $object[$i]->setTemp($temp);
         $object[$i]->setTemp2($temp - $temp_diff);
         $object[$i]->setHumid(rand(30, 100));
@@ -57,7 +58,7 @@ class AppFixtures extends Fixture
         $settings[$i] = new Settings();
         $temp = strval(rand(20, 30));
         $settings[$i]->setTempDay($temp);
-        $settings[$i]->setTempNight($temp - $this->randFloat(0, 15));
+        $settings[$i]->setTempNight($temp - $this->randFloat(0, 150));
         $settings[$i]->setTempHysteresis(rand(0, 5));
         $settings[$i]->setTempControlDay(1);
         $settings[$i]->setTempControlNight(rand(0, 1));
@@ -168,61 +169,88 @@ class AppFixtures extends Fixture
     public function setStats(int $limit, $manager): void
     {
         $temp = 10.5;
-        $humid = 50;
+        $weather_temp = $temp - $this->randFloat(10, 50);
+        $humid = 80;
+        $weather_humid = rand(60, 80);
         $time_of_day = 1;
-        $day_temp = rand(18, 32);
-        $night_temp = rand(5, 15);
+        $day_temp = 28;
+        $night_temp = 15;
+        $day_humid = 50;
+        $night_humid = 90;
 
         for ($id = 0; $id < $limit; $id++) {
             $stats[$id] = new Stats();
+            $weatherStats[$id] = new WeatherStats();
             if ($id) {
                 if ($id % 12 == 0) {
                     $time_of_day = !$time_of_day;
-                    $day_temp = rand(18, 32);
-                    $night_temp = rand(5, 15);
+                    $day_temp = rand(24, 32);
+                    $night_temp = rand(10, 20);
+                    $day_humid = rand(30, 60);
+                    $night_humid = rand(80, 99);
                 }
-
-                if ($time_of_day) {
-                    $temp = $this->differ($temp, 1, $day_temp);
-                } else {
-                    $temp = $this->differ($temp, 0, $night_temp);
+                if ($time_of_day) { // DAY
+                    $temp = $this->differ($temp, 1, $day_temp + 7, 1, 15, 30, 0);
+                    $weather_temp = $this->differ($weather_temp, 1, $day_temp, 1, 20, 35, 0);
+                    $humid = $this->differ($humid, 0, $day_humid, 0, 2, 5, 99);
+                    $weather_humid = $this->differ($weather_humid, 0, $day_humid, 0, 5, 10, 99);
+                } else {            // NIGHT
+                    $temp = $this->differ($temp, 0, $night_temp + 7, 1, 5, 15, 0);
+                    $weather_temp = $this->differ($weather_temp, 0, $night_temp, 1, 10, 20, 0);
+                    $humid = $this->differ($humid, 1, $night_humid, 0, 5, 8, 99);
+                    $weather_humid = $this->differ($weather_humid, 1, $night_humid, 0, 10, 15, 99);
                 }
-
-                $stats[$id]->setBlow($time_of_day);
-                $stats[$id]->setShadow($day_temp);
-                $stats[$id]->setVent($night_temp);
-                $stats[$id]->setTemp($temp);
-
-            } else {
-                $stats[$id]->setTemp($temp);
-                $stats[$id]->setHumid($humid);
             }
-
+            $stats[$id]->setTemp($temp);
+            $stats[$id]->setHumid($humid);
+            $weatherStats[$id]->setTemp($weather_temp);
+            $weatherStats[$id]->setHumid($weather_humid);
             $date = $this->getDateTime($id);
             $stats[$id]->setCreated($date);
+            $weatherStats[$id]->setCreated($date);
             $manager->persist($stats[$id]);
+            $manager->persist($weatherStats[$id]);
         }
     }
 
     public function randFloat(int $min, int $max): string
     {
-        return rand($min, $max) . '.' . rand(0, 9);
+        return rand($min, $max) / 10;
     }
 
-    public function differ($value, bool $trend, int $target): string
+    public function differ($value, bool $trend, int $target, bool $precision, int $min, int $max, int $upper_limit): string
     {
-        if ($trend) {
-            if ($value < $target) $value += $this->randFloat(1, 2);
-            else $value -= $this->randFloat(0, 1);
-
-        } else {
-            if ($value > $target) $value -= $this->randFloat(1, 2);
-            else $value += $this->randFloat(0, 1);
+        if ($upper_limit && $trend && ($value >= $upper_limit))
+        {
+            $value = $upper_limit;
         }
+        else {
+            if ($precision) {
+                if ($trend) {
+                    if ($value <= $target) $value += $this->randFloat($min, $max);
+                    else $value -= $this->randFloat(0, 10);
+
+                } else {
+                    if ($value > $target) $value -= $this->randFloat($min, $max);
+                    else $value += $this->randFloat(0, 10);
+                }
+            } else {
+                if ($trend) {
+                    if ($value <= $target) $value += rand($min, $max);
+                    else $value -= rand(0, 10);
+
+                } else {
+                    if ($value > $target) $value -= rand($min, $max);
+                    else $value += rand(0, 10);
+                }
+            }
+            if ($upper_limit && ($value > $upper_limit)) $value = $upper_limit;
+        }
+
         return $value;
     }
 
-    public function getDateTime(int $interval) : DateTime
+    public function getDateTime(int $interval): DateTime
     {
         $date = new DateTime();
         $date->format('Y-m-d : H');
