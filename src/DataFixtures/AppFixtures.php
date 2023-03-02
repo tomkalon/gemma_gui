@@ -2,6 +2,7 @@
 
 namespace App\DataFixtures;
 
+use App\Entity\Alerts;
 use App\Entity\GlobalSettings;
 use App\Entity\Objects;
 use App\Entity\Settings;
@@ -29,6 +30,7 @@ class AppFixtures extends Fixture
         $this->setWeather($manager);
         $this->setUser($manager);
         $this->setStats($this->number_of_stats, $manager);
+        $this->setAlerts($manager);
 
         $manager->flush();
     }
@@ -213,6 +215,40 @@ class AppFixtures extends Fixture
         }
     }
 
+    public function setAlerts($manager)
+    {
+        $list = [[
+            'attr' => 'temp',
+            'value' => '3',
+            'type' => 'sensor',
+            'importance' => 2,
+            'active' => 1
+        ], [
+            'attr' => 'temp',
+            'value' => '#100',
+            'type' => 'hardware',
+            'importance' => 3,
+            'active' => 1
+        ], [
+            'attr' => 'humid',
+            'value' => '5',
+            'type' => 'sensor',
+            'importance' => 1,
+            'active' => 0
+        ]];
+        for ($i = 0; $i < count($list); $i++) {
+            $alerts[$i] = new Alerts();
+
+                $alerts[$i]->setAttribute($list[$i]['attr']);
+                $alerts[$i]->setValue($list[$i]['value']);
+                $alerts[$i]->setType($list[$i]['type']);
+                $alerts[$i]->setImportance($list[$i]['importance']);
+                $alerts[$i]->setActive($list[$i]['active']);
+
+            $manager->persist($alerts[$i]);
+        }
+    }
+
     public function randFloat(int $min, int $max): string
     {
         return rand($min, $max) / 10;
@@ -220,11 +256,9 @@ class AppFixtures extends Fixture
 
     public function differ($value, bool $trend, int $target, bool $precision, int $min, int $max, int $upper_limit): string
     {
-        if ($upper_limit && $trend && ($value >= $upper_limit))
-        {
+        if ($upper_limit && $trend && ($value >= $upper_limit)) {
             $value = $upper_limit;
-        }
-        else {
+        } else {
             if ($precision) {
                 if ($trend) {
                     if ($value <= $target) $value += $this->randFloat($min, $max);
