@@ -17,18 +17,23 @@
         "@symfony/stimulus-bridge": "^3.2.1",
         "@symfony/webpack-encore": "^4.2.0",
         "core-js": "^3.28.0",
-        "corepack": "^0.17.0"
+        "corepack": "^0.17.0",
+        "prettier": "^2.8.4"
     },
     "devDependencies": {
         "@babel/preset-react": "^7.0.0",
         "@popperjs/core": "^2.11.6",
         "@symfony/ux-react": "file:vendor/symfony/ux-react/assets",
-        "bootstrap": "^5.2.3",
+        "autoprefixer": "^10.4.13",
+        "file-loader": "^6.0.0",
         "jquery": "^3.6.3",
+        "postcss": "^8.4.21",
+        "postcss-loader": "^7.0.2",
         "react": "^18.0",
         "react-dom": "^18.0",
         "sass": "^1.58.3",
         "sass-loader": "^13.0.0",
+        "tailwindcss": "^3.2.7",
         "webpack-notifier": "^1.15.0"
     }
 }

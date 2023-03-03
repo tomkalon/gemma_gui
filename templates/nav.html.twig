@@ -1,4 +1,19 @@
 {% extends 'base.html.twig' %}
 {% block nav %}
-    <header></header>
+    <header class="w-full">
+        <nav class="bg-amber-100 dark:bg-darker-800 border-b-2 border-amber-200 dark:border-darker-500">
+            <div class="container mx-auto grid xl:grid-cols-5 gap-2 py-2">
+                <div class=""><span><i class="gf gf-home"></i></span></div>
+                <div class=""><span><i class="gf gf-settings"></i></span></div>
+                <div class=""><span><i class="gf gf-info"></i></span></div>
+                <div class=""><span><i class="gf gf-help"></i></span></div>
+
+            </div>
+        </nav>
+        <div class="bar shadow-md bg-gradient-to-b bg-amber-100 dark:from-darker-900 dark:to-darker-800 border-b border-amber-300 dark:border-darker-900">
+            <div class="container">
+
+            </div>
+        </div>
+    </header>
 {% endblock %}

@@ -22,8 +22,19 @@ Encore
      */
     .addEntry('app', './assets/app.js')
 
+    .copyFiles({
+        from: 'assets/images/',
+        to: 'images/[name].[ext]',
+        pattern: /\.(png|jpg|jpeg|webp)$/
+    })
+    .copyFiles({
+        from: 'assets/favicon/',
+        to: 'favicon/[name].[ext]',
+        pattern: /\.(png|svg)$/
+    })
+
     // enables the Symfony UX Stimulus bridge (used in assets/bootstrap.js)
-    .enableStimulusBridge('./assets/controllers.json')
+    // .enableStimulusBridge('./assets/controllers.json')
 
     // When enabled, Webpack "splits" your files into smaller pieces for greater optimization.
     .splitEntryChunks()
@@ -58,7 +69,7 @@ Encore
 
     // enables Sass/SCSS support
     .enableSassLoader()
-
+    .enablePostCssLoader()
     // uncomment if you use TypeScript
     //.enableTypeScriptLoader()
 

@@ -1,0 +1,349 @@
+@font-face {
+    font-family: 'gemma-fonts';
+    src: url('../fonts/gemma-fonts.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+.gf {
+    display: inline-block;
+    font-family: 'gemma-fonts';
+    font-style: normal;
+    font-weight: normal;
+    line-height: 1;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+.gf-rotate-90 {
+    filter: progid: DXImageTransform.Microsoft.BasicImage(rotation=1);
+    -webkit-transform: rotate(90deg);
+    -ms-transform: rotate(90deg);
+    transform: rotate(90deg);
+}
+
+.gf-rotate-180 {
+    filter: progid: DXImageTransform.Microsoft.BasicImage(rotation=2);
+    -webkit-transform: rotate(180deg);
+    -ms-transform: rotate(180deg);
+    transform: rotate(180deg);
+}
+
+.gf-rotate-270 {
+    filter: progid: DXImageTransform.Microsoft.BasicImage(rotation=3);
+    -webkit-transform: rotate(270deg);
+    -ms-transform: rotate(270deg);
+    transform: rotate(270deg);
+}
+
+.gf-flip-horizontal {
+    filter: progid: DXImageTransform.Microsoft.BasicImage(rotation=0, mirror=1);
+    -webkit-transform: scale(-1, 1);
+    -ms-transform: scale(-1, 1);
+    transform: scale(-1, 1);
+}
+
+.gf-flip-vertical {
+    filter: progid: DXImageTransform.Microsoft.BasicImage(rotation=2, mirror=1);
+    -webkit-transform: scale(1, -1);
+    -ms-transform: scale(1, -1);
+    transform: scale(1, -1);
+}
+
+.gf-home:before {
+    content: "\f000";
+}
+
+.gf-settings:before {
+    content: "\f001";
+}
+
+.gf-warning:before {
+    content: "\f002";
+}
+
+.gf-manual:before {
+    content: "\f003";
+}
+
+.gf-help:before {
+    content: "\f004";
+}
+
+.gf-damage:before {
+    content: "\f005";
+}
+
+.gf-trash:before {
+    content: "\f009";
+}
+
+.gf-delete:before {
+    content: "\f00a";
+}
+
+.gf-delete2:before {
+    content: "\f00b";
+}
+
+.gf-alarm-range:before {
+    content: "\f00c";
+}
+
+.gf-stats:before {
+    content: "\f00d";
+}
+
+.gf-yes:before {
+    content: "\f010";
+}
+
+.gf-no:before {
+    content: "\f011";
+}
+
+.gf-plus:before {
+    content: "\f012";
+}
+
+.gf-minus:before {
+    content: "\f013";
+}
+
+.gf-max:before {
+    content: "\f014";
+}
+
+.gf-min:before {
+    content: "\f015";
+}
+
+.gf-approve:before {
+    content: "\f016";
+}
+
+.gf-reject:before {
+    content: "\f017";
+}
+
+.gf-hysteresis:before {
+    content: "\f030";
+}
+
+.gf-control:before {
+    content: "\f031";
+}
+
+.gf-step:before {
+    content: "\f032";
+}
+
+.gf-close:before {
+    content: "\f033";
+}
+
+.gf-time:before {
+    content: "\f034";
+}
+
+.gf-pause:before {
+    content: "\f035";
+}
+
+.gf-open:before {
+    content: "\f036";
+}
+
+.gf-day-begin:before {
+    content: "\f040";
+}
+
+.gf-night-begin:before {
+    content: "\f041";
+}
+
+.gf-sun1:before {
+    content: "\f05a";
+}
+
+.gf-sun2:before {
+    content: "\f05b";
+}
+
+.gf-sun3:before {
+    content: "\f05c";
+}
+
+.gf-sun4:before {
+    content: "\f05d";
+}
+
+.gf-sun5:before {
+    content: "\f05e";
+}
+
+.gf-sunny:before {
+    content: "\f060";
+}
+
+.gf-rain:before {
+    content: "\f061";
+}
+
+.gf-vent1:before {
+    content: "\f070";
+}
+
+.gf-vent2:before {
+    content: "\f071";
+}
+
+.gf-vent3:before {
+    content: "\f072";
+}
+
+.gf-vent4:before {
+    content: "\f073";
+}
+
+.gf-vent5:before {
+    content: "\f074";
+}
+
+.gf-vent6:before {
+    content: "\f075";
+}
+
+.gf-vent7:before {
+    content: "\f076";
+}
+
+.gf-dir-n:before {
+    content: "\f083";
+}
+
+.gf-dir-ne:before {
+    content: "\f081";
+}
+
+.gf-dir-e:before {
+    content: "\f080";
+}
+
+.gf-dir-se:before {
+    content: "\f084";
+}
+
+.gf-dir-s:before {
+    content: "\f086";
+}
+
+.gf-dir-sw:before {
+    content: "\f085";
+}
+
+.gf-dir-w:before {
+    content: "\f087";
+}
+
+.gf-dir-nw:before {
+    content: "\f082";
+}
+
+.gf-day:before {
+    content: "\f090";
+}
+
+.gf-night:before {
+    content: "\f091";
+}
+
+.gf-night-full:before {
+    content: "\f092";
+}
+
+.gf-heat:before {
+    content: "\f0b0";
+}
+
+.gf-water:before {
+    content: "\f0b1";
+}
+
+.gf-info:before {
+    content: "\f0b2";
+}
+
+.gf-shadow:before {
+    content: "\f0b3";
+    display: block;
+    transform: rotate(90deg);
+}
+
+.gf-fog:before {
+    content: "\f0b4";
+}
+
+.gf-wind1:before {
+    content: "\f0d0";
+}
+
+.gf-wind2:before {
+    content: "\f0d1";
+}
+
+.gf-wind3:before {
+    content: "\f0d2";
+}
+
+.gf-wind4:before {
+    content: "\f0d3";
+}
+
+.gf-left-arrow:before {
+    content: "\f0f0";
+}
+
+.gf-right-arrow:before {
+    content: "\f0f1";
+}
+
+.gf-page:before {
+    content: "\f0f2";
+}
+
+.gf-empty:before {
+    content: "\f011";
+}
+
+.gf-blow:before {
+    content: "\f0fe";
+}
+
+.gf-humidity:before {
+    content: "\f0ff";
+}
+
+.gf-temp1:before {
+    content: "\f105";
+}
+
+.gf-temp2:before {
+    content: "\f100";
+}
+
+.gf-temp3:before {
+    content: "\f101";
+}
+
+.gf-temp4:before {
+    content: "\f102";
+}
+
+.gf-temp5:before {
+    content: "\f103";
+}
+
+.gf-temp6:before {
+    content: "\f104";
+}

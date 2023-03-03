@@ -1,10 +1,58 @@
+// import TailWind CSS
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
-@import '~bootstrap/scss/bootstrap';
-@import 'dark.scss';
+$dark-0:   #dae9e9;
+$dark-100: #d0e7e7;
+$dark-500: #104e54;
+$dark-600: #0d3d42;
+$dark-700: #042e32;
+$dark-800: #032427;
+$dark-900: #101111;
+
+@import 'gemma-fonts.css';
+// import Bootstrap css
+//@import "~bootstrap/scss/bootstrap";
+
+// STRUCTURE
+//// HEADER
+///// NAV
+html {
+  box-sizing: border-box;
+}
 
 body {
-    background-color: $color;
+  height: 100%;
 }
-h1 {
 
+header {
+  nav {
+    min-height: 3.5rem;
+    i {
+      font-size: 2.5rem;
+      color: $dark-100;
+    }
+  }
+  .bar {
+    min-height: 3rem;
+  }
 }
+
+#content {
+  flex-grow: 1;
+  .all {
+    min-height: 12rem;
+  }
+  .details {
+    flex-grow: 1;
+  }
+}
+
+footer {
+  min-height: 5rem;
+  .bar {
+    min-height: 2rem;
+  }
+}
+
