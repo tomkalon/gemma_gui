@@ -12,13 +12,9 @@
             {{ encore_entry_script_tags('app') }}
         {% endblock %}
     </head>
-    <body class="bg-amber-100 dark:bg-darker-600 min-h-screen flex flex-col">
-        {% if block("nav", "nav.html.twig") is defined %}
-            {{ block("nav", "nav.html.twig") }}
-        {% endif %}
+    <body class="bg-amber-100 dark:bg-teal-900 min-h-screen flex flex-col">
+        {% include('nav.html.twig') %}
         {% block body %}{% endblock %}
-        {% if block("footer", "footer.html.twig") is defined %}
-            {{ block("footer", "footer.html.twig") }}
-        {% endif %}
+        {% include('footer.html.twig') %}
     </body>
 </html>

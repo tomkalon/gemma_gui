@@ -3,8 +3,10 @@
 @tailwind components;
 @tailwind utilities;
 
-$dark-0:   #dae9e9;
+$dark-0: #dae9e9;
 $dark-100: #d0e7e7;
+$dark-300: #377d84;
+$dark-400: #2b7279;
 $dark-500: #104e54;
 $dark-600: #0d3d42;
 $dark-700: #042e32;
@@ -27,13 +29,17 @@ body {
 }
 
 header {
+  min-height: 6.5rem;
+
   nav {
     min-height: 3.5rem;
+
     i {
       font-size: 2rem;
       color: $dark-100;
     }
   }
+
   .bar {
     min-height: 3rem;
   }
@@ -41,16 +47,31 @@ header {
 
 #content {
   flex-grow: 1;
+  height: 150vh;
+
   .all {
     min-height: 12rem;
   }
+
   .details {
     flex-grow: 1;
   }
 }
 
+//#indicators-carousel {
+//  .indicators {
+//    button[aria-current=true] {
+//      background: $dark-100;
+//    }
+//    button[aria-current=false] {
+//      background: $dark-800;
+//    }
+//  }
+//}
+
 footer {
   min-height: 5rem;
+
   .bar {
     min-height: 2rem;
   }

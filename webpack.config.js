@@ -25,7 +25,7 @@ Encore
     .copyFiles({
         from: 'assets/images/',
         to: 'images/[name].[ext]',
-        pattern: /\.(png|jpg|jpeg|webp)$/
+        pattern: /\.(png|jpg|jpeg|webp|svg)$/
     })
     .copyFiles({
         from: 'assets/favicon/',
