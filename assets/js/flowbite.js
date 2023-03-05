@@ -14,23 +14,20 @@ const options = {
     defaultPosition: 0,
     interval: 10000,
     indicators: {
-        activeClasses: 'bg-white dark:bg-darker-300',
-        inactiveClasses: 'bg-white/50 dark:bg-darker-300 hover:bg-white dark:hover:bg-darker-100',
+        activeClasses: 'bg-white dark:bg-gray-100',
+        inactiveClasses: 'bg-white/50 dark:bg-darker-500 hover:bg-white dark:hover:bg-darker-300',
+        items: [],
     },
-    items: [],
     onNext: () => {
-        console.log('next slider item is shown');
     },
     onPrev: ( ) => {
-        console.log('previous slider item is shown');
     },
     onChange: ( ) => {
-        console.log('new slider item has been shown');
     }
 }
 const getIndicatorItems = document.querySelectorAll('.indicators button');
 for (let i = 0; i < getIndicatorItems.length; i++ ) {
-    options.items[i] =
+    options.indicators.items[i] =
         {
             position: i,
             el: getIndicatorItems[i]
