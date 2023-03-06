@@ -1,43 +1,26 @@
 <div id="indicators-carousel" class="hidden xl:block relative" data-carousel="static">
     <!-- Carousel wrapper -->
-    <div class="relative h-56 overflow-hidden rounded-lg">
+    <div class="relative h-64 overflow-hidden rounded-lg">
         <!-- Item 1 -->
-        <div class="hidden duration-700 ease-in-out" data-carousel-item="active">
-            <span>TEST</span>
+        <div class="hidden duration-700 ease-in-out flex gap-3 place-content-center py-4" data-carousel-item>
+            {%  include('app/_mini_item.html.twig') %}
+            {%  include('app/_mini_item.html.twig') %}
+            {%  include('app/_mini_item.html.twig') %}
+            {%  include('app/_mini_item.html.twig') %}
         </div>
         <!-- Item 2 -->
-        <div class="hidden duration-700 ease-in-out" data-carousel-item>
-            <img src="{{ asset('build/images/carousel-2.svg') }}"
-                 class="absolute block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2" alt="...">
-        </div>
-        <!-- Item 3 -->
-        <div class="hidden duration-700 ease-in-out" data-carousel-item>
-            <img src="{{ asset('build/images/carousel-3.svg') }}"
-                 class="absolute block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2" alt="...">
-        </div>
-        <!-- Item 4 -->
-        <div class="hidden duration-700 ease-in-out" data-carousel-item>
-            <img src="{{ asset('build/images/carousel-4.svg') }}"
-                 class="absolute block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2" alt="...">
-        </div>
-        <!-- Item 5 -->
-        <div class="hidden duration-700 ease-in-out" data-carousel-item>
-            <img src="{{ asset('build/images/carousel-5.svg') }}"
-                 class="absolute block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2" alt="...">
+        <div class="hidden duration-700 ease-in-out flex gap-3 place-content-center py-4" data-carousel-item>
+            {%  include('app/_mini_item.html.twig') %}
+            {%  include('app/_mini_item.html.twig') %}
+            {%  include('app/_mini_item.html.twig') %}
         </div>
     </div>
     <!-- Slider indicators -->
-    <div class="indicators absolute z-30 flex space-x-3 -translate-x-1/2 bottom-2 left-1/2">
+    <div class="indicators absolute z-30 flex space-x-3 -translate-x-1/2 gap-4 bottom-3 left-1/2">
         <button type="button" class="w-8 h-3 rounded-full" aria-current="true" aria-label="Slide 1"
                 data-carousel-slide-to="0 "></button>
         <button type="button" class="w-8 h-3 rounded-full" aria-current="false" aria-label="Slide 2"
                 data-carousel-slide-to="1"></button>
-        <button type="button" class="w-8 h-3 rounded-full" aria-current="false" aria-label="Slide 3"
-                data-carousel-slide-to="2"></button>
-        <button type="button" class="w-8 h-3 rounded-full" aria-current="false" aria-label="Slide 4"
-                data-carousel-slide-to="3"></button>
-        <button type="button" class="w-8 h-3 rounded-full" aria-current="false" aria-label="Slide 5"
-                data-carousel-slide-to="4"></button>
     </div>
     <!-- Slider controls -->
     <button type="button"

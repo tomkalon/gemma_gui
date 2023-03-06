@@ -1,32 +1,30 @@
-import { Carousel } from 'flowbite';
+import {Carousel} from 'flowbite';
 
 const items = [];
-const getItems = document.querySelectorAll('[data-carousel-item]');
-for (let i = 0; i < getItems.length; i++ ) {
+const getSlides = document.querySelectorAll('[data-carousel-item]');
+for (let i = 0; i < getSlides.length; i++) {
     items[i] =
         {
             position: i,
-            el: getItems[i]
-        }
+            el: getSlides[i]
+        };
 }
 
 const options = {
     defaultPosition: 0,
-    interval: 10000,
+    interval: 20000,
     indicators: {
-        activeClasses: 'bg-white dark:bg-gray-100',
-        inactiveClasses: 'bg-white/50 dark:bg-darker-500 hover:bg-white dark:hover:bg-darker-300',
         items: [],
     },
     onNext: () => {
     },
-    onPrev: ( ) => {
+    onPrev: () => {
     },
-    onChange: ( ) => {
+    onChange: () => {
     }
 }
 const getIndicatorItems = document.querySelectorAll('.indicators button');
-for (let i = 0; i < getIndicatorItems.length; i++ ) {
+for (let i = 0; i < getIndicatorItems.length; i++) {
     options.indicators.items[i] =
         {
             position: i,
@@ -47,4 +45,22 @@ $nextButton.addEventListener('click', () => {
     carousel.next();
 });
 
-console.log(carousel);
+const getItems = document.querySelectorAll('#indicators-carousel .item');
+
+let itemSettings = (arr, callback) => {
+    arr.forEach(element => {
+        callback(element);
+    });
+};
+
+let itemAddClicker = (element) => {
+    element.onclick = () => {
+        carousel.pause();
+        itemSettings(getItems, function(el) {
+            el.classList.remove('active');
+        });
+        element.classList.add('active');
+    }
+}
+
+itemSettings(getItems, itemAddClicker);

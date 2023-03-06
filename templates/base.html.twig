@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xml:lang="pl" class="dark">
+<html class="dark" lang="pl">
     <head>
         <meta charset="UTF-8">
         <title>{% block title %}Greenee© App{% endblock %}</title>
@@ -12,7 +12,7 @@
             {{ encore_entry_script_tags('app') }}
         {% endblock %}
     </head>
-    <body class="bg-amber-100 dark:bg-teal-900 min-h-screen flex flex-col">
+    <body class="min-h-screen flex flex-col">
         {% include('nav.html.twig') %}
         {% block body %}{% endblock %}
         {% include('footer.html.twig') %}

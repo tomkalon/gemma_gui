@@ -2,13 +2,18 @@
 {% block title %}Greenee© App{% endblock %}
 {% block body %}
 <div id="content" class="flex flex-col">
-    <article class="all w-full border-b-2 dark:border-darker-500">
+    <article class="all w-full bg-amber-100 dark:bg-darker-500 border-b dark:border-darker-450">
         <div class="container mx-auto">
             {%  include('app/_mini_carousel.html.twig') %}
         </div>
     </article>
-    <article class="details w-full bg-gradient-to-b dark:from-darker-800 dark:to-darker-900 shadow-md border-b-4 border-t-2 dark:border-darker-500">
-        <div class="container"></div>
+    <article class="details w-full bg-gradient-to-b dark:from-darker-800 dark:to-darker-900 shadow-md border-b-4 dark:border-darker-400">
+        <div class="separator h-6 bg-gradient-to-r dark:from-darker-600 dark:to-darker-700 w-full border-b dark:border-darker-450">
+
+        </div>
+        <div class="container">
+
+        </div>
     </article>
 </div>
 {% endblock %}

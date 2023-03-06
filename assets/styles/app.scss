@@ -3,15 +3,20 @@
 @tailwind components;
 @tailwind utilities;
 
-$dark-0: #dae9e9;
-$dark-100: #d0e7e7;
+$dark-0: #dbeeee;
+$dark-100: #b4d3d3;
+$dark-200: #87c2c7;
+$dark-250: #9bc3c7;
 $dark-300: #377d84;
 $dark-400: #2b7279;
+$dark-450: #1a6066;
 $dark-500: #104e54;
 $dark-600: #0d3d42;
 $dark-700: #042e32;
 $dark-800: #032427;
 $dark-900: #101111;
+
+$text-shadow: -2px 2px 1px #000000;
 
 @import 'gemma-fonts.css';
 // import Bootstrap css
@@ -29,28 +34,71 @@ body {
 }
 
 header {
-  min-height: 6.5rem;
+  nav.big-screen {
+    min-height: 3rem;
+    .item {
+      color: $dark-0;
+      text-shadow: $text-shadow;
+      i {
+        font-size: 2rem;
+      }
+      .label
+      {
+        float: right;
+        padding:0 0.5rem;
+        font-size: 0.8rem;
+        span:last-child {
+          display: block;
+          margin-top: -0.25rem;
+          color: $dark-100;
+        }
+      }
+    }
+  }
 
-  nav {
-    min-height: 3.5rem;
-
+  nav.small-screen {
     i {
       font-size: 2rem;
-      color: $dark-100;
     }
   }
 
   .bar {
     min-height: 3rem;
+    .item {
+      float: left;
+      width: 4.5rem;
+      text-transform: uppercase;
+      span:first-child {
+        font-size: 1.2rem;
+      }
+      &-label {
+        width: 7rem;
+        text-align: right;
+        span:first-child{
+          font-size: 0.85rem;
+        }
+      }
+      span.block {
+        color: #fafafa;
+        font-size: 0.85rem;
+        padding: 0;
+        margin-top: -0.2rem;
+      }
+    }
   }
 }
 
 #content {
   flex-grow: 1;
-  height: 150vh;
 
   .all {
-    min-height: 12rem;
+    .item {
+      padding: 2px;
+
+      .label {
+
+      }
+    }
   }
 
   .details {
@@ -58,16 +106,26 @@ header {
   }
 }
 
-//#indicators-carousel {
-//  .indicators {
-//    button[aria-current=true] {
-//      background: $dark-100;
-//    }
-//    button[aria-current=false] {
-//      background: $dark-800;
-//    }
-//  }
-//}
+
+#indicators-carousel {
+  .indicators {
+    button[aria-current=true] {
+      background: $dark-100 !important;
+    }
+
+    button[aria-current=false] {
+      background: $dark-800 !important;
+    }
+
+    button[aria-current=false]:hover {
+      background: $dark-0 !important;
+    }
+  }
+
+  .indicators button {
+    box-shadow: 0 3px 3px 0 #11111150;
+  }
+}
 
 footer {
   min-height: 5rem;
