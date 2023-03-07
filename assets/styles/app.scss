@@ -20,8 +20,6 @@ $dark-900: #101111;
 $text-shadow: -2px 2px 1px #00000080;
 
 
-
-
 @import 'gemma-fonts.css';
 // import Bootstrap css
 //@import "~bootstrap/scss/bootstrap";
@@ -110,33 +108,58 @@ header {;
 
   .details {
     flex-grow: 1;
+
     .label {
       text-shadow: $text-shadow;
     }
+
     .data {
       .img {
-        background-position: center!important;
-        background-size: cover!important;
+        background-position: center !important;
+        background-size: cover !important;
       }
+
       .readings {
         .value {
           .box {
             text-shadow: $text-shadow;
             margin-top: 0.5rem;
+
             span {
               &:first-child {
                 font-size: 1rem;
               }
+
               &:last-child {
                 font-size: 0.85rem;
               }
             }
           }
         }
+
         .desc {
           font-size: 0.85rem;
+
           div {
-            padding: 0.25rem 1rem;
+            padding: 0.25rem 0;
+          }
+        }
+
+        .amplitude {
+          .value {
+            padding: 0.25rem 0;
+            font-size: 1.25rem;
+            min-width: 6rem;
+          }
+
+          .label {
+            padding: 0.2rem 0;
+            font-size: 0.75rem;
+
+            span.block {
+              margin-top: -0.25rem;
+              color: $dark-200;
+            }
           }
         }
       }
