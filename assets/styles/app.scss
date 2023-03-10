@@ -19,6 +19,10 @@ $dark-800: #032427;
 $dark-850: #031e21;
 $dark-900: #101111;
 
+$blue-450: #426272;
+
+$alarm-red: #501414;
+
 $text-shadow: -2px 2px 2px #00000050;
 
 
@@ -37,8 +41,7 @@ body {
   height: 100%;
 }
 
-header {;
-
+header {
   nav.big-screen {
     .item {
       color: $dark-0;
@@ -108,6 +111,12 @@ header {;
     #indicators-carousel {
       .wrapper {
         min-height: 16rem;
+        .item {
+          .label {
+            align-items: start;
+            padding-left: 1rem;
+          }
+        }
       }
     }
   }
@@ -140,12 +149,15 @@ header {;
           .title {
             font-size: 1rem;
           }
+
           .pre {
             font-size: 0.75rem;
           }
+
           .post {
             color: $dark-250;
           }
+
           .active {
             font-size: 1.1rem;
             color: $dark-0;
@@ -153,10 +165,12 @@ header {;
         }
 
         .value {
-          padding-top: 0.5rem;
+          height: 4rem;
 
           .box {
+            padding-top: 0.5rem;
             width: 16.66%;
+            height: 4rem;
 
             span {
               &:first-child {
@@ -168,19 +182,39 @@ header {;
               }
             }
           }
+          .box.alarm {
+            background: linear-gradient(to bottom, $alarm-red, transparent);
+            border-radius: 0.25rem;
+          }
         }
 
         .desc {
           font-size: 0.85rem;
 
-          .label {
+          .title {
             justify-content: center;
-            width: 16.66%;
+            line-height: 1.3;
+            font-size: 0.85rem;
+            width: 6rem;
+          }
+          .element{
+            font-size: 1.5rem;
+            border-radius: 0.5rem;
+            display: flex;
+            background: $blue-450;
+            opacity: 0.2;
+            i {
+              padding: 0.5rem;
+              margin: 0 auto;
+              width: 3rem;
+            }
+          }
+          .element.active {
+            opacity: 1;
           }
         }
 
         .amplitude {
-          margin-top: 1rem;
 
           .box {
             margin-right: 3rem;
