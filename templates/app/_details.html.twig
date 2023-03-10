@@ -1,4 +1,4 @@
-<div class="w-full h-8 border-b dark:border-darker-450 flex">
+<div class="heading w-full h-8 border-b dark:border-darker-450 flex">
     <div class="label w-full px-2 container mx-auto uppercase text-sm">
         <span class="dark:text-darker-0 pr-4">Obiekt #1</span>
         <span class="dark:text-darker-200 border-l dark:border-darker-100 pl-4">Tunel #1</span>
@@ -17,46 +17,34 @@
         </div>
         <div class="readings chunk">
             <div class="flex flex-col h-52 dark:text-darker-0 text-center uppercase">
-                <div class="label px-4 dark:text-darker-100 h-8 flex dark:bg-red-950 rounded-tl-lg border-b border-t dark:border-darker-500">
-                    <span>Temperatura</span>
+                <div class="label text-sm px-4 dark:text-darker-0 h-8 dark:bg-blue-950 rounded-tl-lg border-b border-t dark:border-blue-450">
+                    <span class="title pr-4 border-r dark:border-darker-100">Temperatura</span>
+                    <span class="pre px-4">Zadana</span>
+                    <span class="post pr-4 active"><i class="gf gf-day"></i>19.5°C</span>
+                    <span class="post"><i class="gf gf-night"></i>26.5°C</span>
                 </div>
-                <div class="value h-16 flex dark:bg-darker-800">
+                <div class="value h-16 flex dark:bg-blue-550">
                     <div class="box h-16">
-                        <span><i class="gf gf-day"></i> 19.5 °C</span>
-                        <span class="block"><i class="gf gf-night"></i> 26.5 °C</span>
+                        <span><i class="gf gf-temp2"></i>21.5°C</span>
+                        <span class="block diff">+2°C</span>
                     </div>
-                    <div class="box h-16">
-                        <span><i class="gf gf-temp2"></i> 21.5 °C</span>
-                        <span class="block diff">+2 °C</span>
-                    </div>
-                    {#                        <div class="box h-20"> #}
-                    {#                            <span><i class="gf gf-temp2"></i> 21.5 °C</span> #}
-                    {#                            <span class="block diff">+2 °C</span> #}
-                    {#                        </div> #}
-                    {#                        <div class="box h-20"> #}
-                    {#                            <span><i class="gf gf-temp2"></i> 21.5 °C</span> #}
-                    {#                            <span class="block diff">+2 °C</span> #}
-                    {#                        </div> #}
                 </div>
-                <div class="desc h-8 flex bg-gradient-to-r dark:from-darker-800 dark:to-darker-900 rounded-bl-lg border-t border-b dark:border-darker-500">
-                    <div class="label"><span>Zadana</span></div>
+                <div class="desc h-8 flex dark:bg-blue-950 rounded-bl-lg border-t border-b dark:border-blue-450">
                     <div class="label"><span>Zmierzone</span></div>
-                    {#                        <div><span>Zmierzone</span></div> #}
-                    {#                        <div><span>Zmierzone</span></div> #}
                 </div>
                 <div class="amplitude h-10 flex dark:bg-darker-600 border-t border-b dark:border-darker-600">
                     <div class="box">
-                        <div class="value"><span><i class="gf gf-temp2"></i> 5.5 °C</span></div>
+                        <div class="value"><span><i class="gf gf-temp2"></i>5.5°C</span></div>
                         <div class="label text-left">
                             <span>Temp</span>
-                            <span class="block dark:text-blue-500">min</span>
+                            <span class="block dark:text-blue-300">min</span>
                         </div>
                     </div>
                     <div class="box">
-                        <div class="value"><span><i class="gf gf-temp6"></i> 27.3 °C</span></div>
+                        <div class="value"><span><i class="gf gf-temp6"></i>27.3°C</span></div>
                         <div class="label text-left">
                             <span>Temp</span>
-                            <span class="block dark:text-red-500">max</span>
+                            <span class="block dark:text-red-300">max</span>
                         </div>
                     </div>
                 </div>
@@ -64,59 +52,71 @@
         </div>
         <div class="readings chunk">
             <div class="flex flex-col h-52 dark:text-darker-0 text-center uppercase">
-                <div class="label px-4 dark:text-darker-100 h-8 flex dark:bg-blue-950 rounded-tr-lg border-b border-t border-l dark:border-darker-500">
-                    <span>Wilgotność</span>
+                <div class="label text-sm px-4 dark:text-darker-0 h-8 dark:bg-blue-950 rounded-tr-lg border-b border-t border-l dark:border-blue-450">
+                    <span class="title pr-4 border-r dark:border-darker-100">Wilgotność</span>
+                    <span class="pre px-4">Zadana</span>
+                    <span class="post pr-4 active"><i class="gf gf-day"></i>70%</span>
+                    <span class="post"><i class="gf gf-night"></i>90%</span>
                 </div>
-                <div class="value h-16 flex dark:bg-darker-800">
+                <div class="value h-16 flex dark:bg-blue-550">
                     <div class="box h-16">
-                        <span><i class="gf gf-day"></i> 70%</span>
-                        <span class="block diff"><i class="gf gf-night"></i> 80%</span>
+                        <span><i class="gf gf-humidity"></i>73%</span>
+                        <span class="block diff">+3%</span>
                     </div>
                     <div class="box h-16">
-                        <span><i class="gf gf-humidity"></i> 75 °C</span>
-                        <span class="block diff">+5 °C</span>
+                        <span><i class="gf gf-humidity"></i>68%</span>
+                        <span class="block diff">-2%</span>
                     </div>
-                    <div class="box h-16">
-                        <span><i class="gf gf-humidity"></i> 74 °C</span>
-                        <span class="block diff">+4 °C</span>
-                    </div>
-                    {#                        <div class="box h-20"> #}
-                    {#                            <span><i class="gf gf-humidity"></i> 75 °C</span> #}
-                    {#                            <span class="block diff">+5 °C</span> #}
-                    {#                        </div> #}
                 </div>
-                <div class="desc h-8 flex bg-gradient-to-r dark:from-darker-800 dark:to-darker-900 rounded-br-lg border-t border-b border-l dark:border-darker-500">
-                    <div class="label"><span>Zadana</span></div>
+                <div class="desc h-8 flex dark:bg-blue-950 rounded-br-lg border-t border-b border-l dark:border-blue-450">
                     <div class="label"><span>Zmierzone</span></div>
-                    {#                        <div><span>Zmierzone</span></div> #}
-                    {#                        <div><span>Zmierzone</span></div> #}
                 </div>
                 <div class="amplitude h-10 flex mt-4 dark:bg-darker-600 border-t border-b dark:border-darker-600">
                     <div class="box">
-                        <div class="value"><span><i class="gf gf-temp2"></i> 70%</span></div>
+                        <div class="value"><span><i class="gf gf-temp2"></i>70%</span></div>
                         <div class="label text-left">
                             <span>Wilg.</span>
-                            <span class="block dark:text-gray-300">min</span>
+                            <span class="block dark:text-blue-300">min</span>
                         </div>
                     </div>
                     <div class="box">
-                        <div class="value"><span><i class="gf gf-temp2"></i> 99%</span></div>
+                        <div class="value"><span><i class="gf gf-temp2"></i>99%</span></div>
                         <div class="label text-left">
                             <span>Wilg.</span>
-                            <span class="block dark:text-blue-300">max</span>
+                            <span class="block dark:text-red-300">max</span>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    <div class="readings stripe dark:bg-darker-850 border-b dark:border-darker-600 dark:text-darker-100">
+    <div class="readings stripe dark:bg-darker-850 border-b border-t dark:border-darker-600 dark:text-darker-100">
         <div class="container mx-auto flex">
             <div class="box flex">
                 <div class="label"><span>Wietrznik</span></div>
+                <div class="value w-full">
+                    <div class=" indicator w-full relative z-20">
+                        <div class="w-full rounded-full">
+                            <div class="bg-gradient-to-r dark:from-transparent-0 dark:to-darker-100/20 leading-none rounded-full" style="width: 25%"></div>
+                        </div>
+                    </div>
+                    <div class="progress w-full bg-gray-200 relative z-10 rounded-full dark:bg-blue-550">
+                        <div class="bg-darker-350 text-blue-100 flex justify-center items-center leading-none rounded-full" style="width: 58%"><span>58%</span></div>
+                    </div>
+                </div>
             </div>
             <div class="box flex">
                 <div class="label"><span>Cieniówka</span></div>
+                <div class="value w-full">
+                    <div class=" indicator w-full relative z-20">
+                        <div class="w-full rounded-full">
+                            <div class="bg-gradient-to-r dark:from-transparent-0 dark:to-darker-100/20 leading-none rounded-full" style="width: 68%"></div>
+                        </div>
+                    </div>
+                    <div class="progress w-full bg-gray-200 relative z-10 rounded-full dark:bg-blue-550">
+                        <div class="bg-darker-350 text-blue-100 flex justify-center items-center leading-none rounded-full" style="width: 58%"><span>58%</span></div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
