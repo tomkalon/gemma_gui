@@ -99,7 +99,7 @@ header {
         }
       }
 
-      span.block {
+      p {
         color: #fafafa;
         font-size: 0.85rem;
         padding: 0;
@@ -136,7 +136,7 @@ header {
 
   flex-grow: 1;
 
-  .details {
+  .detail {
     flex-grow: 1;
 
     .data {
@@ -268,7 +268,7 @@ header {
                 padding-top: 0.125rem;
               }
 
-              span.block {
+              p {
                 font-size: 0.70rem;
                 margin-top: -0.25rem;
               }
@@ -297,7 +297,7 @@ header {
             font-size: 0.75rem;
             flex-direction: column;
 
-            span.block {
+            p {
               margin-top: -0.25rem;
             }
           }
@@ -342,6 +342,15 @@ header {
           }
         }
       }
+    }
+  }
+
+  .setup {
+    .label {
+
+    }
+
+    .item {
     }
   }
 }
