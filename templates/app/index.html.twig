@@ -1,13 +1,13 @@
 {% extends 'base.html.twig' %}
 {% block title %}Greenee© App{% endblock %}
 {% block body %}
-<div id="content" class="flex flex-col">
-    <article class="all w-full bg-amber-100 dark:bg-darker-500 border-b dark:border-darker-450">
+<div id="content" class="block bg-gradient-to-b dark:from-darker-300 dark:to-darker-700">
+    <article class="all w-full dark:bg-darker-500 border-b dark:border-darker-450">
         <div class="container mx-auto">
             {%  include('app/_mini_carousel.html.twig') %}
         </div>
     </article>
-    <article class="details bg-gradient-to-b dark:from-darker-700 dark:to-darker-800 shadow-md">
+    <article class="details">
             {%  include('app/_details.html.twig') %}
     </article>
 </div>

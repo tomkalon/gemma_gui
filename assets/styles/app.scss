@@ -20,6 +20,8 @@ $dark-850: #031e21;
 $dark-900: #101111;
 
 $blue-450: #426272;
+$blue-450: #104754;
+$blue-470: #425660;
 
 $alarm-red: #501414;
 
@@ -27,6 +29,8 @@ $text-shadow: -2px 2px 2px #00000050;
 
 
 @import 'gemma-fonts.css';
+@import 'fonts.css';
+
 // import Bootstrap css
 //@import "~bootstrap/scss/bootstrap";
 
@@ -39,6 +43,7 @@ html {
 
 body {
   height: 100%;
+  font-family: "Roboto", sans-serif;
 }
 
 header {
@@ -55,6 +60,7 @@ header {
         float: right;
         padding: 0 0.5rem;
         font-size: 0.8rem;
+        text-transform: uppercase;
 
         span:last-child {
           display: block;
@@ -111,6 +117,7 @@ header {
     #indicators-carousel {
       .wrapper {
         min-height: 16rem;
+
         .item {
           .label {
             align-items: start;
@@ -132,9 +139,11 @@ header {
     flex-grow: 1;
 
     .data {
-      .img {
-        background-position: center !important;
-        background-size: cover !important;
+      .image {
+        .img {
+          background-position: center !important;
+          background-size: cover !important;
+        }
       }
 
       i {
@@ -144,8 +153,9 @@ header {
       .readings.chunk {
         flex-grow: 1;
         margin-top: 1rem;
+        width: 50%;
 
-        .label {
+        .heading.label {
           .title {
             font-size: 1rem;
           }
@@ -164,6 +174,7 @@ header {
           }
         }
 
+
         .value {
           height: 4rem;
 
@@ -174,7 +185,7 @@ header {
 
             span {
               &:first-child {
-                font-size: 1rem;
+                font-size: 1.1rem;
               }
 
               &:last-child {
@@ -182,14 +193,16 @@ header {
               }
             }
           }
+
           .box.alarm {
             background: linear-gradient(to bottom, $alarm-red, transparent);
             border-radius: 0.25rem;
           }
         }
 
-        .desc {
+        .additional {
           font-size: 0.85rem;
+          height: 4.25rem;
 
           .title {
             justify-content: center;
@@ -197,24 +210,54 @@ header {
             font-size: 0.85rem;
             width: 6rem;
           }
-          .element{
+
+          .element {
             font-size: 1.5rem;
-            border-radius: 0.5rem;
-            display: flex;
-            background: $blue-450;
-            opacity: 0.2;
+            border: 2px solid #b2d3d5;
+
             i {
               padding: 0.5rem;
               margin: 0 auto;
               width: 3rem;
             }
           }
-          .element.active {
-            opacity: 1;
+
+          &.other {
+            .element {
+              opacity: 0.2;
+              border-radius: 0.75rem;
+              box-shadow: -2px 2px 1px 1px #00000020;
+            }
+            .element.active {
+              opacity: 1;
+            }
+          }
+
+          &.settings {
+            .element {
+              border: none;
+              height: 4rem;
+              width: 5rem;
+              display: flex;
+              flex-grow: 1;
+              flex-direction: column;
+              justify-content: center;
+              background: linear-gradient(to bottom, #00000080, transparent);
+              i {
+                padding-top: 0.125rem;
+              }
+              span.block {
+                font-size: 0.70rem;
+                margin-top: -0.25rem;
+              }
+            }
+
           }
         }
 
         .amplitude {
+
+          height: 2.5rem;
 
           .box {
             margin-right: 3rem;
@@ -261,6 +304,9 @@ header {
                 height: 1.25rem;
                 min-width: 2rem;
               }
+              .bar {
+                border-right: 1px solid #ffffff80;
+              }
             }
 
             .indicator {
@@ -269,6 +315,23 @@ header {
               div {
                 height: 1.25rem;
               }
+            }
+          }
+        }
+      }
+
+      .settings-menu {
+        ul {
+          li {
+            text-align: center;
+
+            i {
+              font-size: 1.33rem;
+            }
+
+            span {
+              font-size: 0.85rem;
+              text-transform: uppercase;
             }
           }
         }

@@ -32,6 +32,11 @@ Encore
         to: 'favicon/[name].[ext]',
         pattern: /\.(png|svg)$/
     })
+    // .copyFiles({
+    //     from: 'assets/fonts/',
+    //     to: 'fonts/[name].[ext]',
+    //     pattern: /\.(woff|ttf)$/
+    // })
 
     // enables the Symfony UX Stimulus bridge (used in assets/bootstrap.js)
     // .enableStimulusBridge('./assets/controllers.json')
