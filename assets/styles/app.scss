@@ -20,7 +20,7 @@ $dark-850: #031e21;
 $dark-900: #101111;
 
 $blue-450: #426272;
-$blue-450: #104754;
+$blue-460: #b2d3d5;
 $blue-470: #425660;
 
 $alarm-red: #501414;
@@ -131,6 +131,7 @@ header {
   .label {
     display: flex;
     align-items: center;
+    text-transform: uppercase;
   }
 
   flex-grow: 1;
@@ -214,6 +215,7 @@ header {
           .element {
             font-size: 1.5rem;
             border: 2px solid #b2d3d5;
+            cursor: pointer;
 
             i {
               padding: 0.5rem;
@@ -227,9 +229,23 @@ header {
               opacity: 0.2;
               border-radius: 0.75rem;
               box-shadow: -2px 2px 1px 1px #00000020;
-            }
-            .element.active {
-              opacity: 1;
+
+              &:hover {
+                opacity: 0.4;
+                background: $blue-460;
+                color: $dark-900;
+              }
+
+              &.active, &.link {
+                opacity: 1;
+              }
+
+              &.link {
+                &:hover {
+                  background: $blue-460;
+                  color: $dark-900;
+                }
+              }
             }
           }
 
@@ -243,9 +259,15 @@ header {
               flex-direction: column;
               justify-content: center;
               background: linear-gradient(to bottom, #00000080, transparent);
+
+              &:hover {
+                background: $blue-450;
+              }
+
               i {
                 padding-top: 0.125rem;
               }
+
               span.block {
                 font-size: 0.70rem;
                 margin-top: -0.25rem;
@@ -304,6 +326,7 @@ header {
                 height: 1.25rem;
                 min-width: 2rem;
               }
+
               .bar {
                 border-right: 1px solid #ffffff80;
               }
@@ -315,23 +338,6 @@ header {
               div {
                 height: 1.25rem;
               }
-            }
-          }
-        }
-      }
-
-      .settings-menu {
-        ul {
-          li {
-            text-align: center;
-
-            i {
-              font-size: 1.33rem;
-            }
-
-            span {
-              font-size: 0.85rem;
-              text-transform: uppercase;
             }
           }
         }
