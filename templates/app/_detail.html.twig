@@ -6,21 +6,21 @@
 </div>
 <div class="data">
     <div class="container mx-auto flex justify-center px-2">
-        <div class="image h-48 w-40 my-1.5 mr-4 dark:bg-darker-900 rounded-md border dark:border-darker-500 shadow-md dark:shadow-gray-900/50">
-            <div>
+        <div class="image-box">
+            <div class="image dark:bg-darker-900 rounded-md border dark:border-darker-500 shadow-md dark:shadow-gray-900/50">
                 <div class="img h-32 mt-2 mx-2" style="background: url({{ asset('build/images/tunel.webp') }})"></div>
-            </div>
-            <div class="desc text-center uppercase mt-1">
-                <span class="text-sm dark:text-darker-200">Typ obiektu:</span>
-                <p class="dark:text-darker-100 -mt-1">Tunel</p>
+                <div class="desc text-center uppercase">
+                    <span class="text-sm dark:text-darker-200">Typ obiektu:</span>
+                    <p class="dark:text-darker-100">Tunel</p>
+                </div>
             </div>
         </div>
         <div class="readings chunk">
             <div class="flex flex-col dark:text-blue-100 text-center uppercase">
-                <div class="heading label text-sm px-4 h-8 dark:bg-blue-950 rounded-tl-lg border-b border-t dark:border-blue-450">
+                <div class="heading label text-sm px-4 h-10 dark:bg-blue-950 border-b border-t dark:border-blue-450">
                     <span class="title pr-4 border-r dark:border-darker-100">Temperatura</span>
                     <span class="pre px-4">Zadana</span>
-                    <span class="post pr-4 active"><i class="gf gf-day"></i>19.5°C</span>
+                    <span class="post pr-4 active"><i class="gf gf-day rotate"></i>19.5°C</span>
                     <span class="post"><i class="gf gf-night"></i>26.5°C</span>
                 </div>
                 <div class="value flex dark:bg-blue-550">
@@ -47,7 +47,7 @@
                 </div>
                 <ul class="additional settings label gap-0.5 h-14 dark:bg-blue-950 border-b dark:border-blue-450">
                     <li class="title">Ustawienia obiektu:</li>
-                    <li class="element">
+                    <li class="element active">
                         <i class="gf gf-temp3 text-red-500"></i>
                         <p>Temperatura</p>
                     </li>
@@ -71,10 +71,10 @@
         </div>
         <div class="readings chunk">
             <div class="flex flex-col dark:text-blue-100 text-center uppercase">
-                <div class="heading label text-sm px-4 h-8 dark:bg-blue-950 rounded-tr-lg border-b border-t border-l dark:border-blue-450">
+                <div class="heading label text-sm px-4 h-10 dark:bg-blue-950 border-b border-t border-l dark:border-blue-450">
                     <span class="title pr-4 border-r dark:border-darker-100">Wilgotność</span>
                     <span class="pre px-4">Zadana</span>
-                    <span class="post pr-4 active"><i class="gf gf-day"></i>70%</span>
+                    <span class="post pr-4 active"><i class="gf gf-day rotate"></i>70%</span>
                     <span class="post"><i class="gf gf-night"></i>90%</span>
                 </div>
                 <div class="value flex dark:bg-blue-550">

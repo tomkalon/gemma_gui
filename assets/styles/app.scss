@@ -31,12 +31,27 @@ $alarm-red: #501414;
 
 $text-shadow: -2px 2px 2px #00000050;
 
-
 @import 'gemma-fonts.css';
 @import 'fonts.css';
 
 // import Bootstrap css
 //@import "~bootstrap/scss/bootstrap";
+
+@keyframes rotator {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.rotate {
+  animation-name: rotator;
+  animation-duration: 10s;
+  animation-iteration-count: infinite;
+  animation-timing-function: linear;
+}
 
 // STRUCTURE
 //// HEADER
@@ -144,10 +159,26 @@ header {
     margin-top: 1rem;
 
     .data {
-      .image {
-        .img {
-          background-position: center !important;
-          background-size: cover !important;
+      .image-box {
+        padding: 0.75rem 0.75rem;
+        background: $blue-550;
+        border-right: 1px solid $blue-450;
+
+        .image {
+          width: 9rem;
+
+          .img {
+            background-position: center !important;
+            background-size: cover !important;
+          }
+
+          .desc {
+            margin: 0.125rem 0;
+
+            p {
+              margin-top: -0.25rem;
+            }
+          }
         }
       }
 
@@ -157,7 +188,6 @@ header {
 
       .readings.chunk {
         flex-grow: 1;
-        margin-top: 0.125rem;
         width: 50%;
 
         .heading.label {
@@ -268,6 +298,15 @@ header {
                 background: $blue-450;
               }
 
+              &.active {
+                background: #30878f;
+                color: #ffffff;
+
+                i {
+                  color: #ffffff;
+                }
+              }
+
               i {
                 padding-top: 0.125rem;
               }
@@ -351,33 +390,48 @@ header {
 
   .setup {
     margin-top: 2rem;
+
     .label {
 
     }
 
-    @mixin flex-center {
+    @mixin setup-item {
       display: flex;
       align-items: center;
       justify-content: center;
       text-align: center;
+      box-shadow: 0 2px 5px 0 #00000080;
     }
-    @mixin item-bg {
+    @mixin item-default-bg {
       border-bottom: 1px solid $blue-450;
       background: linear-gradient(to bottom right, $blue-950, $blue-960);
     }
+    @mixin item-true-bg {
+      background: #1C531E url("../images/bg-true.svg") fixed;
+    }
+    @mixin item-false-bg {
+      background: #62191F url("../images/bg-false.svg") fixed;
+    }
+
+    @keyframes move-bg {
+      from {
+        background-position-x: 0;
+      }
+      to {
+        background-position-x: -200px;
+      }
+    }
+
     .box {
       padding: 1rem 1rem;
       flex-wrap: wrap;
       gap: 0.5rem 0.8%;
       margin: 0 0.5rem;
-      background: linear-gradient(to bottom right, $dark-300, $blue-550);
+      background: linear-gradient(to bottom right, $dark-300, $dark-500);
+
       .separator {
         flex-basis: 100%;
       }
-    }
-
-    .container {
-
     }
 
     .item {
@@ -386,6 +440,19 @@ header {
       width: 16%;
       height: 8rem;
       text-transform: uppercase;
+
+      &:hover {
+        cursor: pointer;
+        .icon {
+          filter: brightness(1.35);
+          animation-name: move-bg;
+          animation-duration: 5s;
+          animation-iteration-count: infinite;
+          animation-timing-function: ease-in-out;
+          animation-direction: alternate;
+        }
+      }
+
       .title {
         height: 2.5rem;
         font-size: 0.85rem;
@@ -393,30 +460,47 @@ header {
         padding: 0 1rem;
         border-radius: 0.5rem 0.5rem 0 0;
         border-top: 1px solid $blue-450;
-        @include item-bg;
-        @include flex-center;
+        @include item-default-bg;
+        @include setup-item;
       }
+
       .icon {
         flex-grow: 1;
-        background: $blue-550;
         font-size: 2rem;
         color: $dark-100;
-        @include flex-center;
+        @include setup-item;
+        background: #174453 url("../images/bg-default.svg") fixed;
+
         i {
           padding: 0 0.5rem;
         }
       }
+
       .value {
         font-size: 1.25rem;
         height: 2.5rem;
-        background: lightcoral;
         border-top: 1px solid $blue-450;
         border-radius: 0 0 0.5rem 0.5rem;
-        @include item-bg;
-        @include flex-center;
+        @include item-default-bg;
+        @include setup-item;
       }
-      &:last-child {
 
+      &.global {
+        .icon {
+          background: #255077 url("../images/bg-global.svg") fixed;
+        }
+      }
+
+      &.true {
+        .icon {
+          @include item-true-bg;
+        }
+      }
+
+      &.false {
+        .icon {
+          @include item-false-bg;
+        }
       }
     }
   }

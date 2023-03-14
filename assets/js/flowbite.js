@@ -1,12 +1,12 @@
 import {Carousel} from 'flowbite';
 
 const items = [];
-const getSlides = document.querySelectorAll('[data-carousel-item]');
-for (let i = 0; i < getSlides.length; i++) {
+const carouselSlides = document.querySelectorAll('[data-carousel-item]');
+for (let i = 0; i < carouselSlides.length; i++) {
     items[i] =
         {
             position: i,
-            el: getSlides[i]
+            el: carouselSlides[i]
         };
 }
 
@@ -23,12 +23,12 @@ const options = {
     onChange: () => {
     }
 }
-const getIndicatorItems = document.querySelectorAll('.indicators button');
-for (let i = 0; i < getIndicatorItems.length; i++) {
+const carouselIndicatorItems = document.querySelectorAll('.indicators button');
+for (let i = 0; i < carouselIndicatorItems.length; i++) {
     options.indicators.items[i] =
         {
             position: i,
-            el: getIndicatorItems[i]
+            el: carouselIndicatorItems[i]
         }
 }
 
@@ -45,9 +45,10 @@ $nextButton.addEventListener('click', () => {
     carousel.next();
 });
 
-const getItems = document.querySelectorAll('#indicators-carousel .item');
+const carouselItems = document.querySelectorAll('#indicators-carousel .item');
+let activeCarouselElement = null;
 
-let itemSettings = (arr, callback) => {
+let doForAll = (arr, callback) => {
     arr.forEach(element => {
         callback(element);
     });
@@ -56,11 +57,12 @@ let itemSettings = (arr, callback) => {
 let itemAddClicker = (element) => {
     element.onclick = () => {
         carousel.pause();
-        itemSettings(getItems, function(el) {
-            el.classList.remove('active');
-        });
-        element.classList.add('active');
+        if (!(activeCarouselElement === null || activeCarouselElement === element)) {
+            activeCarouselElement.classList.remove('active');
+        }
+        activeCarouselElement = element;
+        activeCarouselElement.classList.add('active');
     }
 }
 
-itemSettings(getItems, itemAddClicker);
+doForAll(carouselItems, itemAddClicker);
