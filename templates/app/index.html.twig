@@ -7,11 +7,14 @@
             {%  include('app/_mini_carousel.html.twig') %}
         </div>
     </article>
-    <article class="detail">
+    <article class="detail container mx-auto">
+            {%  include('app/_detail.html.twig') %}
+    </article>
+    <article class="detail mt-16">
             {%  include('app/_detail.html.twig') %}
     </article>
     <article class="setup">
-            {%  include('app/_setup.html.twig') %}
+{#            {%  include('app/_setup.html.twig') %}#}
     </article>
 </div>
 {% endblock %}

@@ -22,6 +22,10 @@ $dark-900: #101111;
 $blue-450: #426272;
 $blue-460: #b2d3d5;
 $blue-470: #425660;
+$blue-550: #143c50;
+$blue-950: #07293a;
+$blue-960: #0e2029;
+$blue-970: #020f16;
 
 $alarm-red: #501414;
 
@@ -350,7 +354,56 @@ header {
 
     }
 
+    @mixin flex-center {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+    }
+    @mixin item-bg {
+      border-bottom: 1px solid $blue-450;
+      background: $blue-950;
+    }
+
+    .container {
+      flex-wrap: wrap;
+      gap: 0.125rem;
+      justify-content: center;
+      padding-top: 0.125rem;
+    }
+
     .item {
+      display: flex;
+      flex-direction: column;
+      width: 16.5%;
+      height: 8rem;
+      text-transform: uppercase;
+      .title {
+        height: 2.5rem;
+        font-size: 0.85rem;
+        line-height: 1.2;
+        padding: 0 1rem;
+        @include item-bg;
+        @include flex-center;
+      }
+      .icon {
+        flex-grow: 1;
+        background: $dark-800;
+        font-size: 2rem;
+        color: $dark-100;
+        @include flex-center;
+      }
+      .value {
+        font-size: 1.25rem;
+        height: 2rem;
+        background: lightcoral;
+        border-top: 1px solid $blue-450;
+        @include item-bg;
+        @include flex-center;
+      }
+      &:last-child {
+
+      }
     }
   }
 }
