@@ -114,7 +114,6 @@ header {
 }
 
 #content {
-  height: 110vh;
   text-shadow: $text-shadow;
 
   .all {
@@ -142,6 +141,7 @@ header {
 
   .detail {
     flex-grow: 1;
+    margin-top: 1rem;
 
     .data {
       .image {
@@ -157,7 +157,7 @@ header {
 
       .readings.chunk {
         flex-grow: 1;
-        margin-top: 1rem;
+        margin-top: 0.125rem;
         width: 50%;
 
         .heading.label {
@@ -350,6 +350,7 @@ header {
   }
 
   .setup {
+    margin-top: 2rem;
     .label {
 
     }
@@ -362,20 +363,23 @@ header {
     }
     @mixin item-bg {
       border-bottom: 1px solid $blue-450;
-      background: $blue-950;
+      background: linear-gradient(to bottom right, $blue-950, $blue-960);
     }
 
     .container {
       flex-wrap: wrap;
-      gap: 0.125rem;
-      justify-content: center;
+      gap: 0.5rem 0.8%;
       padding-top: 0.125rem;
+      margin: 0.5rem auto;
+      .separator {
+        flex-basis: 100%;
+      }
     }
 
     .item {
       display: flex;
       flex-direction: column;
-      width: 16.5%;
+      width: 16%;
       height: 8rem;
       text-transform: uppercase;
       .title {
@@ -383,21 +387,27 @@ header {
         font-size: 0.85rem;
         line-height: 1.2;
         padding: 0 1rem;
+        border-radius: 0.5rem 0.5rem 0 0;
+        border-top: 1px solid $blue-450;
         @include item-bg;
         @include flex-center;
       }
       .icon {
         flex-grow: 1;
-        background: $dark-800;
+        background: $blue-550;
         font-size: 2rem;
         color: $dark-100;
         @include flex-center;
+        i {
+          padding: 0 0.5rem;
+        }
       }
       .value {
         font-size: 1.25rem;
-        height: 2rem;
+        height: 2.5rem;
         background: lightcoral;
         border-top: 1px solid $blue-450;
+        border-radius: 0 0 0.5rem 0.5rem;
         @include item-bg;
         @include flex-center;
       }

@@ -2,7 +2,7 @@
 {% block title %}Greenee© App{% endblock %}
 {% block body %}
 <div id="content" class="block bg-gradient-to-b dark:from-darker-300 dark:to-darker-700">
-    <article class="all w-full dark:bg-darker-500 border-b dark:border-darker-450">
+    <article class="all w-full dark:bg-darker-500 border-b-4 dark:border-darker-450">
         <div class="container mx-auto">
             {%  include('app/_mini_carousel.html.twig') %}
         </div>
@@ -10,11 +10,8 @@
     <article class="detail container mx-auto">
             {%  include('app/_detail.html.twig') %}
     </article>
-    <article class="detail mt-16">
-            {%  include('app/_detail.html.twig') %}
-    </article>
     <article class="setup">
-{#            {%  include('app/_setup.html.twig') %}#}
+            {%  include('app/_setup.html.twig') %}
     </article>
 </div>
 {% endblock %}
