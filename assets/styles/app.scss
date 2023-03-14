@@ -19,8 +19,8 @@ $dark-800: #032427;
 $dark-850: #031e21;
 $dark-900: #101111;
 
+$blue-250: #b2d3d5;
 $blue-450: #426272;
-$blue-460: #b2d3d5;
 $blue-470: #425660;
 $blue-550: #143c50;
 $blue-950: #07293a;
@@ -236,7 +236,7 @@ header {
 
               &:hover {
                 opacity: 0.4;
-                background: $blue-460;
+                background: $blue-250;
                 color: $dark-900;
               }
 
@@ -246,7 +246,7 @@ header {
 
               &.link {
                 &:hover {
-                  background: $blue-460;
+                  background: $blue-250;
                   color: $dark-900;
                 }
               }
@@ -365,15 +365,19 @@ header {
       border-bottom: 1px solid $blue-450;
       background: linear-gradient(to bottom right, $blue-950, $blue-960);
     }
-
-    .container {
+    .box {
+      padding: 1rem 1rem;
       flex-wrap: wrap;
       gap: 0.5rem 0.8%;
-      padding-top: 0.125rem;
-      margin: 0.5rem auto;
+      margin: 0 0.5rem;
+      background: linear-gradient(to bottom right, $dark-300, $blue-550);
       .separator {
         flex-basis: 100%;
       }
+    }
+
+    .container {
+
     }
 
     .item {
