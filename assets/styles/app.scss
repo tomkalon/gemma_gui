@@ -53,6 +53,10 @@ $text-shadow: -2px 2px 2px #00000050;
   animation-timing-function: linear;
 }
 
+.separator {
+  flex-basis: 100%;
+}
+
 // STRUCTURE
 //// HEADER
 ///// NAV
@@ -134,12 +138,44 @@ header {
   .all {
     #indicators-carousel {
       .wrapper {
-        min-height: 16rem;
+        height: auto;
+        display: flex;
+        min-height: 21rem;
 
         .item {
+          width: 16rem;
+          height: 16.5rem;
           .label {
-            align-items: start;
-            padding-left: 1rem;
+            padding: 0.25rem 1rem;
+            justify-content: space-between;
+              .alert {
+                i {
+                  margin: 0 0.5rem;
+                }
+              }
+          }
+          .box {
+            padding: 0.5rem;
+            .row {
+              display: flex;
+              flex-wrap: wrap;
+              div {
+                width: 5rem;
+                height: 4.5rem;
+                text-align: center;
+                text-shadow: none!important;
+                i {
+                  font-size: 1.5rem;
+                }
+                p {
+                  font-size: 1.05rem;
+                  margin-top: -0.25rem;
+                  &.desc {
+                    font-size: 0.75rem;
+                  }
+                }
+              }
+            }
           }
         }
       }
@@ -349,7 +385,7 @@ header {
 
       .readings.stripe {
         min-height: 3rem;
-
+        border-top: 1px solid $blue-450;
         .box {
           width: 50%;
 
@@ -428,10 +464,6 @@ header {
       gap: 0.5rem 0.8%;
       margin: 0 0.5rem;
       background: linear-gradient(to bottom right, $dark-300, $dark-500);
-
-      .separator {
-        flex-basis: 100%;
-      }
     }
 
     .item {

@@ -284,6 +284,10 @@
     content: "\f0b4";
 }
 
+.gf-heater:before {
+    content: "\f0b5";
+}
+
 .gf-wind1:before {
     content: "\f0d0";
 }
