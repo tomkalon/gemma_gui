@@ -39,9 +39,9 @@ class Stats
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     private ?DateTimeInterface $created = null;
 
-    #[ORM\ManyToOne(targetEntity: Objects::class, inversedBy: 'stats')]
-    #[ORM\JoinColumn(name: 'object_id', referencedColumnName: 'id')]
-    private ?int $object_id;
+    #[ORM\ManyToOne(inversedBy: 'stats')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?objects $object = null;
 
     public function getId(): ?int
     {
@@ -140,14 +140,15 @@ class Stats
         $this->created = $created;
     }
 
-    public function getObjectId(): ?int
+    public function getObject(): ?objects
     {
-        return $this->object_id;
+        return $this->object;
     }
 
-    public function setObjectId(?int $object_id): void
+    public function setObject(?objects $object): self
     {
-        $this->object_id = $object_id;
-    }
+        $this->object = $object;
 
+        return $this;
+    }
 }

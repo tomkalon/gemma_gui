@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\SettingsRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -13,6 +15,9 @@ class Settings
     #[ORM\GeneratedValue]
     #[ORM\Column]
     private ?int $id = null;
+
+    #[ORM\Column(length: 255)]
+    private ?string $name = null;
 
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $temp_day = null;
@@ -134,9 +139,27 @@ class Settings
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $shadow5 = null;
 
+    #[ORM\OneToMany(mappedBy: 'settings', targetEntity: Objects::class)]
+    private Collection $object;
+
+    public function __construct()
+    {
+        $this->object = new ArrayCollection();
+    }
+
     public function getId(): ?int
     {
         return $this->id;
+    }
+
+    public function getName(): ?string
+    {
+        return $this->name;
+    }
+
+    public function setName(?string $name): void
+    {
+        $this->name = $name;
     }
 
     public function getTempDay(): ?string
@@ -610,6 +633,36 @@ class Settings
     public function setShadow5(?string $shadow5): self
     {
         $this->shadow5 = $shadow5;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, objects>
+     */
+    public function getObject(): Collection
+    {
+        return $this->object;
+    }
+
+    public function addObject(objects $object): self
+    {
+        if (!$this->object->contains($object)) {
+            $this->object->add($object);
+            $object->setSettings($this);
+        }
+
+        return $this;
+    }
+
+    public function removeObject(objects $object): self
+    {
+        if ($this->object->removeElement($object)) {
+            // set the owning side to null (unless already changed)
+            if ($object->getSettings() === $this) {
+                $object->setSettings(null);
+            }
+        }
 
         return $this;
     }

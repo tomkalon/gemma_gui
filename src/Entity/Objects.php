@@ -39,17 +39,17 @@ class Objects
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $heat = null;
 
-    #[ORM\OneToOne(targetEntity: Settings::class)]
-    #[ORM\JoinColumn(name: 'settings_id', referencedColumnName: 'id')]
-    private ?int $settings_id;
+    #[ORM\OneToMany(mappedBy: 'object', targetEntity: Stats::class, orphanRemoval: true)]
+    private Collection $stats;
 
-    #[ORM\OneToMany(mappedBy: 'object', targetEntity: Stats::class)]
-    private ?Collection $stats;
+    #[ORM\ManyToOne(inversedBy: 'object')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Settings $settings = null;
 
-    #[ORM\OneToMany(mappedBy: 'object', targetEntity: Alerts::class)]
-    private ?Collection $alerts;
+    #[ORM\OneToMany(mappedBy: 'object', targetEntity: Alerts::class, orphanRemoval: true)]
+    private Collection $alerts;
 
-    public function  __construct()
+    public function __construct()
     {
         $this->stats = new ArrayCollection();
         $this->alerts = new ArrayCollection();
@@ -72,14 +72,14 @@ class Objects
         return $this;
     }
 
-    public function getTemp1(): ?string
+    public function getTemp(): ?string
     {
         return $this->temp;
     }
 
-    public function setTemp1(?string $temp1): self
+    public function setTemp(?string $temp): self
     {
-        $this->temp = $temp1;
+        $this->temp = $temp;
 
         return $this;
     }
@@ -156,46 +156,76 @@ class Objects
         return $this;
     }
 
-    public function getTemp(): ?string
-    {
-        return $this->temp;
-    }
-
-    public function setTemp(?string $temp): self
-    {
-        $this->temp = $temp;
-
-        return $this;
-    }
-
-    public function getSettingsId(): ?int
-    {
-        return $this->settings_id;
-    }
-
-    public function setSettingsId(?int $settings_id): void
-    {
-        $this->settings_id = $settings_id;
-    }
-
-    public function getStats(): ?Collection
+    /**
+     * @return Collection<int, Stats>
+     */
+    public function getStats(): Collection
     {
         return $this->stats;
     }
 
-    public function setStats(?Collection $stats): void
+    public function addStat(Stats $stat): self
     {
-        $this->stats = $stats;
+        if (!$this->stats->contains($stat)) {
+            $this->stats->add($stat);
+            $stat->setObject($this);
+        }
+
+        return $this;
     }
 
-    public function getAlerts(): ?Collection
+    public function removeStat(Stats $stat): self
+    {
+        if ($this->stats->removeElement($stat)) {
+            // set the owning side to null (unless already changed)
+            if ($stat->getObject() === $this) {
+                $stat->setObject(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function getSettings(): ?Settings
+    {
+        return $this->settings;
+    }
+
+    public function setSettings(?Settings $settings): self
+    {
+        $this->settings = $settings;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Alerts>
+     */
+    public function getAlerts(): Collection
     {
         return $this->alerts;
     }
 
-    public function setAlerts(?Collection $alerts): void
+    public function addAlert(Alerts $alert): self
     {
-        $this->alerts = $alerts;
+        if (!$this->alerts->contains($alert)) {
+            $this->alerts->add($alert);
+            $alert->setObject($this);
+        }
+
+        return $this;
+    }
+
+    public function removeAlert(Alerts $alert): self
+    {
+        if ($this->alerts->removeElement($alert)) {
+            // set the owning side to null (unless already changed)
+            if ($alert->getObject() === $this) {
+                $alert->setObject(null);
+            }
+        }
+
+        return $this;
     }
 
 }

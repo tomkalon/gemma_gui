@@ -7,7 +7,7 @@ use App\Entity\GlobalSettings;
 use App\Entity\Objects;
 use App\Entity\Settings;
 use App\Entity\Stats;
-use App\Entity\Users;
+use App\Entity\User;
 use App\Entity\Weather;
 use App\Entity\WeatherStats;
 use DateTime;
@@ -23,94 +23,96 @@ class AppFixtures extends Fixture
     public function load(ObjectManager $manager): void
     {
         for ($i = 1; $i <= $this->object_quantity; $i++) {
-            $this->setObjects($i, $manager);
-            $this->setSettings($i, $manager);
+            $object[$i] = new Objects();
+            $settings[$i] = new Settings();
+            $object[$i]->setSettings($settings[$i]);
+            $this->setSettings($settings[$i], $manager, $i);
+            $this->setObjects($object[$i], $manager, $i);
+            $this->setStats($this->number_of_stats, $manager, $object[$i]);
+            $this->setAlerts($manager, $object[$i]);
         }
         $this->setGlobalSettings($manager);
         $this->setWeather($manager);
         $this->setUser($manager);
-        $this->setStats($this->number_of_stats, $manager);
-        $this->setAlerts($manager);
 
         $manager->flush();
     }
 
     // OBJECTS
-    public function setObjects(int $i, $manager): void
+    public function setObjects($obj, $manager, $i): void
     {
-        $object[$i] = new Objects();
-        $object[$i]->setName('Tunel ' . $i);
+        $obj->setName('Tunel ' . $i);
         $temp = $this->randFloat(-150, 350);
         $temp_diff = $this->randFloat(0, 20);
-        $object[$i]->setTemp($temp);
-        $object[$i]->setTemp2($temp - $temp_diff);
-        $object[$i]->setHumid(rand(30, 100));
-        $object[$i]->setVent(rand(1, 100));
-        $object[$i]->setVent(rand(1, 100));
-        $object[$i]->setShadow(rand(1, 100));
-        $object[$i]->setBlow(rand(0, 1));
-        $object[$i]->setHeat(rand(0, 1));
+        $obj->setTemp($temp);
+        $obj->setTemp2($temp - $temp_diff);
+        $obj->setHumid(rand(30, 100));
+        $obj->setVent(rand(1, 100));
+        $obj->setVent(rand(1, 100));
+        $obj->setShadow(rand(1, 100));
+        $obj->setBlow(rand(0, 1));
+        $obj->setHeat(rand(0, 1));
 
-        $manager->persist($object[$i]);
+        $manager->persist($obj);
     }
 
     // SETTINGS
-    public function setSettings(int $i, $manager): void
+    public function setSettings($obj, $manager, $i): void
     {
-        $settings[$i] = new Settings();
+        $obj->setName("Ustawienia " . $i);
         $temp = strval(rand(20, 30));
-        $settings[$i]->setTempDay($temp);
-        $settings[$i]->setTempNight($temp - $this->randFloat(0, 150));
-        $settings[$i]->setTempHysteresis(rand(0, 5));
-        $settings[$i]->setTempControlDay(1);
-        $settings[$i]->setTempControlNight(rand(0, 1));
-        $settings[$i]->setTempVentClose(rand(0, 10));
-        $tempAlarmFlag = rand(0, 1);
-        $settings[$i]->setTempAlarmFlag($tempAlarmFlag);
-        if ($tempAlarmFlag) {
-            $settings[$i]->setTempAlarm(rand(30, 40));
+        $obj->setTempDay($temp);
+        $obj->setTempNight($temp - $this->randFloat(0, 150));
+        $obj->setTempHysteresis(rand(0, 5));
+        $obj->setTempControlDay(1);
+        $obj->setTempControlNight(rand(0, 1));
+        $obj->setTempVentClose(rand(0, 10));
+        $temp_alarm_flag = rand(0, 1);
+        $obj->setTempAlarmFlag($temp_alarm_flag);
+        if ($temp_alarm_flag) {
+            $obj->setTempAlarm(rand(30, 40));
         } else {
-            $settings[$i]->setTempAlarm(rand(-20, 0));
+            $obj->setTempAlarm(rand(-20, 0));
         }
-        $settings[$i]->setHumid(rand(30, 99));
-        $settings[$i]->setHumidHysteresis(rand(0, 30));
-        $settings[$i]->setHumidControlDay(rand(0, 1));
-        $settings[$i]->setHumidControlNight(rand(0, 1));
-        $settings[$i]->setHumidVentStep(rand(0, 30));
-        $settings[$i]->setHumidVentPause(rand(0, 30));
-        $settings[$i]->setHumidVentPauseOpen(rand(0, 100));
-        $settings[$i]->setHumidVentMaxOpen(rand(10, 100));
-        $settings[$i]->setHumidAlarm(rand(40, 90));
-        $humidAlarmFlag = rand(0, 1);
-        $settings[$i]->setHumidAlarmFlag($humidAlarmFlag);
-        $settings[$i]->setHumidAlarmEnable(rand(0, 1));
-        $settings[$i]->setHeat(rand(1, 40));
-        $settings[$i]->setHeatHysteresis(rand(1, 10));
-        $settings[$i]->setVent(rand(10, 100));
-        $settings[$i]->setVentStepTime(rand(0, 30));
-        $settings[$i]->setVentPause(rand(0, 30));
-        $settings[$i]->setVentOpenCloseTime(rand(0, 30));
-        $settings[$i]->setVentMaxOpenRain(rand(0, 100));
-        $settings[$i]->setVentWindDelay(rand(0, 30));
-        $settings[$i]->setVentRainDelay(rand(0, 30));
-        $settings[$i]->setVentWeakWindMax(rand(0, 100));
-        $settings[$i]->setVentStrongWindMax(rand(0, 100));
-        $settings[$i]->setVentMinTemp(rand(0, 30));
-        $settings[$i]->setBlow(rand(0, 30));
-        $settings[$i]->setBlowPause(rand(0, 30));
-        $settings[$i]->setShadow(rand(0, 100));
-        $settings[$i]->setShadowManual(rand(0, 1));
+        $obj->setHumid(rand(30, 99));
+        $obj->setHumidHysteresis(rand(0, 30));
+        $obj->setHumidControlDay(rand(0, 1));
+        $obj->setHumidControlNight(rand(0, 1));
+        $obj->setHumidVentStep(rand(0, 30));
+        $obj->setHumidVentPause(rand(0, 30));
+        $obj->setHumidVentPauseOpen(rand(0, 100));
+        $obj->setHumidVentMaxOpen(rand(10, 100));
+        $obj->setHumidAlarm(rand(40, 90));
+        $humid_alarm_flag = rand(0, 1);
+        $obj->setHumidAlarmFlag($humid_alarm_flag);
+        $obj->setHumidAlarmEnable(rand(0, 1));
+        $obj->setHeat(rand(1, 40));
+        $obj->setHeatHysteresis(rand(1, 10));
+        $obj->setVent(rand(10, 100));
+        $obj->setVentStepTime(rand(0, 30));
+        $obj->setVentPause(rand(0, 30));
+        $obj->setVentOpenCloseTime(rand(0, 30));
+        $obj->setVentMaxOpenRain(rand(0, 100));
+        $obj->setVentWindDelay(rand(0, 30));
+        $obj->setVentRainDelay(rand(0, 30));
+        $obj->setVentWeakWindMax(rand(0, 100));
+        $obj->setVentStrongWindMax(rand(0, 100));
+        $obj->setVentMinTemp(rand(0, 30));
+        $obj->setBlow(rand(0, 30));
+        $obj->setBlowPause(rand(0, 30));
+        $obj->setShadow(rand(0, 100));
+        $obj->setShadowManual(rand(0, 1));
         $shadow = array();
         for ($n = 0; $n < 5; $n++) {
             $shadow[$n] = ($n) ? rand(0, 15) + $shadow[$n - 1] : rand(0, 10);
         }
-        $settings[$i]->setShadow1($shadow[0]);
-        $settings[$i]->setShadow1($shadow[1]);
-        $settings[$i]->setShadow1($shadow[2]);
-        $settings[$i]->setShadow1($shadow[3]);
-        $settings[$i]->setShadow1($shadow[4]);
+        $obj->setShadow1($shadow[0]);
+        $obj->setShadow1($shadow[1]);
+        $obj->setShadow1($shadow[2]);
+        $obj->setShadow1($shadow[3]);
+        $obj->setShadow1($shadow[4]);
 
-        $manager->persist($settings[$i]);
+        $manager->persist($obj);
     }
 
     public function setGlobalSettings($manager): void
@@ -150,17 +152,15 @@ class AppFixtures extends Fixture
 
     public function setUser($manager): void
     {
-        $admin = new Users();
+        $admin = new User();
         $admin->setUsername("admin");
         $admin->setPassword("password");
         $admin->setDescription("NAZWA FIRMY");
-        $admin->setRole("ADMIN");
         $admin->setEmail("admin@email.com");
-        $user = new Users();
+        $user = new User();
         $user->setUsername("user");
         $user->setPassword("password");
         $user->setDescription("Jan Kowalski");
-        $user->setRole("USER");
         $user->setEmail("user@email.com");
 
         $manager->persist($admin);
@@ -168,7 +168,7 @@ class AppFixtures extends Fixture
     }
 
 
-    public function setStats(int $limit, $manager): void
+    public function setStats(int $limit, $manager, $obj): void
     {
         $temp = 10.5;
         $weather_temp = $temp - $this->randFloat(10, 50);
@@ -182,6 +182,7 @@ class AppFixtures extends Fixture
 
         for ($id = 0; $id < $limit; $id++) {
             $stats[$id] = new Stats();
+            $stats[$id]->setObject($obj);
             $weatherStats[$id] = new WeatherStats();
             if ($id) {
                 if ($id % 12 == 0) {
@@ -215,7 +216,7 @@ class AppFixtures extends Fixture
         }
     }
 
-    public function setAlerts($manager)
+    public function setAlerts($manager, $obj)
     {
         $list = [[
             'attr' => 'temp',
@@ -238,6 +239,7 @@ class AppFixtures extends Fixture
         ]];
         for ($i = 0; $i < count($list); $i++) {
             $alerts[$i] = new Alerts();
+            $alerts[$i]->setObject($obj);
 
                 $alerts[$i]->setAttribute($list[$i]['attr']);
                 $alerts[$i]->setValue($list[$i]['value']);

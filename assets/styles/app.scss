@@ -143,8 +143,9 @@ header {
         min-height: 21rem;
 
         .item {
-          width: 16rem;
+          width: 16.25rem;
           height: 16.5rem;
+          border: 2px solid $dark-100;
           .label {
             padding: 0.25rem 1rem;
             justify-content: space-between;
