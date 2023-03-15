@@ -19,9 +19,6 @@ class Stats
     private ?string $temp = null;
 
     #[ORM\Column(length: 255, nullable: true)]
-    private ?string $temp2 = null;
-
-    #[ORM\Column(length: 255, nullable: true)]
     private ?string $humid = null;
 
     #[ORM\Column(length: 255, nullable: true)]
@@ -56,18 +53,6 @@ class Stats
     public function setTemp(?string $temp): self
     {
         $this->temp = $temp;
-
-        return $this;
-    }
-
-    public function getTemp2(): ?string
-    {
-        return $this->temp2;
-    }
-
-    public function setTemp2(?string $temp2): self
-    {
-        $this->temp2 = $temp2;
 
         return $this;
     }

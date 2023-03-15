@@ -43,9 +43,7 @@ class AppFixtures extends Fixture
     {
         $obj->setName('Tunel ' . $i);
         $temp = $this->randFloat(-150, 350);
-        $temp_diff = $this->randFloat(0, 20);
         $obj->setTemp($temp);
-        $obj->setTemp2($temp - $temp_diff);
         $obj->setHumid(rand(30, 100));
         $obj->setVent(rand(1, 100));
         $obj->setVent(rand(1, 100));
