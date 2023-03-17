@@ -39,6 +39,15 @@ class ObjectsRepository extends ServiceEntityRepository
         }
     }
 
+    public function findID(): array
+    {
+        return $this->createQueryBuilder('item')
+            ->select('item.id')
+            ->orderBy('item.id', 'ASC')
+            ->getQuery()
+            ->getResult();
+    }
+
 //    /**
 //     * @return Objects[] Returns an array of Objects objects
 //     */

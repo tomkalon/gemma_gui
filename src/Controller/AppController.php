@@ -3,7 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Objects;
-use App\Service\App\Api;
+use App\Service\Api;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
@@ -14,6 +14,7 @@ class AppController extends AbstractController
 {
 
     public object $api;
+
     public function __construct(Api $api)
     {
         $this->api = $api;
@@ -23,24 +24,27 @@ class AppController extends AbstractController
     public function index(): Response
     {
         return $this->render('app/index.html.twig', [
+            'show_all' => false
         ]);
     }
 
-    #[Route('/app', name: 'app_show_all')]
+    #[Route('/app/{objects<\d+>}', name: 'app_show_one', priority: 1)]
+    public function showOne(Objects $objects): Response
+    {
+        return $this->render('app/index.html.twig', [
+            'show_all'  => false,
+            'data'      => $objects
+        ]);
+    }
+
+    #[Route('/app', name: 'app_show_all', priority: 10)]
     public function showAll(): Response
     {
+        $objects = $this->api->prepareAllObjects();
+        dd($objects);
         return $this->render('app/index.html.twig', [
-
-        ]);
-    }
-
-    #[Route('/app/{id<\d+>}', name: 'app_show_one', priority: 1)]
-    public function showOne($id): Response
-    {
-
-        $data = $this->api->getOneObject(1);
-        var_dump($data);
-        return $this->render('app/index.html.twig', [
+            'show_all'  => true,
+            'data'      => $objects[0]
         ]);
     }
 

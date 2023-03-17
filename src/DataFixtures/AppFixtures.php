@@ -39,15 +39,23 @@ class AppFixtures extends Fixture
     }
 
     // OBJECTS
-    public function setObjects($obj, $manager, $i): void
+    public function setObjects($obj, $manager, $id): void
     {
-        $obj->setName('Tunel ' . $i);
-        $temp = $this->randFloat(-150, 350);
+        $obj->setName('Tunel ' . $id);
+        $temp = array();
+        for ($i = 0; $i < rand(1, 3); $i++) {
+            $temp[$i] = $this->randFloat(-150, 350);
+        }
         $obj->setTemp($temp);
-        $obj->setHumid(rand(30, 100));
-        $obj->setVent(rand(1, 100));
-        $obj->setVent(rand(1, 100));
-        $obj->setShadow(rand(1, 100));
+        $humid = array();
+        for ($i = 0; $i < rand(1, 2); $i++) {
+            $humid[$i] = rand(30, 100);
+        }
+        $obj->setHumid($humid);
+        $vent[0] = rand(1, 100);
+        $obj->setVent($vent);
+        $shadow[0] = rand(1, 100);
+        $obj->setShadow($shadow);
         $obj->setBlow(rand(0, 1));
         $obj->setHeat(rand(0, 1));
 
@@ -55,9 +63,9 @@ class AppFixtures extends Fixture
     }
 
     // SETTINGS
-    public function setSettings($obj, $manager, $i): void
+    public function setSettings($obj, $manager, $id): void
     {
-        $obj->setName("Ustawienia " . $i);
+        $obj->setName("Ustawienia " . $id);
         $temp = strval(rand(20, 30));
         $obj->setTempDay($temp);
         $obj->setTempNight($temp - $this->randFloat(0, 150));
@@ -239,11 +247,11 @@ class AppFixtures extends Fixture
             $alerts[$i] = new Alerts();
             $alerts[$i]->setObject($obj);
 
-                $alerts[$i]->setAttribute($list[$i]['attr']);
-                $alerts[$i]->setValue($list[$i]['value']);
-                $alerts[$i]->setType($list[$i]['type']);
-                $alerts[$i]->setImportance($list[$i]['importance']);
-                $alerts[$i]->setActive($list[$i]['active']);
+            $alerts[$i]->setAttribute($list[$i]['attr']);
+            $alerts[$i]->setValue($list[$i]['value']);
+            $alerts[$i]->setType($list[$i]['type']);
+            $alerts[$i]->setImportance($list[$i]['importance']);
+            $alerts[$i]->setActive($list[$i]['active']);
 
             $manager->persist($alerts[$i]);
         }

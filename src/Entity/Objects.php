@@ -19,16 +19,16 @@ class Objects
     private ?string $name = null;
 
     #[ORM\Column(length: 255, nullable: true)]
-    private ?string $temp = null;
+    private ?array $temp = null;
 
     #[ORM\Column(length: 255, nullable: true)]
-    private ?string $humid = null;
+    private ?array $humid = null;
 
     #[ORM\Column(length: 255, nullable: true)]
-    private ?string $vent = null;
+    private ?array $vent = null;
 
     #[ORM\Column(length: 255, nullable: true)]
-    private ?string $shadow = null;
+    private ?array $shadow = null;
 
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $blow = null;
@@ -69,48 +69,48 @@ class Objects
         return $this;
     }
 
-    public function getTemp(): ?string
+    public function getTemp(): ?array
     {
         return $this->temp;
     }
 
-    public function setTemp(?string $temp): self
+    public function setTemp(?array $temp): self
     {
         $this->temp = $temp;
 
         return $this;
     }
 
-    public function getHumid(): ?string
+    public function getHumid(): ?array
     {
         return $this->humid;
     }
 
-    public function setHumid(?string $humid): self
+    public function setHumid(?array $humid): self
     {
         $this->humid = $humid;
 
         return $this;
     }
 
-    public function getVent(): ?string
+    public function getVent(): ?array
     {
         return $this->vent;
     }
 
-    public function setVent(?string $vent): self
+    public function setVent(?array $vent): self
     {
         $this->vent = $vent;
 
         return $this;
     }
 
-    public function getShadow(): ?string
+    public function getShadow(): ?array
     {
         return $this->shadow;
     }
 
-    public function setShadow(?string $shadow): self
+    public function setShadow(?array $shadow): self
     {
         $this->shadow = $shadow;
 
