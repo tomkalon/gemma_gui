@@ -42,27 +42,43 @@ class ObjectManager
         return $arr;
     }
 
-    public function autoPrepareCarouselLayout($sensor_count, $number): void
+    // if JSON file is not exist, this function create it with default structure
+    public function autoPrepareCarouselLayout(): array
     {
+        $display_settings = array();
         $layout = array(
             'carousel_columns' => 12,
+            'carousel_rows' => 3,
             'block_size' => array(
                 'sm' => 4,
                 'md' => 6,
                 'lg' => 9,
                 'xl' => 12,
                 'xxl' => 15
-            )
+            ),
+            'block_weight' => array()
         );
+
+        /*
+            Jako argument trzeba będzie dodać $sensor_count każdego obiektu,
+            a wobec tego, zapewne trzeba zmodyfikować getPreparedObject,
+            by zapisywał te informacje w jednej tablicy w $this->data;
+
+        */
+
         if ($sensor_count['temp'] <= 3 && $sensor_count['humid'] <= 3) {
             foreach ($layout['block_size'] as $index => $value) {
                 if ($sensor_count['sum'] < $value)
                 {
-                    $this->data['display_settings'][$number]['block_size'] = $index;
+                    $display_settings['block_size'][$number] = $index;
                     break;
                 }
             }
         }
+
+
+
+        return  $display_settings;
     }
 
     // process the ARRAY of DATA for TWIG template -> RETURN ONE OBJECT
@@ -94,7 +110,6 @@ class ObjectManager
         $token = $this->object->findAll();
         foreach ($token as $index => $value) {
             $this->data['data'][$index] = $this->getPreparedObject($value);
-            $this->autoPrepareCarouselLayout($this->data['data'][$index]['sensors_count'], $index);
         }
 
         return $this->data;
