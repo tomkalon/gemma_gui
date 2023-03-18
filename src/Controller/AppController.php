@@ -3,7 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Objects;
-use App\Service\Api;
+use App\Service\ObjectManager;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
@@ -13,11 +13,11 @@ use Symfony\Component\Routing\Annotation\Route;
 class AppController extends AbstractController
 {
 
-    public object $api;
+    public object $object_manager;
 
-    public function __construct(Api $api)
+    public function __construct(ObjectManager $object_manager)
     {
-        $this->api = $api;
+        $this->object_manager = $object_manager;
     }
 
     #[Route('/', name: 'app_index')]
@@ -40,11 +40,11 @@ class AppController extends AbstractController
     #[Route('/app', name: 'app_show_all', priority: 10)]
     public function showAll(): Response
     {
-        $objects = $this->api->prepareAllObjects();
+        $objects = $this->object_manager->prepareAllObjects();
         dd($objects);
         return $this->render('app/index.html.twig', [
             'show_all'  => true,
-            'data'      => $objects[0]
+            'data'      => $objects
         ]);
     }
 

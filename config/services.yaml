@@ -5,7 +5,6 @@
 # https://symfony.com/doc/current/best_practices.html#use-parameters-for-application-configuration
 parameters:
 
-
 services:
     # default configuration for services in *this* file
     _defaults:
@@ -30,10 +29,17 @@ services:
             - '../src/Entity/'
             - '../src/Kernel.php'
 
-    App\Service\Api:
-        class: App\Service\Api
-        arguments:
-            $config: 5
+    App\Service\ObjectManager:
+        class: App\Service\ObjectManager
+        arguments: [
+            '@App\Repository\AlertsRepository',
+            '@App\Repository\GlobalSettingsRepository',
+            '@App\Repository\ObjectsRepository',
+            '@App\Repository\SettingsRepository',
+            '@App\Repository\StatsRepository',
+            '@App\Repository\WeatherRepository',
+            '@App\Repository\WeatherStatsRepository'
+        ]
 
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
