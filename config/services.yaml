@@ -29,8 +29,8 @@ services:
             - '../src/Entity/'
             - '../src/Kernel.php'
 
-    App\Service\ObjectManager:
-        class: App\Service\ObjectManager
+    App\Service\ObjectManager\ObjectManager:
+        class: App\Service\ObjectManager\ObjectManager
         arguments: [
             '@App\Repository\AlertsRepository',
             '@App\Repository\GlobalSettingsRepository',

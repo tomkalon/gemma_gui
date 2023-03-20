@@ -1,0 +1,24 @@
+config:
+  carousel:
+    max_carousel_columns: 12
+    pages: {}
+    block_size:
+      4:
+        rows: 2
+        columns: 2
+      6:
+        rows: 2
+        columns: 3
+      9:
+        rows: 3
+        columns: 3
+      12:
+        rows: 3
+        columns: 4
+      16:
+        rows: 4
+        columns: 4
+      20:
+        rows: 5
+        columns: 4
+  other:

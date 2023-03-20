@@ -3,11 +3,11 @@
 namespace App\Controller;
 
 use App\Entity\Objects;
-use App\Service\ObjectManager;
+use App\Service\ObjectManager\ObjectManager;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 class AppController extends AbstractController
@@ -40,8 +40,8 @@ class AppController extends AbstractController
     #[Route('/app', name: 'app_show_all', priority: 10)]
     public function showAll(): Response
     {
-        $objects = $this->object_manager->prepareAllObjects();
-        dd($objects);
+        $objects = $this->object_manager->prepareAllObjectsToDisplay();
+//        dd($objects);
         return $this->render('app/index.html.twig', [
             'show_all'  => true,
             'data'      => $objects
