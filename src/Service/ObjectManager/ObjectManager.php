@@ -42,13 +42,20 @@ class ObjectManager
         $sensors_data_array = array();
 
         $token = $this->object->findAll();
-        foreach ($token as $index => $value) {
-            $sensors_data_array[$index] = $this->getArrayOfSensorsData($value);
-            $this->data['data'][$index] = $this->getAllSensorsData($sensors_data_array[$index]);
-            $this->data['display_settings']['sensors_count'][$index] = $this->getSensorsCountSettings($sensors_data_array[$index]);
-
+        foreach ($token as $key => $value) {
+            $sensors_data_array[$key] = $this->getArrayOfSensorsData($value);
+            $this->data['facility'][$key] = $this->getAllSensorsData($sensors_data_array[$key]);
+            $this->data['display_settings']['sensors_count'][$key] = $this->getSensorsCountSettings($sensors_data_array[$key]);
         }
+
+        // set display SETTINGS to Carousel
         $this->data['display_settings'] = $this->prepareCarouselSettings($this->data['display_settings']['sensors_count']);
+
+        // applying SETTINGS to OBJECTS
+        foreach (array_keys($this->data['facility']) as $key) {
+            $this->data['facility'][$key]['display']['block_size'] = $this->data['display_settings']['block_size'][$key];
+            $this->data['facility'][$key]['display']['page'] = $this->data['display_settings']['pages'][$key];
+        }
         return $this->data;
     }
 
@@ -58,12 +65,12 @@ class ObjectManager
         $arr = array();
         $arr['id'] = $obj->getId();
         $arr['name'] = $obj->getName();
-        $arr['temp'] = $obj->getTemp();
-        $arr['humid'] = $obj->getHumid();
-        $arr['vent'] = $obj->getVent();
-        $arr['shadow'] = $obj->getShadow();
-        $arr['blow'] = $obj->getBlow();
-        $arr['heat'] = $obj->getHeat();
+        $arr['readings']['temp'] = $obj->getTemp();
+        $arr['readings']['humid'] = $obj->getHumid();
+        $arr['readings']['vent'] = $obj->getVent();
+        $arr['readings']['shadow'] = $obj->getShadow();
+        $arr['readings']['blow'] = $obj->getBlow();
+        $arr['readings']['heat'] = $obj->getHeat();
         return $arr;
     }
 
@@ -72,9 +79,9 @@ class ObjectManager
     {
         $data = array();
 
-        foreach ($obj as $index => $value) {
+        foreach ($obj as $key => $value) {
             if (!$value === false) {
-                $data[$index] = $value;
+                $data[$key] = $value;
             }
         }
         return $data;
@@ -87,16 +94,17 @@ class ObjectManager
             'sum' => 0
         );
 
-        foreach ($obj as $index => $value) {
+        $readings = $obj['readings'];
+
+        foreach ($readings as $key => $value) {
             if (!$value === false) {
                 if (is_array($value)) {
                     $sum = count($value);
                     $settings['sum'] += $sum;
-                    $settings[$index] = $sum;
-                }
-                if ($index === 'blow' || $index === 'heat') {
+                    $settings[$key] = $sum;
+                } else {
                     $settings['sum']++;
-                    $settings[$index] = 1;
+                    $settings[$key] = 1;
                 }
             }
         }
@@ -109,33 +117,42 @@ class ObjectManager
     {
         $settings = array();
         $block_size = array();
+        $pages = array();
         $columns_count_accumulator = null;
         $max_rows_count = null;
-
         $carousel = $this->config['config']['carousel'];
 
         // list all DISPLAY_SETTINGS['sensor_count'] elements - so -> all Objects
-        foreach ($sensors_count as $index => $value) {
+        foreach ($sensors_count as $key => $value) {
             // list all BLOCK_SIZE elements -> realize DISPLAY_SETTINGS['block_size']
             foreach ($carousel['block_size'] as $size => $count) {
                 if ($value['sum'] < $size) {
-                    $block_size[$index] = array(
+                    $block_size[$key] = array(
                         $size => $count
                     );
                     break;
                 }
             }
         }
+
         // sums the number of columns of all objects to calculate the number of pages
-        foreach($block_size as $index => $value) {
-            foreach ($value as $size => $arr) {
+        foreach ($block_size as $key => $value) {
+            $i = 0;
+            foreach ($value as $arr) {
                 $columns_count_accumulator += $arr['columns'];
+                if ($arr['rows'] > $max_rows_count) $max_rows_count = $arr['rows'];
+                $quotient = ($carousel['max_carousel_columns'] * ($i + 1) / $columns_count_accumulator);
+                if ($quotient < 1) {
+                    $i++;
+                }
+                $pages[$key] = $i;
             }
         }
-
         $settings['sensors_count'] = $sensors_count;
         $settings['block_size'] = $block_size;
-        $settings['pages'] = intdiv($columns_count_accumulator, $carousel['max_carousel_columns']) + 1;
+        $settings['all_pages'] = intdiv($columns_count_accumulator, $carousel['max_carousel_columns']);
+        $settings['pages'] = $pages;
+        $settings['max_rows'] = $max_rows_count;
         return $settings;
     }
 }

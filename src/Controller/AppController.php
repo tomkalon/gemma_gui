@@ -32,8 +32,8 @@ class AppController extends AbstractController
     public function showOne(Objects $objects): Response
     {
         return $this->render('app/index.html.twig', [
-            'show_all'  => false,
-            'data'      => $objects
+            'show_all' => false,
+            'data' => $objects
         ]);
     }
 
@@ -41,23 +41,27 @@ class AppController extends AbstractController
     public function showAll(): Response
     {
         $objects = $this->object_manager->prepareAllObjectsToDisplay();
-//        dd($objects);
         return $this->render('app/index.html.twig', [
-            'show_all'  => true,
-            'data'      => $objects
+            'show_all' => true,
+            'facility' => $objects['facility'],
+            'display' => $objects['display_settings'],
+
         ]);
+    }
+
+    #[Route('/var', name: 'app_show_vars', priority: 10)]
+    public function showVarDump(): Response
+    {
+        $objects = $this->object_manager->prepareAllObjectsToDisplay();
+        dd($objects);
     }
 
     #[Route('/app/api', name: 'app_api', priority: 10)]
     public function appApi(Request $request): Response
     {
         if ($request->isXMLHttpRequest()) {
-            return new JsonResponse(array(
-
-            ));
-        }
-        else
-        {
+            return new JsonResponse(array());
+        } else {
             return new Response('This is not ajax!', 400);
         }
 

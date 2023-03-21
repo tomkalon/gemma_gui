@@ -1,19 +1,23 @@
 <div id="indicators-carousel" class="hidden xl:block relative" data-carousel="static">
     <!-- Carousel wrapper -->
     <div class="relative wrapper overflow-hidden rounded-lg">
-        <!-- Item 1 -->
+
+{#        {% for i in 0..display.pages %}#}
+{#            <div>TEST</div>#}
+{#        {% endfor %}#}
+
         <div class="hidden duration-700 ease-in-out flex gap-4 place-content-center py-4" data-carousel-item>
             {%  include('app/_mini_item.html.twig') %}
             {%  include('app/_mini_item.html.twig') %}
             {%  include('app/_mini_item.html.twig') %}
             {%  include('app/_mini_item.html.twig') %}
         </div>
-        <!-- Item 2 -->
         <div class="hidden duration-700 ease-in-out flex gap-4 place-content-center py-4" data-carousel-item>
             {%  include('app/_mini_item.html.twig') %}
             {%  include('app/_mini_item.html.twig') %}
             {%  include('app/_mini_item.html.twig') %}
         </div>
+
     </div>
     <!-- Slider indicators -->
     <div class="indicators absolute z-30 flex space-x-3 -translate-x-1/2 gap-4 bottom-3 left-1/2">
