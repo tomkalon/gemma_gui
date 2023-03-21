@@ -44,7 +44,7 @@ class AppController extends AbstractController
         return $this->render('app/index.html.twig', [
             'show_all' => true,
             'facility' => $objects['facility'],
-            'display' => $objects['display_settings'],
+            'carousel' => $objects['carousel'],
 
         ]);
     }

@@ -1,11 +1,11 @@
 <div id="indicators-carousel" class="hidden xl:block relative" data-carousel="static">
     <!-- Carousel wrapper -->
-    <div class="relative {{  display.max_rows }} wrapper overflow-hidden rounded-lg">
-        {% for i in 0..display.all_pages %}
+    <div class="relative {{  carousel.max_rows }} wrapper overflow-hidden rounded-lg">
+        {% for i in 0..carousel.all_pages %}
             <div class="hidden duration-700 ease-in-out flex gap-4 place-content-center py-4" data-carousel-item>
                 {% set key = loop.index0 %}
                 {% for object in facility %}
-                    {% if object.display.page == key %}
+                    {% if object.carousel.page == key %}
                         {% include 'app/_mini_item.html.twig' with {'object':object} %}
                     {% endif %}
                 {% endfor %}

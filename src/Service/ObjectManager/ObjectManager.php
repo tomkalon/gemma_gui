@@ -18,7 +18,7 @@ class ObjectManager
 
 
     protected array $data = [
-        'display_settings' => array()
+        'carousel' => array()
     ];
 
     public function __construct($alerts, $global_settings, $objects, $settings, $stats, $weather, $weather_stats)
@@ -45,18 +45,18 @@ class ObjectManager
         foreach ($token as $key => $value) {
             $sensors_data_array[$key] = $this->getArrayOfSensorsData($value);
             $this->data['facility'][$key] = $this->getAllSensorsData($sensors_data_array[$key]);
-            $this->data['display_settings']['sensors_count'][$key] = $this->getSensorsCountSettings($sensors_data_array[$key]);
+            $this->data['carousel']['sensors_count'][$key] = $this->getSensorsCountSettings($sensors_data_array[$key]);
         }
 
-        // set display SETTINGS to Carousel
-        $this->data['display_settings'] = $this->prepareCarouselSettings($this->data['display_settings']['sensors_count']);
+        // set carousel SETTINGS to Carousel
+        $this->data['carousel'] = $this->prepareCarouselSettings($this->data['carousel']['sensors_count']);
 
         // applying SETTINGS to OBJECTS
         foreach (array_keys($this->data['facility']) as $key) {
             // block size name
-            $this->data['facility'][$key]['display']['block_size'] = array_keys($this->data['display_settings']['block_size'][$key])[0];
+            $this->data['facility'][$key]['carousel']['block_size'] = array_keys($this->data['carousel']['block_size'][$key])[0];
             // page number
-            $this->data['facility'][$key]['display']['page'] = $this->data['display_settings']['pages'][$key];
+            $this->data['facility'][$key]['carousel']['page'] = $this->data['carousel']['pages'][$key];
         }
         return $this->data;
     }
@@ -121,9 +121,9 @@ class ObjectManager
         $max_rows_count = null;
         $carousel = $this->config['config']['carousel'];
 
-        // list all DISPLAY_SETTINGS['sensor_count'] elements - so -> all Objects
+        // list all carousel['sensor_count'] elements - so -> all Objects
         foreach ($sensors_count as $key => $value) {
-            // list all BLOCK_SIZE elements -> realize DISPLAY_SETTINGS['block_size']
+            // list all BLOCK_SIZE elements -> realize carousel['block_size']
             foreach ($carousel['block_size'] as $size => $count) {
                 if ($value['sum'] < $count['sum']) {
                     $block_size[$key] = array(
