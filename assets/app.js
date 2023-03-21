@@ -19,7 +19,7 @@ import $ from 'jquery';
 
 // register FlowBite - Tailwind Plugin
 import 'flowbite';
-import './js/flowbite';
+// import './js/flowbite';
 
 // register React.JS components
 import { registerReactControllerComponents } from '@symfony/ux-react';

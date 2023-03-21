@@ -17,9 +17,7 @@ class ObjectManager
     protected array $config;
 
 
-    protected array $data = [
-        'carousel' => array()
-    ];
+    protected array $data;
 
     public function __construct($alerts, $global_settings, $objects, $settings, $stats, $weather, $weather_stats)
     {
@@ -57,6 +55,16 @@ class ObjectManager
             $this->data['facility'][$key]['carousel']['block_size'] = array_keys($this->data['carousel']['block_size'][$key])[0];
             // page number
             $this->data['facility'][$key]['carousel']['page'] = $this->data['carousel']['pages'][$key];
+        }
+        return $this->data;
+    }
+
+    public function prepareAllObjectsData(): array
+    {
+        $token = $this->object->findAll();
+        foreach ($token as $key => $value) {
+            $sensors_data_array[$key] = $this->getArrayOfSensorsData($value);
+            $this->data['facility'][$key] = $this->getAllSensorsData($sensors_data_array[$key]);
         }
         return $this->data;
     }

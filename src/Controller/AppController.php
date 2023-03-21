@@ -23,7 +23,7 @@ class AppController extends AbstractController
     #[Route('/', name: 'app_index')]
     public function index(): Response
     {
-        return $this->render('app/index.html.twig', [
+        return $this->render('test.html.twig', [
             'show_all' => false
         ]);
     }
@@ -59,6 +59,8 @@ class AppController extends AbstractController
     #[Route('/app/api', name: 'app_api', priority: 10)]
     public function appApi(Request $request): Response
     {
+        $objects = $this->object_manager->prepareAllObjectsData();
+        dd($objects);
         if ($request->isXMLHttpRequest()) {
             return new JsonResponse(array());
         } else {

@@ -19,10 +19,11 @@
         "core-js": "^3.28.0",
         "corepack": "^0.17.0",
         "flowbite": "^1.6.3",
-        "prettier": "^2.8.4"
+        "prettier": "^2.8.4",
+        "prop-types": "^15.8.1"
     },
     "devDependencies": {
-        "@babel/preset-react": "^7.0.0",
+        "@babel/preset-react": "^7.18.6",
         "@popperjs/core": "^2.11.6",
         "@symfony/ux-react": "file:vendor/symfony/ux-react/assets",
         "autoprefixer": "^10.4.13",
@@ -30,8 +31,8 @@
         "jquery": "^3.6.3",
         "postcss": "^8.4.21",
         "postcss-loader": "^7.0.2",
-        "react": "^18.0",
-        "react-dom": "^18.0",
+        "react": "^18.2.0",
+        "react-dom": "^18.2.0",
         "sass": "^1.58.3",
         "sass-loader": "^13.0.0",
         "tailwindcss": "^3.2.7",

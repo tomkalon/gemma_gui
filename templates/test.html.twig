@@ -1,0 +1,6 @@
+{% extends 'base.html.twig' %}
+{% block title %}REACT TEST{% endblock %}
+{% block body %}
+        <div {{ react_component('MyComponent', { 'fullName': 'test' }) }}></div>
+        <div>TEST2</div>
+{% endblock %}

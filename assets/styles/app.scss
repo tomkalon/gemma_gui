@@ -152,6 +152,7 @@ header {
 
         .item {
           border: 2px solid $dark-100;
+          transition: filter 1s;
           &.sm {
             width: 11.25rem;
             height: 11.75rem;
@@ -173,6 +174,9 @@ header {
           }
           &.xxxl {
 
+          }
+          &.active {
+            filter: brightness(1.15) hue-rotate(45deg) drop-shadow(-10px 10px 10px #00000080);
           }
           .label {
             padding: 0.25rem 1rem;
@@ -502,6 +506,11 @@ header {
       width: 16%;
       height: 8rem;
       text-transform: uppercase;
+      transition: filter 0.5s;
+
+      &:hover {
+        filter: drop-shadow(-5px 5px 5px #00000060);
+      }
 
       &:hover {
         cursor: pointer;
