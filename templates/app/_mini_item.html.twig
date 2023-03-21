@@ -1,46 +1,50 @@
-<div class="item bg-gradient-to-br dark:from-darker-100 dark:to-darker-200 rounded-md cursor-pointer shadow-md dark:shadow-gray-900/30">
+<div class="item {{ object.display.block_size }} bg-gradient-to-br dark:from-darker-100 dark:to-darker-200 rounded-md cursor-pointer shadow-md dark:shadow-gray-900/30">
     <div class="label w-auto rounded-t-md uppercase border-b dark:border-darker-300 dark:bg-darker-700 dark:text-darker-100">
-        <span>Tunel #1</span><span class="alert"><i class="gf gf-damage"></i><i class="gf gf-warning"></i></span>
+        <span>{{ object.name }}</span><span class="alert"><i class="gf gf-damage"></i><i class="gf gf-warning"></i></span>
     </div>
     <div class="box uppercase">
-        <div class="row">
-            <div>
-                <i class="gf gf-temp3"></i>
-                <p><span>°C</span></p>
-                <p class="desc">-19.5°C-</p>
-            </div>
-            <div>
-                <i class="gf gf-humidity"></i>
-                <p><span>%</span></p>
-                <p class="desc">-70%-</p>
-            </div>
-            <div>
-                <i class="gf gf-humidity"></i>
-                <p>89<span>%</span></p>
-                <p class="desc">-70%-</p>
-            </div>
-            <span class="separator"></span>
-            <div>
-                <i class="gf gf-vent2"></i>
-                <p>49<span>%</span></p>
-                <p class="desc">-21%-</p>
-            </div>
-            <div>
-                <i class="gf gf-shadow"></i>
-                <p>58<span>%</span></p>
-                <p class="desc">-69%-</p>
-            </div>
-            <span class="separator"></span>
-            <div>
-                <i class="gf gf-blow"></i>
-                <p><span>Wł.</span></p>
-                <p class="desc">[nadmuch]</p>
-            </div>
-            <div>
-                <i class="gf gf-heat"></i>
-                <p>Wł.<span></span></p>
-                <p class="desc">[ogrzewanie]</p>
-            </div>
+        <div class="inner">
+            {% for type, value in object.readings %}
+                {% if value is iterable %}
+                    {% for item in value %}
+                        <div>
+                            {% if type == 'temp' %}
+                                <i class="gf gf-temp3"></i>
+                                <p><span>{{ item }}°C</span></p>
+                            {% elseif type == 'humid' %}
+                                <i class="gf gf-humidity"></i>
+                                <p><span>{{ item }}%</span></p>
+                            {% elseif type == 'vent' %}
+                                <i class="gf gf-vent3"></i>
+                                <p><span>{{ item }}%</span></p>
+                            {% elseif type == 'shadow' %}
+                                <i class="gf gf-shadow"></i>
+                                <p><span>{{ item }}%</span></p>
+                            {% endif %}
+                            <p class="desc">-19.5°C-</p>
+                        </div>
+                    {% endfor %}
+                {% else %}
+                    <div>
+                        {% if value %}
+                            {% if type == 'blow' %}
+                                <i class="gf gf-blow"></i>
+                            {% else %}
+                                <i class="gf gf-heat"></i>
+                            {% endif %}
+                            <p><span>Wł.</span></p>
+                        {% else %}
+                            <i class="gf gf-empty"></i>
+                            <p><span>Wył.</span></p>
+                        {% endif %}
+                        {% if type == 'blow' %}
+                            <p class="desc">[Nadmuch]</p>
+                        {% else %}
+                            <p class="desc">[Ogrzewanie]</p>
+                        {% endif %}
+                    </div>
+                {% endif %}
+            {% endfor %}
         </div>
     </div>
 </div>

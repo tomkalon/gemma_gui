@@ -1,24 +1,33 @@
 config:
   carousel:
     max_carousel_columns: 12
+    max_rows:
+      2: 'h_sm'
+      3: 'h_md'
+      4: 'h_lg'
     pages: {}
     block_size:
-      4:
+      sm:
         rows: 2
         columns: 2
-      6:
+        sum: 4
+      md:
         rows: 2
         columns: 3
-      9:
+        sum: 6
+      lg:
         rows: 3
         columns: 3
-      12:
-        rows: 3
-        columns: 4
-      16:
+        sum: 9
+      xl:
+        rows: 4
+        columns: 3
+        sum: 12
+      xxl:
         rows: 4
         columns: 4
-      20:
-        rows: 5
-        columns: 4
-  other:
+        sum: 16
+      xxxl:
+        rows: 4
+        columns: 5
+        sum: 20

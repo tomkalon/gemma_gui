@@ -53,7 +53,9 @@ class ObjectManager
 
         // applying SETTINGS to OBJECTS
         foreach (array_keys($this->data['facility']) as $key) {
-            $this->data['facility'][$key]['display']['block_size'] = $this->data['display_settings']['block_size'][$key];
+            // block size name
+            $this->data['facility'][$key]['display']['block_size'] = array_keys($this->data['display_settings']['block_size'][$key])[0];
+            // page number
             $this->data['facility'][$key]['display']['page'] = $this->data['display_settings']['pages'][$key];
         }
         return $this->data;
@@ -93,9 +95,7 @@ class ObjectManager
         $settings = array(
             'sum' => 0
         );
-
         $readings = $obj['readings'];
-
         foreach ($readings as $key => $value) {
             if (!$value === false) {
                 if (is_array($value)) {
@@ -108,7 +108,6 @@ class ObjectManager
                 }
             }
         }
-
         return $settings;
     }
 
@@ -126,7 +125,7 @@ class ObjectManager
         foreach ($sensors_count as $key => $value) {
             // list all BLOCK_SIZE elements -> realize DISPLAY_SETTINGS['block_size']
             foreach ($carousel['block_size'] as $size => $count) {
-                if ($value['sum'] < $size) {
+                if ($value['sum'] < $count['sum']) {
                     $block_size[$key] = array(
                         $size => $count
                     );
@@ -148,6 +147,9 @@ class ObjectManager
                 $pages[$key] = $i;
             }
         }
+
+        $max_rows_count = $carousel['max_rows'][$max_rows_count];
+
         $settings['sensors_count'] = $sensors_count;
         $settings['block_size'] = $block_size;
         $settings['all_pages'] = intdiv($columns_count_accumulator, $carousel['max_carousel_columns']);

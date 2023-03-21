@@ -138,14 +138,42 @@ header {
   .all {
     #indicators-carousel {
       .wrapper {
-        height: auto;
         display: flex;
-        min-height: 21rem;
+
+        &.h_sm {
+          height: 17rem;
+        }
+        &.h_md {
+          height: 22rem;
+        }
+        &.h_lg {
+          height: 27rem;
+        }
 
         .item {
-          width: 16.25rem;
-          height: 16.5rem;
           border: 2px solid $dark-100;
+          &.sm {
+            width: 11.25rem;
+            height: 11.75rem;
+          }
+          &.md {
+            width: 11.25rem;
+            height: 16.5rem;
+          }
+          &.lg {
+            width: 16.25rem;
+            height: 16.5rem;
+          }
+          &.xl {
+            width: 21.25rem;
+            height: 16.5rem;
+          }
+          &.xxl {
+
+          }
+          &.xxxl {
+
+          }
           .label {
             padding: 0.25rem 1rem;
             justify-content: space-between;
@@ -157,7 +185,7 @@ header {
           }
           .box {
             padding: 0.75rem 0.5rem 0;
-            .row {
+            .inner {
               display: flex;
               flex-wrap: wrap;
               div {

@@ -1,23 +1,16 @@
 <div id="indicators-carousel" class="hidden xl:block relative" data-carousel="static">
     <!-- Carousel wrapper -->
-    <div class="relative wrapper overflow-hidden rounded-lg">
-
-{#        {% for i in 0..display.pages %}#}
-{#            <div>TEST</div>#}
-{#        {% endfor %}#}
-
-        <div class="hidden duration-700 ease-in-out flex gap-4 place-content-center py-4" data-carousel-item>
-            {%  include('app/_mini_item.html.twig') %}
-            {%  include('app/_mini_item.html.twig') %}
-            {%  include('app/_mini_item.html.twig') %}
-            {%  include('app/_mini_item.html.twig') %}
-        </div>
-        <div class="hidden duration-700 ease-in-out flex gap-4 place-content-center py-4" data-carousel-item>
-            {%  include('app/_mini_item.html.twig') %}
-            {%  include('app/_mini_item.html.twig') %}
-            {%  include('app/_mini_item.html.twig') %}
-        </div>
-
+    <div class="relative {{  display.max_rows }} wrapper overflow-hidden rounded-lg">
+        {% for i in 0..display.all_pages %}
+            <div class="hidden duration-700 ease-in-out flex gap-4 place-content-center py-4" data-carousel-item>
+                {% set key = loop.index0 %}
+                {% for object in facility %}
+                    {% if object.display.page == key %}
+                        {% include 'app/_mini_item.html.twig' with {'object':object} %}
+                    {% endif %}
+                {% endfor %}
+            </div>
+        {% endfor %}
     </div>
     <!-- Slider indicators -->
     <div class="indicators absolute z-30 flex space-x-3 -translate-x-1/2 gap-4 bottom-3 left-1/2">
