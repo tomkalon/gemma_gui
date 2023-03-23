@@ -2,52 +2,40 @@
 
 namespace App\Service\ObjectManager;
 
+use App\Repository\ObjectsRepository;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\Yaml\Yaml;
 
 class ObjectManager
 {
     protected object $object;
-    protected object $setting;
-    protected object $global_setting;
-    protected object $stat;
-    protected object $alert;
-    protected object $weather;
-    protected object $weather_stat;
     protected array $config;
-
-
     protected array $data;
 
-    public function __construct($alerts, $global_settings, $objects, $settings, $stats, $weather, $weather_stats)
+    public function __construct(ObjectsRepository $objectsRepository)
     {
-        $this->object = $objects;
-        $this->setting = $settings;
-        $this->global_setting = $global_settings;
-        $this->stat = $stats;
-        $this->alert = $alerts;
-        $this->weather = $weather;
-        $this->weather_stat = $weather_stats;
+        $this->object = $objectsRepository;
         $configDirectories = [__DIR__ . '/config'];
         $fileLocator = new FileLocator($configDirectories);
         $config_location = $fileLocator->locate('facility.yaml');
         $this->config = Yaml::parse(file_get_contents($config_location));
     }
 
-    // get ALL OBJECTS and PREPARE THEM to TWIG TEMPLATE -> RETURN ALL OBJECTS
-    public function prepareAllObjectsToDisplay(): array
+    // get ALL OBJECTS and PREPARE THEM to DISPLAY with CAROUSEL in TWIG TEMPLATE -> RETURN ALL OBJECTS with CAROUSEL SETUP
+    public function prepareAllObjectsDataForCarousel(): array
     {
         $sensors_data_array = array();
 
-        $token = $this->object->findAll();
-        foreach ($token as $key => $value) {
+        $query = $this->object->findAll();
+        foreach ($query as $key => $value) {
             $sensors_data_array[$key] = $this->getArrayOfSensorsData($value);
             $this->data['facility'][$key] = $this->getAllSensorsData($sensors_data_array[$key]);
             $this->data['carousel']['sensors_count'][$key] = $this->getSensorsCountSettings($sensors_data_array[$key]);
         }
 
-        // set carousel SETTINGS to Carousel
-        $this->data['carousel'] = $this->prepareCarouselSettings($this->data['carousel']['sensors_count']);
+        // carousel BLOCK_SIZE & PAGES/ALL_PAGES & MAX_ROWS
+        $this->data['carousel'] = $this->prepareCarouselSetup($this->data['carousel']['sensors_count']);
+        unset($this->data['carousel']['sensors_count']);
 
         // applying SETTINGS to OBJECTS
         foreach (array_keys($this->data['facility']) as $key) {
@@ -56,13 +44,19 @@ class ObjectManager
             // page number
             $this->data['facility'][$key]['carousel']['page'] = $this->data['carousel']['pages'][$key];
         }
+
+        //remove unused DATA from carousel
+        unset($this->data['carousel']['pages']);
+        unset($this->data['carousel']['block_size']);
+
         return $this->data;
     }
 
+    // get ALL OBJECTS DATA
     public function prepareAllObjectsData(): array
     {
-        $token = $this->object->findAll();
-        foreach ($token as $key => $value) {
+        $query = $this->object->findAll();
+        foreach ($query as $key => $value) {
             $sensors_data_array[$key] = $this->getArrayOfSensorsData($value);
             $this->data['facility'][$key] = $this->getAllSensorsData($sensors_data_array[$key]);
         }
@@ -120,7 +114,7 @@ class ObjectManager
     }
 
     // if JSON file is not exist, this function create it with default structure from SENSORS_COUNT ARRAY
-    private function prepareCarouselSettings($sensors_count): array
+    private function prepareCarouselSetup($sensors_count): array
     {
         $settings = array();
         $block_size = array();

@@ -3,6 +3,7 @@ module.exports = {
   darkMode: 'class',
   content: [
     "./assets/**/*.js",
+    "./assets/react/controllers/*.jsx",
     "./templates/**/*.html.twig",
     "./node_modules/flowbite/**/*.js"
   ],

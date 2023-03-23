@@ -29,17 +29,5 @@ services:
             - '../src/Entity/'
             - '../src/Kernel.php'
 
-    App\Service\ObjectManager\ObjectManager:
-        class: App\Service\ObjectManager\ObjectManager
-        arguments: [
-            '@App\Repository\AlertsRepository',
-            '@App\Repository\GlobalSettingsRepository',
-            '@App\Repository\ObjectsRepository',
-            '@App\Repository\SettingsRepository',
-            '@App\Repository\StatsRepository',
-            '@App\Repository\WeatherRepository',
-            '@App\Repository\WeatherStatsRepository'
-        ]
-
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones

@@ -3,7 +3,9 @@
 namespace App\Controller;
 
 use App\Entity\Objects;
+use App\Repository\WeatherRepository;
 use App\Service\ObjectManager\ObjectManager;
+use App\Service\Weather\WeatherManager;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -12,17 +14,10 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class AppController extends AbstractController
 {
-
-    public object $object_manager;
-
-    public function __construct(ObjectManager $object_manager)
-    {
-        $this->object_manager = $object_manager;
-    }
-
     #[Route('/', name: 'app_index')]
-    public function index(): Response
+    public function index(WeatherManager $weatherManager): Response
     {
+        $weather = $weatherManager->getWeatherData();
         return $this->render('test.html.twig', [
             'show_all' => false
         ]);
@@ -38,34 +33,35 @@ class AppController extends AbstractController
     }
 
     #[Route('/app', name: 'app_show_all', priority: 10)]
-    public function showAll(): Response
+    public function showAll(ObjectManager $objectManager): Response
     {
-        $objects = $this->object_manager->prepareAllObjectsToDisplay();
+        $facility = $objectManager->prepareAllObjectsDataForCarousel();
+//        dd($facility);
         return $this->render('app/index.html.twig', [
             'show_all' => true,
-            'facility' => $objects['facility'],
-            'carousel' => $objects['carousel'],
+            'facility' => $facility['facility'],
+            'carousel' => $facility['carousel'],
 
         ]);
-    }
-
-    #[Route('/var', name: 'app_show_vars', priority: 10)]
-    public function showVarDump(): Response
-    {
-        $objects = $this->object_manager->prepareAllObjectsToDisplay();
-        dd($objects);
     }
 
     #[Route('/app/api', name: 'app_api', priority: 10)]
     public function appApi(Request $request): Response
     {
-        $objects = $this->object_manager->prepareAllObjectsData();
-        dd($objects);
         if ($request->isXMLHttpRequest()) {
             return new JsonResponse(array());
         } else {
             return new Response('This is not ajax!', 400);
         }
 
+    }
+
+    #[Route('/app/api/weather', name: 'app_api_weather', priority: 10)]
+    public function appApiWeather(Request $request, WeatherManager $weatherManager): Response
+    {
+        $data = $weatherManager->getWeatherData();
+
+//        dd($data);
+        return new JsonResponse($data);
     }
 }
