@@ -3,12 +3,10 @@
 namespace App\Controller;
 
 use App\Entity\Objects;
-use App\Repository\WeatherRepository;
 use App\Service\ObjectManager\ObjectManager;
 use App\Service\Weather\WeatherManager;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -50,6 +48,7 @@ class AppController extends AbstractController
     public function apiObjects(ObjectManager $objectManager): Response
     {
         $data = $objectManager->getAllObjectsDataWithSensorsCount();
+//        dd($data);
         return new JsonResponse($data);
     }
 

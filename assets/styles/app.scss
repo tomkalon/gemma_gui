@@ -168,6 +168,8 @@ header {
             .item {
               border: 2px solid $dark-100;
               transition: filter 1s;
+              min-width: 11.25rem;
+              min-height: 11.75rem;
 
               &.sm {
                 width: 11.25rem;

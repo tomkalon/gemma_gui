@@ -28,7 +28,7 @@ class ObjectManager
 
         $query = $this->object->findAll();
         foreach ($query as $key => $value) {
-            $sensors_data_array[$key] = $this->getArrayOfSensorsData($value);
+            $sensors_data_array[$key] = $this->getArrayOfSensorsData($value, false);
             $this->data['facility'][$key] = $this->getAllSensorsData($sensors_data_array[$key]);
             $this->data['carousel']['sensors_count'][$key] = $this->getSensorsCountSettings($sensors_data_array[$key]);
         }
@@ -58,7 +58,7 @@ class ObjectManager
     {
         $query = $this->object->findAll();
         foreach ($query as $key => $value) {
-            $sensors_data_array[$key] = $this->getArrayOfSensorsData($value);
+            $sensors_data_array[$key] = $this->getArrayOfSensorsData($value, false);
             $this->data[$key] = $this->getAllSensorsData($sensors_data_array[$key]);
         }
         return $this->data;
@@ -69,14 +69,14 @@ class ObjectManager
     {
         $query = $this->object->findAll();
         foreach ($query as $key => $value) {
-            $sensors_data_array[$key] = $this->getArrayOfSensorsData($value);
+            $sensors_data_array[$key] = $this->getArrayOfSensorsData($value, true);
             $this->data[$key] = $this->getAllSensorsData($sensors_data_array[$key]);
         }
         return $this->data;
     }
 
     // write Sensors data to array
-    private function getArrayOfSensorsData($obj): array
+    private function getArrayOfSensorsData(object $obj, bool $sensor_count): array
     {
         $arr = array();
         $arr['id'] = $obj->getId();
@@ -87,6 +87,12 @@ class ObjectManager
         count($obj->getShadow()) === 0 ?: $arr['readings']['shadow'] = $obj->getShadow();
         $obj->getBlow() === 'false' ?: $arr['readings']['blow'] = $obj->getBlow();
         $obj->getHeat() === 'false' ?: $arr['readings']['heat'] = $obj->getHeat();
+
+        if ($sensor_count) {
+            $arr['sensors_count'] = $this->getSensorsCountSettings($arr);
+        }
+
+
         return $arr;
     }
 

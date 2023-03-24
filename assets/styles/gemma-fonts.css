@@ -167,22 +167,26 @@
 }
 
 .gf-sun1:before {
-    content: "\f05a";
+    content: "\f05f";
 }
 
 .gf-sun2:before {
-    content: "\f05b";
+    content: "\f05a";
 }
 
 .gf-sun3:before {
-    content: "\f05c";
+    content: "\f05b";
 }
 
 .gf-sun4:before {
-    content: "\f05d";
+    content: "\f05c";
 }
 
 .gf-sun5:before {
+    content: "\f05d";
+}
+
+.gf-sun6:before {
     content: "\f05e";
 }
 
@@ -324,6 +328,10 @@
     content: "\f011";
 }
 
+.gf-dry:before {
+    content: "\f0fd";
+}
+
 .gf-blow:before {
     content: "\f0fe";
 }
@@ -354,4 +362,40 @@
 
 .gf-temp6:before {
     content: "\f104";
+}
+
+.gf-temp7:before {
+    content: "\f106";
+}
+
+.gf-arrow-e:before {
+    content: "\f11a";
+}
+
+.gf-arrow-ne:before {
+    content: "\f11b";
+}
+
+.gf-arrow-nw:before {
+    content: "\f11c";
+}
+
+.gf-arrow-n:before {
+    content: "\f11d";
+}
+
+.gf-arrow-se:before {
+    content: "\f11e";
+}
+
+.gf-arrow-sw:before {
+    content: "\f11f";
+}
+
+.gf-arrow-s:before {
+    content: "\f120";
+}
+
+.gf-arrow-w:before {
+    content: "\f121";
 }
