@@ -39,7 +39,7 @@ class AppController extends AbstractController
 //        dd($facility);
         return $this->render('app/index.html.twig', [
             'show_all' => true,
-            'custom_carousel' => false,
+            'custom_carousel' => true,
             'facility' => $facility['facility'],
             'carousel' => $facility['carousel'],
             'object' => $facility['facility'][3]

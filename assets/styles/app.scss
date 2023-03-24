@@ -134,73 +134,125 @@ header {
 }
 
 #content {
-  text-shadow: $text-shadow;
-
   .all {
     #carousel {
-      &-prev, &-next {
-        width: 4rem;
-      }
+      .carousel {
+        &-sidebar {
+          width: 4rem;
+          justify-content: center;
+          display: flex;
+          flex-direction: column;
+          text-align: center;
 
-      .item {
-        border: 2px solid $dark-100;
-        transition: filter 1s;
-        &.sm {
-          width: 11.25rem;
-          height: 11.75rem;
-        }
-        &.md {
-          width: 16.25rem;
-          height: 11.75rem;
-        }
-        &.lg {
-          width: 16.25rem;
-          height: 16.5rem;
-        }
-        &.xl {
-          width: 21.25rem;
-          height: 16.5rem;
-        }
-        &.xxl {
+          &-prev, &-next {
+            cursor: pointer;
+            color: $dark-100;
+            transition: color 1s;
 
-        }
-        &.xxxl {
-
-        }
-        &.active {
-          filter: brightness(1.15) hue-rotate(45deg) drop-shadow(-10px 10px 10px #00000080);
-        }
-        .label {
-          padding: 0.25rem 1rem;
-          justify-content: space-between;
-          .alert {
-            i {
-              margin: 0 0.25rem;
+            &:hover {
+              color: $dark-0;
+              filter: drop-shadow($text-shadow);
             }
+
+            span {
+              font-size: 5rem;
+            }
+
           }
         }
-        .box {
-          padding: 0.75rem 0.5rem 0;
-          .inner {
-            display: flex;
-            flex-wrap: wrap;
-            div {
-              width: 5rem;
-              height: 4.5rem;
-              text-align: center;
-              text-shadow: none!important;
-              i {
-                font-size: 1.5rem;
-              }
-              p {
-                font-size: 1.05rem;
-                margin-top: -0.25rem;
-                &.desc, i {
-                  font-size: 0.75rem;
 
+        &-content {
+          .item {
+            border: 2px solid $dark-100;
+            transition: filter 1s;
+
+            &.sm {
+              width: 11.25rem;
+              height: 11.75rem;
+            }
+
+            &.md {
+              width: 16.25rem;
+              height: 11.75rem;
+            }
+
+            &.lg {
+              width: 16.25rem;
+              height: 16.5rem;
+            }
+
+            &.xl {
+              width: 21.25rem;
+              height: 16.5rem;
+            }
+
+            &.xxl {
+
+            }
+
+            &.xxxl {
+
+            }
+
+            &.active {
+              filter: brightness(1.15) hue-rotate(45deg) drop-shadow(-10px 10px 10px #00000080);
+            }
+
+            .label {
+              padding: 0.25rem 1rem;
+              justify-content: space-between;
+
+              .alert {
+                i {
+                  margin: 0 0.25rem;
                 }
               }
             }
+
+            .box {
+              padding: 0.75rem 0.5rem 0;
+
+              .inner {
+                display: flex;
+                flex-wrap: wrap;
+
+                div {
+                  width: 5rem;
+                  height: 4.5rem;
+                  text-align: center;
+                  text-shadow: none !important;
+
+                  i {
+                    font-size: 1.5rem;
+                  }
+
+                  p {
+                    font-size: 1.05rem;
+                    margin-top: -0.25rem;
+
+                    &.desc, i {
+                      font-size: 0.75rem;
+
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+
+        &-pagination {
+          .item {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            min-width: 4rem;
+            padding: 0 1rem;
+            height: 2rem;
+            background: $dark-200;
+            border-radius: 1rem;
+            text-align: center;
+            font-size: 1.25rem;
           }
         }
       }
@@ -213,9 +265,11 @@ header {
         &.h_sm {
           height: 17rem;
         }
+
         &.h_md {
           height: 22rem;
         }
+
         &.h_lg {
           height: 27rem;
         }
@@ -223,56 +277,71 @@ header {
         .item {
           border: 2px solid $dark-100;
           transition: filter 1s;
+
           &.sm {
             width: 11.25rem;
             height: 11.75rem;
           }
+
           &.md {
             width: 16.25rem;
             height: 11.75rem;
           }
+
           &.lg {
             width: 16.25rem;
             height: 16.5rem;
           }
+
           &.xl {
             width: 21.25rem;
             height: 16.5rem;
           }
+
           &.xxl {
 
           }
+
           &.xxxl {
 
           }
+
           &.active {
             filter: brightness(1.15) hue-rotate(45deg) drop-shadow(-10px 10px 10px #00000080);
           }
+
           .label {
             padding: 0.25rem 1rem;
             justify-content: space-between;
-              .alert {
-                i {
-                  margin: 0 0.25rem;
-                }
+
+            .alert {
+              i {
+                margin: 0 0.25rem;
               }
+            }
           }
+
           .box {
             padding: 0.75rem 0.5rem 0;
+
             .inner {
               display: flex;
               flex-wrap: wrap;
+
               div {
                 width: 5rem;
                 height: 4.5rem;
                 text-align: center;
-                text-shadow: none!important;
+                text-shadow: none !important;
+
                 i {
                   font-size: 1.5rem;
                 }
+
                 p {
                   font-size: 1.05rem;
                   margin-top: -0.25rem;
+
                   &.desc, i {
                     font-size: 0.75rem;
 
@@ -295,6 +364,7 @@ header {
   flex-grow: 1;
 
   .detail {
+    text-shadow: $text-shadow;
     flex-grow: 1;
     margin-top: 1rem;
 
@@ -490,6 +560,7 @@ header {
       .readings.stripe {
         min-height: 3rem;
         border-top: 1px solid $blue-450;
+
         .box {
           width: 50%;
 
@@ -584,6 +655,7 @@ header {
 
       &:hover {
         cursor: pointer;
+
         .icon {
           filter: brightness(1.35);
           animation-name: move-bg;
