@@ -6,7 +6,7 @@
                 {% set key = loop.index0 %}
                 {% for object in facility %}
                     {% if object.carousel.page == key %}
-                        {% include 'app/_mini_item.html.twig' with {'object':object} %}
+                        {% include 'app/_carousel_item.html.twig' with {'object':object} %}
                     {% endif %}
                 {% endfor %}
             </div>

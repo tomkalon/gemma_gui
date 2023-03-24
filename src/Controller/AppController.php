@@ -39,29 +39,24 @@ class AppController extends AbstractController
 //        dd($facility);
         return $this->render('app/index.html.twig', [
             'show_all' => true,
+            'custom_carousel' => false,
             'facility' => $facility['facility'],
             'carousel' => $facility['carousel'],
-
+            'object' => $facility['facility'][3]
         ]);
     }
 
-    #[Route('/app/api', name: 'app_api', priority: 10)]
-    public function appApi(Request $request): Response
+    #[Route('/api/objects', name: 'app_api_objects', priority: 10)]
+    public function apiObjects(ObjectManager $objectManager): Response
     {
-        if ($request->isXMLHttpRequest()) {
-            return new JsonResponse(array());
-        } else {
-            return new Response('This is not ajax!', 400);
-        }
-
+        $data = $objectManager->getAllObjectsDataWithSensorsCount();
+        return new JsonResponse($data);
     }
 
-    #[Route('/app/api/weather', name: 'app_api_weather', priority: 10)]
-    public function appApiWeather(Request $request, WeatherManager $weatherManager): Response
+    #[Route('/api/weather', name: 'app_api_weather', priority: 10)]
+    public function apiWeather(WeatherManager $weatherManager): Response
     {
         $data = $weatherManager->getWeatherData();
-
-//        dd($data);
         return new JsonResponse($data);
     }
 }

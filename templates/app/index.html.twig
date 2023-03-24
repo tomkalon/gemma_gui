@@ -1,21 +1,25 @@
 {% extends 'base.html.twig' %}
 {% block title %}Greenee© App{% endblock %}
 {% block body %}
-<div id="content" class="block bg-gradient-to-b dark:from-darker-300 dark:to-darker-700">
-    {% if show_all %}
-        <article class="all w-full dark:bg-darker-500 border-b-4 dark:border-darker-450">
-            <div class="container mx-auto">
-                {% if carousel.all_pages %}
-                    {% include('app/_mini_carousel.html.twig') %}
-                {% endif %}
-            </div>
+    <div id="content" class="block bg-gradient-to-b dark:from-darker-300 dark:to-darker-700">
+        {% if show_all %}
+            <article class="all w-full dark:bg-darker-500 border-b-4 dark:border-darker-450">
+                <div class="container mx-auto">
+                    {% if carousel.all_pages %}
+                        {% if custom_carousel %}
+                            {% include('app/_facility_carousel.html.twig') %}
+                        {% else %}
+                            {% include('app/_carousel.html.twig') %}
+                        {% endif %}
+                    {% endif %}
+                </div>
+            </article>
+        {% endif %}
+        <article class="detail container mx-auto">
+            {% include('app/_detail.html.twig') %}
         </article>
-    {% endif %}
-    <article class="detail container mx-auto">
-            {%  include('app/_detail.html.twig') %}
-    </article>
-    <article class="setup">
-            {%  include('app/_setup.html.twig') %}
-    </article>
-</div>
+        <article class="setup">
+            {% include('app/_setup.html.twig') %}
+        </article>
+    </div>
 {% endblock %}

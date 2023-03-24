@@ -17,7 +17,7 @@ use Doctrine\Persistence\ObjectManager;
 
 class AppFixtures extends Fixture
 {
-    private int $object_quantity = 5;
+    private int $object_quantity = 6;
     private int $number_of_stats = 50;
 
     public function load(ObjectManager $manager): void
@@ -52,12 +52,15 @@ class AppFixtures extends Fixture
             $humid[$i] = rand(30, 100);
         }
         $obj->setHumid($humid);
-        $vent[0] = rand(1, 100);
+        rand(0, 5) === 0 ? $vent = array() : $vent[0] = rand(1, 100);
         $obj->setVent($vent);
         $shadow[0] = rand(1, 100);
+        rand(0, 3) === 0 ? $shadow = array() : $shadow[0] = rand(1, 100);
         $obj->setShadow($shadow);
-        $obj->setBlow(rand(0, 1));
-        $obj->setHeat(rand(0, 1));
+        $blow = rand(0, 1) === 0 ? 'false' : rand(0, 1);
+        $obj->setBlow($blow);
+        $heat = rand(0, 1) === 0 ? 'false' : rand(0, 1);
+        $obj->setHeat($heat);
 
         $manager->persist($obj);
     }

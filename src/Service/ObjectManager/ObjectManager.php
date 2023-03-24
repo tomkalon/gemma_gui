@@ -35,7 +35,7 @@ class ObjectManager
 
         // carousel BLOCK_SIZE & PAGES/ALL_PAGES & MAX_ROWS
         $this->data['carousel'] = $this->prepareCarouselSetup($this->data['carousel']['sensors_count']);
-        unset($this->data['carousel']['sensors_count']);
+//        unset($this->data['carousel']['sensors_count']);
 
         // applying SETTINGS to OBJECTS
         foreach (array_keys($this->data['facility']) as $key) {
@@ -50,15 +50,27 @@ class ObjectManager
         unset($this->data['carousel']['block_size']);
 
         return $this->data;
+
     }
 
     // get ALL OBJECTS DATA
-    public function prepareAllObjectsData(): array
+    public function getAllObjectsData(): array
     {
         $query = $this->object->findAll();
         foreach ($query as $key => $value) {
             $sensors_data_array[$key] = $this->getArrayOfSensorsData($value);
-            $this->data['facility'][$key] = $this->getAllSensorsData($sensors_data_array[$key]);
+            $this->data[$key] = $this->getAllSensorsData($sensors_data_array[$key]);
+        }
+        return $this->data;
+    }
+
+    // get ALL OBJECTS DATA
+    public function getAllObjectsDataWithSensorsCount(): array
+    {
+        $query = $this->object->findAll();
+        foreach ($query as $key => $value) {
+            $sensors_data_array[$key] = $this->getArrayOfSensorsData($value);
+            $this->data[$key] = $this->getAllSensorsData($sensors_data_array[$key]);
         }
         return $this->data;
     }
@@ -69,12 +81,12 @@ class ObjectManager
         $arr = array();
         $arr['id'] = $obj->getId();
         $arr['name'] = $obj->getName();
-        $arr['readings']['temp'] = $obj->getTemp();
-        $arr['readings']['humid'] = $obj->getHumid();
-        $arr['readings']['vent'] = $obj->getVent();
-        $arr['readings']['shadow'] = $obj->getShadow();
-        $arr['readings']['blow'] = $obj->getBlow();
-        $arr['readings']['heat'] = $obj->getHeat();
+        count($obj->getTemp()) === 0 ?: $arr['readings']['temp'] = $obj->getTemp();
+        count($obj->getHumid()) === 0 ?: $arr['readings']['humid'] = $obj->getHumid();
+        count($obj->getVent()) === 0 ?: $arr['readings']['vent'] = $obj->getVent();
+        count($obj->getShadow()) === 0 ?: $arr['readings']['shadow'] = $obj->getShadow();
+        $obj->getBlow() === 'false' ?: $arr['readings']['blow'] = $obj->getBlow();
+        $obj->getHeat() === 'false' ?: $arr['readings']['heat'] = $obj->getHeat();
         return $arr;
     }
 
@@ -99,15 +111,13 @@ class ObjectManager
         );
         $readings = $obj['readings'];
         foreach ($readings as $key => $value) {
-            if (!$value === false) {
-                if (is_array($value)) {
-                    $sum = count($value);
-                    $settings['sum'] += $sum;
-                    $settings[$key] = $sum;
-                } else {
-                    $settings['sum']++;
-                    $settings[$key] = 1;
-                }
+            if (is_array($value)) {
+                $sum = count($value);
+                $settings['sum'] += $sum;
+                $settings[$key] = $sum;
+            } else {
+                $settings['sum']++;
+                $settings[$key] = 1;
             }
         }
         return $settings;
@@ -127,7 +137,7 @@ class ObjectManager
         foreach ($sensors_count as $key => $value) {
             // list all BLOCK_SIZE elements -> realize carousel['block_size']
             foreach ($carousel['block_size'] as $size => $count) {
-                if ($value['sum'] < $count['sum']) {
+                if ($value['sum'] <= $count['sum']) {
                     $block_size[$key] = array(
                         $size => $count
                     );

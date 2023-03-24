@@ -13,6 +13,9 @@ module.exports = {
         "half": '50%',
         "66": '16.5rem'
       },
+      height: {
+        "26": "6.5rem"
+      },
       colors: {
         transparent: {
           0: 'transparent'

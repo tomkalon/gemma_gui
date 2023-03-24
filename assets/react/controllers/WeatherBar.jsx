@@ -7,6 +7,7 @@ export default class WeatherBar extends Component {
     constructor(props) {
         super(props);
         this.data = weather;
+        this.isInitialFetch = true;
         this.state = {
             weather: {}
         }
@@ -18,18 +19,33 @@ export default class WeatherBar extends Component {
     }
 
     getWeather() {
-        fetch('/app/api/weather')
+        fetch('/api/weather')
             .then((response) => response.json())
             .then(data => {
+                // remove all unused sensors from this.data object
+                if (this.isInitialFetch) {
+                    this.isSensorActive(data, this.data);
+                    this.isInitialFetch = false;
+                }
                 // update this.data by the fetched data and setup/weather (draw: si, icons, colors)
                 this.assignSetupToValues (data, this.data);
                 this.setState({weather: this.data});
             });
     }
 
+    // update this.data by the fetched data and setup/weather (draw: si, icons, colors)
     assignSetupToValues (data, obj) {
         for (const [key, val] of Object.entries(data)) {
             obj[key].value = val;
+        }
+    }
+
+    // remove all unused sensors from this.data object
+    isSensorActive (data, obj) {
+        for (const [key, val] of Object.entries(obj)) {
+            if (!(data[key])) {
+                delete this.data[key];
+            }
         }
     }
 

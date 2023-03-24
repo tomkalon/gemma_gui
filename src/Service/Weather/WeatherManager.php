@@ -17,12 +17,12 @@ class WeatherManager
     {
         $arr = array();
         $query = $this->weather->findAll()[0];
-        $arr['temp'] = $query->getTemp();
-        $arr['humid'] = $query->getHumid();
-        $arr['sun'] = $query->getSun();
-        $arr['rain'] = $query->getRain();
-        $arr['wind'] = $query->getWind();
-        $arr['wind_direction'] = $query->getWindDirection();
+        $query->getTemp() === 'false' ? : $arr['temp'] = $query->getTemp();
+        $query->getHumid() === 'false' ? : $arr['humid'] = $query->getHumid();
+        $query->getSun() === 'false' ? : $arr['sun'] = $query->getSun();
+        $query->getRain() === 'false' ? : $arr['rain'] = $query->getRain();
+        $query->getWind() === 'false' ? : $arr['wind'] = $query->getWind();
+        $query->getWindDirection() === 'false' ? : $arr['wind_direction'] = $query->getWindDirection();
         return $arr;
     }
 }

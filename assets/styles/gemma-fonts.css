@@ -162,6 +162,10 @@
     content: "\f041";
 }
 
+.gf-refresh:before {
+    content: "\f053";
+}
+
 .gf-sun1:before {
     content: "\f05a";
 }
