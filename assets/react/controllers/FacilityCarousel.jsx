@@ -1,37 +1,54 @@
 import React, {Component} from 'react';
 import icons from "./setup/Icons";
+import commonFunctions from "./common/funtions";
 
 export default class FacilityCarousel extends Component {
 
     constructor(props) {
         super(props);
-        this.scheme = icons;
+
+        //const
+        this.refreshInterval = 5000;
+
+        // var
+        this.scheme = [];
+        this.icons = structuredClone(icons);
+        this.isInitialFetch = true;
+
+        // state
         this.state = {
-            weather: {}
+            facility: {}
         }
-        this.getObjects();
+
+        // function
+        this.assignSetupToValues = commonFunctions.assignSetupToValues;
+        this.isSensorActive = commonFunctions.isSensorActive;
+        this.getData();
     }
 
-    componentDidMount() {
-        // setInterval(() => this.getWeather(), 5000);
-    }
-
-    getObjects() {
+    getData() {
         fetch('/api/objects')
             .then((response) => response.json())
             .then(data => {
-                // console.log(data);
-                for (const [key, value] of Object.entries(data)) {
-                    this.assignSetupToValues (value, key, this.scheme);
-                }
-                // console.log(this.scheme);
-                // this.setState({weather: this.data});
-            });
-    }
 
-    assignSetupToValues(data, key, scheme) {
-        for (const [key, val] of Object.entries(data)) {
-        }
+                // initial function which filters sensors used by specific object
+                // and adds icons scheme for each sensor
+                // RUN ONCE
+                if (this.isInitialFetch) {
+                    for (const [key, value] of Object.entries(data)) {
+                        this.isSensorActive(value, key, this.scheme, icons);
+                    }
+                    this.isInitialFetch = false;
+                }
+
+                // update SCHEME by the fetched data -> VALUES and setup icons
+                for (const [key, value] of Object.entries(data)) {
+                    this.assignSetupToValues(value.readings, this.scheme[key].readings);
+                }
+
+                // save SCHEME to STATE
+                this.setState({facility: this.scheme});
+            });
     }
 
     render() {
@@ -44,7 +61,6 @@ export default class FacilityCarousel extends Component {
                         </div>
                     </div>
                     <div className={`flex flex-grow flex-col justify-center`}>
-
                         <div className={'row carousel-content'}>
                             <div
                                 className={`item bg-gradient-to-br dark:from-darker-100 dark:to-darker-200 rounded-md cursor-pointer shadow-md dark:shadow-gray-900/30`}>
@@ -60,7 +76,6 @@ export default class FacilityCarousel extends Component {
                                 </div>
                             </div>
                         </div>
-
                         <div className={`row carousel-pagination`}>
                             <div className={`mt-6 py-2 gap-x-6 flex flex-grow justify-center`}>
                                 <div className={'item'}>
@@ -72,7 +87,6 @@ export default class FacilityCarousel extends Component {
                             </div>
                         </div>
                     </div>
-
                     <div className={`carousel-sidebar`}>
                         <div className={`carousel-sidebar-next`}>
                             <span><i className={`gf gf-right-arrow`}></i></span>
@@ -81,5 +95,9 @@ export default class FacilityCarousel extends Component {
                 </div>
             </div>
         )
+    }
+
+    componentDidMount() {
+        setInterval(() => this.getData(), this.refreshInterval = 5000);
     }
 }

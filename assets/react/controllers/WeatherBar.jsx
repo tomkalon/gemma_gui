@@ -1,85 +1,55 @@
 import React, {Component} from 'react';
-import './setup/Icons';
 import icons from "./setup/Icons";
+import commonFunctions from "./common/funtions";
 
 export default class WeatherBar extends Component {
-
     constructor(props) {
         super(props);
-        this.scheme = icons;
+
+        //const
+        this.refreshInterval = 5000;
+
+        // var
+        this.scheme = [];
+        this.icons = structuredClone(icons);
+        this.data = [];
         this.isInitialFetch = true;
+
+        // state
         this.state = {
             weather: {}
         }
-        this.getWeather();
+
+        // function
+        this.assignSetupToValues = commonFunctions.assignSetupToValues;
+        this.isSensorActive = commonFunctions.isSensorActive;
+        this.getData();
     }
 
-    componentDidMount() {
-        //setInterval(() => this.getWeather(), 5000);
-    }
-
-    getWeather() {
+    getData() {
         fetch('/api/weather')
             .then((response) => response.json())
             .then(data => {
-                // remove all unused sensors from this.data object
+
+                // set data STRUCTURE for specific functions
+                this.data = [{
+                    readings: data
+                }]
+
+                // initial function which filters sensors used by specific object
+                // and adds icons scheme for each sensor
+                // RUN ONCE
                 if (this.isInitialFetch) {
-                    this.isSensorActive(data, this.scheme);
+                    this.isSensorActive(this.data[0], 0, this.scheme, icons);
                     this.isInitialFetch = false;
                 }
-                console.log(this.scheme);
-                // update this.data by the fetched data and setup/weather (choose: si, icons, colors)
-                this.assignSetupToValues(data, this.scheme);
-                console.log(this.scheme);
-                this.setState({weather: this.scheme});
+
+                // update SCHEME by the fetched data -> VALUES and setup icons
+                this.assignSetupToValues(this.data[0].readings, this.scheme[0].readings);
+
+                // save SCHEME to STATE
+                this.setState({weather: this.scheme[0].readings});
             });
-    }
-
-    // update this.data by the fetched data and setup/weather (draw: si, icons, colors)
-    assignSetupToValues(data, scheme) {
-
-        const $directions = ['N', 'NE', 'E', 'SE', 'S', 'SW', 'W', 'NW'];
-
-        for (const [key, val] of Object.entries(data)) {
-            scheme[key].value = val;
-
-            // choose the right icon on the basis of the thresholds array
-            if (scheme[key].thresholds !== false) {
-                for (const [index, item] of Object.entries(scheme[key].thresholds)) {
-                    if (val <= item) {
-                        scheme[key].calculated = {
-                            icon: scheme[key].icon[index]
-                        };
-                        break;
-                    }
-                }
-            }
-            else {
-                let result = null;
-                if (key === 'wind_direction') {
-                    for (let i = 0; i < $directions.length; i++) {
-                        if (val === $directions[i]) {
-                            result = i;
-                            break;
-                        }
-                    }
-                }
-                scheme[key].calculated = {
-                    icon: scheme[key].icon[result]
-                };
-            }
-        }
-    }
-
-    // remove all unused sensors from this.data object
-    isSensorActive(data, scheme) {
-        for (const [key, val] of Object.entries(scheme)) {
-            if (!(data[key])) {
-                delete scheme[key];
-            } else {
-                scheme[key].calculated = {};
-            }
-        }
     }
 
     render() {
@@ -90,10 +60,13 @@ export default class WeatherBar extends Component {
             </div>
             {Object.entries(this.state.weather).map(([key, item]) => {
                 return (<div key={key} className={`item text-center`}>
-                        <span><i className={`gf ${item.calculated.icon} ${item.color}`}></i></span>
-                        <p>{item.value} {item.si}</p>
-                    </div>)
+                    <span><i className={`gf ${item.calculated[0].icon} ${item.color}`}></i></span>
+                    <p>{item.value} {item.si}</p>
+                </div>)
             })}
         </div>);
+    }
+    componentDidMount() {
+        setInterval(() => this.getData(), this.refreshInterval);
     }
 }
