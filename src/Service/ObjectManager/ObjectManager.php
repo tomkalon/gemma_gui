@@ -54,22 +54,11 @@ class ObjectManager
     }
 
     // get ALL OBJECTS DATA
-    public function getAllObjectsData(): array
+    public function getAllObjectsData(bool $sensors_count): array
     {
         $query = $this->object->findAll();
         foreach ($query as $key => $value) {
-            $sensors_data_array[$key] = $this->getArrayOfSensorsData($value, false);
-            $this->data[$key] = $this->getAllSensorsData($sensors_data_array[$key]);
-        }
-        return $this->data;
-    }
-
-    // get ALL OBJECTS DATA
-    public function getAllObjectsDataWithSensorsCount(): array
-    {
-        $query = $this->object->findAll();
-        foreach ($query as $key => $value) {
-            $sensors_data_array[$key] = $this->getArrayOfSensorsData($value, true);
+            $sensors_data_array[$key] = $this->getArrayOfSensorsData($value, $sensors_count);
             $this->data[$key] = $this->getAllSensorsData($sensors_data_array[$key]);
         }
         return $this->data;
@@ -91,8 +80,6 @@ class ObjectManager
         if ($sensor_count) {
             $arr['sensors_count'] = $this->getSensorsCountSettings($arr);
         }
-
-
         return $arr;
     }
 

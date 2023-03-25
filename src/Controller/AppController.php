@@ -47,7 +47,7 @@ class AppController extends AbstractController
     #[Route('/api/objects', name: 'app_api_objects', priority: 10)]
     public function apiObjects(ObjectManager $objectManager): Response
     {
-        $data = $objectManager->getAllObjectsDataWithSensorsCount();
+        $data = $objectManager->getAllObjectsData(true);
 //        dd($data);
         return new JsonResponse($data);
     }

@@ -37,12 +37,41 @@ $text-shadow: -2px 2px 2px #00000050;
 // import Bootstrap css
 //@import "~bootstrap/scss/bootstrap";
 
+
+// ANIMATIONS
 @keyframes rotator {
   from {
     transform: rotate(0deg);
   }
   to {
     transform: rotate(360deg);
+  }
+}
+
+@keyframes move-bg {
+  from {
+    background-position-x: 0;
+  }
+  to {
+    background-position-x: -200px;
+  }
+}
+
+@keyframes push-left {
+  from {
+    right: 0;
+  }
+  to {
+    right: 10px;
+  }
+}
+
+@keyframes push-right {
+  from {
+    left: 0;
+  }
+  to {
+    left: 10px;
   }
 }
 
@@ -144,6 +173,18 @@ header {
           flex-direction: column;
           text-align: center;
 
+          &-prev {
+            i:hover {
+              animation-name: push-left;
+            }
+          }
+
+          &-next {
+            i:hover {
+              animation-name: push-right;
+            }
+          }
+
           &-prev, &-next {
             cursor: pointer;
             color: $dark-200;
@@ -152,6 +193,15 @@ header {
             &:hover {
               color: $dark-0;
               filter: drop-shadow($text-shadow);
+              i {
+                position: relative;
+                &:hover {
+                  animation-duration: 1s;
+                  animation-iteration-count: infinite;
+                  animation-timing-function: ease-in-out;
+                  animation-direction: alternate;
+                }
+              }
             }
 
             span {
@@ -165,6 +215,7 @@ header {
           &.row {
             display: flex;
             justify-content: center;
+
             .item {
               border: 2px solid $dark-100;
               transition: filter 1s;
@@ -629,15 +680,6 @@ header {
     }
     @mixin item-false-bg {
       background: #62191F url("../images/bg-false.svg") fixed;
-    }
-
-    @keyframes move-bg {
-      from {
-        background-position-x: 0;
-      }
-      to {
-        background-position-x: -200px;
-      }
     }
 
     .box {
