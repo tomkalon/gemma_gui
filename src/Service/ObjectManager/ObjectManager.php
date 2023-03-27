@@ -76,6 +76,7 @@ class ObjectManager
         count($obj->getShadow()) === 0 ?: $arr['readings']['shadow'] = $obj->getShadow();
         $obj->getBlow() === 'false' ?: $arr['readings']['blow'] = $obj->getBlow();
         $obj->getHeat() === 'false' ?: $arr['readings']['heat'] = $obj->getHeat();
+        $arr['settings'] = $obj->getSettings();
 
         if ($sensor_count) {
             $arr['sensors_count'] = $this->getSensorsCountSettings($arr);

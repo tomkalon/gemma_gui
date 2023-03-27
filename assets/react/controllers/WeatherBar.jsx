@@ -12,7 +12,6 @@ export default class WeatherBar extends Component {
         // var
         this.scheme = [];
         this.icons = structuredClone(icons);
-        this.data = [];
         this.isInitialFetch = true;
 
         // state
@@ -32,7 +31,7 @@ export default class WeatherBar extends Component {
             .then(data => {
 
                 // set data STRUCTURE for specific functions
-                this.data = [{
+                data = [{
                     readings: data
                 }]
 
@@ -40,12 +39,12 @@ export default class WeatherBar extends Component {
                 // and adds icons scheme for each sensor
                 // RUN ONCE
                 if (this.isInitialFetch) {
-                    this.isSensorActive(this.data[0], 0, this.scheme, icons);
+                    this.isSensorActive(data[0], 0, this.scheme, icons);
                     this.isInitialFetch = false;
                 }
 
                 // update SCHEME by the fetched data -> VALUES and setup icons
-                this.assignSetupToValues(this.data[0].readings, this.scheme[0].readings);
+                this.assignSetupToValues(data[0].readings, this.scheme[0].readings);
 
                 // save SCHEME to STATE
                 this.setState({weather: this.scheme[0].readings});

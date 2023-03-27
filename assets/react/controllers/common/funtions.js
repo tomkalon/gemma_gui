@@ -3,6 +3,8 @@ import React from 'react';
 // update SCHEME by the fetched data -> VALUES and setup icons
 function assignSetupToValues(data, scheme) {
     for (const [key, val] of Object.entries(data)) {
+
+        // icons if THRESHOLD is  an integer array
         if (scheme[key].thresholds !== false)
         for (const i of Object.keys(val)) {
             for (const [index, item] of Object.entries(scheme[key].thresholds)) {
@@ -14,12 +16,14 @@ function assignSetupToValues(data, scheme) {
                 }
             }
         }
+        // icons if THRESHOLD is not an integer array
+        // WIND_DIRECTION
         else {
-            const $directions = ['N', 'NE', 'E', 'SE', 'S', 'SW', 'W', 'NW'];
             let result = null;
             if (key === 'wind_direction') {
+                const $directions = scheme[key].desc_arr;
                 for (let i = 0; i < $directions.length; i++) {
-                    if (val[0] === $directions[i]) {
+                    if (val[0].toUpperCase() === $directions[i]) {
                         result = i;
                         break;
                     }
@@ -30,9 +34,16 @@ function assignSetupToValues(data, scheme) {
             }];
         }
 
-        if (key ==='rain') {
-            scheme[key] ? scheme[key].value = 'Deszcz' : scheme[key].value = '-';
-        } else {
+        // Display TEMP as FLOAT rounded to decimal place
+        if (key === 'temp'){
+            scheme[key].value = val.map((element) => Number.parseFloat(element).toFixed(1));
+        }
+
+        // Display integer values as strings from Icons.js -> sensor_name.desc_arr[]
+        else if (key ==='rain' || key ==='blow' || key ==='heat') {
+            scheme[key] ? scheme[key].value = scheme[key].desc_arr[1] : scheme[key].value = scheme[key].desc_arr[0];
+        }
+        else {
             scheme[key].value = val;
         }
     }
@@ -56,6 +67,7 @@ function isSensorActive(data, num, scheme, icons) {
                 scope: val.scope,
                 color: val.color,
                 desc: val.desc,
+                desc_arr: val.desc_arr,
                 calculated: {}
             }
         }

@@ -173,37 +173,31 @@ header {
           flex-direction: column;
           text-align: center;
 
-          &-prev {
-            i:hover {
+          &-prev:hover i {
               animation-name: push-left;
-            }
           }
 
-          &-next {
-            i:hover {
+          &-next:hover i {
               animation-name: push-right;
-            }
           }
 
           &-prev, &-next {
-            cursor: pointer;
             color: $dark-200;
             transition: color 1s;
+            cursor: pointer;
 
             &:hover {
               color: $dark-0;
               filter: drop-shadow($text-shadow);
-              i {
-                position: relative;
-                &:hover {
-                  animation-duration: 1s;
-                  animation-iteration-count: infinite;
-                  animation-timing-function: ease-in-out;
-                  animation-direction: alternate;
-                }
-              }
             }
 
+            i {
+              position: relative;
+              animation-duration: 1s;
+              animation-iteration-count: infinite;
+              animation-timing-function: ease-in-out;
+              animation-direction: alternate;
+            }
             span {
               font-size: 5rem;
             }

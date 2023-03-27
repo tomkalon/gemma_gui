@@ -40,7 +40,8 @@ let icons = {
         scope: [],
         color: ['text-sky-300'],
         desc: 'nadmuch',
-        value: []
+        desc_arr: ['Wł.', 'Wył.'],
+        value: [],
     },
     heat: {
         si: '',
@@ -49,6 +50,7 @@ let icons = {
         scope: [],
         color: ['text-sky-300'],
         desc: 'ogrzewanie',
+        desc_arr: ['Wł.', 'Wył.'],
         value: []
     },
     sun: {
@@ -65,6 +67,7 @@ let icons = {
         thresholds: [0, 1],
         scope: [],
         color: ['text-sky-600'],
+        desc_arr: ['-', 'Deszcz'],
         value: []
     },
     wind: {
@@ -81,6 +84,7 @@ let icons = {
         thresholds: false,
         scope: [],
         color: ['text-amber-300'],
+        desc_arr: ['N', 'NE', 'E', 'SE', 'S', 'SW', 'W', 'NW'],
         value: []
     }
 }
