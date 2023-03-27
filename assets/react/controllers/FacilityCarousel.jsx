@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import icons from "./setup/Icons";
+import icons from "./setup/icons";
 import commonFunctions from "./common/funtions";
 
 export default class FacilityCarousel extends Component {
@@ -9,6 +9,11 @@ export default class FacilityCarousel extends Component {
 
         //const
         this.refreshInterval = 5000;
+        this.obiectSettings = {
+            settings: [
+                'temp_day', 'temp_night', 'temp_control_day', 'temp_control_night',
+                'humid', 'humid_control_day', 'humid_control_night'
+            ]};
 
         // var
         this.scheme = [];
@@ -23,14 +28,20 @@ export default class FacilityCarousel extends Component {
         // function
         this.assignSetupToValues = commonFunctions.assignSetupToValues;
         this.isSensorActive = commonFunctions.isSensorActive;
-        this.getData();
+        this.getFacility();
     }
 
-    getData() {
-        fetch('/api/objects')
+    getFacility() {
+        fetch('/api/objects', {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(this.obiectSettings),
+        })
             .then((response) => response.json())
             .then(data => {
-
+                console.log(data);
                 // initial function which filters sensors used by specific object
                 // and adds icons scheme for each sensor
                 // RUN ONCE
@@ -40,7 +51,7 @@ export default class FacilityCarousel extends Component {
                     }
                     this.isInitialFetch = false;
                 }
-
+                console.log(this.scheme);
                 // update SCHEME by the fetched data -> VALUES and setup icons
                 for (const [key, value] of Object.entries(data)) {
                     this.assignSetupToValues(value.readings, this.scheme[key].readings);
@@ -48,6 +59,9 @@ export default class FacilityCarousel extends Component {
 
                 // save SCHEME to STATE
                 this.setState({facility: this.scheme});
+            })
+            .catch((error) => {
+                console.error("Error:", error);
             });
     }
 
@@ -98,6 +112,6 @@ export default class FacilityCarousel extends Component {
     }
 
     componentDidMount() {
-        setInterval(() => this.getData(), this.refreshInterval = 5000);
+        setInterval(() => this.getFacility(), this.refreshInterval = 5000);
     }
 }

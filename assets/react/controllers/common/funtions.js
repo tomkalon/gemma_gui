@@ -34,14 +34,16 @@ function assignSetupToValues(data, scheme) {
             }];
         }
 
-        // Display TEMP as FLOAT rounded to decimal place
-        if (key === 'temp'){
-            scheme[key].value = val.map((element) => Number.parseFloat(element).toFixed(1));
+        // Display integer TINYINT values as strings from Icons.js -> sensor_name.desc_arr[]
+        if (key ==='rain' || key ==='blow' || key ==='heat') {
+            val[0] === '0' ? scheme[key].value = scheme[key].desc_arr[0] : scheme[key].value = scheme[key].desc_arr[1];
         }
-
-        // Display integer values as strings from Icons.js -> sensor_name.desc_arr[]
-        else if (key ==='rain' || key ==='blow' || key ==='heat') {
-            scheme[key] ? scheme[key].value = scheme[key].desc_arr[1] : scheme[key].value = scheme[key].desc_arr[0];
+        // Display TEMP as FLOAT rounded to decimal place // uncomment
+        // else if (key === 'temp'){
+        //     scheme[key].value = val.map((element) => Number.parseFloat(element).toFixed(1));
+        // }
+        else if (key ==='sun') {
+            scheme[key].value[0] = val;
         }
         else {
             scheme[key].value = val;
@@ -52,8 +54,14 @@ function assignSetupToValues(data, scheme) {
 // initial function which filters sensors used by specific object and adds icons scheme for each sensor
 function isSensorActive(data, num, scheme, icons) {
     scheme[num] = {
-        readings: {}
+        readings: {},
     };
+
+    if (data.settings) {
+        scheme[num] = {
+            settings: data.settings,
+        };
+    }
 
     // array with sensors names as KEY and array with values as VALUES
     let readings = {};

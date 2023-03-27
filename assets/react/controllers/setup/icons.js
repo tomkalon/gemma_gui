@@ -59,6 +59,7 @@ let icons = {
         thresholds: [1000, 2000, 3000, 4000, 5000, 20000],
         scope: [],
         color: ['text-sky-300'],
+        desc_arr: ['I PRÓG', 'II PRÓG', 'II PRÓG', 'IV PRÓG', 'V PRÓG'],
         value: []
     },
     rain: {

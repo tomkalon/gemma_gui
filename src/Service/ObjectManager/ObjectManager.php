@@ -28,7 +28,7 @@ class ObjectManager
 
         $query = $this->object->findAll();
         foreach ($query as $key => $value) {
-            $sensors_data_array[$key] = $this->getArrayOfSensorsData($value, false);
+            $sensors_data_array[$key] = $this->getArrayOfSensorsData($value, false, null);
             $this->data['facility'][$key] = $this->getAllSensorsData($sensors_data_array[$key]);
             $this->data['carousel']['sensors_count'][$key] = $this->getSensorsCountSettings($sensors_data_array[$key]);
         }
@@ -54,18 +54,18 @@ class ObjectManager
     }
 
     // get ALL OBJECTS DATA
-    public function getAllObjectsData(bool $sensors_count): array
+    public function getAllObjectsData(bool $sensors_count, ?array $settings): array
     {
         $query = $this->object->findAll();
         foreach ($query as $key => $value) {
-            $sensors_data_array[$key] = $this->getArrayOfSensorsData($value, $sensors_count);
+            $sensors_data_array[$key] = $this->getArrayOfSensorsData($value, $sensors_count, $settings);
             $this->data[$key] = $this->getAllSensorsData($sensors_data_array[$key]);
         }
         return $this->data;
     }
 
     // write Sensors data to array
-    private function getArrayOfSensorsData(object $obj, bool $sensor_count): array
+    private function getArrayOfSensorsData(object $obj, bool $sensor_count, ?array $settings): array
     {
         $arr = array();
         $arr['id'] = $obj->getId();
@@ -77,11 +77,18 @@ class ObjectManager
         $obj->getBlow() === 'false' ?: $arr['readings']['blow'] = $obj->getBlow();
         $obj->getHeat() === 'false' ?: $arr['readings']['heat'] = $obj->getHeat();
         $arr['settings'] = $obj->getSettings();
-
+        if (isset($arr['settings'])) {
+            $arr['settings'] = $arr['settings']->getTempDay();
+        }
         if ($sensor_count) {
             $arr['sensors_count'] = $this->getSensorsCountSettings($arr);
         }
         return $arr;
+    }
+
+    private function getSettings($settings): bool
+    {
+        return true;
     }
 
     // merge SINGLE sensors DATA of OBJECTS to ARRAYS of OBJECTS

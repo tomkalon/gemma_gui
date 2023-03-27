@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import icons from "./setup/Icons";
+import icons from "./setup/icons";
 import commonFunctions from "./common/funtions";
 
 export default class WeatherBar extends Component {
@@ -26,7 +26,12 @@ export default class WeatherBar extends Component {
     }
 
     getData() {
-        fetch('/api/weather')
+        fetch('/api/weather', {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+        })
             .then((response) => response.json())
             .then(data => {
 
@@ -48,6 +53,9 @@ export default class WeatherBar extends Component {
 
                 // save SCHEME to STATE
                 this.setState({weather: this.scheme[0].readings});
+            })
+            .catch((error) => {
+                console.error("Error:", error);
             });
     }
 

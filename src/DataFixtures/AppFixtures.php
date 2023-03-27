@@ -25,7 +25,9 @@ class AppFixtures extends Fixture
         for ($i = 1; $i <= $this->object_quantity; $i++) {
             $object[$i] = new Objects();
             $settings[$i] = new Settings();
-            $object[$i]->setSettings($settings[$i]);
+            if ($i == 1) {} else {
+                $object[$i]->setSettings($settings[$i]);
+            }
             $this->setSettings($settings[$i], $manager, $i);
             $this->setObjects($object[$i], $manager, $i);
             $this->setStats($this->number_of_stats, $manager, $object[$i]);

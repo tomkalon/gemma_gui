@@ -7,15 +7,15 @@ use App\Service\ObjectManager\ObjectManager;
 use App\Service\Weather\WeatherManager;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 class AppController extends AbstractController
 {
     #[Route('/', name: 'app_index')]
-    public function index(WeatherManager $weatherManager): Response
+    public function index(): Response
     {
-        $weather = $weatherManager->getWeatherData();
         return $this->render('test.html.twig', [
             'show_all' => false
         ]);
@@ -45,10 +45,16 @@ class AppController extends AbstractController
     }
 
     #[Route('/api/objects', name: 'app_api_objects', priority: 10)]
-    public function apiObjects(ObjectManager $objectManager): Response
+    public function apiObjects(ObjectManager $objectManager, Request $request): Response
     {
-        $data = $objectManager->getAllObjectsData(true);
-//        dd($data);
+        if ($request->getContent()) {
+            $settings = $request->toArray()['settings'];
+            $data = $objectManager->getAllObjectsData(true, $settings);
+        }
+        else {
+            $data = $objectManager->getAllObjectsData(true, null);
+            dd($data);
+        }
         return new JsonResponse($data);
     }
 
@@ -56,6 +62,7 @@ class AppController extends AbstractController
     public function apiWeather(WeatherManager $weatherManager): Response
     {
         $data = $weatherManager->getWeatherData();
+//        dd($data);
         return new JsonResponse($data);
     }
 }

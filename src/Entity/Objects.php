@@ -40,7 +40,7 @@ class Objects
     private Collection $stats;
 
     #[ORM\ManyToOne(inversedBy: 'object')]
-    #[ORM\JoinColumn(nullable: false)]
+    #[ORM\JoinColumn(nullable: true)]
     private ?Settings $settings = null;
 
     #[ORM\OneToMany(mappedBy: 'object', targetEntity: Alerts::class, orphanRemoval: true)]
