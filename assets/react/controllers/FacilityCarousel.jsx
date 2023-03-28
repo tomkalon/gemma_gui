@@ -10,10 +10,16 @@ export default class FacilityCarousel extends Component {
         //const
         this.refreshInterval = 5000;
         this.obiectSettings = {
-            settings: [
-                'temp_day', 'temp_night', 'temp_control_day', 'temp_control_night',
-                'humid', 'humid_control_day', 'humid_control_night'
-            ]};
+            settings: {
+                'temp_day': true,
+                'temp_night': true,
+                'temp_control_day': true,
+                'temp_control_night': true,
+                'humid': true,
+                'humid_control_day': true,
+                'humid_control_night': true
+            }
+        };
 
         // var
         this.scheme = [];
@@ -33,11 +39,9 @@ export default class FacilityCarousel extends Component {
 
     getFacility() {
         fetch('/api/objects', {
-            method: "POST",
-            headers: {
+            method: "POST", headers: {
                 "Content-Type": "application/json",
-            },
-            body: JSON.stringify(this.obiectSettings),
+            }, body: JSON.stringify(this.obiectSettings),
         })
             .then((response) => response.json())
             .then(data => {
@@ -66,8 +70,7 @@ export default class FacilityCarousel extends Component {
     }
 
     render() {
-        return (
-            <div>
+        return (<div>
                 <div className={`row flex`}>
                     <div className={`carousel-sidebar`}>
                         <div className={`carousel-sidebar-prev`}>
@@ -107,11 +110,10 @@ export default class FacilityCarousel extends Component {
                         </div>
                     </div>
                 </div>
-            </div>
-        )
+            </div>)
     }
 
     componentDidMount() {
-        setInterval(() => this.getFacility(), this.refreshInterval = 5000);
+        // setInterval(() => this.getFacility(), this.refreshInterval = 5000);
     }
 }

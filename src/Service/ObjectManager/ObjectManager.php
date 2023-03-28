@@ -54,18 +54,18 @@ class ObjectManager
     }
 
     // get ALL OBJECTS DATA
-    public function getAllObjectsData(bool $sensors_count, ?array $settings): array
+    public function getAllObjectsData(bool $sensors_count, ?array $request_data): array
     {
         $query = $this->object->findAll();
         foreach ($query as $key => $value) {
-            $sensors_data_array[$key] = $this->getArrayOfSensorsData($value, $sensors_count, $settings);
+            $sensors_data_array[$key] = $this->getArrayOfSensorsData($value, $sensors_count, $request_data);
             $this->data[$key] = $this->getAllSensorsData($sensors_data_array[$key]);
         }
         return $this->data;
     }
 
     // write Sensors data to array
-    private function getArrayOfSensorsData(object $obj, bool $sensor_count, ?array $settings): array
+    private function getArrayOfSensorsData(object $obj, bool $sensor_count, ?array $request_data): array
     {
         $arr = array();
         $arr['id'] = $obj->getId();
@@ -76,19 +76,55 @@ class ObjectManager
         count($obj->getShadow()) === 0 ?: $arr['readings']['shadow'] = $obj->getShadow();
         $obj->getBlow() === 'false' ?: $arr['readings']['blow'] = $obj->getBlow();
         $obj->getHeat() === 'false' ?: $arr['readings']['heat'] = $obj->getHeat();
-        $arr['settings'] = $obj->getSettings();
-        if (isset($arr['settings'])) {
-            $arr['settings'] = $arr['settings']->getTempDay();
-        }
-        if ($sensor_count) {
-            $arr['sensors_count'] = $this->getSensorsCountSettings($arr);
-        }
-        return $arr;
-    }
 
-    private function getSettings($settings): bool
-    {
-        return true;
+
+        if (isset($request_data['settings'])) {
+            if ($obj->getSettings()) {
+                $settings = $obj->getSettings();
+                $req_settings = $request_data['settings'];
+
+                if ($req_settings['temp_day']) { $arr['settings']['temp_day'] = $settings->getTempDay(); }
+                if ($req_settings['temp_night']) { $arr['settings']['temp_night'] = $settings->getTempNight(); }
+                if ($req_settings['temp_control_day']) { $arr['settings']['temp_control_day'] = $settings->isTempControlDay(); }
+                if ($req_settings['temp_control_night']) { $arr['settings']['temp_control_night'] = $settings->isTempControlNight(); }
+                if ($req_settings['humid']) { $arr['settings']['humid'] = $settings->getHumid(); }
+                if ($req_settings['humid_control_day']) { $arr['settings']['humid_control_day'] = $settings->isHumidControlDay(); }
+                if ($req_settings['humid_control_night']) { $arr['settings']['humid_control_night'] = $settings->isHumidControlNight(); }
+            }
+        }
+
+        if (isset($request_data['alerts'])) {
+            if ($obj->getAlerts()) {
+                $alerts = $obj->getAlerts();
+                $req_alerts = $request_data['alerts'];
+//
+//                if ($req_settings['temp_day']) {
+//                    $arr['settings']['temp_day'] = $settings->getTempDay();
+//                }
+//                if ($req_settings['temp_night']) {
+//                    $arr['settings']['temp_night'] = $settings->getTempNight();
+//                }
+//                if ($req_settings['temp_control_day']) {
+//                    $arr['settings']['temp_control_day'] = $settings->isTempControlDay();
+//                }
+//                if ($req_settings['temp_control_night']) {
+//                    $arr['settings']['temp_control_night'] = $settings->isTempControlNight();
+//                }
+//                if ($req_settings['humid']) {
+//                    $arr['settings']['humid'] = $settings->getHumid();
+//                }
+//                if ($req_settings['humid_control_day']) {
+//                    $arr['settings']['humid_control_day'] = $settings->isHumidControlDay();
+//                }
+//                if ($req_settings['humid_control_night']) {
+//                    $arr['settings']['humid_control_night'] = $settings->isHumidControlNight();
+//                }
+            }
+        }
+
+        if ($sensor_count) $arr['sensors_count'] = $this->getSensorsCountSettings($arr);
+
+        return $arr;
     }
 
     // merge SINGLE sensors DATA of OBJECTS to ARRAYS of OBJECTS
