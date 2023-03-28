@@ -55,6 +55,7 @@ function assignSetupToValues(data, scheme) {
 function isSensorActive(data, num, scheme, icons) {
     scheme[num] = {
         readings: {},
+        display: {},
     };
 
     if (data.settings) {

@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import WeatherItem from "./component/weather/WeatherItem"
 import icons from "./setup/icons";
 import commonFunctions from "./common/funtions";
 
@@ -27,8 +28,7 @@ export default class WeatherBar extends Component {
 
     getData() {
         fetch('/api/weather', {
-            method: "POST",
-            headers: {
+            method: "POST", headers: {
                 "Content-Type": "application/json",
             },
         })
@@ -67,12 +67,12 @@ export default class WeatherBar extends Component {
             </div>
             {Object.entries(this.state.weather).map(([key, item]) => {
                 return (<div key={key} className={`item text-center`}>
-                    <span><i className={`gf ${item.calculated[0].icon} ${item.color}`}></i></span>
-                    <p>{item.value} {item.si}</p>
-                </div>)
+                        <WeatherItem icon={item.calculated[0].icon} color={item.color} value={item.value} si={item.si}/>
+                    </div>)
             })}
         </div>);
     }
+
     componentDidMount() {
         setInterval(() => this.getData(), this.refreshInterval);
     }

@@ -30,6 +30,7 @@ $blue-970: #020f16;
 $alarm-red: #501414;
 
 $text-shadow: -2px 2px 2px #00000050;
+$light-shadow: 0 0 5px #ffffff80;
 
 @import 'gemma-fonts.css';
 @import 'fonts.css';
@@ -104,6 +105,10 @@ header {
     .item {
       color: $dark-0;
       text-shadow: $text-shadow;
+      &:hover {
+        cursor: pointer;
+        filter: drop-shadow($light-shadow);
+      }
 
       i {
         font-size: 2rem;
@@ -121,12 +126,6 @@ header {
           color: $dark-100;
         }
       }
-    }
-  }
-
-  nav.small-screen {
-    i {
-      font-size: 4rem;
     }
   }
 
@@ -218,30 +217,30 @@ header {
 
               &.sm {
                 width: 11.25rem;
-                height: 11.75rem;
               }
 
               &.md {
                 width: 16.25rem;
-                height: 11.75rem;
               }
 
               &.lg {
                 width: 16.25rem;
-                height: 16.5rem;
               }
 
               &.xl {
                 width: 21.25rem;
-                height: 16.5rem;
               }
 
               &.xxl {
-
+                width: 21.25rem;
               }
 
-              &.xxxl {
+              &.x2l {
+                width: 26.25rem;
+              }
 
+              &.x3l {
+                width: 31.25rem;
               }
 
               &.active {

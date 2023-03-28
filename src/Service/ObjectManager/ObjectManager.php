@@ -83,13 +83,30 @@ class ObjectManager
                 $settings = $obj->getSettings();
                 $req_settings = $request_data['settings'];
 
-                if ($req_settings['temp_day']) { $arr['settings']['temp_day'] = $settings->getTempDay(); }
-                if ($req_settings['temp_night']) { $arr['settings']['temp_night'] = $settings->getTempNight(); }
-                if ($req_settings['temp_control_day']) { $arr['settings']['temp_control_day'] = $settings->isTempControlDay(); }
-                if ($req_settings['temp_control_night']) { $arr['settings']['temp_control_night'] = $settings->isTempControlNight(); }
-                if ($req_settings['humid']) { $arr['settings']['humid'] = $settings->getHumid(); }
-                if ($req_settings['humid_control_day']) { $arr['settings']['humid_control_day'] = $settings->isHumidControlDay(); }
-                if ($req_settings['humid_control_night']) { $arr['settings']['humid_control_night'] = $settings->isHumidControlNight(); }
+                if (isset($req_settings['name'])) {
+                    $arr['settings']['name'] = $settings->getName();
+                }
+                if (isset($req_settings['temp_day'])) {
+                    $arr['settings']['temp_day'] = $settings->getTempDay();
+                }
+                if (isset($req_settings['temp_night'])) {
+                    $arr['settings']['temp_night'] = $settings->getTempNight();
+                }
+                if (isset($req_settings['temp_control_day'])) {
+                    $arr['settings']['temp_control_day'] = $settings->isTempControlDay();
+                }
+                if (isset($req_settings['temp_control_night'])) {
+                    $arr['settings']['temp_control_night'] = $settings->isTempControlNight();
+                }
+                if (isset($req_settings['humid'])) {
+                    $arr['settings']['humid'] = $settings->getHumid();
+                }
+                if (isset($req_settings['humid_control_day'])) {
+                    $arr['settings']['humid_control_day'] = $settings->isHumidControlDay();
+                }
+                if (isset($req_settings['humid_control_night'])) {
+                    $arr['settings']['humid_control_night'] = $settings->isHumidControlNight();
+                }
             }
         }
 
