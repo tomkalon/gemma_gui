@@ -105,6 +105,7 @@ header {
     .item {
       color: $dark-0;
       text-shadow: $text-shadow;
+
       &:hover {
         cursor: pointer;
         filter: drop-shadow($light-shadow);
@@ -173,11 +174,11 @@ header {
           text-align: center;
 
           &-prev:hover i {
-              animation-name: push-left;
+            animation-name: push-left;
           }
 
           &-next:hover i {
-              animation-name: push-right;
+            animation-name: push-right;
           }
 
           &-prev, &-next {
@@ -197,6 +198,7 @@ header {
               animation-timing-function: ease-in-out;
               animation-direction: alternate;
             }
+
             span {
               font-size: 5rem;
             }
@@ -208,6 +210,7 @@ header {
           &.row {
             display: flex;
             justify-content: center;
+            gap: 1rem;
 
             .item {
               border: 2px solid $dark-100;
@@ -304,6 +307,16 @@ header {
             border-radius: 1rem;
             text-align: center;
             font-size: 1.25rem;
+
+            &.active {
+              background: $dark-100;
+              color: $dark-800;
+            }
+            &:hover {
+              cursor: pointer;
+              background: $dark-0;
+              color: $dark-800;
+            }
           }
         }
       }

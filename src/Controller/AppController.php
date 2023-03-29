@@ -51,10 +51,10 @@ class AppController extends AbstractController
             $js_request = json_decode($request->getContent(), true);
             $data = $objectManager->getAllObjectsData(true, $js_request);
         }
-//        else {
-//            $data = $objectManager->getAllObjectsData(true, null);
-//            dd($data);
-//        }
+        else {
+            $data = $objectManager->getAllObjectsData(true, null);
+            dd($data);
+        }
         return new JsonResponse($data);
     }
 

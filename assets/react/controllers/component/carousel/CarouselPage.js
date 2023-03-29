@@ -1,11 +1,13 @@
 import React from 'react';
+import CarouselItem from "./page/CarouselItem";
 
 class CarouselPage extends React.Component {
 
     render() {
-        return (<div>
-            <span><i className={`gf ${this.props.icon} ${this.props.color}`}></i></span>
-            <p>{this.props.value} {this.props.si}</p>
+        return (<div className={'row carousel-content'}>
+            {this.props.pages.map(function (value, index) {
+                return (<CarouselItem key={index}/>)
+            })}
         </div>)
     }
 }

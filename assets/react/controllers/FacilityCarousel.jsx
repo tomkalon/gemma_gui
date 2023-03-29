@@ -1,5 +1,7 @@
 import React, {Component} from 'react';
 import CarouselSidebar from "./component/carousel/CarouselSidebar";
+import CarouselPagination from "./component/carousel/CarouselPagination";
+import CarouselPage from "./component/carousel/CarouselPage";
 import icons from "./setup/icons";
 import commonFunctions from "./common/funtions";
 
@@ -9,7 +11,7 @@ export default class FacilityCarousel extends Component {
         super(props);
 
         //const
-        this.refreshInterval = 5000;
+        this.refreshInterval = 3000;
         this.obiectSettings = {
             settings: {
                 'temp_day': true,
@@ -28,7 +30,7 @@ export default class FacilityCarousel extends Component {
             }, blockColumn: { // number of columns regarding number of sensors
                 sm: 2, md: 3, lg: 3, xl: 4, xxl: 4, x2l: 5, x3l: 6
                 //
-            }, page: 0, adder: 0, colPerPage: 12
+            }, pageCount: 0, pages: {0: []}, page: 0, adder: 0, colPerPage: 12, numberOfObjects: null, pagination: [], paginationPageStart: 1
         }
 
         // var
@@ -38,13 +40,18 @@ export default class FacilityCarousel extends Component {
 
         // state
         this.state = {
-            facility: {}
+            facility: {},
+            display: {},
+            page: 0
         }
 
         // function
         this.assignSetupToValues = commonFunctions.assignSetupToValues;
         this.isSensorActive = commonFunctions.isSensorActive;
         this.getFacility();
+
+        // dev
+        this.counter = 0;
     }
 
     getFacility() {
@@ -59,11 +66,11 @@ export default class FacilityCarousel extends Component {
                 // and adds icons scheme for each sensor
                 // RUN ONCE
                 if (this.isInitialFetch) {
+                    this.carousel.numberOfObjects = data.length;
                     for (const [key, value] of Object.entries(data)) {
                         this.isSensorActive(value, key, this.scheme, icons);
                         this.assignSetupToValues(value.readings, this.scheme[key].readings);
                         this.getCarouselDisplaySettings(value['sensors_count'], key, this.scheme[key]);
-
                     }
                     this.isInitialFetch = false;
                 } else {
@@ -72,19 +79,19 @@ export default class FacilityCarousel extends Component {
                         this.assignSetupToValues(value.readings, this.scheme[key].readings);
                     }
                 }
-                console.log(this.scheme);
 
                 // save SCHEME to STATE
-                this.setState({facility: this.scheme});
+                this.setState({facility: this.scheme, display: this.carousel, page: this.carousel.page});
             })
-            .catch((error) => {
-                console.error("Error:", error);
-            });
+            // .catch((error) => {
+            //     console.error("Error:", error);
+            // });
     }
 
     getCarouselDisplaySettings(sensorsCount, num, scheme) {
-
         let elementSize = null;
+        let numInteger = Number.parseInt(num);
+
         // get OBJECT size and number of columns -> add number of columns to accumulator -> adder
         for (const [key, value] of Object.entries(this.carousel.blockSize)) {
             if (sensorsCount['sum'] <= value) {
@@ -94,53 +101,77 @@ export default class FacilityCarousel extends Component {
             }
         }
 
-        // get OBJECT page number
-        if ((this.carousel.adder / (this.carousel.colPerPage * (this.carousel.page + 1))) > 1) {
-            this.carousel.page++;
+        // get OBJECT page number AND pagination buttons
+        if ((this.carousel.adder / (this.carousel.colPerPage * (this.carousel.pageCount + 1))) > 1) {
+            this.carousel.pageCount++;
+            let paginationBtn = `${this.carousel.paginationPageStart} - ${num}`;
+            this.carousel.pagination.push(paginationBtn);
+            this.carousel.paginationPageStart = numInteger + 1;
+            this.carousel.pages[this.carousel.pageCount] = [];
+        } else {
+            if (numInteger === (this.carousel.numberOfObjects - 1)) {
+                let paginationBtn = `${this.carousel.paginationPageStart} - ${this.carousel.numberOfObjects}`;
+                this.carousel.pagination.push(paginationBtn);
+            }
         }
+        this.carousel.pages[this.carousel.pageCount].push(numInteger);
 
         // save to Object SCHEME
         // object size; object page
         scheme.display = {
-            size: elementSize, page: this.carousel.page,
+            size: elementSize, page: this.carousel.pageCount
         }
     }
 
-    render() {
-        return (<div className={`row flex`}>
-            <CarouselSidebar direction={"prev"} directionIcon={"gf-left-arrow"}/>
-            <div className={`flex flex-grow flex-col justify-center`}>
-                <div className={'row carousel-content'}>
-                    <div
-                        className={`item bg-gradient-to-br dark:from-darker-100 dark:to-darker-200 rounded-md cursor-pointer shadow-md dark:shadow-gray-900/30`}>
-                        <div
-                            className={`label w-auto rounded-t-md uppercase border-b dark:border-darker-300 dark:bg-darker-700 dark:text-darker-100`}>
-                            <span>NAZWA OBIEKTU</span><span className={`alert`}><i className={`gf gf-damage`}></i><i
-                            className={`gf gf-warning`}></i></span>
-                        </div>
+    paginationPageIndex(index) {
+        this.carousel.page = index;
+        this.setState({display: this.carousel});
+    }
 
-                        <div className={`box uppercase`}>
-                            <div className={`inner`}>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+    sidebarPageIndex(index) {
+        console.log(index);
+
+        // this.carousel.page = index;
+        // this.setState({display: this.carousel});
+    }
+
+    render() {
+        let displayState;
+        let facilityState;
+
+        let showPage;
+        let pagination;
+        let prevSideBar;
+        let nextSideBar;
+
+        let sidebarIsActive = false;
+
+        if (!this.isInitialFetch) {
+            displayState = this.state.display;
+            facilityState = this.state.facility;
+            showPage = <CarouselPage page={displayState.page} pages={displayState.pages[displayState.page]} objects={facilityState}/>;
+            pagination = <CarouselPagination pagination={displayState.pagination} active={displayState.page} handler={this.paginationPageIndex.bind(this)}/>;
+            prevSideBar = <CarouselSidebar direction={"prev"} directionIcon={"gf-left-arrow"} isActive={sidebarIsActive} handler={this.sidebarPageIndex.bind(this)} />;
+            nextSideBar = <CarouselSidebar direction={"next"} directionIcon={"gf-right-arrow"} isActive={sidebarIsActive} handler={this.sidebarPageIndex.bind(this)} />;
+            this.counter++;
+        }
+
+        return (<div className={`row flex`}>
+            {prevSideBar}
+            <div className={`flex flex-grow flex-col justify-center`}>
+                {showPage}
                 <div className={`row carousel-pagination`}>
-                    <div className={`mt-6 py-2 gap-x-6 flex flex-grow justify-center`}>
-                        <div className={'item'}>
-                            <span>1 - 4</span>
-                        </div>
-                        <div className={'item'}>
-                            <span>5 - 6</span>
-                        </div>
-                    </div>
+                    {pagination}
                 </div>
             </div>
-            <CarouselSidebar direction={"next"} directionIcon={"gf-right-arrow"}/>
+            {nextSideBar}
         </div>)
     }
 
     componentDidMount() {
-        // setInterval(() => this.getFacility(), this.refreshInterval = 5000);
+        setInterval(() => this.getFacility(), this.refreshInterval);
+    }
+    componentWillUnmount() {
+        clearInterval(this.getFacility);
     }
 }
