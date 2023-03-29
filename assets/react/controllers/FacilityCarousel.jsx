@@ -27,10 +27,19 @@ export default class FacilityCarousel extends Component {
         this.carousel = {
             blockSize: { // number of sensors
                 sm: 4, md: 6, lg: 9, xl: 12, xxl: 16, x2l: 20, x3l: 24
-            }, blockColumn: { // number of columns regarding number of sensors
+            },
+            blockColumn: { // number of columns regarding number of sensors
                 sm: 2, md: 3, lg: 3, xl: 4, xxl: 4, x2l: 5, x3l: 6
                 //
-            }, pageCount: 0, pages: {0: []}, page: 0, adder: 0, colPerPage: 12, numberOfObjects: null, pagination: [], paginationPageStart: 1
+            },
+            pageCount: 0,
+            pages: {0: []},
+            page: 0,
+            adder: 0,
+            colPerPage: 12,
+            numberOfObjects: null,
+            pagination: [],
+            paginationPageStart: 1
         }
 
         // var
@@ -40,9 +49,7 @@ export default class FacilityCarousel extends Component {
 
         // state
         this.state = {
-            facility: {},
-            display: {},
-            page: 0
+            facility: {}, display: {}, page: 0
         }
 
         // function
@@ -83,9 +90,9 @@ export default class FacilityCarousel extends Component {
                 // save SCHEME to STATE
                 this.setState({facility: this.scheme, display: this.carousel, page: this.carousel.page});
             })
-            // .catch((error) => {
-            //     console.error("Error:", error);
-            // });
+        // .catch((error) => {
+        //     console.error("Error:", error);
+        // });
     }
 
     getCarouselDisplaySettings(sensorsCount, num, scheme) {
@@ -129,10 +136,15 @@ export default class FacilityCarousel extends Component {
     }
 
     sidebarPageIndex(index) {
-        console.log(index);
+        if (this.carousel.pageCount) {
 
-        // this.carousel.page = index;
-        // this.setState({display: this.carousel});
+            if (index === "prev") {
+                this.carousel.page--;
+            } else {
+                this.carousel.page++;
+            }
+        }
+        this.setState({display: this.carousel});
     }
 
     render() {
@@ -144,15 +156,36 @@ export default class FacilityCarousel extends Component {
         let prevSideBar;
         let nextSideBar;
 
-        let sidebarIsActive = false;
+        let prevIsActive = "hidden";
+        let nextIsActive = "hidden";
+
+        if (this.carousel.pageCount) {
+            if (this.carousel.page === 0) {
+                prevIsActive = "hidden";
+                nextIsActive = "block";
+            } else {
+                prevIsActive = "block";
+            }
+
+            if (this.carousel.page === this.carousel.pageCount) {
+                prevIsActive = "block";
+                nextIsActive = "hidden";
+            } else {
+                nextIsActive = "block";
+            }
+        }
 
         if (!this.isInitialFetch) {
             displayState = this.state.display;
             facilityState = this.state.facility;
-            showPage = <CarouselPage page={displayState.page} pages={displayState.pages[displayState.page]} objects={facilityState}/>;
-            pagination = <CarouselPagination pagination={displayState.pagination} active={displayState.page} handler={this.paginationPageIndex.bind(this)}/>;
-            prevSideBar = <CarouselSidebar direction={"prev"} directionIcon={"gf-left-arrow"} isActive={sidebarIsActive} handler={this.sidebarPageIndex.bind(this)} />;
-            nextSideBar = <CarouselSidebar direction={"next"} directionIcon={"gf-right-arrow"} isActive={sidebarIsActive} handler={this.sidebarPageIndex.bind(this)} />;
+            showPage = <CarouselPage
+                page={displayState.page} pages={displayState.pages[displayState.page]} objects={facilityState}/>;
+            pagination = <CarouselPagination
+                pagination={displayState.pagination} active={displayState.page} handler={this.paginationPageIndex.bind(this)}/>;
+            prevSideBar = <CarouselSidebar
+                direction={"prev"} directionIcon={"gf-left-arrow"} visibility={prevIsActive} handler={this.sidebarPageIndex.bind(this)}/>;
+            nextSideBar = <CarouselSidebar
+                direction={"next"} directionIcon={"gf-right-arrow"} visibility={nextIsActive} handler={this.sidebarPageIndex.bind(this)}/>;
             this.counter++;
         }
 
@@ -171,6 +204,7 @@ export default class FacilityCarousel extends Component {
     componentDidMount() {
         setInterval(() => this.getFacility(), this.refreshInterval);
     }
+
     componentWillUnmount() {
         clearInterval(this.getFacility);
     }
