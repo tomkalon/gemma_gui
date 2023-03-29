@@ -1,16 +1,16 @@
 import React from 'react';
 
-// update SCHEME by the fetched data -> VALUES and setup icons
-function assignSetupToValues(data, scheme) {
+// update stateSCHEME by the fetched data -> VALUES and setup icons
+function assignSetupToValues(data, stateScheme) {
     for (const [key, val] of Object.entries(data)) {
 
         // icons if THRESHOLD is  an integer array
-        if (scheme[key].thresholds !== false)
+        if (stateScheme[key].thresholds !== false)
         for (const i of Object.keys(val)) {
-            for (const [index, item] of Object.entries(scheme[key].thresholds)) {
+            for (const [index, item] of Object.entries(stateScheme[key].thresholds)) {
                 if (val[i] <= item) {
-                    scheme[key].calculated[i] = {
-                        icon: scheme[key].icon[index]
+                    stateScheme[key].calculated[i] = {
+                        icon: stateScheme[key].icon[index]
                     };
                     break;
                 }
@@ -21,7 +21,7 @@ function assignSetupToValues(data, scheme) {
         else {
             let result = null;
             if (key === 'wind_direction') {
-                const $directions = scheme[key].desc_arr;
+                const $directions = stateScheme[key].desc_arr;
                 for (let i = 0; i < $directions.length; i++) {
                     if (val[0].toUpperCase() === $directions[i]) {
                         result = i;
@@ -29,37 +29,36 @@ function assignSetupToValues(data, scheme) {
                     }
                 }
             }
-            scheme[key].calculated = [{
-                icon: scheme[key].icon[result]
+            stateScheme[key].calculated = [{
+                icon: stateScheme[key].icon[result]
             }];
         }
 
         // Display integer TINYINT values as strings from Icons.js -> sensor_name.desc_arr[]
         if (key ==='rain' || key ==='blow' || key ==='heat') {
-            val[0] === '0' ? scheme[key].value = scheme[key].desc_arr[0] : scheme[key].value = scheme[key].desc_arr[1];
+            val[0] === '0' ? stateScheme[key].value = stateScheme[key].desc_arr[0] : stateScheme[key].value = stateScheme[key].desc_arr[1];
         }
         // Display TEMP as FLOAT rounded to decimal place // uncomment
         // else if (key === 'temp'){
-        //     scheme[key].value = val.map((element) => Number.parseFloat(element).toFixed(1));
+        //     stateScheme[key].value = val.map((element) => Number.parseFloat(element).toFixed(1));
         // }
         else if (key ==='sun') {
-            scheme[key].value[0] = val;
+            stateScheme[key].value[0] = val;
         }
         else {
-            scheme[key].value = val;
+            stateScheme[key].value = val;
         }
     }
 }
 
-// initial function which filters sensors used by specific object and adds icons scheme for each sensor
-function isSensorActive(data, num, scheme, icons) {
-    scheme[num] = {
-        readings: {},
-        display: {},
+// initial function which filters sensors used by specific object and adds icons stateScheme for each sensor
+function isSensorActive(data, num, stateScheme, icons) {
+    stateScheme[num] = {
+        readings: {}
     };
 
     if (data.settings) {
-        scheme[num] = {
+        stateScheme[num] = {
             settings: data.settings,
         };
     }
@@ -82,7 +81,7 @@ function isSensorActive(data, num, scheme, icons) {
         }
     }
 
-    scheme[num].readings = readings;
+    stateScheme[num].readings = readings;
 }
 
 const commonFunctions = {

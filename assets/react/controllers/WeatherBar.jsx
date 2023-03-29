@@ -11,7 +11,7 @@ export default class WeatherBar extends Component {
         this.refreshInterval = 5000;
 
         // var
-        this.scheme = [];
+        this.stateScheme = [];
         this.icons = structuredClone(icons);
         this.isInitialFetch = true;
 
@@ -44,15 +44,15 @@ export default class WeatherBar extends Component {
                 // and adds icons scheme for each sensor
                 // RUN ONCE
                 if (this.isInitialFetch) {
-                    this.isSensorActive(data[0], 0, this.scheme, icons);
+                    this.isSensorActive(data[0], 0, this.stateScheme, icons);
                     this.isInitialFetch = false;
                 }
 
                 // update SCHEME by the fetched data -> VALUES and setup icons
-                this.assignSetupToValues(data[0].readings, this.scheme[0].readings);
+                this.assignSetupToValues(data[0].readings, this.stateScheme[0].readings);
 
                 // save SCHEME to STATE
-                this.setState({weather: this.scheme[0].readings});
+                this.setState({weather: this.stateScheme[0].readings});
             })
             .catch((error) => {
                 console.error("Error:", error);
@@ -75,5 +75,9 @@ export default class WeatherBar extends Component {
 
     componentDidMount() {
         setInterval(() => this.getData(), this.refreshInterval);
+    }
+
+    componentWillUnmount() {
+        clearInterval(this.getData);
     }
 }
