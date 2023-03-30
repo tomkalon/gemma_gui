@@ -21,38 +21,6 @@ class ObjectManager
         $this->config = Yaml::parse(file_get_contents($config_location));
     }
 
-    // get ALL OBJECTS and PREPARE THEM to DISPLAY with CAROUSEL in TWIG TEMPLATE -> RETURN ALL OBJECTS with CAROUSEL SETUP
-    public function prepareAllObjectsDataForCarousel(): array
-    {
-        $sensors_data_array = array();
-
-        $query = $this->object->findAll();
-        foreach ($query as $key => $value) {
-            $sensors_data_array[$key] = $this->getArrayOfSensorsData($value, false, null);
-            $this->data['facility'][$key] = $this->getAllSensorsData($sensors_data_array[$key]);
-            $this->data['carousel']['sensors_count'][$key] = $this->getSensorsCountSettings($sensors_data_array[$key]);
-        }
-
-        // carousel BLOCK_SIZE & PAGES/ALL_PAGES & MAX_ROWS
-        $this->data['carousel'] = $this->prepareCarouselSetup($this->data['carousel']['sensors_count']);
-//        unset($this->data['carousel']['sensors_count']);
-
-        // applying SETTINGS to OBJECTS
-        foreach (array_keys($this->data['facility']) as $key) {
-            // block size name
-            $this->data['facility'][$key]['carousel']['block_size'] = array_keys($this->data['carousel']['block_size'][$key])[0];
-            // page number
-            $this->data['facility'][$key]['carousel']['page'] = $this->data['carousel']['pages'][$key];
-        }
-
-        //remove unused DATA from carousel
-        unset($this->data['carousel']['pages']);
-        unset($this->data['carousel']['block_size']);
-
-        return $this->data;
-
-    }
-
     // get ALL OBJECTS DATA
     public function getAllObjectsData(bool $sensors_count, ?array $request_data): array
     {
@@ -62,6 +30,19 @@ class ObjectManager
             $this->data[$key] = $this->getAllSensorsData($sensors_data_array[$key]);
         }
         return $this->data;
+    }
+
+    // merge SINGLE sensors DATA of OBJECTS to ARRAYS of OBJECTS
+    private function getAllSensorsData($obj): array
+    {
+        $data = array();
+
+        foreach ($obj as $key => $value) {
+            if (!$value === false) {
+                $data[$key] = $value;
+            }
+        }
+        return $data;
     }
 
     // write Sensors data to array
@@ -114,47 +95,12 @@ class ObjectManager
             if ($obj->getAlerts()) {
                 $alerts = $obj->getAlerts();
                 $req_alerts = $request_data['alerts'];
-//
-//                if ($req_settings['temp_day']) {
-//                    $arr['settings']['temp_day'] = $settings->getTempDay();
-//                }
-//                if ($req_settings['temp_night']) {
-//                    $arr['settings']['temp_night'] = $settings->getTempNight();
-//                }
-//                if ($req_settings['temp_control_day']) {
-//                    $arr['settings']['temp_control_day'] = $settings->isTempControlDay();
-//                }
-//                if ($req_settings['temp_control_night']) {
-//                    $arr['settings']['temp_control_night'] = $settings->isTempControlNight();
-//                }
-//                if ($req_settings['humid']) {
-//                    $arr['settings']['humid'] = $settings->getHumid();
-//                }
-//                if ($req_settings['humid_control_day']) {
-//                    $arr['settings']['humid_control_day'] = $settings->isHumidControlDay();
-//                }
-//                if ($req_settings['humid_control_night']) {
-//                    $arr['settings']['humid_control_night'] = $settings->isHumidControlNight();
-//                }
             }
         }
 
         if ($sensor_count) $arr['sensors_count'] = $this->getSensorsCountSettings($arr);
 
         return $arr;
-    }
-
-    // merge SINGLE sensors DATA of OBJECTS to ARRAYS of OBJECTS
-    public function getAllSensorsData($obj): array
-    {
-        $data = array();
-
-        foreach ($obj as $key => $value) {
-            if (!$value === false) {
-                $data[$key] = $value;
-            }
-        }
-        return $data;
     }
 
     // retrieves information on the number of sensors in the ONE facility
@@ -175,6 +121,48 @@ class ObjectManager
             }
         }
         return $settings;
+    }
+
+    public function getTime(?array $request_time):array {
+        $time = array();
+        if (isset($request_time)) {
+            for($i = 0; $i < count($request_time); $i++) {
+                $time[$i] = date($request_time[$i]);
+            }
+        }
+        return $time;
+    }
+
+    // get ALL OBJECTS and PREPARE THEM to DISPLAY with CAROUSEL in TWIG TEMPLATE -> RETURN ALL OBJECTS with CAROUSEL SETUP
+    public function prepareAllObjectsDataForCarousel(): array
+    {
+        $sensors_data_array = array();
+
+        $query = $this->object->findAll();
+        foreach ($query as $key => $value) {
+            $sensors_data_array[$key] = $this->getArrayOfSensorsData($value, false, null);
+            $this->data['facility'][$key] = $this->getAllSensorsData($sensors_data_array[$key]);
+            $this->data['carousel']['sensors_count'][$key] = $this->getSensorsCountSettings($sensors_data_array[$key]);
+        }
+
+        // carousel BLOCK_SIZE & PAGES/ALL_PAGES & MAX_ROWS
+        $this->data['carousel'] = $this->prepareCarouselSetup($this->data['carousel']['sensors_count']);
+//        unset($this->data['carousel']['sensors_count']);
+
+        // applying SETTINGS to OBJECTS
+        foreach (array_keys($this->data['facility']) as $key) {
+            // block size name
+            $this->data['facility'][$key]['carousel']['block_size'] = array_keys($this->data['carousel']['block_size'][$key])[0];
+            // page number
+            $this->data['facility'][$key]['carousel']['page'] = $this->data['carousel']['pages'][$key];
+        }
+
+        //remove unused DATA from carousel
+        unset($this->data['carousel']['pages']);
+        unset($this->data['carousel']['block_size']);
+
+        return $this->data;
+
     }
 
     // if JSON file is not exist, this function create it with default structure from SENSORS_COUNT ARRAY

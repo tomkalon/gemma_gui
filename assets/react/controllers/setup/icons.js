@@ -7,7 +7,10 @@ let icons = {
         thresholds: [0, 5, 10, 20, 30, 40, 200],
         scope: [],
         color: ['text-red-500'],
-        value: []
+        desc: 'temp',
+        value: [],
+        timeOfDay: ['gf-day', 'gf-night'],
+        settings: []
     },
     humid: {
         si: '%',
@@ -15,7 +18,10 @@ let icons = {
         thresholds: [35, 100],
         scope: [],
         color: ['text-sky-300'],
-        value: []
+        desc: 'wilgotność',
+        value: [],
+        timeOfDay: ['gf-day', 'gf-night'],
+        settings: []
     },
     vent: {
         si: '%',
@@ -23,7 +29,9 @@ let icons = {
         thresholds: [0, 20, 40, 60, 80, 95, 100],
         scope: [],
         color: ['text-sky-300'],
-        value: []
+        desc: 'wietrznik',
+        value: [],
+        settings: []
     },
     shadow: {
         si: '%',
@@ -31,7 +39,9 @@ let icons = {
         thresholds: [5, 25, 50, 75, 95, 100],
         scope: [],
         color: ['text-sky-300'],
-        value: []
+        desc: 'cieniówka',
+        value: [],
+        settings: []
     },
     blow: {
         si: '',
@@ -42,6 +52,7 @@ let icons = {
         desc: 'nadmuch',
         desc_arr: ['Wł.', 'Wył.'],
         value: [],
+        settings: []
     },
     heat: {
         si: '',
@@ -51,7 +62,8 @@ let icons = {
         color: ['text-sky-300'],
         desc: 'ogrzewanie',
         desc_arr: ['Wł.', 'Wył.'],
-        value: []
+        value: [],
+        settings: []
     },
     sun: {
         si: 'lx',
@@ -60,7 +72,8 @@ let icons = {
         scope: [],
         color: ['text-sky-300'],
         desc_arr: ['I PRÓG', 'II PRÓG', 'II PRÓG', 'IV PRÓG', 'V PRÓG'],
-        value: []
+        value: [],
+        settings: []
     },
     rain: {
         si: '',
@@ -69,7 +82,8 @@ let icons = {
         scope: [],
         color: ['text-sky-600'],
         desc_arr: ['-', 'Deszcz'],
-        value: []
+        value: [],
+        settings: []
     },
     wind: {
         si: 'km/s',
@@ -77,7 +91,8 @@ let icons = {
         thresholds: [5, 15, 30, 200],
         scope: [],
         color: ['text-lime-500'],
-        value: []
+        value: [],
+        settings: []
     },
     wind_direction: {
         si: '',
@@ -86,7 +101,8 @@ let icons = {
         scope: [],
         color: ['text-amber-300'],
         desc_arr: ['N', 'NE', 'E', 'SE', 'S', 'SW', 'W', 'NW'],
-        value: []
+        value: [],
+        settings: []
     }
 }
 

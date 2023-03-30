@@ -12,7 +12,7 @@ export default class FacilityCarousel extends Component {
         super(props);
 
         //const
-        this.refreshInterval = 3000;
+        this.refreshInterval = 5000;
         this.obiectSettings = {
             settings: {
                 'temp_day': true,
@@ -23,7 +23,7 @@ export default class FacilityCarousel extends Component {
                 'humid_control_day': true,
                 'humid_control_night': true,
                 'name': true
-            }
+            },
         };
         this.carousel = {
             blockSize: { // number of sensors
@@ -48,6 +48,7 @@ export default class FacilityCarousel extends Component {
         this.scheme = [];
         this.icons = structuredClone(icons);
         this.isInitialFetch = true;
+        this.time = null;
 
         // state
         this.state = {
@@ -57,6 +58,7 @@ export default class FacilityCarousel extends Component {
         // function
         this.assignSetupToValues = commonFunctions.assignSetupToValues;
         this.isSensorActive = commonFunctions.isSensorActive;
+        this.getObjectInfo = commonFunctions.getObjectInfo;
         this.getFacility();
     }
 
@@ -68,12 +70,14 @@ export default class FacilityCarousel extends Component {
         })
             .then((response) => response.json())
             .then(data => {
+
+                let facility = data.facility;
                 // initial function which filters sensors used by specific object
                 // and adds icons scheme for each sensor
                 // RUN ONCE
                 if (this.isInitialFetch) {
-                    this.carousel.numberOfObjects = data.length;
-                    for (const [key, value] of Object.entries(data)) {
+                    this.carousel.numberOfObjects = facility.length;
+                    for (const [key, value] of Object.entries(facility)) {
                         this.getObjectInfo(value, key, this.scheme);
                         this.isSensorActive(value, key, this.stateScheme, icons);
                         this.assignSetupToValues(value.readings, this.stateScheme[key].readings);
@@ -82,23 +86,18 @@ export default class FacilityCarousel extends Component {
                     this.isInitialFetch = false;
                 } else {
                     // update SCHEME by the fetched data -> VALUES and setup icons
-                    for (const [key, value] of Object.entries(data)) {
+                    for (const [key, value] of Object.entries(facility)) {
                         this.assignSetupToValues(value.readings, this.stateScheme[key].readings);
                     }
                 }
 
                 // save SCHEME to STATE
-                this.setState({facility: this.stateScheme, display: this.carousel, page: this.carousel.page});
+                this.setState({facility: this.stateScheme, page: this.carousel.page});
+
             })
         .catch((error) => {
             console.error("Error:", error);
         });
-    }
-
-    getObjectInfo(data, num, scheme) {
-        scheme[num] = {
-            id: data.id, name: data.name
-        }
     }
 
     getCarouselDisplaySettings(sensorsCount, num, carousel, scheme) {
@@ -149,8 +148,7 @@ export default class FacilityCarousel extends Component {
     }
 
     paginationPageIndex(index) {
-        this.carousel.page = index;
-        this.setState({display: this.carousel});
+        this.setState({page: index});
     }
 
     sidebarPageIndex(index) {
@@ -162,13 +160,14 @@ export default class FacilityCarousel extends Component {
                 this.carousel.page++;
             }
         }
-        this.setState({display: this.carousel});
+        this.setState({page: this.carousel.page});
     }
 
     render() {
-        let displayState;
+        let pageState = this.state.page;
         let facilityState;
         let facilityInfo;
+        let display;
 
         let showPage;
         let pagination;
@@ -197,18 +196,18 @@ export default class FacilityCarousel extends Component {
 
         // render if there isn't initial rendering
         if (!this.isInitialFetch) {
-            displayState = this.state.display;
             facilityState = this.state.facility;
             facilityInfo = this.scheme;
+            display = this.carousel;
 
             // carousel content block
             showPage = <CarouselPage
-                page={displayState.page} pages={displayState.pages[displayState.page]} objectsState={facilityState}
-                objectsInfo={facilityInfo} maxRow={displayState.maxRows}/>;
+                page={pageState} pages={display.pages[pageState]} objectsState={facilityState}
+                objectsInfo={facilityInfo} maxRow={display.maxRows}/>;
 
             // carousel pagination block
             pagination = <CarouselPagination
-                pagination={displayState.pagination} active={displayState.page} handler={this.paginationPageIndex.bind(this)}/>;
+                pagination={display.pagination} active={pageState} handler={this.paginationPageIndex.bind(this)}/>;
 
             // carousel navigations blocks
             prevSideBar = <CarouselSidebar

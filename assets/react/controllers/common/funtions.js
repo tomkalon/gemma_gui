@@ -76,6 +76,7 @@ function isSensorActive(data, num, stateScheme, icons) {
                 color: val.color,
                 desc: val.desc,
                 desc_arr: val.desc_arr,
+                settings: val.settings,
                 calculated: {}
             }
         }
@@ -84,8 +85,14 @@ function isSensorActive(data, num, stateScheme, icons) {
     stateScheme[num].readings = readings;
 }
 
+function getObjectInfo(data, num, scheme) {
+    scheme[num] = {
+        id: data.id, name: data.name
+    }
+}
+
 const commonFunctions = {
-    isSensorActive, assignSetupToValues
+    isSensorActive, assignSetupToValues, getObjectInfo
 }
 
 export default commonFunctions;

@@ -49,10 +49,13 @@ class AppController extends AbstractController
     {
         if ($request->isMethod('post')) {
             $js_request = json_decode($request->getContent(), true);
-            $data = $objectManager->getAllObjectsData(true, $js_request);
+            $data['facility'] = $objectManager->getAllObjectsData(true, $js_request);
+            if (isset($js_request['time'])) {
+                $data['time'] = $objectManager->getTime($js_request['time']);
+            }
         }
         else {
-            $data = $objectManager->getAllObjectsData(true, null);
+            $data['facility']  = $objectManager->getAllObjectsData(true, null);
             dd($data);
         }
         return new JsonResponse($data);

@@ -23,12 +23,14 @@ class CarouselObject extends React.Component {
                     {Object.entries(readings).map(([index, item]) => {
                         if (Array.isArray(item.value)) {
                             if(item.value.length === 1) {
-                                return (<CarouselSensor key={index} si={readings[index].si} value={readings[index].value[0]} icon={readings[index].calculated[0].icon}/>);
+                                return (<CarouselSensor key={index} si={readings[index].si} value={readings[index].value[0]}
+                                                        icon={readings[index].calculated[0].icon} desc={item.desc}/>);
                             }
                             else {
                                 let arr = [];
                                 readings[index].value.map((element, i) => {
-                                    arr[i] = <CarouselSensor key={index + '_' + i} si={readings[index].si} value={readings[index].value[i]} icon={readings[index].calculated[i].icon}/>;
+                                    arr[i] = <CarouselSensor key={index + '_' + i} si={readings[index].si} value={readings[index].value[i]}
+                                                             icon={readings[index].calculated[i].icon} desc={item.desc}/>;
                                 })
                                 return (arr);
                             }
