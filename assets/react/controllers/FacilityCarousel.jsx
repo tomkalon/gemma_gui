@@ -4,6 +4,7 @@ import CarouselPagination from "./component/carousel/CarouselPagination";
 import CarouselPage from "./component/carousel/CarouselPage";
 import icons from "./setup/icons";
 import commonFunctions from "./common/funtions";
+import {max} from "@popperjs/core/lib/utils/math";
 
 export default class FacilityCarousel extends Component {
 
@@ -28,9 +29,11 @@ export default class FacilityCarousel extends Component {
             blockSize: { // number of sensors
                 sm: 4, md: 6, lg: 9, xl: 12, xxl: 16, x2l: 20, x3l: 24
             }, blockColumn: { // number of columns regarding number of sensors
-                sm: 2, md: 3, lg: 3, xl: 4, xxl: 4, x2l: 5, x3l: 6
-                //
-            }, pageCount: 0, // number of pages
+                sm: 2, md: 2, lg: 3, xl: 4, xxl: 4, x2l: 5, x3l: 6
+            }, blockRows: { // number of rows per size
+                sm: 2, md: 3, lg: 3, xl: 3, xxl: 4, x2l: 4, x3l: 4
+            }, maxRows: 0, // max object rows
+            pageCount: 0, // number of pages
             pages: {0: []}, // object id in pages
             page: 0, // selected page
             adder: 0, // object columns accumulator -> to calculate number of pages
@@ -87,9 +90,9 @@ export default class FacilityCarousel extends Component {
                 // save SCHEME to STATE
                 this.setState({facility: this.stateScheme, display: this.carousel, page: this.carousel.page});
             })
-        // .catch((error) => {
-        //     console.error("Error:", error);
-        // });
+        .catch((error) => {
+            console.error("Error:", error);
+        });
     }
 
     getObjectInfo(data, num, scheme) {
@@ -100,6 +103,7 @@ export default class FacilityCarousel extends Component {
 
     getCarouselDisplaySettings(sensorsCount, num, carousel, scheme) {
         let elementSize = null;
+        let maxRows = null;
         let numInteger = Number.parseInt(num);
 
         // get OBJECT size and number of columns -> add number of columns to accumulator -> adder
@@ -107,22 +111,33 @@ export default class FacilityCarousel extends Component {
             if (sensorsCount['sum'] <= value) {
                 elementSize = key;
                 carousel.adder += carousel.blockColumn[key];
+                if (carousel.maxRows < carousel.blockRows[key]) {
+                    maxRows = carousel.blockRows[key];
+                    carousel.maxRows = key;
+                }
                 break;
             }
         }
 
         // get OBJECT page number AND pagination buttons
+        // END of Page
         if ((carousel.adder / (carousel.colPerPage * (carousel.pageCount + 1))) > 1) {
             carousel.pageCount++;
             let paginationBtn = `${carousel.paginationPageStart} - ${num}`;
             carousel.pagination.push(paginationBtn);
             carousel.paginationPageStart = numInteger + 1;
             carousel.pages[carousel.pageCount] = [];
-        } else {
-            if (numInteger === (carousel.numberOfObjects - 1)) {
-                let paginationBtn = `${carousel.paginationPageStart} - ${carousel.numberOfObjects}`;
-                carousel.pagination.push(paginationBtn);
+        }
+        // last ELEMENT
+        if (numInteger === (carousel.numberOfObjects - 1)) {
+            let paginationBtn;
+            if (carousel.paginationPageStart === carousel.numberOfObjects) {
+                paginationBtn = carousel.numberOfObjects;
             }
+            else {
+                paginationBtn = `${carousel.paginationPageStart} - ${carousel.numberOfObjects}`;
+            }
+            carousel.pagination.push(paginationBtn);
         }
         carousel.pages[carousel.pageCount].push(numInteger);
 
@@ -189,7 +204,7 @@ export default class FacilityCarousel extends Component {
             // carousel content block
             showPage = <CarouselPage
                 page={displayState.page} pages={displayState.pages[displayState.page]} objectsState={facilityState}
-                objectsInfo={facilityInfo}/>;
+                objectsInfo={facilityInfo} maxRow={displayState.maxRows}/>;
 
             // carousel pagination block
             pagination = <CarouselPagination
@@ -202,10 +217,6 @@ export default class FacilityCarousel extends Component {
             nextSideBar = <CarouselSidebar
                 direction={"next"} directionIcon={"gf-right-arrow"} visibility={nextIsActive}
                 handler={this.sidebarPageIndex.bind(this)}/>;
-
-            console.log(this.scheme);
-            console.log(this.stateScheme);
-            console.log(this.state);
         }
 
         return (<div className={`row flex`}>

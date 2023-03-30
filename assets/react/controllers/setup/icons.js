@@ -28,7 +28,7 @@ let icons = {
     shadow: {
         si: '%',
         icon: ['gf-shadow1', 'gf-shadow2', 'gf-shadow3', 'gf-shadow4', 'gf-shadow5',  'gf-shadow6'],
-        thresholds: [0, 25, 50, 75, 95, 100],
+        thresholds: [5, 25, 50, 75, 95, 100],
         scope: [],
         color: ['text-sky-300'],
         value: []

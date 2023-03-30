@@ -9,8 +9,6 @@ class CarouselObject extends React.Component {
         let boxSize = info.display.size;
         let readings = state.readings;
 
-        console.log(readings);
-
         return (<div
             className={`item ${boxSize} bg-gradient-to-br dark:from-darker-100 dark:to-darker-200 rounded-md cursor-pointer shadow-md dark:shadow-gray-900/30`}>
             <div
@@ -30,7 +28,6 @@ class CarouselObject extends React.Component {
                             else {
                                 let arr = [];
                                 readings[index].value.map((element, i) => {
-                                    console.log(i);
                                     arr[i] = <CarouselSensor key={index + '_' + i} si={readings[index].si} value={readings[index].value[i]} icon={readings[index].calculated[i].icon}/>;
                                 })
                                 return (arr);

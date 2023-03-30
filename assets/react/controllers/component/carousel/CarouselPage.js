@@ -7,8 +7,9 @@ class CarouselPage extends React.Component {
         let facilityState = this.props.objectsState;
         let facilityInfo = this.props.objectsInfo;
         let pages = this.props.pages;
+        let maxRow = this.props.maxRow;
 
-        return (<div className={'row carousel-content'}>
+        return (<div className={`row carousel-content ${maxRow}`}>
             {pages.map(function (value, index) {
                 return (<CarouselObject key={index} itemState={facilityState[value]} itemInfo={facilityInfo[value]} />)
             })}

@@ -212,6 +212,19 @@ header {
             justify-content: center;
             gap: 1rem;
 
+            &.sm {
+              height: 12rem;
+            }
+
+            &.md, &.lg, &.xl {
+              height: 16rem;
+            }
+
+            &.xxl, &.x2l, &.x3l {
+              height: 20rem;
+            }
+
+
             .item {
               border: 2px solid $dark-100;
               transition: filter 1s;
@@ -223,7 +236,7 @@ header {
               }
 
               &.md {
-                width: 16.25rem;
+                width: 11.25rem;
               }
 
               &.lg {

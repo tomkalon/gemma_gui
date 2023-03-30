@@ -296,6 +296,30 @@
     content: "\f0b5";
 }
 
+.gf-shadow1:before {
+    content: "\f0c0";
+}
+
+.gf-shadow2:before {
+    content: "\f0c1";
+}
+
+.gf-shadow3:before {
+    content: "\f0c2";
+}
+
+.gf-shadow4:before {
+    content: "\f0c3";
+}
+
+.gf-shadow5:before {
+    content: "\f0c4";
+}
+
+.gf-shadow6:before {
+    content: "\f0c5";
+}
+
 .gf-wind1:before {
     content: "\f0d0";
 }
