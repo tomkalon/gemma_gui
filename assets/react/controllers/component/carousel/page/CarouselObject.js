@@ -18,21 +18,23 @@ class CarouselObject extends React.Component {
                 <span>{info.name}</span><span className={`alert`}>
                 {/*<i className={`gf gf-damage`}></i><i*/}
                 {/*className={`gf gf-warning`}></i>*/}
-            </span>
+                </span>
             </div>
             <div className={`box uppercase`}>
                 <div className={`inner`}>
                     {Object.entries(readings).map(([index, item]) => {
-                        console.log('');
                         if (Array.isArray(item.value)) {
                             if(item.value.length === 1) {
-                                return (<CarouselSensor key={index} si={readings[index].si}/>);
+                                return (<CarouselSensor key={index} si={readings[index].si} value={readings[index].value[0]} icon={readings[index].calculated[0].icon}/>);
                             }
                             else {
-                                return (<CarouselSensor key={index} si={readings[index].si}/>);
+                                let arr = [];
+                                readings[index].value.map((element, i) => {
+                                    console.log(i);
+                                    arr[i] = <CarouselSensor key={index + '_' + i} si={readings[index].si} value={readings[index].value[i]} icon={readings[index].calculated[i].icon}/>;
+                                })
+                                return (arr);
                             }
-                        } else {
-                            return (<CarouselSensor key={index} si={readings[index].si}/>);
                         }
                     })}
                 </div>
@@ -42,24 +44,3 @@ class CarouselObject extends React.Component {
 }
 
 export default CarouselObject;
-
-// {Object.entries(readings).map(([key, item]) => {
-//     if(Array.isArray(item.value)) {
-//         if (item.value.length > 1) {
-//
-//         } else {
-//             return (<div key={key}>
-//                 <i className={`gf ${item.calculated[0].icon}`}></i>
-//                 <p><span>°C</span></p>
-//             </div>)
-//         }
-//     }
-//     else {
-//         return (<div key={key}>
-//             <i className={`gf ${item.calculated[0].icon}`}></i>
-//             <p><span>°C</span></p>
-//         </div>)
-//     }
-//
-//
-// })}

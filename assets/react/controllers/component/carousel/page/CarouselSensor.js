@@ -3,13 +3,14 @@ import React from 'react';
 class CarouselSensor extends React.Component {
     render() {
         let si = this.props.si;
+        let icon = this.props.icon;
+        let value = this.props.value;
 
         return (<div>
-            <i className={`gf`}></i>
-            <p><span>{si}</span></p>
+            <i className={`gf ${icon}`}></i>
+            <p><span>{value}{si}</span></p>
         </div>)
     }
-
 }
 
 export default CarouselSensor;

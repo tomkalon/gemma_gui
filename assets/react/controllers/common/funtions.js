@@ -5,8 +5,7 @@ function assignSetupToValues(data, stateScheme) {
     for (const [key, val] of Object.entries(data)) {
 
         // icons if THRESHOLD is  an integer array
-        if (stateScheme[key].thresholds !== false)
-        for (const i of Object.keys(val)) {
+        if (stateScheme[key].thresholds !== false) for (const i of Object.keys(val)) {
             for (const [index, item] of Object.entries(stateScheme[key].thresholds)) {
                 if (val[i] <= item) {
                     stateScheme[key].calculated[i] = {
@@ -16,7 +15,7 @@ function assignSetupToValues(data, stateScheme) {
                 }
             }
         }
-        // icons if THRESHOLD is not an integer array
+            // icons if THRESHOLD is not an integer array
         // WIND_DIRECTION
         else {
             let result = null;
@@ -35,17 +34,18 @@ function assignSetupToValues(data, stateScheme) {
         }
 
         // Display integer TINYINT values as strings from Icons.js -> sensor_name.desc_arr[]
-        if (key ==='rain' || key ==='blow' || key ==='heat') {
-            val[0] === '0' ? stateScheme[key].value = stateScheme[key].desc_arr[0] : stateScheme[key].value = stateScheme[key].desc_arr[1];
+        if (key === 'blow' || key === 'heat') {
+            val[0] === '0' ? stateScheme[key].value = [stateScheme[key].desc_arr[1]] : stateScheme[key].value = [stateScheme[key].desc_arr[0]];
+        } else if (key === 'rain') {
+            val[0] === '0' ? stateScheme[key].value = [stateScheme[key].desc_arr[0]] : stateScheme[key].value = [stateScheme[key].desc_arr[1]];
         }
-        // Display TEMP as FLOAT rounded to decimal place // uncomment
-        // else if (key === 'temp'){
-        //     stateScheme[key].value = val.map((element) => Number.parseFloat(element).toFixed(1));
+            // Display TEMP as FLOAT rounded to decimal place // uncomment
+            // else if (key === 'temp'){
+            //     stateScheme[key].value = val.map((element) => Number.parseFloat(element).toFixed(1));
         // }
-        else if (key ==='sun') {
+        else if (key === 'sun') {
             stateScheme[key].value[0] = val;
-        }
-        else {
+        } else {
             stateScheme[key].value = val;
         }
     }
@@ -85,8 +85,7 @@ function isSensorActive(data, num, stateScheme, icons) {
 }
 
 const commonFunctions = {
-    isSensorActive,
-    assignSetupToValues
+    isSensorActive, assignSetupToValues
 }
 
 export default commonFunctions;
