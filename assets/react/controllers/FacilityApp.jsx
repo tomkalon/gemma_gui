@@ -54,8 +54,7 @@ export default class FacilityApp extends Component {
         fetch('/api/objects', {
             method: "POST", headers: {
                 "Content-Type": "application/json",
-            },
-            // body: JSON.stringify(this.objectSettings),
+            }, // body: JSON.stringify(this.objectSettings),
         })
             .then((response) => response.json())
             .then(data => {
@@ -84,9 +83,9 @@ export default class FacilityApp extends Component {
                 this.setState({facility: this.stateScheme, page: this.carousel.page});
 
             })
-        .catch((error) => {
-            console.error("Error:", error);
-        });
+            .catch((error) => {
+                console.error("Error:", error);
+            });
     }
 
     getCarouselDisplaySettings(sensorsCount, num, carousel, scheme) {
@@ -121,8 +120,7 @@ export default class FacilityApp extends Component {
             let paginationBtn;
             if (carousel.paginationPageStart === carousel.numberOfObjects) {
                 paginationBtn = carousel.numberOfObjects;
-            }
-            else {
+            } else {
                 paginationBtn = `${carousel.paginationPageStart} - ${carousel.numberOfObjects}`;
             }
             carousel.pagination.push(paginationBtn);
@@ -210,12 +208,19 @@ export default class FacilityApp extends Component {
         }
 
         return (<div>
-            <Carousel showPage={showPage} pagination={pagination} prevSideBar={prevSideBar} nextSideBar={nextSideBar} />
+            <article className="all w-full dark:bg-darker-500 border-b-4 dark:border-darker-450">
+                <div className="container mx-auto">
+                    <div id="carousel" className="w-full py-4">
+                        <Carousel showPage={showPage} pagination={pagination} prevSideBar={prevSideBar}
+                                  nextSideBar={nextSideBar}/>
+                    </div>
+                </div>
+            </article>
         </div>)
     }
 
     componentDidMount() {
-        // setInterval(() => this.getFacility(), this.refreshInterval);
+        setInterval(() => this.getFacility(), this.refreshInterval);
     }
 
     componentWillUnmount() {

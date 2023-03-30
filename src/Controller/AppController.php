@@ -17,7 +17,6 @@ class AppController extends AbstractController
     public function index(): Response
     {
         return $this->render('test.html.twig', [
-            'show_all' => false
         ]);
     }
 
@@ -25,7 +24,7 @@ class AppController extends AbstractController
     public function showOne(Objects $objects): Response
     {
         return $this->render('app/index.html.twig', [
-            'show_all' => false,
+            'reactApp' => false,
             'data' => $objects
         ]);
     }
@@ -34,7 +33,7 @@ class AppController extends AbstractController
     public function showAll(ObjectManager $objectManager): Response
     {
         return $this->render('app/index.html.twig', [
-            'show_all' => true
+            'reactApp' => true
         ]);
     }
 
