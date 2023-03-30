@@ -1,30 +1,18 @@
 import React, {Component} from 'react';
+import Carousel from "./component/carousel/Carousel";
 import CarouselSidebar from "./component/carousel/CarouselSidebar";
 import CarouselPagination from "./component/carousel/CarouselPagination";
 import CarouselPage from "./component/carousel/CarouselPage";
 import icons from "./setup/icons";
 import commonFunctions from "./common/funtions";
-import {max} from "@popperjs/core/lib/utils/math";
 
-export default class FacilityCarousel extends Component {
+export default class FacilityApp extends Component {
 
     constructor(props) {
         super(props);
 
         //const
         this.refreshInterval = 5000;
-        this.obiectSettings = {
-            settings: {
-                'temp_day': true,
-                'temp_night': true,
-                'temp_control_day': true,
-                'temp_control_night': true,
-                'humid': true,
-                'humid_control_day': true,
-                'humid_control_night': true,
-                'name': true
-            },
-        };
         this.carousel = {
             blockSize: { // number of sensors
                 sm: 4, md: 6, lg: 9, xl: 12, xxl: 16, x2l: 20, x3l: 24
@@ -66,7 +54,8 @@ export default class FacilityCarousel extends Component {
         fetch('/api/objects', {
             method: "POST", headers: {
                 "Content-Type": "application/json",
-            }, body: JSON.stringify(this.obiectSettings),
+            },
+            // body: JSON.stringify(this.objectSettings),
         })
             .then((response) => response.json())
             .then(data => {
@@ -148,12 +137,12 @@ export default class FacilityCarousel extends Component {
     }
 
     paginationPageIndex(index) {
+        this.carousel.page = index;
         this.setState({page: index});
     }
 
     sidebarPageIndex(index) {
         if (this.carousel.pageCount) {
-
             if (index === "prev") {
                 this.carousel.page--;
             } else {
@@ -177,28 +166,30 @@ export default class FacilityCarousel extends Component {
         let prevIsActive = "hidden";
         let nextIsActive = "hidden";
 
-        // show carousel navigation sidebar dependent on selected page number
-        if (this.carousel.pageCount) {
-            if (this.carousel.page === 0) {
-                prevIsActive = "hidden";
-                nextIsActive = "block";
-            } else {
-                prevIsActive = "block";
-            }
-
-            if (this.carousel.page === this.carousel.pageCount) {
-                prevIsActive = "block";
-                nextIsActive = "hidden";
-            } else {
-                nextIsActive = "block";
-            }
-        }
 
         // render if there isn't initial rendering
         if (!this.isInitialFetch) {
             facilityState = this.state.facility;
             facilityInfo = this.scheme;
             display = this.carousel;
+
+            // show carousel navigation sidebar dependent on selected page number
+            if (this.carousel.pageCount) {
+                // console.log(pageState);
+                if (pageState === 0) {
+                    prevIsActive = "hidden";
+                    nextIsActive = "block";
+                } else {
+                    prevIsActive = "block";
+                }
+
+                if (pageState === this.carousel.pageCount) {
+                    prevIsActive = "block";
+                    nextIsActive = "hidden";
+                } else {
+                    nextIsActive = "block";
+                }
+            }
 
             // carousel content block
             showPage = <CarouselPage
@@ -218,15 +209,8 @@ export default class FacilityCarousel extends Component {
                 handler={this.sidebarPageIndex.bind(this)}/>;
         }
 
-        return (<div className={`row flex`}>
-            {prevSideBar}
-            <div className={`flex flex-grow flex-col justify-center`}>
-                {showPage}
-                <div className={`row carousel-pagination`}>
-                    {pagination}
-                </div>
-            </div>
-            {nextSideBar}
+        return (<div>
+            <Carousel showPage={showPage} pagination={pagination} prevSideBar={prevSideBar} nextSideBar={nextSideBar} />
         </div>)
     }
 

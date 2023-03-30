@@ -33,21 +33,17 @@ class AppController extends AbstractController
     #[Route('/app', name: 'app_show_all', priority: 10)]
     public function showAll(ObjectManager $objectManager): Response
     {
-        $facility = $objectManager->prepareAllObjectsDataForCarousel();
-//        dd($facility);
         return $this->render('app/index.html.twig', [
-            'show_all' => true,
-            'custom_carousel' => true,
-            'facility' => $facility['facility'],
-            'carousel' => $facility['carousel'],
-            'object' => $facility['facility'][3]
+            'show_all' => true
         ]);
     }
 
     #[Route('/api/objects', name: 'app_api_objects', priority: 10)]
     public function apiObjects(ObjectManager $objectManager, Request $request): Response
     {
+
         if ($request->isMethod('post')) {
+            // STRUCTURE:: object: { settings: { setting_name: true }, time: { ['H', 'd', etc..] }}
             $js_request = json_decode($request->getContent(), true);
             $data['facility'] = $objectManager->getAllObjectsData(true, $js_request);
             if (isset($js_request['time'])) {
