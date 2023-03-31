@@ -1,0 +1,87 @@
+settings:
+  temp:
+    temp_day: true
+    temp_night: true
+    temp_hysteresis: true
+    temp_control_day: true
+    temp_control_night: true
+    temp_vent_close: true
+    temp_alarm: true
+    temp_alarm_flag: true
+  humid:
+    humid: true
+    humid_hysteresis: true
+    humid_control_day: true
+    humid_control_night: true
+    humid_vent_step: true
+    humid_vent_pause: true
+    humid_vent_pause_open: true
+    humid_vent_max_open: true
+    humid_alarm: true
+    humid_alarm_flag: true
+    humid_alarm_enable: true
+  heat:
+    heat: true
+    heat_hysteresis: true
+  vent:
+    vent: true
+    vent_step_time: true
+    vent_pause: true
+    vent_open_close_time: true
+    vent_max_open_rain: true
+    vent_wind_delay: true
+    vent_rain_delay: true
+    vent_weak_wind_max: true
+    vent_strong_wind_max: true
+    vent_min_temp: true
+  blow:
+    blow: true
+    blow_pause: true
+  shadow:
+    shadow: true
+    shadow_manual: true
+    shadow1: true
+    shadow2: true
+    shadow3: true
+    shadow4: true
+    shadow5: true
+  enable:
+    temp: true
+    humid: true
+    heat: true
+    vent: true
+    blow: true
+    shadow: true
+
+carousel:
+  max_carousel_columns: 12
+  max_rows:
+    2: 'h_sm'
+    3: 'h_md'
+    4: 'h_lg'
+  pages: { }
+  block_size:
+    sm:
+      rows: 2
+      columns: 2
+      sum: 4
+    md:
+      rows: 2
+      columns: 3
+      sum: 6
+    lg:
+      rows: 3
+      columns: 3
+      sum: 9
+    xl:
+      rows: 4
+      columns: 3
+      sum: 12
+    xxl:
+      rows: 4
+      columns: 4
+      sum: 16
+    xxxl:
+      rows: 4
+      columns: 5
+      sum: 20

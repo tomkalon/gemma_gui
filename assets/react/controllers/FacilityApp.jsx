@@ -5,6 +5,7 @@ import CarouselPagination from "./component/carousel/CarouselPagination";
 import CarouselPage from "./component/carousel/CarouselPage";
 import icons from "./setup/icons";
 import commonFunctions from "./common/funtions";
+import Details from "./component/details/Details";
 
 // ================================================================================
 //  CLASS STRUCTURE & DESCRIPTION OF THE ACTION
@@ -55,10 +56,16 @@ export default class FacilityApp extends Component {
             pagination: [], // array with pages labels in pagination
             paginationPageStart: 1 // label number of first object
         }
+        this.facilitySettings = {
+            settings: true,
+            time: false,
+            alerts: false,
+        }
 
         // var
         this.stateScheme = [];
         this.scheme = [];
+        this.currentObject = null;
         this.icons = structuredClone(icons);
         this.isInitialFetch = true;
         this.time = null;
@@ -79,12 +86,18 @@ export default class FacilityApp extends Component {
         fetch('/api/objects', {
             method: "POST", headers: {
                 "Content-Type": "application/json",
-            }, // body: JSON.stringify(this.objectSettings),
+            }, body: JSON.stringify(this.facilitySettings),
         })
             .then((response) => response.json())
             .then(data => {
 
-                let facility = data.facility;
+                let facility, settings, alerts;
+                if (data.facility) facility = data.facility;
+                if (data.settings) settings = data.settings;
+                if (data.alerts) alerts = data.alerts;
+
+                console.log(data);
+
                 // initial function which filters sensors used by specific object
                 // and adds icons scheme for each sensor
                 // RUN ONCE
@@ -104,15 +117,14 @@ export default class FacilityApp extends Component {
                     }
                 }
 
-                console.log(this.scheme);
-                console.log(this.carousel);
-
                 // save SCHEME to STATE
-                this.setState({facility: this.stateScheme, page: this.carousel.page});
+                this.setState({facility: this.stateScheme, page: this.carousel.page, current: this.currentObject});
 
             })
             .catch((error) => {
+                alert("BŁĄD KOMUNIKACJI Z API!");
                 console.error("Error:", error);
+
             });
     }
 
@@ -180,6 +192,9 @@ export default class FacilityApp extends Component {
 
     render() {
 
+        // dev helper
+        let current = 0;
+
         // carousel
         let pageState = this.state.page;
         let display;
@@ -194,14 +209,22 @@ export default class FacilityApp extends Component {
 
         // objects DATA // FACILITY
         let facilityState;
+        let settingsState;
         let facilityInfo;
+        let currentObjectInfo = null;
+        let currentObjectState = null;
 
-        // CAROUSEL
+
         // =======================================================================
         // render if there isn't initial rendering
         if (!this.isInitialFetch) {
             facilityState = this.state.facility;
+            settingsState = this.state.settings;
             facilityInfo = this.scheme;
+            currentObjectInfo = facilityInfo[Object.keys(facilityInfo)[current]];
+            currentObjectState = facilityState[Object.keys(facilityState)[current]];
+
+            // ======= CAROUSEL =======
             display = this.carousel;
 
             // show carousel navigation sidebar dependent on selected page number
@@ -249,11 +272,16 @@ export default class FacilityApp extends Component {
                     </div>
                 </div>
             </article>
+            <article className="container mx-auto">
+                <Details current={current} info={currentObjectInfo} state={currentObjectState}/>
+            </article>
+            <article className="setup">
+            </article>
         </div>)
     }
 
     componentDidMount() {
-        setInterval(() => this.getFacility(), this.refreshInterval);
+        // setInterval(() => this.getFacility(), this.refreshInterval);
     }
 
     componentWillUnmount() {

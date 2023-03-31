@@ -40,12 +40,11 @@ class AppController extends AbstractController
     #[Route('/api/objects', name: 'app_api_objects', priority: 10)]
     public function apiObjects(ObjectManager $objectManager, Request $request): Response
     {
-
+        // REQUEST STRUCTURE:: object: { settings: true, time: true, alerts: true }
         if ($request->isMethod('post')) {
-            // STRUCTURE:: object: { settings: { setting_name: true }, time: { ['H', 'd', etc..] }}
             $js_request = json_decode($request->getContent(), true);
             $data['facility'] = $objectManager->getAllObjectsData(true, $js_request);
-            if (isset($js_request['time'])) {
+            if (isset($js_request['time']) AND $js_request['time'] === true) {
                 $data['time'] = $objectManager->getTime($js_request['time']);
             }
         }

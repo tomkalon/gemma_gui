@@ -10,7 +10,9 @@ let icons = {
         desc: 'temp',
         value: [],
         timeOfDay: ['gf-day', 'gf-night'],
-        settings: []
+        settings: [],
+        fullName: 'Temperatura',
+        shortName: 'Temp'
     },
     humid: {
         si: '%',
@@ -21,7 +23,9 @@ let icons = {
         desc: 'wilgotność',
         value: [],
         timeOfDay: ['gf-day', 'gf-night'],
-        settings: []
+        settings: [],
+        fullName: 'Wilgotność',
+        shortName: 'Wilg.'
     },
     vent: {
         si: '%',

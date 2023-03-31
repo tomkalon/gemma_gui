@@ -17,7 +17,7 @@ class ObjectManager
         $this->object = $objectsRepository;
         $configDirectories = [__DIR__ . '/config'];
         $fileLocator = new FileLocator($configDirectories);
-        $config_location = $fileLocator->locate('facility.yaml');
+        $config_location = $fileLocator->locate('config.yaml');
         $this->config = Yaml::parse(file_get_contents($config_location));
     }
 
@@ -45,9 +45,10 @@ class ObjectManager
         return $data;
     }
 
-    // write Sensors data to array
+    // return DATA array dependent of $sensors_count & $request_data
     private function getArrayOfSensorsData(object $obj, bool $sensor_count, ?array $request_data): array
     {
+        // saves Sensors data to array
         $arr = array();
         $arr['id'] = $obj->getId();
         $arr['name'] = $obj->getName();
@@ -58,43 +59,80 @@ class ObjectManager
         $obj->getBlow() === 'false' ?: $arr['readings']['blow'] = $obj->getBlow();
         $obj->getHeat() === 'false' ?: $arr['readings']['heat'] = $obj->getHeat();
 
-
-        if (isset($request_data['settings'])) {
+        // saves objects settings to array
+        if (isset($request_data['settings']) and $request_data['settings'] === true) {
             if ($obj->getSettings()) {
                 $settings = $obj->getSettings();
-                $req_settings = $request_data['settings'];
+                $check_settings = $this->config['settings'];
 
-                if (isset($req_settings['name'])) {
-                    $arr['settings']['name'] = $settings->getName();
+                $arr['settings']['id'] = $settings->getId();
+                $arr['settings']['name'] = $settings->getName();
+
+                if ($check_settings['enable']['temp'] === true) {
+                    $check = $check_settings['temp'];
+                    if ($check['temp_day'] === true) {$arr['settings']['temp_day'] = $settings->getTempDay();}
+                    if ($check['temp_night'] === true) {$arr['settings']['temp_night'] = $settings->getTempNight();}
+                    if ($check['temp_hysteresis'] === true) {$arr['settings']['temp_hysteresis'] = $settings->getTempHysteresis();}
+                    if ($check['temp_control_day'] === true) {$arr['settings']['temp_control_day'] = $settings->isTempControlDay();}
+                    if ($check['temp_control_night'] === true) {$arr['settings']['temp_control_night'] = $settings->isTempControlNight();}
+                    if ($check['temp_vent_close'] === true) {$arr['settings']['temp_vent_close'] = $settings->getTempVentClose();}
+                    if ($check['temp_alarm'] === true) {$arr['settings']['temp_alarm'] = $settings->getTempAlarm();}
+                    if ($check['temp_alarm_flag'] === true) {$arr['settings']['temp_alarm_flag'] = $settings->getTempAlarmFlag();}
                 }
-                if (isset($req_settings['temp_day'])) {
-                    $arr['settings']['temp_day'] = $settings->getTempDay();
+                if ($check_settings['enable']['humid'] === true) {
+                    $check = $check_settings['humid'];
+                    if ($check['humid'] === true) {$arr['settings']['humid'] = $settings->getHumid();}
+                    if ($check['humid_hysteresis'] === true) {$arr['settings']['humid_hysteresis'] = $settings->getHumidHysteresis();}
+                    if ($check['humid_control_day'] === true) {$arr['settings']['humid_control_day'] = $settings->isHumidControlDay();}
+                    if ($check['humid_control_night'] === true) {$arr['settings']['humid_control_night'] = $settings->isHumidControlNight();}
+                    if ($check['humid_vent_step'] === true) {$arr['settings']['humid_vent_step'] = $settings->getHumidVentStep();}
+                    if ($check['humid_vent_pause'] === true) {$arr['settings']['humid_vent_pause'] = $settings->getHumidVentPause();}
+                    if ($check['humid_vent_pause_open'] === true) {$arr['settings']['humid_vent_pause_open'] = $settings->getHumidVentPause();}
+                    if ($check['humid_vent_max_open'] === true) {$arr['settings']['humid_vent_max_open'] = $settings->getHumidVentMaxOpen();}
+                    if ($check['humid_alarm'] === true) {$arr['settings']['humid_alarm'] = $settings->getHumidAlarm();}
+                    if ($check['humid_alarm_flag'] === true) {$arr['settings']['humid_alarm_flag'] = $settings->isHumidAlarmFlag();}
+                    if ($check['humid_alarm_enable'] === true) {$arr['settings']['humid_alarm_enable'] = $settings->getHumidAlarmEnable();}
                 }
-                if (isset($req_settings['temp_night'])) {
-                    $arr['settings']['temp_night'] = $settings->getTempNight();
+                if ($check_settings['enable']['heat'] === true) {
+                    $check = $check_settings['heat'];
+                    if ($check['heat'] === true) {$arr['settings']['heat'] = $settings->getHeat();}
+                    if ($check['heat_hysteresis'] === true) {$arr['settings']['heat_hysteresis'] = $settings->getHeatHysteresis();}
                 }
-                if (isset($req_settings['temp_control_day'])) {
-                    $arr['settings']['temp_control_day'] = $settings->isTempControlDay();
+                if ($check_settings['enable']['vent'] === true) {
+                    $check = $check_settings['vent'];
+                    if ($check['vent'] === true) {$arr['settings']['vent'] = $settings->getVent();}
+                    if ($check['vent_step_time'] === true) {$arr['settings']['vent_step_time'] = $settings->getVentStepTime();}
+                    if ($check['vent_pause'] === true) {$arr['settings']['vent_pause'] = $settings->getVentPause();}
+                    if ($check['vent_open_close_time'] === true) {$arr['settings']['vent_open_close_time'] = $settings->getVentOpenCloseTime();}
+                    if ($check['vent_max_open_rain'] === true) {$arr['settings']['vent_max_open_rain'] = $settings->getVentMaxOpenRain();}
+                    if ($check['vent_wind_delay'] === true) {$arr['settings']['vent_wind_delay'] = $settings->getVentWindDelay();}
+                    if ($check['vent_rain_delay'] === true) {$arr['settings']['vent_rain_delay'] = $settings->getVentRainDelay();}
+                    if ($check['vent_weak_wind_max'] === true) {$arr['settings']['vent_weak_wind_max'] = $settings->getVentWeakWindMax();}
+                    if ($check['vent_strong_wind_max'] === true) {$arr['settings']['vent_strong_wind_max'] = $settings->getVentStrongWindMax();}
+                    if ($check['vent_min_temp'] === true) {$arr['settings']['vent_min_temp'] = $settings->getVentMinTemp();}
                 }
-                if (isset($req_settings['temp_control_night'])) {
-                    $arr['settings']['temp_control_night'] = $settings->isTempControlNight();
+                if ($check_settings['enable']['blow'] === true) {
+                    $check = $check_settings['blow'];
+                    if ($check['blow'] === true) {$arr['settings']['blow'] = $settings->getBlow();}
+                    if ($check['blow_pause'] === true) {$arr['settings']['blow_pause'] = $settings->getBlowPause();}
                 }
-                if (isset($req_settings['humid'])) {
-                    $arr['settings']['humid'] = $settings->getHumid();
-                }
-                if (isset($req_settings['humid_control_day'])) {
-                    $arr['settings']['humid_control_day'] = $settings->isHumidControlDay();
-                }
-                if (isset($req_settings['humid_control_night'])) {
-                    $arr['settings']['humid_control_night'] = $settings->isHumidControlNight();
+                if ($check_settings['enable']['shadow'] === true) {
+                    $check = $check_settings['shadow'];
+                    if ($check['shadow'] === true) {$arr['settings']['shadow'] = $settings->getShadow();}
+                    if ($check['shadow_manual'] === true) {$arr['settings']['shadow_manual'] = $settings->getShadowManual();}
+                    if ($check['shadow1'] === true) {$arr['settings']['shadow1'] = $settings->getShadow1();}
+                    if ($check['shadow2'] === true) {$arr['settings']['shadow2'] = $settings->getShadow2();}
+                    if ($check['shadow3'] === true) {$arr['settings']['shadow3'] = $settings->getShadow3();}
+                    if ($check['shadow4'] === true) {$arr['settings']['shadow4'] = $settings->getShadow4();}
+                    if ($check['shadow5'] === true) {$arr['settings']['shadow5'] = $settings->getShadow5();}
                 }
             }
         }
 
-        if (isset($request_data['alerts'])) {
+        if (isset($request_data['alerts']) and $request_data['alerts'] === true) {
             if ($obj->getAlerts()) {
                 $alerts = $obj->getAlerts();
-                $req_alerts = $request_data['alerts'];
+                $arr['alerts'] = 'test';
             }
         }
 
@@ -123,12 +161,11 @@ class ObjectManager
         return $settings;
     }
 
-    public function getTime(?array $request_time):array {
+    public function getTime(?bool $request_time): array
+    {
         $time = array();
         if (isset($request_time)) {
-            for($i = 0; $i < count($request_time); $i++) {
-                $time[$i] = date($request_time[$i]);
-            }
+            $time = ['test ok'];
         }
         return $time;
     }
@@ -174,7 +211,7 @@ class ObjectManager
         $pages = array();
         $columns_count_accumulator = null;
         $max_rows_count = null;
-        $carousel = $this->config['config']['carousel'];
+        $carousel = $this->config['carousel'];
 
         // list all carousel['sensor_count'] elements - so -> all Objects
         foreach ($sensors_count as $key => $value) {

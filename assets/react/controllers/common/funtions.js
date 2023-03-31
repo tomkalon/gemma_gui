@@ -77,7 +77,9 @@ function isSensorActive(data, num, stateScheme, icons) {
                 desc: val.desc,
                 desc_arr: val.desc_arr,
                 settings: val.settings,
-                calculated: {}
+                calculated: {},
+                fullName: val.fullName,
+                shortName: val.shortName,
             }
         }
     }
