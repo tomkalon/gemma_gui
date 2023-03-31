@@ -133,6 +133,7 @@ class ObjectManager
         return $time;
     }
 
+    // === TWIG CAROUSEL ===
     // get ALL OBJECTS and PREPARE THEM to DISPLAY with CAROUSEL in TWIG TEMPLATE -> RETURN ALL OBJECTS with CAROUSEL SETUP
     public function prepareAllObjectsDataForCarousel(): array
     {

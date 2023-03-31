@@ -6,6 +6,31 @@ import CarouselPage from "./component/carousel/CarouselPage";
 import icons from "./setup/icons";
 import commonFunctions from "./common/funtions";
 
+// ================================================================================
+//  CLASS STRUCTURE & DESCRIPTION OF THE ACTION
+//
+// getFacility
+// -> fetching DATA from API (values, objects)
+// -> -> getObjectInfo::: like ID & NAME (create THIS.SCHEME) / functions.js
+// -> -> isSensorActive::: assign settings from Icons.js to Objects Elements (create THIS.STATE_SCHEME) / functions.js
+// -> -> assignSetupToValues::: calculate the given VALUES for specific SENSORS -> get current values and icons
+//      (THIS.STATE_SCHEME) / functions.js
+// -> -> getCarouselDisplaySettings::: prepare SCHEME (OBJECT DISPLAY - size)
+//      & THIS.CAROUSEL to be displayed in CAROUSEL (PAGINATION, PAGES, MAX_ROWS, OBJECT_PER_PAGE etc.)
+//      & THIS.STATE_SCHEME (CURRENT_PAGE)
+//      / functions.js
+//
+//
+// ==== functions which realize changing pages in Carousel
+// carouselPaginationPageIndex
+// carouselSidebarPageIndex
+//
+// ================================================================================
+//  Carousel -> display Carousel -> /component/carousel/carousel.js
+//  Details -> display Object details -> /component/details/details.js
+//
+// ================================================================================
+
 export default class FacilityApp extends Component {
 
     constructor(props) {
@@ -79,6 +104,9 @@ export default class FacilityApp extends Component {
                     }
                 }
 
+                console.log(this.scheme);
+                console.log(this.carousel);
+
                 // save SCHEME to STATE
                 this.setState({facility: this.stateScheme, page: this.carousel.page});
 
@@ -134,12 +162,12 @@ export default class FacilityApp extends Component {
         }
     }
 
-    paginationPageIndex(index) {
+    carouselPaginationPageIndex(index) {
         this.carousel.page = index;
         this.setState({page: index});
     }
 
-    sidebarPageIndex(index) {
+    carouselSidebarPageIndex(index) {
         if (this.carousel.pageCount) {
             if (index === "prev") {
                 this.carousel.page--;
@@ -151,20 +179,25 @@ export default class FacilityApp extends Component {
     }
 
     render() {
+
+        // carousel
         let pageState = this.state.page;
-        let facilityState;
-        let facilityInfo;
         let display;
 
-        let showPage;
-        let pagination;
-        let prevSideBar;
-        let nextSideBar;
+        let carouselShowPage;
+        let carouselPagination;
+        let prevCarouselSideBar;
+        let nextCarouselSideBar;
 
         let prevIsActive = "hidden";
         let nextIsActive = "hidden";
 
+        // objects DATA // FACILITY
+        let facilityState;
+        let facilityInfo;
 
+        // CAROUSEL
+        // =======================================================================
         // render if there isn't initial rendering
         if (!this.isInitialFetch) {
             facilityState = this.state.facility;
@@ -173,7 +206,6 @@ export default class FacilityApp extends Component {
 
             // show carousel navigation sidebar dependent on selected page number
             if (this.carousel.pageCount) {
-                // console.log(pageState);
                 if (pageState === 0) {
                     prevIsActive = "hidden";
                     nextIsActive = "block";
@@ -190,29 +222,30 @@ export default class FacilityApp extends Component {
             }
 
             // carousel content block
-            showPage = <CarouselPage
+            carouselShowPage = <CarouselPage
                 page={pageState} pages={display.pages[pageState]} objectsState={facilityState}
                 objectsInfo={facilityInfo} maxRow={display.maxRows}/>;
 
             // carousel pagination block
-            pagination = <CarouselPagination
-                pagination={display.pagination} active={pageState} handler={this.paginationPageIndex.bind(this)}/>;
+            carouselPagination = <CarouselPagination
+                pagination={display.pagination} active={pageState} handler={this.carouselPaginationPageIndex.bind(this)}/>;
 
             // carousel navigations blocks
-            prevSideBar = <CarouselSidebar
+            prevCarouselSideBar = <CarouselSidebar
                 direction={"prev"} directionIcon={"gf-left-arrow"} visibility={prevIsActive}
-                handler={this.sidebarPageIndex.bind(this)}/>;
-            nextSideBar = <CarouselSidebar
+                handler={this.carouselSidebarPageIndex.bind(this)}/>;
+            nextCarouselSideBar = <CarouselSidebar
                 direction={"next"} directionIcon={"gf-right-arrow"} visibility={nextIsActive}
-                handler={this.sidebarPageIndex.bind(this)}/>;
+                handler={this.carouselSidebarPageIndex.bind(this)}/>;
         }
+        // =======================================================================
 
         return (<div>
             <article className="all w-full dark:bg-darker-500 border-b-4 dark:border-darker-450">
                 <div className="container mx-auto">
                     <div id="carousel" className="w-full py-4">
-                        <Carousel showPage={showPage} pagination={pagination} prevSideBar={prevSideBar}
-                                  nextSideBar={nextSideBar}/>
+                        <Carousel showPage={carouselShowPage} pagination={carouselPagination} prevSideBar={prevCarouselSideBar}
+                                  nextSideBar={nextCarouselSideBar}/>
                     </div>
                 </div>
             </article>
