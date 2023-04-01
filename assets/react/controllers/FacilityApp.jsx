@@ -3,7 +3,7 @@ import Carousel from "./component/carousel/Carousel";
 import CarouselSidebar from "./component/carousel/CarouselSidebar";
 import CarouselPagination from "./component/carousel/CarouselPagination";
 import CarouselPage from "./component/carousel/CarouselPage";
-import icons from "./setup/icons";
+import icons from "./common/icons";
 import commonFunctions from "./common/funtions";
 import Details from "./component/details/Details";
 
@@ -66,7 +66,7 @@ export default class FacilityApp extends Component {
         this.stateScheme = [];
         this.scheme = [];
         this.currentObject = null;
-        this.icons = structuredClone(icons);
+        this.icons = icons;
         this.isInitialFetch = true;
         this.time = null;
 
@@ -90,19 +90,18 @@ export default class FacilityApp extends Component {
         })
             .then((response) => response.json())
             .then(data => {
-
                 let facility, settings, alerts;
                 if (data.facility) facility = data.facility;
                 if (data.settings) settings = data.settings;
                 if (data.alerts) alerts = data.alerts;
-
-                console.log(data);
 
                 // initial function which filters sensors used by specific object
                 // and adds icons scheme for each sensor
                 // RUN ONCE
                 if (this.isInitialFetch) {
                     this.carousel.numberOfObjects = facility.length;
+
+                    // key -> object number; value -> object data (id, name, readings)
                     for (const [key, value] of Object.entries(facility)) {
                         this.getObjectInfo(value, key, this.scheme);
                         this.isSensorActive(value, key, this.stateScheme, icons);

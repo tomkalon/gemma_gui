@@ -1,9 +1,12 @@
+// noinspection JSCheckFunctionSignatures
+
 import React from 'react';
 
 // update stateSCHEME by the fetched data -> VALUES and setup icons
-function assignSetupToValues(data, stateScheme) {
-    for (const [key, val] of Object.entries(data)) {
-
+function assignSetupToValues(readings, stateScheme) {
+    // KEY -> for example: temp, humid...; VAL -> si, thresholds, value...
+    for (const [key, val] of Object.entries(readings)) {
+        stateScheme[key].calculated = [];
         // icons if THRESHOLD is  an integer array
         if (stateScheme[key].thresholds !== false) for (const i of Object.keys(val)) {
             for (const [index, item] of Object.entries(stateScheme[key].thresholds)) {
@@ -44,7 +47,7 @@ function assignSetupToValues(data, stateScheme) {
             //     stateScheme[key].value = val.map((element) => Number.parseFloat(element).toFixed(1));
         // }
         else if (key === 'sun') {
-            stateScheme[key].value[0] = val;
+            stateScheme[key].value = val;
         } else {
             stateScheme[key].value = val;
         }
@@ -67,19 +70,11 @@ function isSensorActive(data, num, stateScheme, icons) {
     let readings = {};
     for (const [key, val] of Object.entries(icons)) {
         if (data.readings[key]) {
-            readings[key] = {
-                value: val.value,
-                si: val.si,
-                icon: val.icon,
-                thresholds: val.thresholds,
-                scope: val.scope,
-                color: val.color,
-                desc: val.desc,
-                desc_arr: val.desc_arr,
-                settings: val.settings,
-                calculated: {},
-                fullName: val.fullName,
-                shortName: val.shortName,
+            readings[key] = {};
+            for (const [index, element] of Object.entries(val)) {
+                let sensorProperty = {};
+                sensorProperty[index] = element;
+                Object.assign(readings[key], sensorProperty);
             }
         }
     }

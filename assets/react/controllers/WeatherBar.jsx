@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import WeatherItem from "./component/weather/WeatherItem"
-import icons from "./setup/icons";
+import icons from "./common/icons";
 import commonFunctions from "./common/funtions";
 
 export default class WeatherBar extends Component {
@@ -12,7 +12,7 @@ export default class WeatherBar extends Component {
 
         // var
         this.stateScheme = [];
-        this.icons = structuredClone(icons);
+        this.icons = icons;
         this.isInitialFetch = true;
 
         // state
@@ -74,7 +74,7 @@ export default class WeatherBar extends Component {
     }
 
     componentDidMount() {
-        setInterval(() => this.getData(), this.refreshInterval);
+        // setInterval(() => this.getData(), this.refreshInterval);
     }
 
     componentWillUnmount() {
