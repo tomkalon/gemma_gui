@@ -85,7 +85,8 @@ class AppFixtures extends Fixture
         } else {
             $obj->setTempAlarm(rand(-20, 0));
         }
-        $obj->setHumid(rand(30, 99));
+        $obj->setHumidDay(rand(30, 99));
+        $obj->setHumidNight(rand(60, 99));
         $obj->setHumidHysteresis(rand(0, 30));
         $obj->setHumidControlDay(rand(0, 1));
         $obj->setHumidControlNight(rand(0, 1));

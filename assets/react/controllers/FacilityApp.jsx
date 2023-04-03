@@ -58,17 +58,16 @@ export default class FacilityApp extends Component {
         }
         this.facilitySettings = {
             settings: true,
-            time: false,
+            time: true,
             alerts: false,
         }
 
         // var
         this.stateScheme = [];
         this.scheme = [];
-        this.currentObject = null;
+        this.currentObject = 1;
         this.icons = icons;
         this.isInitialFetch = true;
-        this.time = null;
 
         // state
         this.state = {
@@ -76,7 +75,7 @@ export default class FacilityApp extends Component {
         }
 
         // function
-        this.assignSetupToValues = commonFunctions.assignSetupToValues;
+        this.assignValues = commonFunctions.assignValues;
         this.isSensorActive = commonFunctions.isSensorActive;
         this.getObjectInfo = commonFunctions.getObjectInfo;
         this.getFacility();
@@ -90,10 +89,9 @@ export default class FacilityApp extends Component {
         })
             .then((response) => response.json())
             .then(data => {
-                let facility, settings, alerts;
+                let facility, time;
                 if (data.facility) facility = data.facility;
-                if (data.settings) settings = data.settings;
-                if (data.alerts) alerts = data.alerts;
+                if (data.time) time = data.time;
 
                 // initial function which filters sensors used by specific object
                 // and adds icons scheme for each sensor
@@ -105,19 +103,33 @@ export default class FacilityApp extends Component {
                     for (const [key, value] of Object.entries(facility)) {
                         this.getObjectInfo(value, key, this.scheme);
                         this.isSensorActive(value, key, this.stateScheme, icons);
-                        this.assignSetupToValues(value.readings, this.stateScheme[key].readings);
+                        this.assignValues(value.readings, this.stateScheme[key].readings);
                         this.getCarouselDisplaySettings(value['sensors_count'], key, this.carousel, this.scheme[key]);
                     }
                     this.isInitialFetch = false;
                 } else {
                     // update SCHEME by the fetched data -> VALUES and setup icons
                     for (const [key, value] of Object.entries(facility)) {
-                        this.assignSetupToValues(value.readings, this.stateScheme[key].readings);
+                        this.assignValues(value.readings, this.stateScheme[key].readings);
                     }
                 }
 
+                console.log('-----------------------------------------------');
+                console.log("API data:");
+                console.log(data);
+                console.log("state:");
+                console.log(this.stateScheme);
+                console.log("scheme:");
+                console.log(this.scheme);
+                console.log("display:");
+                console.log(this.carousel);
+                console.log('-----------------------------------------------');
+
                 // save SCHEME to STATE
-                this.setState({facility: this.stateScheme, page: this.carousel.page, current: this.currentObject});
+                this.setState({facility: this.stateScheme, page: this.carousel.page, current: this.currentObject,
+                    isDay: time['isDay']});
+
+
 
             })
             .catch((error) => {
@@ -190,14 +202,11 @@ export default class FacilityApp extends Component {
     }
 
     render() {
-
-        // dev helper
-        let current = 0;
-
         // carousel
         let pageState = this.state.page;
         let display;
 
+        let carousel;
         let carouselShowPage;
         let carouselPagination;
         let prevCarouselSideBar;
@@ -207,21 +216,26 @@ export default class FacilityApp extends Component {
         let nextIsActive = "hidden";
 
         // objects DATA // FACILITY
-        let facilityState;
-        let settingsState;
+        let facilityState; //
         let facilityInfo;
-        let currentObjectInfo = null;
-        let currentObjectState = null;
+        let currentObject;
+        let currentObjectInfo;
+        let currentObjectState;
+        let isDay;
 
+        // details
+        let details;
 
         // =======================================================================
         // render if there isn't initial rendering
         if (!this.isInitialFetch) {
             facilityState = this.state.facility;
-            settingsState = this.state.settings;
             facilityInfo = this.scheme;
-            currentObjectInfo = facilityInfo[Object.keys(facilityInfo)[current]];
-            currentObjectState = facilityState[Object.keys(facilityState)[current]];
+            currentObject = this.state.current;
+            isDay = this.state.isDay;
+
+            currentObjectInfo = facilityInfo[Object.keys(facilityInfo)[currentObject]];
+            currentObjectState = facilityState[Object.keys(facilityState)[currentObject]];
 
             // ======= CAROUSEL =======
             display = this.carousel;
@@ -243,6 +257,7 @@ export default class FacilityApp extends Component {
                 }
             }
 
+            // === CAROUSEL
             // carousel content block
             carouselShowPage = <CarouselPage
                 page={pageState} pages={display.pages[pageState]} objectsState={facilityState}
@@ -259,6 +274,14 @@ export default class FacilityApp extends Component {
             nextCarouselSideBar = <CarouselSidebar
                 direction={"next"} directionIcon={"gf-right-arrow"} visibility={nextIsActive}
                 handler={this.carouselSidebarPageIndex.bind(this)}/>;
+            // carousel container
+            carousel = <Carousel showPage={carouselShowPage} pagination={carouselPagination} prevSideBar={prevCarouselSideBar}
+                                 nextSideBar={nextCarouselSideBar}/>;
+
+            // === DETAILS
+            // details container
+            details = <Details current={currentObject} info={currentObjectInfo} state={currentObjectState} isDay={isDay}/>;
+
         }
         // =======================================================================
 
@@ -266,14 +289,12 @@ export default class FacilityApp extends Component {
             <article className="all w-full dark:bg-darker-500 border-b-4 dark:border-darker-450">
                 <div className="container mx-auto">
                     <div id="carousel" className="w-full py-4">
-                        <Carousel showPage={carouselShowPage} pagination={carouselPagination} prevSideBar={prevCarouselSideBar}
-                                  nextSideBar={nextCarouselSideBar}/>
+                        {carousel}
                     </div>
                 </div>
             </article>
             <article className="container mx-auto">
-                <Details current={current} info={currentObjectInfo} state={currentObjectState}/>
-            </article>
+                {details}</article>
             <article className="setup">
             </article>
         </div>)

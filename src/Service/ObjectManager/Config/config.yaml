@@ -9,7 +9,8 @@ settings:
     temp_alarm: true
     temp_alarm_flag: true
   humid:
-    humid: true
+    humid_day: true
+    humid_night: true
     humid_hysteresis: true
     humid_control_day: true
     humid_control_night: true

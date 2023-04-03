@@ -44,7 +44,10 @@ class Settings
     private ?string $temp_alarm_flag = null;
 
     #[ORM\Column(length: 255, nullable: true)]
-    private ?string $humid = null;
+    private ?string $humid_day = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $humid_night = null;
 
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $humid_hysteresis = null;
@@ -258,17 +261,26 @@ class Settings
         return $this;
     }
 
-    public function getHumid(): ?string
+    public function getHumidDay(): ?string
     {
-        return $this->humid;
+        return $this->humid_day;
     }
 
-    public function setHumid(?string $humid): self
+    public function setHumidDay(?string $humid_day): void
     {
-        $this->humid = $humid;
-
-        return $this;
+        $this->humid_day = $humid_day;
     }
+
+    public function getHumidNight(): ?string
+    {
+        return $this->humid_night;
+    }
+
+    public function setHumidNight(?string $humid_night): void
+    {
+        $this->humid_night = $humid_night;
+    }
+
 
     public function getHumidHysteresis(): ?string
     {

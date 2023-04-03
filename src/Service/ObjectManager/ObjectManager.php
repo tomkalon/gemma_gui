@@ -2,6 +2,7 @@
 
 namespace App\Service\ObjectManager;
 
+use App\Repository\GlobalSettingsRepository;
 use App\Repository\ObjectsRepository;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\Yaml\Yaml;
@@ -9,12 +10,14 @@ use Symfony\Component\Yaml\Yaml;
 class ObjectManager
 {
     protected object $object;
+    protected object $global_settings;
     protected array $config;
     protected array $data;
 
-    public function __construct(ObjectsRepository $objectsRepository)
+    public function __construct(ObjectsRepository $objectsRepository, GlobalSettingsRepository $globalSettingsRepository)
     {
         $this->object = $objectsRepository;
+        $this->global_settings = $globalSettingsRepository;
         $configDirectories = [__DIR__ . '/config'];
         $fileLocator = new FileLocator($configDirectories);
         $config_location = $fileLocator->locate('config.yaml');
@@ -81,7 +84,8 @@ class ObjectManager
                 }
                 if ($check_settings['enable']['humid'] === true) {
                     $check = $check_settings['humid'];
-                    if ($check['humid'] === true) {$arr['settings']['humid'] = $settings->getHumid();}
+                    if ($check['humid_day'] === true) {$arr['settings']['humid_day'] = $settings->getHumidday();}
+                    if ($check['humid_night'] === true) {$arr['settings']['humid_night'] = $settings->getHumidNight();}
                     if ($check['humid_hysteresis'] === true) {$arr['settings']['humid_hysteresis'] = $settings->getHumidHysteresis();}
                     if ($check['humid_control_day'] === true) {$arr['settings']['humid_control_day'] = $settings->isHumidControlDay();}
                     if ($check['humid_control_night'] === true) {$arr['settings']['humid_control_night'] = $settings->isHumidControlNight();}
@@ -131,8 +135,7 @@ class ObjectManager
 
         if (isset($request_data['alerts']) and $request_data['alerts'] === true) {
             if ($obj->getAlerts()) {
-                $alerts = $obj->getAlerts();
-                $arr['alerts'] = 'test';
+
             }
         }
 
@@ -161,12 +164,27 @@ class ObjectManager
         return $settings;
     }
 
+    // get time of the day
     public function getTime(?bool $request_time): array
     {
         $time = array();
-        if (isset($request_time)) {
-            $time = ['test ok'];
+
+        // global settings
+        $query= $this->global_settings->findAll()[0];
+        $time['settings']['day_begin'] = $query->getDayBegin();
+        $time['settings']['night_begin'] = $query->getNightBegin();
+
+        // current time
+        $hour = date('H');
+
+        if (($hour >= $time['settings']['day_begin']) and ($hour < $time['settings']['night_begin'])) {
+            $time['isDay'] = true;
         }
+        else {
+            $time['isDay'] = false;
+        }
+
+
         return $time;
     }
 

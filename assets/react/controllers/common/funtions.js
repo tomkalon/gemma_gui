@@ -3,7 +3,7 @@
 import React from 'react';
 
 // update stateSCHEME by the fetched data -> VALUES and setup icons
-function assignSetupToValues(readings, stateScheme) {
+function assignValues(readings, stateScheme) {
     // KEY -> for example: temp, humid...; VAL -> si, thresholds, value...
     for (const [key, val] of Object.entries(readings)) {
         stateScheme[key].calculated = [];
@@ -65,6 +65,11 @@ function isSensorActive(data, num, stateScheme, icons) {
             settings: data.settings,
         };
     }
+    if (data.time) {
+        stateScheme[num] = {
+            time: data.time,
+        };
+    }
 
     // array with sensors names as KEY and array with values as VALUES
     let readings = {};
@@ -90,7 +95,7 @@ function getObjectInfo(data, num, scheme) {
 }
 
 const commonFunctions = {
-    isSensorActive, assignSetupToValues, getObjectInfo
+    isSensorActive, assignValues, getObjectInfo
 }
 
 export default commonFunctions;

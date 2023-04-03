@@ -4,7 +4,8 @@ class DetailsLabel extends React.Component {
 
     render() {
 
-        let current = this.props.number;
+        // props
+        let current = this.props.current;
         let name = this.props.name;
 
         return (<div

@@ -1,33 +1,54 @@
 import React from 'react';
 import DetailsLabel from "./DetailsLabel";
 import DetailsPanel from "./DetailsPanel";
+import {array} from "prop-types";
 
 class Details extends React.Component {
 
     render() {
+
+        // props
         let info = this.props.info;
         let state = this.props.state;
         let current = this.props.current + 1;
+        let isDay = this.props.isDay;
 
-        // Object name
+        // readings
+        let readings = state.readings;
+        let sensor;
+
+        // settings
+        let isSettings = null;
+        let settings = array;
+
+        if (state.settings) {
+            isSettings = true;
+            settings = state.settings;
+        }
+
+        // object info
         let name;
         if (info) {
             name = info.name;
         }
 
-        // Panels
+        // === PANELS
         let panels = [];
         let tempFullName, tempShortName, humidFullName, humidShortName;
         if (state) {
-            if (state.readings.temp) {
-                tempFullName = state.readings.temp.fullName;
-                tempShortName = state.readings.temp.shortName;
-                panels.push(<DetailsPanel fullName={tempFullName} shortName={tempShortName} key={tempShortName} data={state.readings.temp} />);
+            if (readings.temp) {
+                tempFullName = readings.temp.fullName;
+                tempShortName = readings.temp.shortName;
+                sensor = readings.temp;
+                panels.push(<DetailsPanel fullName={tempFullName} shortName={tempShortName} type="temp" key={tempShortName} sensor={sensor}
+                                          isSettings={isSettings} settings={settings} isDay={isDay} />);
             }
-            if (state.readings.humid) {
-                humidFullName = state.readings.humid.fullName;
-                humidShortName = state.readings.humid.shortName;
-                panels.push(<DetailsPanel fullName={humidFullName} shortName={humidShortName} key={humidShortName} data={state.readings.humid} />);
+            if (readings.humid) {
+                humidFullName = readings.humid.fullName;
+                humidShortName = readings.humid.shortName;
+                sensor = readings.humid;
+                panels.push(<DetailsPanel fullName={humidFullName} shortName={humidShortName} type="humid" key={humidShortName} sensor={sensor}
+                                          isSettings={isSettings} settings={settings} isDay={isDay} />);
             }
         }
 

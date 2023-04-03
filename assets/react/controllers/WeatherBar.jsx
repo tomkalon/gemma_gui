@@ -21,7 +21,7 @@ export default class WeatherBar extends Component {
         }
 
         // function
-        this.assignSetupToValues = commonFunctions.assignSetupToValues;
+        this.assignValues = commonFunctions.assignValues;
         this.isSensorActive = commonFunctions.isSensorActive;
         this.getData();
     }
@@ -49,7 +49,7 @@ export default class WeatherBar extends Component {
                 }
 
                 // update SCHEME by the fetched data -> VALUES and setup icons
-                this.assignSetupToValues(data[0].readings, this.stateScheme[0].readings);
+                this.assignValues(data[0].readings, this.stateScheme[0].readings);
 
                 // save SCHEME to STATE
                 this.setState({weather: this.stateScheme[0].readings});
