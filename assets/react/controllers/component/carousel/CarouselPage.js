@@ -4,10 +4,12 @@ import CarouselObject from "./page/CarouselObject";
 class CarouselPage extends React.Component {
 
     render() {
-        let facilityState = this.props.objectsState;
-        let facilityInfo = this.props.objectsInfo;
-        let pages = this.props.pages;
-        let maxRow = this.props.maxRow;
+
+        // props
+        const facilityState = this.props.objectsState;
+        const facilityInfo = this.props.objectsInfo;
+        const pages = this.props.pages;
+        const maxRow = this.props.maxRow;
 
         return (<div className={`row carousel-content ${maxRow}`}>
             {pages.map(function (value, index) {

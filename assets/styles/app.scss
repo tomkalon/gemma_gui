@@ -325,6 +325,7 @@ header {
               background: $dark-100;
               color: $dark-800;
             }
+
             &:hover {
               cursor: pointer;
               background: $dark-0;
@@ -379,7 +380,6 @@ header {
 
       .readings.chunk {
         flex-grow: 1;
-        width: 50%;
 
         .heading.label {
           .title {
@@ -405,18 +405,18 @@ header {
           height: 4rem;
 
           .box {
-            padding-top: 0.5rem;
             width: 16.66%;
             height: 4rem;
+            display: flex;
+            justify-content: center;
+            flex-direction: column;
 
             span {
-              &:first-child {
-                font-size: 1.1rem;
-              }
+              font-size: 1.1rem;
+            }
 
-              &:last-child {
-                font-size: 0.85rem;
-              }
+            p {
+              font-size: 0.85rem;
             }
           }
 

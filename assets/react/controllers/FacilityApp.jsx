@@ -203,7 +203,7 @@ export default class FacilityApp extends Component {
 
     render() {
         // carousel
-        let pageState = this.state.page;
+        const pageState = this.state.page;
         let display;
 
         let carousel;
@@ -274,9 +274,15 @@ export default class FacilityApp extends Component {
             nextCarouselSideBar = <CarouselSidebar
                 direction={"next"} directionIcon={"gf-right-arrow"} visibility={nextIsActive}
                 handler={this.carouselSidebarPageIndex.bind(this)}/>;
+
+
+
             // carousel container
             carousel = <Carousel showPage={carouselShowPage} pagination={carouselPagination} prevSideBar={prevCarouselSideBar}
                                  nextSideBar={nextCarouselSideBar}/>;
+
+
+
 
             // === DETAILS
             // details container
@@ -301,7 +307,7 @@ export default class FacilityApp extends Component {
     }
 
     componentDidMount() {
-        // setInterval(() => this.getFacility(), this.refreshInterval);
+        setInterval(() => this.getFacility(), this.refreshInterval);
     }
 
     componentWillUnmount() {

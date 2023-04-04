@@ -4,10 +4,12 @@ import CarouselSensor from "./CarouselSensor";
 class CarouselObject extends React.Component {
 
     render() {
-        let state = this.props.itemState;
-        let info = this.props.itemInfo;
-        let boxSize = info.display.size;
-        let readings = state.readings;
+
+        // props
+        const state = this.props.itemState;
+        const info = this.props.itemInfo;
+        const boxSize = info.display.size;
+        const readings = state.readings;
 
         return (<div
             className={`item ${boxSize} bg-gradient-to-br dark:from-darker-100 dark:to-darker-200 rounded-md cursor-pointer shadow-md dark:shadow-gray-900/30`}>
@@ -27,11 +29,10 @@ class CarouselObject extends React.Component {
                                                         icon={readings[index].calculated[0].icon} desc={item.desc}/>);
                             }
                             else {
-                                let arr = [];
-                                readings[index].value.map((element, i) => {
-                                    arr[i] = <CarouselSensor key={index + '_' + i} si={readings[index].si} value={readings[index].value[i]}
-                                                             icon={readings[index].calculated[i].icon} desc={item.desc}/>;
-                                })
+                                let arr = readings[index].value.map((element, i) =>
+                                    <CarouselSensor key={index + '_' + i} si={readings[index].si} value={readings[index].value[i]}
+                                                             icon={readings[index].calculated[i].icon} desc={item.desc}/>
+                                )
                                 return (arr);
                             }
                         }

@@ -8,10 +8,10 @@ class Details extends React.Component {
     render() {
 
         // props
-        let info = this.props.info;
-        let state = this.props.state;
-        let current = this.props.current + 1;
-        let isDay = this.props.isDay;
+        const info = this.props.info;
+        const state = this.props.state;
+        const current = this.props.current + 1;
+        const isDay = this.props.isDay;
 
         // readings
         let readings = state.readings;
@@ -21,7 +21,7 @@ class Details extends React.Component {
         let isSettings = null;
         let settings = array;
 
-        if (state.settings) {
+        if (state.settings !== undefined) {
             isSettings = true;
             settings = state.settings;
         }
@@ -55,8 +55,8 @@ class Details extends React.Component {
         return (<div className={`detail`}>
             <DetailsLabel name={name} current={current}/>
             <div className={`data`}>
-                <div className={`container mx-auto flex justify-center px-2`}>
-                    <div className={`image-box`}>
+                <div className={`container mx-auto block justify-center px-2`}>
+                    <div className={`image-box float-left hidden xl:block`}>
                         <div className={`image dark:bg-darker-900 rounded-md border dark:border-darker-500 shadow-md dark:shadow-gray-900/50`}>
                             <div className={`img h-32 mt-2 mx-2`}></div>
                             <div className={`desc text-center uppercase`}>
@@ -65,7 +65,12 @@ class Details extends React.Component {
                             </div>
                         </div>
                     </div>
-                    {panels.map((element) => {return element;})}
+                    <div className={`flex`}>
+                        {panels.map((element) => {return element;})}
+                    </div>
+                    <ul className={`additional settings label gap-0.5 h-14 dark:bg-blue-950 border-b dark:border-blue-450`}>
+                        <li className={`title`}>Ustawienia obiektu:</li>
+                    </ul>
                 </div>
             </div>
         </div>)

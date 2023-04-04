@@ -5,8 +5,8 @@ class DetailsLabel extends React.Component {
     render() {
 
         // props
-        let current = this.props.current;
-        let name = this.props.name;
+        const current = this.props.current;
+        const name = this.props.name;
 
         return (<div
                 className={`h-8 bg-gradient-to-br dark:from-blue-950 dark:to-blue-960 border-b border-t dark:border-blue-450 flex rounded-md shadow-md relative dark:shadow-gray-900/30`}>

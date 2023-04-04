@@ -4,10 +4,12 @@ import React from 'react';
 
 // update stateSCHEME by the fetched data -> VALUES and setup icons
 function assignValues(readings, stateScheme) {
+
     // KEY -> for example: temp, humid...; VAL -> si, thresholds, value...
     for (const [key, val] of Object.entries(readings)) {
         stateScheme[key].calculated = [];
-        // icons if THRESHOLD is  an integer array
+
+        // icons if THRESHOLD is an integer array
         if (stateScheme[key].thresholds !== false) for (const i of Object.keys(val)) {
             for (const [index, item] of Object.entries(stateScheme[key].thresholds)) {
                 if (val[i] <= item) {
@@ -18,7 +20,8 @@ function assignValues(readings, stateScheme) {
                 }
             }
         }
-            // icons if THRESHOLD is not an integer array
+
+        // icons if THRESHOLD is not an integer array
         // WIND_DIRECTION
         else {
             let result = null;
@@ -42,10 +45,12 @@ function assignValues(readings, stateScheme) {
         } else if (key === 'rain') {
             val[0] === '0' ? stateScheme[key].value = [stateScheme[key].desc_arr[0]] : stateScheme[key].value = [stateScheme[key].desc_arr[1]];
         }
-            // Display TEMP as FLOAT rounded to decimal place // uncomment
-            // else if (key === 'temp'){
-            //     stateScheme[key].value = val.map((element) => Number.parseFloat(element).toFixed(1));
+
+        // Display TEMP as FLOAT rounded to decimal place
+        // else if (key === 'temp'){
+        //     stateScheme[key].value = val.map((element) => Number.parseFloat(element).toFixed(1));
         // }
+
         else if (key === 'sun') {
             stateScheme[key].value = val;
         } else {
