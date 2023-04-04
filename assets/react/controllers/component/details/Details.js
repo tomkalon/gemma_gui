@@ -1,25 +1,26 @@
 import React from 'react';
 import DetailsLabel from "./DetailsLabel";
 import DetailsPanel from "./DetailsPanel";
-import {array} from "prop-types";
+import DetailsSettings from "./DetailsSettings";
+import './details.scss'
 
 class Details extends React.Component {
 
     render() {
 
         // props
-        const info = this.props.info;
-        const state = this.props.state;
-        const current = this.props.current + 1;
-        const isDay = this.props.isDay;
+        const info = this.props.info; // object: id, name
+        const state = this.props.state; // object: state -> settings, readings etc.
+        const sequenceNumber = this.props.current + 1; // Object number: starting with 1
+        const isDay = this.props.isDay; // time of day
 
         // readings
         let readings = state.readings;
         let sensor;
 
         // settings
-        let isSettings = null;
-        let settings = array;
+        let isSettings;
+        let settings;
 
         if (state.settings !== undefined) {
             isSettings = true;
@@ -32,18 +33,18 @@ class Details extends React.Component {
             name = info.name;
         }
 
-        // === PANELS
+        // panels
         let panels = [];
         let tempFullName, tempShortName, humidFullName, humidShortName;
         if (state) {
-            if (readings.temp) {
+            if (readings.temp !== undefined) {
                 tempFullName = readings.temp.fullName;
                 tempShortName = readings.temp.shortName;
                 sensor = readings.temp;
                 panels.push(<DetailsPanel fullName={tempFullName} shortName={tempShortName} type="temp" key={tempShortName} sensor={sensor}
                                           isSettings={isSettings} settings={settings} isDay={isDay} />);
             }
-            if (readings.humid) {
+            if (readings.humid !== undefined) {
                 humidFullName = readings.humid.fullName;
                 humidShortName = readings.humid.shortName;
                 sensor = readings.humid;
@@ -52,10 +53,18 @@ class Details extends React.Component {
             }
         }
 
+        // settings
+        let selectSettings;
+        if (isSettings) {
+            selectSettings = <DetailsSettings settings={settings} />;
+
+        }
+
         return (<div className={`detail`}>
-            <DetailsLabel name={name} current={current}/>
+            <DetailsLabel name={name} sequenceNumber={sequenceNumber}/>
             <div className={`data`}>
                 <div className={`container mx-auto block justify-center px-2`}>
+
                     <div className={`image-box float-left hidden xl:block`}>
                         <div className={`image dark:bg-darker-900 rounded-md border dark:border-darker-500 shadow-md dark:shadow-gray-900/50`}>
                             <div className={`img h-32 mt-2 mx-2`}></div>
@@ -65,12 +74,29 @@ class Details extends React.Component {
                             </div>
                         </div>
                     </div>
+
                     <div className={`flex`}>
                         {panels.map((element) => {return element;})}
                     </div>
-                    <ul className={`additional settings label gap-0.5 h-14 dark:bg-blue-950 border-b dark:border-blue-450`}>
-                        <li className={`title`}>Ustawienia obiektu:</li>
-                    </ul>
+                    <div className={`additional settings text-center bg-gradient-to-t dark:from-blue-950 dark:to-blue-960 dark:text-blue-100 border-b-2 dark:border-blue-450 h-14`}>
+                        <div className={`flex justify-between gap-0.5`}>
+                            {selectSettings}
+                            <div className={`label px-4`}>
+                                <div className={`title`}>Aktywne moduły:</div>
+                                <div className="module dark:bg-blue-450 active"><i className="gf gf-blow"></i></div>
+                                <div className="module dark:bg-blue-450"><i className="gf gf-heat"></i></div>
+                                <div className={`title ml-4 mr-3`}>Stats:</div>
+                                <div className="module dark:bg-blue-450 active"><i className="gf gf-stats"></i></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div className="readings stripe dark:bg-blue-960 dark:border-darker-200 dark:text-blue-100 rounded-b shadow-md dark:shadow-gray-900/30">
+                        <div className="container mx-auto px-4 flex">
+                        </div>
+                    </div>
+
+
                 </div>
             </div>
         </div>)

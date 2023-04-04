@@ -47,6 +47,9 @@ class AppController extends AbstractController
             if (isset($js_request['time']) AND $js_request['time'] === true) {
                 $data['time'] = $objectManager->getTime($js_request['time']);
             }
+            if (isset($js_request['save']) AND $js_request['save']['active'] === true) {
+
+            }
         }
         else {
             $data['facility']  = $objectManager->getAllObjectsData(true, null);

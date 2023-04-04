@@ -3,10 +3,12 @@ import React from 'react';
 class CarouselSidebar extends React.Component {
 
     render() {
-        let handler = this.props.handler;
-        let direction = this.props.direction;
-        let visibility = this.props.visibility;
-        let directionIcon = this.props.directionIcon;
+
+        // props
+        const handler = this.props.handler;
+        const direction = this.props.direction;
+        const visibility = this.props.visibility;
+        const directionIcon = this.props.directionIcon;
 
         return (
             <div className={`carousel-sidebar`}>

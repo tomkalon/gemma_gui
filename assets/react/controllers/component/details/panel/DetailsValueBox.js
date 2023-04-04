@@ -4,9 +4,9 @@ class DetailsValueBox extends React.Component {
     render() {
 
         // props
-        const sensor = this.props.sensor;
-        const diff = this.props.diff;
-        const si = this.props.si;
+        const sensor = this.props.sensor; // the sensor data like value, si, icon...
+        const diff = this.props.diff; // difference between the set value and the real value
+        const si = this.props.si; // si unit
 
         // components
         let valueList;

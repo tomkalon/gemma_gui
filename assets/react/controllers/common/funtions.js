@@ -99,8 +99,76 @@ function getObjectInfo(data, num, scheme) {
     }
 }
 
+function getCarouselDisplaySettings(sensorsCount, num, carousel, scheme) {
+    let elementSize = null;
+    let maxRows = null;
+    let numInteger = Number.parseInt(num);
+
+    // get OBJECT size and number of columns -> add number of columns to accumulator -> adder
+    for (const [key, value] of Object.entries(carousel.blockSize)) {
+        if (sensorsCount['sum'] <= value) {
+            elementSize = key;
+            carousel.adder += carousel.blockColumn[key];
+            if (carousel.maxRows < carousel.blockRows[key]) {
+                maxRows = carousel.blockRows[key];
+                carousel.maxRows = key;
+            }
+            break;
+        }
+    }
+
+    // get OBJECT page number AND pagination buttons
+    // END of Page
+    if ((carousel.adder / (carousel.colPerPage * (carousel.pageCount + 1))) > 1) {
+        carousel.pageCount++;
+        let paginationBtn = `${carousel.paginationPageStart} - ${num}`;
+        carousel.pagination.push(paginationBtn);
+        carousel.paginationPageStart = numInteger + 1;
+        carousel.pages[carousel.pageCount] = [];
+    }
+    // last ELEMENT
+    if (numInteger === (carousel.numberOfObjects - 1)) {
+        let paginationBtn;
+        if (carousel.paginationPageStart === carousel.numberOfObjects) {
+            paginationBtn = carousel.numberOfObjects;
+        } else {
+            paginationBtn = `${carousel.paginationPageStart} - ${carousel.numberOfObjects}`;
+        }
+        carousel.pagination.push(paginationBtn);
+    }
+    carousel.pages[carousel.pageCount].push(numInteger);
+
+    // save to Object SCHEME
+    // object size; object page
+    scheme.display = {
+        size: elementSize, page: carousel.pageCount
+    }
+}
+
+function carouselPaginationPageIndex(index) {
+    this.carousel.page = index;
+    this.setState({page: index});
+}
+
+function carouselSidebarPageIndex(index) {
+    if (this.carousel.pageCount) {
+        if (index === "prev") {
+            this.carousel.page--;
+        } else {
+            this.carousel.page++;
+        }
+    }
+    this.setState({page: this.carousel.page});
+}
+
+function carouselSetActiveElement(index) {
+    this.currentObject = index;
+    this.setState({current: this.currentObject});
+}
+
 const commonFunctions = {
-    isSensorActive, assignValues, getObjectInfo
+    isSensorActive, assignValues, getObjectInfo, getCarouselDisplaySettings, carouselPaginationPageIndex, carouselSidebarPageIndex,
+    carouselSetActiveElement
 }
 
 export default commonFunctions;

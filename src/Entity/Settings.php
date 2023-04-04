@@ -20,6 +20,9 @@ class Settings
     private ?string $name = null;
 
     #[ORM\Column(length: 255, nullable: true)]
+    private ?bool $temp_enable = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
     private ?string $temp_day = null;
 
     #[ORM\Column(length: 255, nullable: true)]
@@ -42,6 +45,9 @@ class Settings
 
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $temp_alarm_flag = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?bool $humid_enable = null;
 
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $humid_day = null;
@@ -80,10 +86,16 @@ class Settings
     private ?bool $humid_alarm_enable = null;
 
     #[ORM\Column(length: 255, nullable: true)]
+    private ?bool $heat_enable = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
     private ?string $heat = null;
 
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $heat_hysteresis = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?bool $vent_enable = null;
 
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $vent = null;
@@ -116,10 +128,16 @@ class Settings
     private ?string $vent_min_temp = null;
 
     #[ORM\Column(length: 255, nullable: true)]
+    private ?bool $blow_enable = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
     private ?string $blow = null;
 
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $blow_pause = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?bool $shadow_enable = null;
 
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $shadow = null;
@@ -163,6 +181,16 @@ class Settings
     public function setName(?string $name): void
     {
         $this->name = $name;
+    }
+
+    public function isTempEnable(): ?bool
+    {
+        return $this->temp_enable;
+    }
+
+    public function setTempEnable(?bool $temp_enable): void
+    {
+        $this->temp_enable = $temp_enable;
     }
 
     public function getTempDay(): ?string
@@ -259,6 +287,16 @@ class Settings
         $this->temp_alarm_flag = $temp_alarm_flag;
 
         return $this;
+    }
+
+    public function isHumidEnable(): ?bool
+    {
+        return $this->humid_enable;
+    }
+
+    public function setHumidEnable(?bool $humid_enable): void
+    {
+        $this->humid_enable = $humid_enable;
     }
 
     public function getHumidDay(): ?string
@@ -400,6 +438,16 @@ class Settings
         $this->humid_alarm_enable = $humid_alarm_enable;
     }
 
+    public function isHeatEnable(): ?bool
+    {
+        return $this->heat_enable;
+    }
+
+    public function setHeatEnable(?bool $heat_enable): void
+    {
+        $this->heat_enable = $heat_enable;
+    }
+
     public function getHeat(): ?string
     {
         return $this->heat;
@@ -422,6 +470,16 @@ class Settings
         $this->heat_hysteresis = $heat_hysteresis;
 
         return $this;
+    }
+
+    public function isVentEnable(): ?bool
+    {
+        return $this->vent_enable;
+    }
+
+    public function setVentEnable(?bool $vent_enable): void
+    {
+        $this->vent_enable = $vent_enable;
     }
 
     public function getVent(): ?string
@@ -542,6 +600,16 @@ class Settings
         return $this;
     }
 
+    public function isBlowEnable(): ?bool
+    {
+        return $this->blow_enable;
+    }
+
+    public function setBlowEnable(?bool $blow_enable): void
+    {
+        $this->blow_enable = $blow_enable;
+    }
+
     public function getBlow(): ?string
     {
         return $this->blow;
@@ -564,6 +632,16 @@ class Settings
         $this->blow_pause = $blow_pause;
 
         return $this;
+    }
+
+    public function isShadowEnable(): ?bool
+    {
+        return $this->shadow_enable;
+    }
+
+    public function setShadowEnable(?bool $shadow_enable): void
+    {
+        $this->shadow_enable = $shadow_enable;
     }
 
     public function getShadow(): ?string

@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import WeatherItem from "./component/weather/WeatherItem"
+import './component/weather/weather.scss'
 import icons from "./common/icons";
 import commonFunctions from "./common/funtions";
 
@@ -60,16 +61,22 @@ export default class WeatherBar extends Component {
     }
 
     render() {
-        return (<div className={`js-weather`}>
-            <div className={`item item-label text-center pr-4 mt-0.5 hidden md:block`}>
-                <span className={`text-darker-200`}>Odczyty</span>
-                <p>Zewnętrzne</p>
+        return (<div
+            className="bar shadow-md dark:shadow-gray-900/30 bg-gradient-to-b bg-amber-100
+             dark:from-darker-900 dark:to-darker-800 border-b border-amber-300 dark:border-darker-500">
+            <div className={`container mx-auto px-2 flex`}>
+                <div className={`js-weather`}>
+                    <div className={`item item-label text-center pr-4 mt-0.5 hidden lg:block`}>
+                        <span className={`text-darker-200`}>Odczyty</span>
+                        <p>Zewnętrzne</p>
+                    </div>
+                    {Object.entries(this.state.weather).map(([key, item]) => {
+                        return (<div key={key} className={`item text-center`}>
+                            <WeatherItem icon={item.calculated[0].icon} color={item.color} value={item.value} si={item.si}/>
+                        </div>)
+                    })}
+                </div>
             </div>
-            {Object.entries(this.state.weather).map(([key, item]) => {
-                return (<div key={key} className={`item text-center`}>
-                        <WeatherItem icon={item.calculated[0].icon} color={item.color} value={item.value} si={item.si}/>
-                    </div>)
-            })}
         </div>);
     }
 

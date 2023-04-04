@@ -5,9 +5,9 @@ class DetailsSetpoint extends React.Component {
     render() {
 
         // props
-        let day = this.props.day;
-        let night = this.props.night;
-        let isDay = this.props.isDay;
+        let day = this.props.day; // time of day
+        let night = this.props.night; // set day value block
+        let isDay = this.props.isDay; // set night value block
 
         // logic
         // IS DAY

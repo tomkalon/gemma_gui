@@ -1,0 +1,30 @@
+.bar {
+  min-height: 3rem;
+
+  .item {
+    float: left;
+    width: 4.5rem;
+    text-shadow: -2px 2px 2px #00000050;
+    text-transform: uppercase;
+
+    span {
+      font-size: 1.2rem;
+    }
+
+    &-label {
+      width: 7rem;
+      text-align: right;
+
+      span {
+        font-size: 0.85rem;
+      }
+    }
+
+    p {
+      color: #fafafa;
+      font-size: 0.85rem;
+      padding: 0;
+      margin-top: -0.2rem;
+    }
+  }
+}
