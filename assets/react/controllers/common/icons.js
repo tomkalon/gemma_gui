@@ -1,6 +1,6 @@
 import React from 'react';
 
-let icons = {
+const icons = {
     temp: {
         si: '°C',
         icon: ['gf-temp1', 'gf-temp2', 'gf-temp3', 'gf-temp4', 'gf-temp5', 'gf-temp6', 'gf-temp7'],

@@ -1,5 +1,3 @@
-// noinspection JSCheckFunctionSignatures
-
 import React from 'react';
 import $ from 'jquery'
 
@@ -42,7 +40,14 @@ function assignValues(readings, stateScheme) {
 
         // Display integer TINYINT values as strings from Icons.js -> sensor_name.desc_arr[]
         if (key === 'blow' || key === 'heat') {
-            val[0] === '0' ? stateScheme[key].value = [stateScheme[key].desc_arr[1]] : stateScheme[key].value = [stateScheme[key].desc_arr[0]];
+            if (val[0] === '0') {
+                stateScheme[key].boolValue = false;
+                stateScheme[key].value = [stateScheme[key].desc_arr[1]];
+            }
+            else {
+                stateScheme[key].boolValue = true;
+                stateScheme[key].value = [stateScheme[key].desc_arr[0]];
+            }
         } else if (key === 'rain') {
             val[0] === '0' ? stateScheme[key].value = [stateScheme[key].desc_arr[0]] : stateScheme[key].value = [stateScheme[key].desc_arr[1]];
         }
@@ -102,16 +107,15 @@ function getObjectInfo(data, num, scheme) {
 
 function getCarouselDisplaySettings(sensorsCount, num, carousel, scheme) {
     let elementSize = null;
-    let maxRows = null;
     let numInteger = Number.parseInt(num);
 
     // get OBJECT size and number of columns -> add number of columns to accumulator -> adder
+    // set maxRows
     for (const [key, value] of Object.entries(carousel.blockSize)) {
         if (sensorsCount['sum'] <= value) {
             elementSize = key;
             carousel.adder += carousel.blockColumn[key];
-            if (carousel.maxRows < carousel.blockRows[key]) {
-                maxRows = carousel.blockRows[key];
+            if (carousel.blockColumn[carousel.maxRows] < carousel.blockRows[key]) {
                 carousel.maxRows = key;
             }
             break;
@@ -181,7 +185,6 @@ function carouselSetActiveElement(index, timeout) {
         });
     }, timeout);
 }
-
 
 const commonFunctions = {
     isSensorActive, assignValues, getObjectInfo, getCarouselDisplaySettings, carouselPaginationPageIndex, carouselSidebarPageIndex,

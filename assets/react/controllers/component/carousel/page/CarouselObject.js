@@ -14,10 +14,7 @@ class CarouselObject extends React.Component {
         const readings = state.readings;
         const handler = this.props.handler;
         let isActive;
-        if (num === current) {
-            isActive = 'active';
-        }
-
+        if (num === current) isActive = 'active';
 
         return (<div onClick={() => handler(num, 200)}
                      className={`item ${boxSize} ${isActive} bg-gradient-to-br dark:from-darker-100 dark:to-darker-200 

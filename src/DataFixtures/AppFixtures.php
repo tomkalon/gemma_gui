@@ -100,8 +100,10 @@ class AppFixtures extends Fixture
         $humid_alarm_flag = rand(0, 1);
         $obj->setHumidAlarmFlag($humid_alarm_flag);
         $obj->setHumidAlarmEnable(rand(0, 1));
+        $obj->setHeatEnable(true);
         $obj->setHeat(rand(1, 40));
         $obj->setHeatHysteresis(rand(1, 10));
+        $obj->setVentEnable(true);
         $obj->setVent(rand(10, 100));
         $obj->setVentStepTime(rand(0, 30));
         $obj->setVentPause(rand(0, 30));
@@ -112,8 +114,10 @@ class AppFixtures extends Fixture
         $obj->setVentWeakWindMax(rand(0, 100));
         $obj->setVentStrongWindMax(rand(0, 100));
         $obj->setVentMinTemp(rand(0, 30));
+        $obj->setBlowEnable(true);
         $obj->setBlow(rand(0, 30));
         $obj->setBlowPause(rand(0, 30));
+        $obj->setShadowEnable(true);
         $obj->setShadow(rand(0, 100));
         $obj->setShadowManual(rand(0, 1));
         $shadow = array();

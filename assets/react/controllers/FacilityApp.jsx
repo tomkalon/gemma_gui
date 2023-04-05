@@ -2,8 +2,8 @@ import React, {Component} from 'react';
 import Carousel from "./component/carousel/Carousel";
 import Details from "./component/details/Details";
 import icons from "./common/icons";
+import carousel from "./common/carousel";
 import commonFunctions from "./common/funtions";
-import $ from 'jquery'
 
 // ================================================================================
 //  CLASS STRUCTURE & DESCRIPTION OF THE ACTION
@@ -37,23 +37,7 @@ export default class FacilityApp extends Component {
 
         //const
         this.refreshInterval = 5000;
-        this.carousel = {
-            blockSize: { // number of sensors
-                sm: 4, md: 6, lg: 9, xl: 12, xxl: 16, x2l: 20, x3l: 24
-            }, blockColumn: { // number of columns regarding number of sensors
-                sm: 2, md: 2, lg: 3, xl: 4, xxl: 4, x2l: 5, x3l: 6
-            }, blockRows: { // number of rows per size
-                sm: 2, md: 3, lg: 3, xl: 3, xxl: 4, x2l: 4, x3l: 4
-            }, maxRows: 0, // max object rows
-            pageCount: 0, // number of pages
-            pages: {0: []}, // object id in pages
-            page: 0, // selected page
-            adder: 0, // object columns accumulator -> to calculate number of pages
-            colPerPage: 12, // maximum columns per pages
-            numberOfObjects: null, // number of objects
-            pagination: [], // array with pages labels in pagination
-            paginationPageStart: 1 // label number of first object
-        }
+        this.carousel = carousel;
         this.facilitySettings = {
             settings: true, time: true, alerts: false,
         }
@@ -61,7 +45,7 @@ export default class FacilityApp extends Component {
         // var
         this.stateScheme = [];
         this.scheme = [];
-        this.currentObject = 1;
+        this.currentObject = 0;
         this.icons = icons;
         this.isInitialFetch = true;
 
@@ -156,6 +140,9 @@ export default class FacilityApp extends Component {
         // details
         let details;
 
+        // stats
+        let stats = true;
+
         // =======================================================================
         // render if there isn't initial rendering
         if (!this.isInitialFetch) {
@@ -178,7 +165,8 @@ export default class FacilityApp extends Component {
             // ======= DETAILS =======
             // details container
             if (currentObject !== false) {
-                details = <Details current={currentObject} info={currentObjectInfo} state={currentObjectState} isDay={isDay}/>;
+                details = <Details current={currentObject} info={currentObjectInfo} state={currentObjectState} isDay={isDay}
+                                   stats={stats} />;
             }
 
         }
@@ -206,7 +194,5 @@ export default class FacilityApp extends Component {
 
     componentWillUnmount() {
         clearInterval(this.getFacility);
-        console.log(document.getElementById('#js-object-detail'));
-
     }
 }

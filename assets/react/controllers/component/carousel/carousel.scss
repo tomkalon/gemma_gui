@@ -93,34 +93,54 @@ $light-shadow: 0 0 5px #ffffff80;
 
           &.sm {
             width: 11.25rem;
+            height: 12rem;
           }
 
           &.md {
             width: 11.25rem;
+            height: 16.5rem;
           }
 
           &.lg {
             width: 16.25rem;
+            height: 16.5rem;
           }
 
           &.xl {
             width: 21.25rem;
+            height: 16.5rem;
           }
 
           &.xxl {
             width: 21.25rem;
+            height: 21rem;
           }
 
           &.x2l {
             width: 26.25rem;
+            height: 21rem;
           }
 
           &.x3l {
             width: 31.25rem;
+            height: 21rem;
           }
 
           &.active {
             filter: brightness(1.15) hue-rotate(45deg) drop-shadow(-10px 10px 10px #00000080);
+            &:after {
+              content: "";
+              margin: 0 auto;
+              position: relative;
+              width: 80%;
+              height: 3px;
+              display: block;
+              top: 5px;
+              z-index: 20;
+              background: #cadafc;
+              border-radius: 5rem;
+              filter: drop-shadow(-5px 5px 5px #00000060);
+            }
           }
 
           .label {

@@ -14,6 +14,7 @@ class DetailsPanel extends React.Component {
         const isSettings = this.props.isSettings; // is object has settings?
         const sensor = this.props.sensor; // the sensor data like value, si, icon...
         const isDay = this.props.isDay; // time of day
+        const stats = this.props.stats; // time of day
 
         // ==== var
         let controlDay, controlNight, setupDay, setupNight;
@@ -23,6 +24,7 @@ class DetailsPanel extends React.Component {
         // components
         let setpoints;
         let valueBox;
+        let amplitude;
 
         // functions
         function calculateDiff(array, setup) {
@@ -71,6 +73,24 @@ class DetailsPanel extends React.Component {
             valueBox = <DetailsValueBox sensor={sensor} diff={false} si={sensor['si']}/>;
         }
 
+        if (stats) {
+            amplitude = <div className={`amplitude flex dark:bg-blue-550 border-t dark:border-blue-950`}>
+                <div className={`box`}>
+                    <div className={`value`}><span><i className={`gf gf-temp2`}></i>-{sensor['si']}</span></div>
+                    <div className={`label text-left`}>
+                        <span>{shortName}</span>
+                        <p className={`dark:text-blue-300`}>min</p>
+                    </div>
+                </div>
+                <div className={`box`}>
+                    <div className={`value`}><span><i className={`gf gf-temp6`}></i>-{sensor['si']}</span></div>
+                    <div className={`label text-left`}>
+                        <span>{shortName}</span>
+                        <p className={`dark:text-red-300`}>max</p>
+                    </div>
+                </div>
+            </div>;
+        }
         return (<div className={`readings chunk flex-wrap`}>
             <div className={`flex flex-col dark:text-blue-100 text-center uppercase`}>
                 <div className={`heading label text-sm px-4 h-10 dark:bg-blue-950 border-t dark:border-blue-450`}>
@@ -78,22 +98,7 @@ class DetailsPanel extends React.Component {
                     {setpoints}
                 </div>
                 {valueBox}
-                <div className={`amplitude flex dark:bg-blue-550 border-t dark:border-blue-950`}>
-                    <div className={`box`}>
-                        <div className={`value`}><span><i className={`gf gf-temp2`}></i>-{sensor['si']}</span></div>
-                        <div className={`label text-left`}>
-                            <span>{shortName}</span>
-                            <p className={`dark:text-blue-300`}>min</p>
-                        </div>
-                    </div>
-                    <div className={`box`}>
-                        <div className={`value`}><span><i className={`gf gf-temp6`}></i>-{sensor['si']}</span></div>
-                        <div className={`label text-left`}>
-                            <span>{shortName}</span>
-                            <p className={`dark:text-red-300`}>max</p>
-                        </div>
-                    </div>
-                </div>
+                {amplitude}
             </div>
         </div>)
     }

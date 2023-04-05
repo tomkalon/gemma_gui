@@ -138,7 +138,7 @@ $light-shadow: 0 0 5px #ffffff80;
       font-size: 0.85rem;
       height: 4.25rem;
 
-      .settings, .other {
+      .settings, .stats, .other {
         display: inline-flex!important;
       }
 
@@ -147,7 +147,11 @@ $light-shadow: 0 0 5px #ffffff80;
       }
 
       .other {
-        max-width: 25rem;
+        max-width: 16rem;
+      }
+
+      .stats {
+        max-width: 12rem;
       }
 
       .title {
@@ -223,37 +227,38 @@ $light-shadow: 0 0 5px #ffffff80;
       border-top: 1px solid $blue-450;
 
       .box {
-        width: 50%;
+        .row {
+          align-items: center;
 
-        .label {
-          text-transform: uppercase;
-          min-width: 7rem;
-          height: 3rem;
-        }
-
-        .value {
-          padding: 0 2rem 0 0;
-          margin-top: -0.35rem;
-          font-size: 0.85rem;
+          .value {
+            font-size: 0.85rem;
+            align-items: center;
+            justify-content: center;
+            min-width: 2rem!important;
+            border-radius: 0.25rem;
+          }
 
           .progress {
-            div {
-              height: 1.25rem;
-              min-width: 2rem;
-            }
-
-            .bar {
-              border-right: 1px solid #ffffff80;
-            }
+            z-index: 10;
           }
 
           .indicator {
-            top: 1.25rem;
-
-            div {
-              height: 1.25rem;
-            }
+            z-index: 20;
+            top: -1.5rem;
+            min-width: 0.25rem!important;
           }
+
+          .progress, .indicator {
+            position: relative;
+            border-radius: 0.25rem;
+          }
+
+        }
+
+        .label {
+          text-transform: uppercase;
+          width: 7rem;
+          height: 3rem;
         }
       }
     }
