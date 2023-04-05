@@ -1,6 +1,7 @@
 // noinspection JSCheckFunctionSignatures
 
 import React from 'react';
+import $ from 'jquery'
 
 // update stateSCHEME by the fetched data -> VALUES and setup icons
 function assignValues(readings, stateScheme) {
@@ -145,12 +146,17 @@ function getCarouselDisplaySettings(sensorsCount, num, carousel, scheme) {
     }
 }
 
-function carouselPaginationPageIndex(index) {
+function carouselPaginationPageIndex(index, timeout) {
     this.carousel.page = index;
-    this.setState({page: index});
+    $('#js-carousel-content').fadeOut(timeout);
+    setTimeout(() => {
+        this.setState({page: this.carousel.page}, () => {
+            $('#js-carousel-content').fadeIn(timeout);
+        });
+    }, timeout);
 }
 
-function carouselSidebarPageIndex(index) {
+function carouselSidebarPageIndex(index, timeout) {
     if (this.carousel.pageCount) {
         if (index === "prev") {
             this.carousel.page--;
@@ -158,13 +164,24 @@ function carouselSidebarPageIndex(index) {
             this.carousel.page++;
         }
     }
-    this.setState({page: this.carousel.page});
+    $('#js-carousel-content').fadeOut(timeout);
+    setTimeout(() => {
+        this.setState({page: this.carousel.page}, () => {
+            $('#js-carousel-content').fadeIn(timeout);
+        });
+    }, timeout);
 }
 
-function carouselSetActiveElement(index) {
+function carouselSetActiveElement(index, timeout) {
     this.currentObject = index;
-    this.setState({current: this.currentObject});
+    $('#js-object-detail').fadeOut(timeout);
+    setTimeout(() => {
+        this.setState({current: this.currentObject}, () => {
+            $('#js-object-detail').fadeIn(timeout);
+        });
+    }, timeout);
 }
+
 
 const commonFunctions = {
     isSensorActive, assignValues, getObjectInfo, getCarouselDisplaySettings, carouselPaginationPageIndex, carouselSidebarPageIndex,

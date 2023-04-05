@@ -48,7 +48,7 @@ class DetailsSettings extends React.Component {
             </div>;
         }
 
-        return (<div className={`label`}>
+        return (<div className={`label settings float-left`}>
                 <div className={`title`}>Ustawienia obiektu:</div>
                 {tempSetup}{humidSetup}{ventSetup}{shadowSetup}{otherSetup}
             </div>)

@@ -14,11 +14,13 @@ class CarouselPage extends React.Component {
         const maxRow = this.props.maxRow;
         const handler = this.props.handler;
 
-        return (<div className={`row carousel-content ${maxRow}`}>
-            {pages[page].map(function (value) {
-                return (<CarouselObject key={value} num={value} current={current} itemState={facilityState[value]}
-                                        itemInfo={facilityInfo[value]} handler={handler}/>)
-            })}
+        return (<div className={`carousel-content ${maxRow}`}>
+            <div className={`row`} id={`js-carousel-content`}>
+                {pages[page].map(function (value) {
+                    return (<CarouselObject key={value} num={value} current={current} itemState={facilityState[value]}
+                                            itemInfo={facilityInfo[value]} handler={handler}/>)
+                })}
+            </div>
         </div>)
     }
 }

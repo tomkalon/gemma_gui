@@ -1,11 +1,9 @@
 import React, {Component} from 'react';
 import Carousel from "./component/carousel/Carousel";
-import CarouselSidebar from "./component/carousel/CarouselSidebar";
-import CarouselPagination from "./component/carousel/CarouselPagination";
-import CarouselPage from "./component/carousel/CarouselPage";
+import Details from "./component/details/Details";
 import icons from "./common/icons";
 import commonFunctions from "./common/funtions";
-import Details from "./component/details/Details";
+import $ from 'jquery'
 
 // ================================================================================
 //  CLASS STRUCTURE & DESCRIPTION OF THE ACTION
@@ -63,7 +61,7 @@ export default class FacilityApp extends Component {
         // var
         this.stateScheme = [];
         this.scheme = [];
-        this.currentObject = false;
+        this.currentObject = 1;
         this.icons = icons;
         this.isInitialFetch = true;
 
@@ -208,5 +206,7 @@ export default class FacilityApp extends Component {
 
     componentWillUnmount() {
         clearInterval(this.getFacility);
+        console.log(document.getElementById('#js-object-detail'));
+
     }
 }

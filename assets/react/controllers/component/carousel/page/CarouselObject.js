@@ -19,7 +19,7 @@ class CarouselObject extends React.Component {
         }
 
 
-        return (<div onClick={() => handler(num)}
+        return (<div onClick={() => handler(num, 200)}
                      className={`item ${boxSize} ${isActive} bg-gradient-to-br dark:from-darker-100 dark:to-darker-200 
                      rounded-md cursor-pointer shadow-md dark:shadow-gray-900/30`}>
             <div

@@ -15,7 +15,7 @@ class CarouselPagination extends React.Component {
                     </div>)
                 }
                 else {
-                    return (<div key={index} className={'item'} onClick={() => handler(index)}>
+                    return (<div key={index} className={'item'} onClick={() => handler(index, 200)}>
                         <span>{value}</span>
                     </div>)
                 }

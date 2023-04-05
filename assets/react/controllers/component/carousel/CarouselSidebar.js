@@ -12,7 +12,7 @@ class CarouselSidebar extends React.Component {
 
         return (
             <div className={`carousel-sidebar`}>
-                <div className={`${visibility} carousel-sidebar-${direction}`} onClick={() => handler(direction)} >
+                <div className={`${visibility} carousel-sidebar-${direction}`} onClick={() => handler(direction, 200)} >
                     <span><i className={`gf ${directionIcon}`}></i></span>
                 </div>
             </div>

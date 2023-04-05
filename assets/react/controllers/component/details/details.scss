@@ -138,73 +138,83 @@ $light-shadow: 0 0 5px #ffffff80;
       font-size: 0.85rem;
       height: 4.25rem;
 
+      .settings, .other {
+        display: inline-flex!important;
+      }
+
+      .settings {
+        max-width: 34rem;
+      }
+
+      .other {
+        max-width: 25rem;
+      }
+
       .title {
         line-height: 1.3;
         font-size: 0.85rem;
         max-width: 5.5rem;
       }
 
-      &.settings {
-        .module {
-          margin: 0.5rem 0.5rem 0.5rem 0;
-          opacity: 0.2;
-          border-radius: 0.75rem;
-          box-shadow: -2px 2px 1px 1px #00000020;
-          height: 3rem;
-          width: 4rem;
-          border: 2px solid $blue-250;
-          display: flex;
-          justify-content: center;
-          align-items: center;
-          i {
-            font-size: 2rem;
-            margin: 0;
-          }
+      .module {
+        margin: 0.5rem 0.5rem 0.5rem 0;
+        opacity: 0.2;
+        border-radius: 0.75rem;
+        box-shadow: -2px 2px 1px 1px #00000020;
+        height: 3rem;
+        width: 4rem;
+        border: 2px solid $blue-250;
+        display: flex;
+        justify-content: center;
+        align-items: center;
 
+        i {
+          font-size: 2rem;
+          margin: 0;
+        }
+
+        &:hover {
+          opacity: 0.4;
+          background: $blue-250;
+          color: $dark-900;
+          cursor: pointer;
+        }
+
+        &.active, &.link {
+          opacity: 1;
+        }
+
+        &.link {
           &:hover {
-            opacity: 0.4;
             background: $blue-250;
             color: $dark-900;
-            cursor: pointer;
-          }
-
-          &.active, &.link {
-            opacity: 1;
-          }
-
-          &.link {
-            &:hover {
-              background: $blue-250;
-              color: $dark-900;
-            }
           }
         }
+      }
 
-        .element {
-          border-left: 1px solid $blue-550;
-          height: 4rem;
-          width: 6rem;
-          display: flex;
-          flex-direction: column;
-          justify-content: center;
-          font-size: 1.5rem;
-          cursor: pointer;
+      .element {
+        border-left: 1px solid $blue-550;
+        height: 4rem;
+        width: 6rem;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        font-size: 1.5rem;
+        cursor: pointer;
 
-          &:hover {
-            background: $blue-450;
-          }
-
-          &.active {
-            background: #30878f;
-            color: $dark-0;
-          }
-
-          p {
-            font-size: 0.80rem;
-            margin-top: 0.3rem;
-          }
+        &:hover {
+          background: $blue-450;
         }
 
+        &.active {
+          background: #30878f;
+          color: $dark-0;
+        }
+
+        p {
+          font-size: 0.80rem;
+          margin-top: 0.3rem;
+        }
       }
     }
 

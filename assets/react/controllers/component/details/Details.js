@@ -60,7 +60,8 @@ class Details extends React.Component {
 
         }
 
-        return (<div className={`detail`}>
+        // component
+        const component = <div id={`js-object-detail`}>
             <DetailsLabel name={name} sequenceNumber={sequenceNumber}/>
             <div className={`data`}>
                 <div className={`container mx-auto block justify-center px-2`}>
@@ -74,18 +75,17 @@ class Details extends React.Component {
                             </div>
                         </div>
                     </div>
-
                     <div className={`flex`}>
                         {panels.map((element) => {return element;})}
                     </div>
-                    <div className={`additional settings text-center bg-gradient-to-t dark:from-blue-950 dark:to-blue-960 dark:text-blue-100 border-b-2 dark:border-blue-450 h-14`}>
-                        <div className={`flex justify-between gap-0.5`}>
+                    <div className={`additional text-center bg-gradient-to-t dark:from-blue-950 dark:to-blue-960 dark:text-blue-100 border-b-2 dark:border-blue-450 h-14`}>
+                        <div>
                             {selectSettings}
-                            <div className={`label px-4`}>
+                            <div className={`label other px-4 float-right`}>
                                 <div className={`title`}>Aktywne moduły:</div>
                                 <div className="module dark:bg-blue-450 active"><i className="gf gf-blow"></i></div>
                                 <div className="module dark:bg-blue-450"><i className="gf gf-heat"></i></div>
-                                <div className={`title ml-4 mr-3`}>Stats:</div>
+                                <div className={`title ml-4 mr-3`}>Wykresy:</div>
                                 <div className="module dark:bg-blue-450 active"><i className="gf gf-stats"></i></div>
                             </div>
                         </div>
@@ -95,11 +95,11 @@ class Details extends React.Component {
                         <div className="container mx-auto px-4 flex">
                         </div>
                     </div>
-
-
                 </div>
             </div>
-        </div>)
+        </div>;
+
+        return (<div className={`detail`}>{component}</div>);
     }
 }
 

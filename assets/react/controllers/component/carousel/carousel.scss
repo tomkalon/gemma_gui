@@ -68,23 +68,22 @@ $light-shadow: 0 0 5px #ffffff80;
     }
 
     &-content {
-      &.row {
+      &.sm {
+        height: 13rem;
+      }
+
+      &.md, &.lg, &.xl {
+        height: 17rem;
+      }
+
+      &.xxl, &.x2l, &.x3l {
+        height: 21rem;
+      }
+
+      .row {
         display: flex;
         justify-content: center;
         gap: 1rem;
-
-        &.sm {
-          height: 13rem;
-        }
-
-        &.md, &.lg, &.xl {
-          height: 17rem;
-        }
-
-        &.xxl, &.x2l, &.x3l {
-          height: 21rem;
-        }
-
 
         .item {
           border: 2px solid $dark-100;
