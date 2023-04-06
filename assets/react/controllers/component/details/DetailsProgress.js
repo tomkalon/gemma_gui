@@ -9,52 +9,57 @@ class DetailsProgress extends React.Component {
         const shadow = this.props.shadow;
         const settings = this.props.settings;
 
-        // var
-        let ventBar;
-        let shadowBar;
+        function renderProgressBar(value, si, indicator) {
 
-        if (vent) {
-            ventBar = <div className="box flex w-full">
-                <div className="label"><span>Wietrznik</span></div>
-                <div className="row flex w-full">
-                    <div className="shadow progress w-full dark:bg-blue-550 h-6 mr-4">
-                        <div className="value flex dark:bg-darker-350 leading-none h-6"
-                             style={{width: '45%'}}>45%
+            let arr = value.map((element, index) => {
+                return (<div key={index} className={`shadow progress w-full dark:bg-blue-550 h-6 mr-4`}>
+                        <div className={`value flex dark:bg-darker-350 leading-none h-6`}
+                             style={{width: `${element}%`}}>{element}{si}
                         </div>
-                        <div className="indicator flex bg-gradient-to-r dark:from-transparent-0 dark:to-darker-100/20 leading-none h-6"
-                             style={{width: '45%'}}>
+                        <div
+                            className={`indicator flex bg-gradient-to-r dark:from-transparent-0 dark:to-darker-100/20
+                             leading-none h-6`}
+                            style={{width: `${indicator}%`}}>
                         </div>
-                    </div>
-                </div>
-            </div>;
+                    </div>)
+            })
+            return (<div className={`row flex w-full`}>{arr}</div>);
         }
 
-        if (shadow) {
-            shadowBar = <div className="box flex w-full">
-                <div className="label"><span>Cieniówka</span></div>
-                <div className="row flex w-full">
-                    <div className="shadow progress w-full dark:bg-blue-550 h-6 mr-4">
-                        <div className="value flex dark:bg-darker-350 leading-none h-6"
-                             style={{width: '45%'}}>45%
-                        </div>
-                        <div className="indicator flex bg-gradient-to-r dark:from-transparent-0 dark:to-darker-100/20 leading-none h-6"
-                             style={{width: '45%'}}>
-                        </div>
-                    </div>
-                </div>
-            </div>;
+        function renderProgressRow(type, settings) {
+            let indicatorValue;
+            let name = type.desc;
+            if (type.name === 'vent' && settings) {
+                indicatorValue = settings.vent;
+            } else if (type.name === 'shadow' && settings) {
+                indicatorValue = settings.shadow;
+            }
+
+            let progressArray = renderProgressBar(type.value, type.si, indicatorValue);
+
+            return (<div className={`box flex w-full`}>
+                <div className={`label`}><span>{name}</span></div>
+                {progressArray}
+            </div>);
         }
 
         // var
-        return (
-            <div
-                className="readings stripe dark:bg-blue-960 dark:border-darker-200 dark:text-blue-100 rounded shadow-md dark:shadow-gray-900/30">
-                <div className="container mx-auto px-4 flex text-blue-100 text-center">
-                    {ventBar}
-                    {shadowBar}
-                </div>
+        let progressRows = [];
+        if (vent) progressRows[0] = renderProgressRow(vent, settings);
+        if (shadow) progressRows[1] = renderProgressRow(shadow, settings);
+
+        return (<div
+            className={`readings stripe dark:bg-blue-960 dark:border-darker-200 dark:text-blue-100 rounded shadow-md dark:shadow-gray-900/30`}>
+            <div className={`container mx-auto px-4 flex text-blue-100 text-center`}>
+                {progressRows.map((element, index) => (
+                    <div key={index} className={`box flex w-full`}>
+                        {element}
+                    </div>
+                ))}
             </div>
-        )
+
+            <div>Coś tam napisane:</div>
+        </div>)
     }
 }
 

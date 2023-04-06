@@ -7,7 +7,6 @@ class DetailsPanel extends React.Component {
     render() {
 
         // props
-        const type = this.props.type; // custom prop - type: temp, humid
         const shortName = this.props.shortName; // from icons.js
         const fullName = this.props.fullName; // from icons.js
         const settings = this.props.settings; // object state settings
@@ -35,12 +34,12 @@ class DetailsPanel extends React.Component {
 
         // logic
         if (isSettings) {
-            if (type === 'temp') {
+            if (sensor.name === 'temp') {
                 controlDay = settings['temp_control_day'];
                 controlNight = settings['temp_control_night'];
                 setupDay = settings['temp_day'];
                 setupNight = settings['temp_night'];
-            } else if (type === 'humid') {
+            } else if (sensor.name === 'humid') {
                 controlDay = settings['humid_control_day'];
                 controlNight = settings['humid_control_night'];
                 setupDay = settings['humid_day'];

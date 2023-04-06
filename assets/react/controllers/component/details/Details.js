@@ -49,7 +49,7 @@ class Details extends React.Component {
 
         // PROGRESS BAR
         let progressBar;
-        if (vent || shadow) progressBar = <DetailsProgress vent={vent} shadow={shadow} settings={'settings'} />;
+        if (vent || shadow) progressBar = <DetailsProgress vent={vent} shadow={shadow} settings={settings} />;
 
 
         // OBJECT INFO
@@ -64,7 +64,7 @@ class Details extends React.Component {
                 tempFullName = readings.temp.fullName;
                 tempShortName = readings.temp.shortName;
                 sensor = readings.temp;
-                panels.push(<DetailsPanel fullName={tempFullName} shortName={tempShortName} type="temp" key={tempShortName}
+                panels.push(<DetailsPanel fullName={tempFullName} shortName={tempShortName} key={tempShortName}
                                           sensor={sensor}
                                           isSettings={isSettings} settings={settings} isDay={isDay} stats={stats}/>);
             }
@@ -72,7 +72,7 @@ class Details extends React.Component {
                 humidFullName = readings.humid.fullName;
                 humidShortName = readings.humid.shortName;
                 sensor = readings.humid;
-                panels.push(<DetailsPanel fullName={humidFullName} shortName={humidShortName} type="humid" key={humidShortName}
+                panels.push(<DetailsPanel fullName={humidFullName} shortName={humidShortName} key={humidShortName}
                                           sensor={sensor}
                                           isSettings={isSettings} settings={settings} isDay={isDay} stats={stats}/>);
             }

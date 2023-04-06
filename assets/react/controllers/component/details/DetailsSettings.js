@@ -7,9 +7,7 @@ class DetailsSettings extends React.Component {
         // props
         const settings = this.props.settings;
         const readings = this.props.readings;
-
-        console.log(readings);
-
+        
         let tempSetup, humidSetup, ventSetup, shadowSetup, otherSetup;
         // === SETTINGS
         // TEMPERATURE

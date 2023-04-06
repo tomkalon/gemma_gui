@@ -2,6 +2,7 @@ import React from 'react';
 
 const icons = {
     temp: {
+        name: 'temp',
         si: '°C',
         icon: ['gf-temp1', 'gf-temp2', 'gf-temp3', 'gf-temp4', 'gf-temp5', 'gf-temp6', 'gf-temp7'],
         thresholds: [0, 5, 10, 20, 30, 40, 200],
@@ -11,6 +12,7 @@ const icons = {
         shortName: 'Temp'
     },
     humid: {
+        name: 'humid',
         si: '%',
         icon: ['gf-dry', 'gf-humidity'],
         thresholds: [35, 100],
@@ -20,6 +22,7 @@ const icons = {
         shortName: 'Wilg.'
     },
     vent: {
+        name: 'vent',
         si: '%',
         icon: ['gf-vent1', 'gf-vent2', 'gf-vent3', 'gf-vent4', 'gf-vent5', 'gf-vent6', 'gf-vent7'],
         thresholds: [0, 20, 40, 60, 80, 95, 100],
@@ -27,6 +30,7 @@ const icons = {
         desc: 'wietrznik',
     },
     shadow: {
+        name: 'shadow',
         si: '%',
         icon: ['gf-shadow1', 'gf-shadow2', 'gf-shadow3', 'gf-shadow4', 'gf-shadow5',  'gf-shadow6'],
         thresholds: [5, 25, 50, 75, 95, 100],
@@ -34,6 +38,7 @@ const icons = {
         desc: 'cieniówka',
     },
     blow: {
+        name: 'blow',
         icon: ['gf-empty', 'gf-blow'],
         thresholds: [0, 1],
         color: ['text-sky-300'],
@@ -41,6 +46,7 @@ const icons = {
         desc_arr: ['Wł.', 'Wył.'],
     },
     heat: {
+        name: 'heat',
         icon: ['gf-empty', 'gf-heat'],
         thresholds: [0, 1],
         color: ['text-sky-300'],
