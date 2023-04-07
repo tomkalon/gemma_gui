@@ -36,6 +36,9 @@ class Objects
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $heat = null;
 
+    #[ORM\Column(length: 1023, nullable: true)]
+    private ?string $description = null;
+
     #[ORM\OneToMany(mappedBy: 'object', targetEntity: Stats::class, orphanRemoval: true)]
     private Collection $stats;
 
@@ -139,6 +142,16 @@ class Objects
         $this->heat = $heat;
 
         return $this;
+    }
+
+    public function getDescription(): ?string
+    {
+        return $this->description;
+    }
+
+    public function setDescription(?string $description): void
+    {
+        $this->description = $description;
     }
 
     /**

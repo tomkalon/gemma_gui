@@ -12,7 +12,7 @@ class Details extends React.Component {
     render() {
 
         // props
-        const info = this.props.info; // object: id, name
+        const info = this.props.info; // object: id, name, description
         const state = this.props.state; // object: state -> settings, readings etc.
         const sequenceNumber = this.props.current + 1; // Object number: starting with 1
         const isDay = this.props.isDay; // time of day
@@ -49,7 +49,8 @@ class Details extends React.Component {
 
         // PROGRESS BAR
         let progressBar;
-        if (vent || shadow) progressBar = <DetailsProgress vent={vent} shadow={shadow} settings={settings} />;
+        if (vent || shadow || info['description']) progressBar = <DetailsProgress vent={vent} shadow={shadow} settings={settings}
+                                                                                  description={info['description']} />;
 
 
         // OBJECT INFO

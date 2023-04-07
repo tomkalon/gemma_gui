@@ -55,6 +55,8 @@ class ObjectManager
         $arr = array();
         $arr['id'] = $obj->getId();
         $arr['name'] = $obj->getName();
+        $arr['description'] = $obj->getDescription();
+
         count($obj->getTemp()) === 0 ?: $arr['readings']['temp'] = $obj->getTemp();
         count($obj->getHumid()) === 0 ?: $arr['readings']['humid'] = $obj->getHumid();
         count($obj->getVent()) === 0 ?: $arr['readings']['vent'] = $obj->getVent();

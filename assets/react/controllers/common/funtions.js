@@ -101,7 +101,7 @@ function isSensorActive(data, num, stateScheme, icons) {
 // save to scheme -> object ID & NAME
 function getObjectInfo(data, num, scheme) {
     scheme[num] = {
-        id: data.id, name: data.name
+        id: data.id, name: data.name, description: data.description
     }
 }
 

@@ -8,6 +8,15 @@ class DetailsProgress extends React.Component {
         const vent = this.props.vent;
         const shadow = this.props.shadow;
         const settings = this.props.settings;
+        const description = this.props.description;
+
+        // vars
+        let descriptionBlock;
+        if (description) {
+            descriptionBlock = <div className={`p-4`}>
+                <div className={`p-4 rounded dark:bg-blue-950`}>{description}</div>
+            </div>;
+        }
 
         function renderProgressBar(value, si, indicator) {
 
@@ -57,8 +66,7 @@ class DetailsProgress extends React.Component {
                     </div>
                 ))}
             </div>
-
-            <div>Coś tam napisane:</div>
+            {descriptionBlock}
         </div>)
     }
 }
