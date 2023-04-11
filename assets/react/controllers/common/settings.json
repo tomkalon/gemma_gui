@@ -4,50 +4,60 @@
   },
   "temp": {
     "temp_day": {
+      "desc": "Temperatura w dzień",
       "icon": ["gf-temp2", "gf-day"],
       "range": [-20, 120],
       "step": 0.1,
       "si": "°C"
     },
     "temp_night": {
+      "desc": "Temperatura w nocy",
       "icon": ["gf-temp2", "gf-night"],
       "range": [-20, 120],
       "step": 0.1,
       "si": "°C"
     },
     "temp_hysteresis": {
+      "desc": "Histereza",
       "icon": ["gf-temp2", "gf-hysteresis"],
       "range": [-20, 120],
       "step": 0.1,
       "si": "°C"
     },
     "temp_vent_close": {
+      "desc": "Temp. bezwzględnego zamknięcia wietrznika",
       "icon": ["gf-temp2", "gf-warning"],
       "range": [-20, 120],
       "step": 0.1,
       "si": "°C"
     },
     "temp_control_day": {
+      "desc": "Sterowanie temperaturą<br/> w dzień",
       "icon": ["gf-day"],
       "range": [-20, 120],
       "step": 0.1,
       "bool": true
     },
     "temp_control_night": {
+      "desc": "Sterowanie temperaturą<br/> w nocy",
       "icon": ["gf-night"],
       "range": [-20, 120],
       "step": 0.1,
       "bool": true
     },
     "day_begin": {
+      "desc": "Początek dnia",
       "icon": ["gf-day-begin"],
       "range": [-20, 120],
-      "step": 0.1
+      "step": 0.1,
+      "global": true
     },
     "night_begin": {
+      "desc": "Początek nocy",
       "icon": ["gf-night-begin"],
       "range": [-20, 120],
-      "step": 0.1
+      "step": 0.1,
+      "global": true
     }
   }
 }

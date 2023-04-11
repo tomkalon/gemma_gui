@@ -46,15 +46,19 @@ export default class FacilityApp extends Component {
         // var
         this.stateScheme = [];
         this.scheme = [];
-        this.currentObject = 0;
-        this.selectedSettings = false;
         this.icons = icons;
         this.isInitialFetch = true;
+
+        this.currentObject = 0; // current Object
+        this.selectedSettings = false; // selected settings of current object
 
         // state
         this.state = {
             facility: {}
         }
+
+        // display
+        this.scrollPosition = 0;
 
         // function
         this.assignValues = commonFunctions.assignValues;
@@ -79,7 +83,6 @@ export default class FacilityApp extends Component {
                 let facility, time;
                 if (data.facility) facility = data.facility;
                 if (data.time) time = data.time;
-
                 // initial function which filters sensors used by specific object
                 // and adds icons scheme for each sensor
                 // RUN ONCE
@@ -119,7 +122,9 @@ export default class FacilityApp extends Component {
                     current: this.currentObject,
                     selectedSettings: this.selectedSettings,
                     isDay: time['isDay']
-                });
+                },
+                    function () {
+                    });
             })
             .catch((error) => {
                 alert("BŁĄD KOMUNIKACJI Z API!");

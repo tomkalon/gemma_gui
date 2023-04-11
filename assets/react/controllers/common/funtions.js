@@ -184,10 +184,12 @@ function carouselSidebarPageIndex(index, timeout) {
 // === get DETAILS ===
 function carouselSetActiveElement(index, timeout) {
     this.currentObject = index;
+    $('#js-settings').fadeOut(timeout / 2);
     $('#js-object-detail').fadeOut(timeout);
     setTimeout(() => {
         this.setState({current: this.currentObject}, () => {
             $('#js-object-detail').fadeIn(timeout);
+            $('#js-settings').fadeIn(timeout * 2);
         });
     }, timeout);
 }

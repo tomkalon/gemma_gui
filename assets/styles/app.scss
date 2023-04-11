@@ -92,6 +92,8 @@ $light-shadow: 0 0 5px #ffffff80;
 ///// NAV
 html {
   box-sizing: border-box;
+  overflow: -moz-scrollbars-vertical;
+  overflow-y: scroll;
 }
 
 body {

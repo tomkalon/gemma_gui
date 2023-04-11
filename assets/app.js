@@ -17,10 +17,6 @@ import './bootstrap';
 // register jQuery
 import $ from 'jquery';
 
-// register FlowBite - Tailwind Plugin
-// import 'flowbite';
-// import './js/flowbite';
-
 // register React.JS components
 import { registerReactControllerComponents } from '@symfony/ux-react';
 registerReactControllerComponents(require.context('./react/controllers', true, /\.(j|t)sx?$/));

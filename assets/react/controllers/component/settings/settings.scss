@@ -30,6 +30,7 @@ $assetPath : "/public/build/images";
 
 .setup {
   margin-top: 1rem;
+  padding-bottom: 3rem;
 
   @mixin setup-item {
     display: flex;
