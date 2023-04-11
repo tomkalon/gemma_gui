@@ -83,8 +83,6 @@ $light-shadow: 0 0 5px #ffffff80;
 
 
       .value {
-        height: 4rem;
-
         .box {
           width: 16.66%;
           height: 4rem;
@@ -211,7 +209,7 @@ $light-shadow: 0 0 5px #ffffff80;
         }
 
         &.active {
-          background: #30878f;
+          background: #1f475a;
           color: $dark-0;
         }
 

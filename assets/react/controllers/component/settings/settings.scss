@@ -1,0 +1,135 @@
+$dark-0: #dbeeee;
+$dark-100: #b4d3d3;
+$dark-200: #9bc3c7;
+$dark-250: #87c2c7;
+$dark-300: #377d84;
+$dark-350: #0a707a;
+$dark-400: #2b7279;
+$dark-450: #1a6066;
+$dark-500: #104e54;
+$dark-600: #0d3d42;
+$dark-650: #16393b;
+$dark-700: #042e32;
+$dark-800: #032427;
+$dark-850: #031e21;
+$dark-900: #101111;
+
+$blue-250: #b2d3d5;
+$blue-450: #426272;
+$blue-470: #425660;
+$blue-550: #143c50;
+$blue-950: #07293a;
+$blue-960: #0e2029;
+$blue-970: #020f16;
+
+$alarm-red: #501414;
+
+$text-shadow: -2px 2px 2px #00000050;
+$light-shadow: 0 0 5px #ffffff80;
+$assetPath : "/public/build/images";
+
+.setup {
+  margin-top: 1rem;
+
+  @mixin setup-item {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    box-shadow: 0 2px 5px 0 #00000080;
+  }
+  @mixin item-default-bg {
+    border-bottom: 1px solid $blue-450;
+    background: linear-gradient(to bottom right, $blue-950, $blue-960);
+  }
+  @mixin item-true-bg {
+    background: #1C531E url("#{$assetPath}/bg-true.png");
+  }
+  @mixin item-false-bg {
+    background: #62191F url("#{$assetPath}/bg-false.png");
+  }
+
+  .box {
+    padding: 1rem 1rem;
+    flex-wrap: wrap;
+    gap: 0.5rem 0.8%;
+    margin: 0 0.5rem;
+    background: linear-gradient(to bottom right, $dark-300, $dark-500);
+  }
+
+  .item {
+    display: flex;
+    flex-direction: column;
+    width: 16%;
+    height: 8rem;
+    text-transform: uppercase;
+    transition: filter 0.5s;
+
+    &:hover {
+      filter: drop-shadow(-5px 5px 5px #00000060);
+    }
+
+    &:hover {
+      cursor: pointer;
+
+      .icon {
+        filter: brightness(1.35);
+        animation-name: move-bg;
+        animation-duration: 5s;
+        animation-iteration-count: infinite;
+        animation-timing-function: ease-in-out;
+        animation-direction: alternate;
+      }
+    }
+
+    .title {
+      height: 2.5rem;
+      font-size: 0.85rem;
+      line-height: 1.2;
+      padding: 0 1rem;
+      border-radius: 0.5rem 0.5rem 0 0;
+      border-top: 1px solid $blue-450;
+      @include item-default-bg;
+      @include setup-item;
+    }
+
+    .icon {
+      flex-grow: 1;
+      font-size: 2rem;
+      color: $dark-100;
+      @include setup-item;
+      background: #174453 url("#{$assetPath}/bg-default.png");
+
+      i {
+        padding: 0 0.5rem;
+      }
+    }
+
+    .value {
+      font-size: 1.25rem;
+      height: 2.5rem;
+      border-top: 1px solid $blue-450;
+      border-radius: 0 0 0.5rem 0.5rem;
+      @include item-default-bg;
+      @include setup-item;
+    }
+
+    &.global {
+      .icon {
+        background: #255077 url("#{$assetPath}/bg-global.png");
+      }
+    }
+
+    &.true {
+      .icon {
+        @include item-true-bg;
+      }
+    }
+
+    &.false {
+      .icon {
+        @include item-false-bg;
+      }
+    }
+  }
+}

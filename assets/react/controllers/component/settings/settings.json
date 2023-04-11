@@ -1,0 +1,53 @@
+{
+  "arrangement": {
+    "temp": 6
+  },
+  "temp": {
+    "temp_day": {
+      "icon": ["gf-temp2", "gf-day"],
+      "range": [-20, 120],
+      "step": 0.1,
+      "si": "°C"
+    },
+    "temp_night": {
+      "icon": ["gf-temp2", "gf-night"],
+      "range": [-20, 120],
+      "step": 0.1,
+      "si": "°C"
+    },
+    "temp_hysteresis": {
+      "icon": ["gf-temp2", "gf-hysteresis"],
+      "range": [-20, 120],
+      "step": 0.1,
+      "si": "°C"
+    },
+    "temp_vent_close": {
+      "icon": ["gf-temp2", "gf-warning"],
+      "range": [-20, 120],
+      "step": 0.1,
+      "si": "°C"
+    },
+    "temp_control_day": {
+      "icon": ["gf-day"],
+      "range": [-20, 120],
+      "step": 0.1,
+      "bool": true
+    },
+    "temp_control_night": {
+      "icon": ["gf-night"],
+      "range": [-20, 120],
+      "step": 0.1,
+      "bool": true
+    },
+    "day_begin": {
+      "icon": ["gf-day-begin"],
+      "range": [-20, 120],
+      "step": 0.1
+    },
+    "night_begin": {
+      "icon": ["gf-night-begin"],
+      "range": [-20, 120],
+      "step": 0.1
+    }
+  }
+}

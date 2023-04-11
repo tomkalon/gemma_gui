@@ -105,6 +105,7 @@ function getObjectInfo(data, num, scheme) {
     }
 }
 
+// prepare scheme->display to operate the carousel
 function getCarouselDisplaySettings(sensorsCount, num, carousel, scheme) {
     let elementSize = null;
     let numInteger = Number.parseInt(num);
@@ -150,6 +151,9 @@ function getCarouselDisplaySettings(sensorsCount, num, carousel, scheme) {
     }
 }
 
+// ========= HANDLERS ==========
+
+// ===  pagination ===
 function carouselPaginationPageIndex(index, timeout) {
     this.carousel.page = index;
     $('#js-carousel-content').fadeOut(timeout);
@@ -160,6 +164,7 @@ function carouselPaginationPageIndex(index, timeout) {
     }, timeout);
 }
 
+// === sidebar arrows ===
 function carouselSidebarPageIndex(index, timeout) {
     if (this.carousel.pageCount) {
         if (index === "prev") {
@@ -176,6 +181,7 @@ function carouselSidebarPageIndex(index, timeout) {
     }, timeout);
 }
 
+// === get DETAILS ===
 function carouselSetActiveElement(index, timeout) {
     this.currentObject = index;
     $('#js-object-detail').fadeOut(timeout);
@@ -186,9 +192,16 @@ function carouselSetActiveElement(index, timeout) {
     }, timeout);
 }
 
+// === select Current Settings ===
+function selectSettingsHandler (name) {
+        this.selectedSettings = name;
+        this.setState({selectedSettings: this.selectedSettings});
+}
+
+// export functions
 const commonFunctions = {
     isSensorActive, assignValues, getObjectInfo, getCarouselDisplaySettings, carouselPaginationPageIndex, carouselSidebarPageIndex,
-    carouselSetActiveElement
+    carouselSetActiveElement, selectSettingsHandler
 }
 
 export default commonFunctions;

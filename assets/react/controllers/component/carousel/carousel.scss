@@ -24,6 +24,11 @@ $dark-900: #101111;
 
 $text-shadow: -2px 2px 2px #00000050;
 $light-shadow: 0 0 5px #ffffff80;
+$assetPath : "/public/build/images";
+
+.carousel-bg {
+  background: #1C531E url("#{$assetPath}/bg-carousel.svg") fixed;
+}
 
 #carousel {
   .carousel {

@@ -1,7 +1,8 @@
 import React, {Component} from 'react';
 import Carousel from "./component/carousel/Carousel";
 import Details from "./component/details/Details";
-import icons from "./common/icons";
+import Settings from "./component/settings/Settings";
+import icons from "./common/icons.json"
 import carousel from "./common/carousel";
 import commonFunctions from "./common/funtions";
 
@@ -46,6 +47,7 @@ export default class FacilityApp extends Component {
         this.stateScheme = [];
         this.scheme = [];
         this.currentObject = 0;
+        this.selectedSettings = false;
         this.icons = icons;
         this.isInitialFetch = true;
 
@@ -62,6 +64,7 @@ export default class FacilityApp extends Component {
         this.carouselPaginationPageIndex = commonFunctions.carouselPaginationPageIndex;
         this.carouselSidebarPageIndex = commonFunctions.carouselSidebarPageIndex;
         this.carouselSetActiveElement = commonFunctions.carouselSetActiveElement;
+        this.selectSettingsHandler = commonFunctions.selectSettingsHandler;
         this.getFacility();
     }
 
@@ -111,17 +114,20 @@ export default class FacilityApp extends Component {
 
                 // save SCHEME to STATE
                 this.setState({
-                    facility: this.stateScheme, page: this.carousel.page, current: this.currentObject, isDay: time['isDay']
+                    facility: this.stateScheme,
+                    page: this.carousel.page,
+                    current: this.currentObject,
+                    selectedSettings: this.selectedSettings,
+                    isDay: time['isDay']
                 });
-
-
             })
             .catch((error) => {
                 alert("BŁĄD KOMUNIKACJI Z API!");
                 console.error("Error:", error);
-
             });
     }
+
+
 
     render() {
         // carousel
@@ -135,10 +141,14 @@ export default class FacilityApp extends Component {
         let currentObject;
         let currentObjectInfo;
         let currentObjectState;
+        let selectedSettings;
         let isDay;
 
         // details
         let details;
+
+        // settings
+        let settings;
 
         // stats
         let stats = true;
@@ -153,27 +163,38 @@ export default class FacilityApp extends Component {
 
             currentObjectInfo = facilityInfo[Object.keys(facilityInfo)[currentObject]];
             currentObjectState = facilityState[Object.keys(facilityState)[currentObject]];
+            selectedSettings = this.state.selectedSettings;
 
             // ======= CAROUSEL =======
             display = this.carousel;
+
             // carousel container
             carousel = <Carousel display={display} state={facilityState} info={facilityInfo} page={pageState}
                                  current={currentObject} sidebarHandler={this.carouselSidebarPageIndex.bind(this)}
                                  paginationHandler={this.carouselPaginationPageIndex.bind(this)}
-                                 activeHandler={this.carouselSetActiveElement.bind(this)}/>;
+                                 activeHandler={this.carouselSetActiveElement.bind(this)} />;
 
             // ======= DETAILS =======
             // details container
-            if (currentObject !== false) {
-                details = <Details current={currentObject} info={currentObjectInfo} state={currentObjectState} isDay={isDay}
-                                   stats={stats} />;
+            if (currentObject !== false && currentObject !== null) {
+                if (selectedSettings === false && currentObjectState.settings) {
+                    selectedSettings = Object.keys(currentObjectState.readings)[0];
+                }
+                details = <Details current={currentObject} info={currentObjectInfo} selectedSettings={selectedSettings}
+                                   handler={this.selectSettingsHandler.bind(this)}
+                                   state={currentObjectState} isDay={isDay} stats={stats} />;
             }
 
+            // ======= SETTINGS =======
+            // settings container
+            if (currentObject !== false && currentObject !== null && currentObjectState['settings'] && selectedSettings) {
+                settings = <Settings state={currentObjectState} selectedSettings={selectedSettings}/>;
+            }
         }
         // =======================================================================
 
         return (<div>
-            <article className="w-full dark:bg-darker-500 border-b-4 dark:border-darker-450">
+            <article className="carousel-bg w-full border-b-4 dark:border-darker-450">
                 <div className="container mx-auto">
                     <div id="carousel" className="w-full py-4">
                         {carousel}
@@ -183,8 +204,7 @@ export default class FacilityApp extends Component {
             <article className="container mx-auto">
                 {details}
             </article>
-            <article className="setup">
-            </article>
+            {settings}
         </div>)
     }
 

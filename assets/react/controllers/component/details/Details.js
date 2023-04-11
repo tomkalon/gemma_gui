@@ -14,7 +14,9 @@ class Details extends React.Component {
         // props
         const info = this.props.info; // object: id, name, description
         const state = this.props.state; // object: state -> settings, readings etc.
+        const handler = this.props.handler; // select settings handler
         const sequenceNumber = this.props.current + 1; // Object number: starting with 1
+        const selectedSettings = this.props.selectedSettings; // Selected Settings
         const isDay = this.props.isDay; // time of day
         const stats = this.props.stats; // statistics & charts
 
@@ -37,7 +39,7 @@ class Details extends React.Component {
             settings = state.settings;
         }
         let selectSettings;
-        if (isSettings) selectSettings = <DetailsSettings settings={settings} readings={readings} />;
+        if (isSettings) selectSettings = <DetailsSettings settings={settings} selectedSettings={selectedSettings} handler={handler} readings={readings} />;
 
         // HEAT, BLOW: modules
         let detailsModules;
@@ -49,8 +51,9 @@ class Details extends React.Component {
 
         // PROGRESS BAR
         let progressBar;
-        if (vent || shadow || info['description']) progressBar = <DetailsProgress vent={vent} shadow={shadow} settings={settings}
-                                                                                  description={info['description']} />;
+        if (vent || shadow || info['description']) {
+            progressBar = <DetailsProgress vent={vent} shadow={shadow} settings={settings} description={info['description']} />;
+        }
 
 
         // OBJECT INFO
@@ -65,16 +68,14 @@ class Details extends React.Component {
                 tempFullName = readings.temp.fullName;
                 tempShortName = readings.temp.shortName;
                 sensor = readings.temp;
-                panels.push(<DetailsPanel fullName={tempFullName} shortName={tempShortName} key={tempShortName}
-                                          sensor={sensor}
+                panels.push(<DetailsPanel fullName={tempFullName} shortName={tempShortName} key={tempShortName} sensor={sensor}
                                           isSettings={isSettings} settings={settings} isDay={isDay} stats={stats}/>);
             }
             if (readings.humid !== undefined) {
                 humidFullName = readings.humid.fullName;
                 humidShortName = readings.humid.shortName;
                 sensor = readings.humid;
-                panels.push(<DetailsPanel fullName={humidFullName} shortName={humidShortName} key={humidShortName}
-                                          sensor={sensor}
+                panels.push(<DetailsPanel fullName={humidFullName} shortName={humidShortName} key={humidShortName} sensor={sensor}
                                           isSettings={isSettings} settings={settings} isDay={isDay} stats={stats}/>);
             }
         }
