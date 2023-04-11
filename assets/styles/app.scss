@@ -32,8 +32,8 @@ $alarm-red: #501414;
 $text-shadow: -2px 2px 2px #00000050;
 $light-shadow: 0 0 5px #ffffff80;
 
-@import 'gemma-fonts.css';
 @import 'fonts.css';
+@import 'gemma-fonts.css';
 
 // import Bootstrap css
 //@import "~bootstrap/scss/bootstrap";
@@ -88,11 +88,9 @@ $light-shadow: 0 0 5px #ffffff80;
 }
 
 // STRUCTURE
-//// HEADER
-///// NAV
+
 html {
   box-sizing: border-box;
-  overflow: -moz-scrollbars-vertical;
   overflow-y: scroll;
 }
 

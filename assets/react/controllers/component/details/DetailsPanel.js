@@ -13,7 +13,7 @@ class DetailsPanel extends React.Component {
         const isSettings = this.props.isSettings; // is object has settings?
         const sensor = this.props.sensor; // the sensor data like value, si, icon...
         const isDay = this.props.isDay; // time of day
-        const stats = this.props.stats; // time of day
+        const stats = this.props.stats; // stats
 
         // ==== var
         let controlDay, controlNight, setupDay, setupNight;
@@ -33,7 +33,7 @@ class DetailsPanel extends React.Component {
         }
 
         // logic
-        if (isSettings) {
+        if (isSettings && isDay !== undefined) {
             if (sensor.name === 'temp') {
                 controlDay = settings['temp_control_day'];
                 controlNight = settings['temp_control_night'];

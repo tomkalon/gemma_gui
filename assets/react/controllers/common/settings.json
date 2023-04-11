@@ -1,6 +1,8 @@
 {
   "arrangement": {
-    "temp": 6
+    "temp": 4,
+    "bool": ["false", "true"],
+    "otherTitle": "Pozostałe"
   },
   "temp": {
     "temp_day": {
@@ -36,14 +38,16 @@
       "icon": ["gf-day"],
       "range": [-20, 120],
       "step": 0.1,
-      "bool": true
+      "bool": true,
+      "values": ["NIE", "TAK"]
     },
     "temp_control_night": {
       "desc": "Sterowanie temperaturą<br/> w nocy",
       "icon": ["gf-night"],
       "range": [-20, 120],
       "step": 0.1,
-      "bool": true
+      "bool": true,
+      "values": ["NIE", "TAK"]
     },
     "day_begin": {
       "desc": "Początek dnia",

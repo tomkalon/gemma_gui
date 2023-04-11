@@ -26,7 +26,6 @@ $alarm-red: #501414;
 
 $text-shadow: -2px 2px 2px #00000050;
 $light-shadow: 0 0 5px #ffffff80;
-$assetPath : "/public/build/images";
 
 .setup {
   margin-top: 1rem;
@@ -42,12 +41,6 @@ $assetPath : "/public/build/images";
   @mixin item-default-bg {
     border-bottom: 1px solid $blue-450;
     background: linear-gradient(to bottom right, $blue-950, $blue-960);
-  }
-  @mixin item-true-bg {
-    background: #1C531E url("#{$assetPath}/bg-true.png");
-  }
-  @mixin item-false-bg {
-    background: #62191F url("#{$assetPath}/bg-false.png");
   }
 
   .box {
@@ -99,7 +92,7 @@ $assetPath : "/public/build/images";
       font-size: 2rem;
       color: $dark-100;
       @include setup-item;
-      background: #174453 url("#{$assetPath}/bg-default.png");
+      background: #174453 url("img/bg-default.png");
 
       i {
         padding: 0 0.5rem;
@@ -117,19 +110,19 @@ $assetPath : "/public/build/images";
 
     &.global {
       .icon {
-        background: #255077 url("#{$assetPath}/bg-global.png");
+        background: #255077 url("img/bg-global.png");
       }
     }
 
     &.true {
       .icon {
-        @include item-true-bg;
+        background: #1C531E url("img/bg-true.png");
       }
     }
 
     &.false {
       .icon {
-        @include item-false-bg;
+        background: #62191F url("img/bg-false.png");
       }
     }
   }

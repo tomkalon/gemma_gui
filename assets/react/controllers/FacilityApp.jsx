@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import Carousel from "./component/carousel/Carousel";
 import Details from "./component/details/Details";
 import Settings from "./component/settings/Settings";
-import icons from "./common/icons.json"
+import sensors from "./common/sensors.js"
 import carousel from "./common/carousel";
 import commonFunctions from "./common/funtions";
 
@@ -40,13 +40,13 @@ export default class FacilityApp extends Component {
         this.refreshInterval = 5000;
         this.carousel = carousel;
         this.facilitySettings = {
-            settings: true, time: true, alerts: false,
+            settings: true, time: true, global: true, alerts: false,
         }
+        this.sensors = structuredClone(sensors);
 
         // var
         this.stateScheme = [];
         this.scheme = [];
-        this.icons = icons;
         this.isInitialFetch = true;
 
         this.currentObject = 0; // current Object
@@ -82,7 +82,7 @@ export default class FacilityApp extends Component {
             .then(data => {
                 let facility, time;
                 if (data.facility) facility = data.facility;
-                if (data.time) time = data.time;
+                data.time ? time = data.time : time = 0;
                 // initial function which filters sensors used by specific object
                 // and adds icons scheme for each sensor
                 // RUN ONCE
@@ -92,7 +92,7 @@ export default class FacilityApp extends Component {
                     // key -> object number; value -> object data (id, name, readings)
                     for (const [key, value] of Object.entries(facility)) {
                         this.getObjectInfo(value, key, this.scheme);
-                        this.isSensorActive(value, key, this.stateScheme, icons);
+                        this.isSensorActive(value, key, this.stateScheme, this.sensors);
                         this.assignValues(value.readings, this.stateScheme[key].readings);
                         this.getCarouselDisplaySettings(value['sensors_count'], key, this.carousel, this.scheme[key]);
                     }

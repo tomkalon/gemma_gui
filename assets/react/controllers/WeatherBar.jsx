@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import WeatherItem from "./component/weather/WeatherItem"
 import './component/weather/weather.scss'
-import icons from "./common/icons";
+import sensors from "./common/sensors.js";
 import commonFunctions from "./common/funtions";
 
 export default class WeatherBar extends Component {
@@ -10,10 +10,10 @@ export default class WeatherBar extends Component {
 
         //const
         this.refreshInterval = 5000;
+        this.sensors = structuredClone(sensors);
 
         // var
         this.stateScheme = [];
-        this.icons = icons;
         this.isInitialFetch = true;
 
         // state
@@ -45,7 +45,7 @@ export default class WeatherBar extends Component {
                 // and adds icons scheme for each sensor
                 // RUN ONCE
                 if (this.isInitialFetch) {
-                    this.isSensorActive(data[0], 0, this.stateScheme, icons);
+                    this.isSensorActive(data[0], 0, this.stateScheme, this.sensors);
                     this.isInitialFetch = false;
                 }
 
