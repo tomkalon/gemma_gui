@@ -11,6 +11,9 @@ class Settings extends React.Component {
         // props
         const state = this.props.state;
         const selectedSettings = this.props.selectedSettings;
+        const global = this.props.global;
+
+        console.log(global);
 
         //var
         const settings = state.settings;
@@ -28,16 +31,35 @@ class Settings extends React.Component {
         //logic
         if (selectedSettings !== false && settingsScheme[selectedSettings] !== undefined) {
             let value;
+            let color = settingsScheme.arrangement.default;
             for (const [key, element] of Object.entries(settingsScheme[selectedSettings])) {
+
+                // if there is color saved in scheme use it
+                if (element.color) {
+                    color = element.color;
+                }
+
+                // specific sensor settings
                 if (settings[key] !== undefined) {
+                    // boolean
                     if (element.bool !== undefined) {
                         settings[key] === true ? value = 1 : value = 0;
                         display[counter] = getSettingButton(key, element, element.values[value], settingsScheme.arrangement.bool[value]);
-                    } else {
-                        display[counter] = getSettingButton(key, element, settings[key]);
                     }
+
+                    // other
+                    else {
+                        display[counter] = getSettingButton(key, element, settings[key], color);
+                    }
+                    counter++;
                 }
-                counter++;
+
+                // global settings
+                else if (global[key]) {
+                    display[counter] = getSettingButton(key, element, global[key], color);
+                    counter++;
+                }
+
                 if (counter === settingsScheme.arrangement[selectedSettings]) {
                     display[counter] = getNewRow();
                     counter++;

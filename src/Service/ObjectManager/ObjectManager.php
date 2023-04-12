@@ -179,13 +179,13 @@ class ObjectManager
 
         // global settings
         $query= $this->global_settings->findAll()[0];
-        $time['settings']['day_begin'] = $query->getDayBegin();
-        $time['settings']['night_begin'] = $query->getNightBegin();
+        $day_begin = $query->getDayBegin();
+        $night_begin = $query->getNightBegin();
 
         // current time
         $hour = date('H');
 
-        if (($hour >= $time['settings']['day_begin']) and ($hour < $time['settings']['night_begin'])) {
+        if (($hour >= $day_begin) and ($hour < $night_begin)) {
             $time['isDay'] = true;
         }
         else {
@@ -194,83 +194,23 @@ class ObjectManager
         return $time;
     }
 
-    // === TWIG CAROUSEL ===
-    // get ALL OBJECTS and PREPARE THEM to DISPLAY with CAROUSEL in TWIG TEMPLATE -> RETURN ALL OBJECTS with CAROUSEL SETUP
-    public function prepareAllObjectsDataForCarousel(): array
-    {
-        $sensors_data_array = array();
+    // get global settings
+    public function getGlobalSettings(?bool $request_global): array {
 
-        $query = $this->object->findAll();
-        foreach ($query as $key => $value) {
-            $sensors_data_array[$key] = $this->getArrayOfSensorsData($value, false, null);
-            $this->data['facility'][$key] = $this->getAllSensorsData($sensors_data_array[$key]);
-            $this->data['carousel']['sensors_count'][$key] = $this->getSensorsCountSettings($sensors_data_array[$key]);
-        }
+        $global = array();
 
-        // carousel BLOCK_SIZE & PAGES/ALL_PAGES & MAX_ROWS
-        $this->data['carousel'] = $this->prepareCarouselSetup($this->data['carousel']['sensors_count']);
-//        unset($this->data['carousel']['sensors_count']);
+        // global settings
+        $query= $this->global_settings->findAll()[0];
+        $global['day_begin'] = $query->getDayBegin();
+        $global['night_begin'] = $query->getNightBegin();
+        $global['weak_wind'] = $query->getWeakWind();
+        $global['strong_wind'] = $query->getStrongWind();
+        $global['sun_threshold1'] = $query->getSunThreshold1();
+        $global['sun_threshold2'] = $query->getSunThreshold2();
+        $global['sun_threshold3'] = $query->getSunThreshold3();
+        $global['sun_threshold4'] = $query->getSunThreshold4();
+        $global['sun_threshold5'] = $query->getSunThreshold5();
 
-        // applying SETTINGS to OBJECTS
-        foreach (array_keys($this->data['facility']) as $key) {
-            // block size name
-            $this->data['facility'][$key]['carousel']['block_size'] = array_keys($this->data['carousel']['block_size'][$key])[0];
-            // page number
-            $this->data['facility'][$key]['carousel']['page'] = $this->data['carousel']['pages'][$key];
-        }
-
-        //remove unused DATA from carousel
-        unset($this->data['carousel']['pages']);
-        unset($this->data['carousel']['block_size']);
-
-        return $this->data;
-
-    }
-
-    // if JSON file is not exist, this function create it with default structure from SENSORS_COUNT ARRAY
-    private function prepareCarouselSetup($sensors_count): array
-    {
-        $settings = array();
-        $block_size = array();
-        $pages = array();
-        $columns_count_accumulator = null;
-        $max_rows_count = null;
-        $carousel = $this->config['carousel'];
-
-        // list all carousel['sensor_count'] elements - so -> all Objects
-        foreach ($sensors_count as $key => $value) {
-            // list all BLOCK_SIZE elements -> realize carousel['block_size']
-            foreach ($carousel['block_size'] as $size => $count) {
-                if ($value['sum'] <= $count['sum']) {
-                    $block_size[$key] = array(
-                        $size => $count
-                    );
-                    break;
-                }
-            }
-        }
-
-        // sums the number of columns of all objects to calculate the number of pages
-        foreach ($block_size as $key => $value) {
-            $i = 0;
-            foreach ($value as $arr) {
-                $columns_count_accumulator += $arr['columns'];
-                if ($arr['rows'] > $max_rows_count) $max_rows_count = $arr['rows'];
-                $quotient = ($carousel['max_carousel_columns'] * ($i + 1) / $columns_count_accumulator);
-                if ($quotient < 1) {
-                    $i++;
-                }
-                $pages[$key] = $i;
-            }
-        }
-
-        $max_rows_count = $carousel['max_rows'][$max_rows_count];
-
-        $settings['sensors_count'] = $sensors_count;
-        $settings['block_size'] = $block_size;
-        $settings['all_pages'] = intdiv($columns_count_accumulator, $carousel['max_carousel_columns']);
-        $settings['pages'] = $pages;
-        $settings['max_rows'] = $max_rows_count;
-        return $settings;
+        return $global;
     }
 }

@@ -47,8 +47,8 @@ class AppController extends AbstractController
             if (isset($js_request['time']) AND $js_request['time'] === true) {
                 $data['time'] = $objectManager->getTime($js_request['time']);
             }
-            if (isset($js_request['save']) AND $js_request['save']['active'] === true) {
-
+            if (isset($js_request['global']) AND $js_request['global'] === true) {
+                $data['global'] = $objectManager->getGlobalSettings($js_request['global']);
             }
         }
         else {

@@ -80,54 +80,64 @@ export default class FacilityApp extends Component {
         })
             .then((response) => response.json())
             .then(data => {
-                let facility, time;
-                if (data.facility) facility = data.facility;
+
+                let facility, time, global;
+                data.facility ? facility = data.facility : facility = false;
                 data.time ? time = data.time : time = 0;
+                data.global ? global = data.global : global = 0;
+
                 // initial function which filters sensors used by specific object
                 // and adds icons scheme for each sensor
                 // RUN ONCE
-                if (this.isInitialFetch) {
-                    this.carousel.numberOfObjects = facility.length;
+                if (facility) {
+                    if (this.isInitialFetch) {
+                        this.carousel.numberOfObjects = facility.length;
 
-                    // key -> object number; value -> object data (id, name, readings)
-                    for (const [key, value] of Object.entries(facility)) {
-                        this.getObjectInfo(value, key, this.scheme);
-                        this.isSensorActive(value, key, this.stateScheme, this.sensors);
-                        this.assignValues(value.readings, this.stateScheme[key].readings);
-                        this.getCarouselDisplaySettings(value['sensors_count'], key, this.carousel, this.scheme[key]);
+                        // key -> object number; value -> object data (id, name, readings)
+                        for (const [key, value] of Object.entries(facility)) {
+                            this.getObjectInfo(value, key, this.scheme);
+                            this.isSensorActive(value, key, this.stateScheme, this.sensors);
+                            this.assignValues(value.readings, this.stateScheme[key].readings);
+                            this.getCarouselDisplaySettings(value['sensors_count'], key, this.carousel, this.scheme[key]);
+                        }
+                        this.isInitialFetch = false;
+                    } else {
+
+                        // update SCHEME by the fetched data -> VALUES and setup icons
+                        for (const [key, value] of Object.entries(facility)) {
+                            this.assignValues(value.readings, this.stateScheme[key].readings);
+                        }
                     }
-                    this.isInitialFetch = false;
-                } else {
-                    // update SCHEME by the fetched data -> VALUES and setup icons
-                    for (const [key, value] of Object.entries(facility)) {
-                        this.assignValues(value.readings, this.stateScheme[key].readings);
-                    }
+
+                    console.log('-----------------------------------------------');
+                    console.log("API data:");
+                    console.log(data);
+                    console.log("state:");
+                    console.log(this.stateScheme);
+                    console.log("scheme:");
+                    console.log(this.scheme);
+                    console.log("display:");
+                    console.log(this.carousel);
+                    console.log('-----------------------------------------------');
+
+                    // save SCHEME to STATE
+                    this.setState({
+                            facility: this.stateScheme,
+                            page: this.carousel.page,
+                            current: this.currentObject,
+                            selectedSettings: this.selectedSettings,
+                            isDay: time['isDay'],
+                            global: global
+                        },
+                        function () {
+                        });
                 }
-
-                console.log('-----------------------------------------------');
-                console.log("API data:");
-                console.log(data);
-                console.log("state:");
-                console.log(this.stateScheme);
-                console.log("scheme:");
-                console.log(this.scheme);
-                console.log("display:");
-                console.log(this.carousel);
-                console.log('-----------------------------------------------');
-
-                // save SCHEME to STATE
-                this.setState({
-                    facility: this.stateScheme,
-                    page: this.carousel.page,
-                    current: this.currentObject,
-                    selectedSettings: this.selectedSettings,
-                    isDay: time['isDay']
-                },
-                    function () {
-                    });
+                else {
+                    console.log('Facility data is empty! There is no any objects to display!');
+                }
             })
             .catch((error) => {
-                alert("BŁĄD KOMUNIKACJI Z API!");
+                console.log("API communication error!");
                 console.error("Error:", error);
             });
     }
@@ -154,6 +164,7 @@ export default class FacilityApp extends Component {
 
         // settings
         let settings;
+        let global;
 
         // stats
         let stats = true;
@@ -165,6 +176,7 @@ export default class FacilityApp extends Component {
             facilityInfo = this.scheme;
             currentObject = this.state.current;
             isDay = this.state.isDay;
+            global = this.state.global;
 
             currentObjectInfo = facilityInfo[Object.keys(facilityInfo)[currentObject]];
             currentObjectState = facilityState[Object.keys(facilityState)[currentObject]];
@@ -193,7 +205,7 @@ export default class FacilityApp extends Component {
             // ======= SETTINGS =======
             // settings container
             if (currentObject !== false && currentObject !== null && currentObjectState['settings'] && selectedSettings) {
-                settings = <Settings state={currentObjectState} selectedSettings={selectedSettings}/>;
+                settings = <Settings state={currentObjectState} selectedSettings={selectedSettings} global={global}/>;
             }
         }
         // =======================================================================
