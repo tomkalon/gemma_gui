@@ -1,4 +1,5 @@
 import React from 'react';
+import SettingsPopup from "./SettingsPopup";
 import './settings.scss'
 import settingsScheme from '../../common/settings.json'
 import parser from 'html-react-parser';
@@ -41,6 +42,7 @@ class Settings extends React.Component {
 
                 // specific sensor settings
                 if (settings[key] !== undefined) {
+
                     // boolean
                     if (element.bool !== undefined) {
                         settings[key] === true ? value = 1 : value = 0;
@@ -90,13 +92,16 @@ class Settings extends React.Component {
                 className={`container mx-auto flex bg-gradient-to-br dark:from-darker-700 dark:to-darker-900 dark:text-darker-100 rounded-md shadow-md relative dark:shadow-gray-900/30`}>
                 <div className={`label px-4 h-8`}>Ustawienia: {title}</div>
             </div>
-            <div className={`dark:text-darker-100`} id={`js-settings-content`}>
-                <div className={`container mx-auto `}>
+            <div className={`dark:text-darker-100`}>
+                <div className={`container mx-auto`}>
                     <div className={`box flex rounded-b`}>
-                        {Object.values(display)}
+                        <div id={`js-settings-content`} className={`box-content flex flex-grow`}>
+                            {Object.values(display)}
+                        </div>
                     </div>
                 </div>
             </div>
+            <SettingsPopup />
         </article>)
     }
 }

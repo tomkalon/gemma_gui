@@ -138,7 +138,7 @@
     content: "\f032";
 }
 
-.gf-close:before {
+.gf-closed:before {
     content: "\f033";
 }
 
@@ -346,6 +346,10 @@
 
 .gf-page:before {
     content: "\f0f2";
+}
+
+.gf-close:before {
+    content: "\f0f4";
 }
 
 .gf-empty:before {

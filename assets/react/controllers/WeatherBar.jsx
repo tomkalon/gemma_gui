@@ -55,7 +55,7 @@ export default class WeatherBar extends Component {
                 console.log('-----------------------------------------------');
                 console.log('====WEATHER====');
                 console.log('-----------------------------------------------');
-                console.log(this.stateScheme);
+                console.log(this.stateScheme[0]);
 
                 // save SCHEME to STATE
                 this.setState({weather: this.stateScheme[0].readings});

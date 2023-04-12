@@ -96,6 +96,10 @@ $assetPath : "/public/build/images";
           min-width: 11.25rem;
           min-height: 11.75rem;
 
+          &:hover {
+            filter: brightness(1.2) drop-shadow(-5px 5px 5px #00000080);
+          }
+
           &.sm {
             width: 11.25rem;
             height: 12rem;
@@ -132,7 +136,7 @@ $assetPath : "/public/build/images";
           }
 
           &.active {
-            filter: brightness(1.15) hue-rotate(45deg) drop-shadow(-10px 10px 10px #00000080);
+            filter: brightness(1.15) hue-rotate(35deg) drop-shadow(-10px 10px 10px #00000080);
             &:after {
               content: "";
               margin: 0 auto;

@@ -134,6 +134,7 @@ header {
 #content {
   flex-grow: 1;
   padding-bottom: 1rem;
+
   .label {
     display: flex;
     align-items: center;
@@ -150,5 +151,36 @@ footer {
 
   .bar {
     min-height: 2rem;
+  }
+}
+
+// buttons
+
+.btn {
+  height: 2.5rem;
+  border-radius: 0.5rem;
+  padding: 0 0.75rem;
+  font-size: 1.1rem;
+
+  &-side {
+    height: 100%;
+  }
+
+  &-save {
+    background: #3e6895;
+    border: 1px solid #3e6895;
+
+  }
+
+  &-cancel {
+    border: 1px solid $blue-450;
+  }
+
+  &-change {
+    border: 1px solid $blue-450;
+
+    &:hover {
+      background: $blue-450;
+    }
   }
 }
