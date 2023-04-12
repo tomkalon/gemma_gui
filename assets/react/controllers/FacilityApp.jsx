@@ -110,6 +110,8 @@ export default class FacilityApp extends Component {
                     }
 
                     console.log('-----------------------------------------------');
+                    console.log('====FACILITY====');
+                    console.log('-----------------------------------------------');
                     console.log("API data:");
                     console.log(data);
                     console.log("state:");
@@ -213,7 +215,7 @@ export default class FacilityApp extends Component {
         return (<div>
             <article className="carousel-bg w-full border-b-4 dark:border-darker-450">
                 <div className="container mx-auto">
-                    <div id="carousel" className="w-full py-4">
+                    <div id="carousel" className="w-full pt-4">
                         {carousel}
                     </div>
                 </div>

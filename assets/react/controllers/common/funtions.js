@@ -183,6 +183,13 @@ function carouselSidebarPageIndex(index, timeout) {
 
 // === get DETAILS ===
 function carouselSetActiveElement(index, timeout) {
+
+    // if, when changing an object, another has no currently selected settings, the settings menu selection is reset
+    if (!this.state.facility[index].readings[this.state.selectedSettings])
+    {
+        this.state.selectedSettings = false;
+    }
+
     this.currentObject = index;
     $('#js-settings').fadeOut(timeout / 2);
     $('#js-object-detail').fadeOut(timeout);
@@ -195,9 +202,14 @@ function carouselSetActiveElement(index, timeout) {
 }
 
 // === select Current Settings ===
-function selectSettingsHandler (name) {
-        this.selectedSettings = name;
-        this.setState({selectedSettings: this.selectedSettings});
+function selectSettingsHandler (name, timeout) {
+    this.selectedSettings = name;
+    $('#js-settings-content').fadeOut(timeout);
+    setTimeout(() => {
+        this.setState({selectedSettings: this.selectedSettings}, () => {
+            $('#js-settings-content').fadeIn(timeout);
+        });
+    }, timeout);
 }
 
 // export functions

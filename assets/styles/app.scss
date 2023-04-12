@@ -144,7 +144,9 @@ header {
 }
 
 footer {
-  min-height: 5rem;
+  min-height: 2rem;
+  border-top: 2px solid $dark-700;
+  box-shadow: 2px 2px 2px 2px $dark-900;
 
   .bar {
     min-height: 2rem;

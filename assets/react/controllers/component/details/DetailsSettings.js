@@ -1,4 +1,5 @@
 import React from 'react';
+import settingsScheme from '../../common/settings.json'
 
 class DetailsSettings extends React.Component {
 
@@ -12,6 +13,7 @@ class DetailsSettings extends React.Component {
 
         // object
         let display = {};
+        const environment = settingsScheme.environment;
 
         for (const key of Object.keys(readings)) {
             let active = '';
@@ -21,17 +23,28 @@ class DetailsSettings extends React.Component {
             if (settings[key + '_enable']) {
                 if (key === 'heat' || key === 'blow') {
                     if (!display['other']) {
-                        display['other'] = <div onClick={() => handler('other')} key={key} className={`element${active}`}>
+                        if (selectedSettings === 'other') active = ' active';
+                        display['other'] = <div onClick={() => handler('other', 150)} key={key} className={`element${active}`}>
                             <i className={`gf gf-manual text-cyan-500`}></i>
                             <p>Pozostałe</p>
                         </div>;
                     }
                 }
                 else {
-                    display[key] = <div onClick={() => handler(key)} key={key} className={`element${active}`}>
-                        <i className={`gf ${readings[key]['settingsStyle']}`}></i>
-                        <p>{readings[key]['fullName']}</p>
-                    </div>
+                    if (key === "shadow") {
+                        if (environment['sun']) {
+                            display[key] = <div onClick={() => handler(key, 150)} key={key} className={`element${active}`}>
+                                <i className={`gf ${readings[key]['settingsStyle']}`}></i>
+                                <p>{readings[key]['fullName']}</p>
+                            </div>
+                        }
+                    }
+                    else {
+                        display[key] = <div onClick={() => handler(key, 150)} key={key} className={`element${active}`}>
+                            <i className={`gf ${readings[key]['settingsStyle']}`}></i>
+                            <p>{readings[key]['fullName']}</p>
+                        </div>
+                    }
                 }
             }
         }

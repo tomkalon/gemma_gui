@@ -28,8 +28,7 @@ $text-shadow: -2px 2px 2px #00000050;
 $light-shadow: 0 0 5px #ffffff80;
 
 .setup {
-  margin-top: 1rem;
-  padding-bottom: 1.5rem;
+  margin: 1rem auto 2rem;
 
   @mixin setup-item {
     display: flex;

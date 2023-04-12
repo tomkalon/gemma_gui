@@ -13,10 +13,10 @@ class Settings extends React.Component {
         const selectedSettings = this.props.selectedSettings;
         const global = this.props.global;
 
-        console.log(global);
-
         //var
         const settings = state.settings;
+        const readings = state.readings;
+        const environment = settingsScheme.environment;
         let display = {};
         let counter = 0;
         let title;
@@ -25,7 +25,7 @@ class Settings extends React.Component {
             title = settingsScheme.arrangement.otherTitle;
         }
         else {
-            title = state.readings[selectedSettings]['fullName'];
+            title = readings[selectedSettings]['fullName'];
         }
 
         //logic
@@ -47,20 +47,22 @@ class Settings extends React.Component {
                         display[counter] = getSettingButton(key, element, element.values[value], settingsScheme.arrangement.bool[value]);
                     }
 
-                    // other
+                    // range
                     else {
-                        display[counter] = getSettingButton(key, element, settings[key], color);
+                        if (readings[element.rel] || environment[element.rel]) display[counter] = getSettingButton(key, element, settings[key], color);
                     }
                     counter++;
                 }
 
                 // global settings
                 else if (global[key]) {
-                    display[counter] = getSettingButton(key, element, global[key], color);
+                    if (environment[element.rel]) {
+                        display[counter] = getSettingButton(key, element, global[key], color);
+                    }
                     counter++;
                 }
 
-                if (counter === settingsScheme.arrangement[selectedSettings]) {
+                if (element.separator) {
                     display[counter] = getNewRow();
                     counter++;
                 }
