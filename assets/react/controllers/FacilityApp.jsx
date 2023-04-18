@@ -53,9 +53,7 @@ export default class FacilityApp extends Component {
         this.selectedSettings = false; // selected settings of current object
 
         // state
-        this.state = {
-            facility: {}
-        }
+        this.state = {}
 
         // display
         this.scrollPosition = 0;
@@ -207,7 +205,7 @@ export default class FacilityApp extends Component {
             // ======= SETTINGS =======
             // settings container
             if (currentObject !== false && currentObject !== null && currentObjectState['settings'] && selectedSettings) {
-                settings = <Settings state={currentObjectState} selectedSettings={selectedSettings} global={global}/>;
+                settings = <Settings state={currentObjectState} selectedSettings={selectedSettings} global={global} />;
             }
         }
         // =======================================================================

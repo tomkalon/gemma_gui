@@ -33,7 +33,7 @@ $popup-shadow: -4px 4px 10px #000000;
 .setup {
   margin: 1rem auto 2rem;
 
-  .js-popup-cover {
+  .js-settings-popup-cover {
     width: 100%;
     height: 100%;
     background: $popup-cover;
@@ -41,15 +41,14 @@ $popup-shadow: -4px 4px 10px #000000;
     .settings-popup {
       width: 40rem;
       max-width: 90vw;
-      height: 25rem;
       max-height: 90vh;
       filter: drop-shadow($popup-shadow);
       background: $blue-550;
 
       .label {
         justify-content: space-between;
-        text-transform: unset!important;
-        font-size: 1.1rem;
+        text-transform: unset !important;
+        font-size: 1.2rem;
 
         .js-btn-close {
           font-size: 1.25rem;
@@ -57,12 +56,93 @@ $popup-shadow: -4px 4px 10px #000000;
           height: 1.75rem;
           text-align: center;
           color: $blue-250;
+
           &:hover {
             background: $blue-250;
             color: $blue-950;
             cursor: pointer;
             border-radius: 0.25rem;
           }
+        }
+      }
+
+      .description {
+        padding: 1rem;
+        margin: 1rem;
+        background: #254b5e;
+        border-radius: 0.25rem;
+      }
+
+      .content {
+        margin: 2rem 0;
+
+        .settings-range {
+          width: 100%;
+
+          input[type="range"] {
+            -webkit-appearance: none;
+            appearance: none;
+            cursor: pointer;
+            background: transparent;
+          }
+
+          // track style
+          input[type="range"]::-webkit-slider-runnable-track  {
+            background: $blue-950;
+            height: 0.75rem;
+          }
+
+          input[type="range"]::-webkit-slider-runnable-track  {
+            background: $blue-950;
+            height: 0.75rem;
+          }
+
+          input[type="range"]::-moz-range-track {
+            background: $blue-950;
+            height: 0.75rem;
+          }
+
+
+
+
+          // pointer
+          input[type="range"]:focus {
+            outline: none;
+            border: none;
+          }
+
+          input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none; /* Override default look */
+            appearance: none;
+            margin-top: -5px; /* Centers thumb on the track */
+            background-color: $dark-0;
+            height: 1.25rem;
+            width: 1.25rem;
+            border-radius: 1rem;
+            border: 0;
+          }
+
+          input[type="range"]:focus::-webkit-slider-thumb {
+            outline: 2px solid $dark-0;
+            outline-offset: 0.125rem;
+          }
+
+          input[type="range"]::-moz-range-thumb {
+            -webkit-appearance: none; /* Override default look */
+            appearance: none;
+            margin-top: -5px; /* Centers thumb on the track */
+            background-color: $dark-0;
+            height: 1.25rem;
+            width: 1.25rem;
+            border-radius: 1rem;
+            border: 0;
+          }
+
+          input[type="range"]:focus::-moz-range-thumb {
+            outline: 2px solid $dark-0;
+            outline-offset: 0.125rem;
+          }
+
         }
       }
     }
