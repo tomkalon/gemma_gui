@@ -167,13 +167,22 @@ footer {
   }
 
   &-save {
-    background: #3e6895;
-    border: 1px solid #3e6895;
-
+    background: $dark-400;
+    border: 1px solid $dark-400;
+    &:hover {
+      background: $dark-100;
+      border: 1px solid $dark-100;
+      color: $blue-450;
+    }
   }
 
   &-cancel {
     border: 1px solid $blue-450;
+    &:hover {
+      background: $dark-100;
+      border: 1px solid $dark-100;
+      color: $blue-450;
+    }
   }
 
   &-change {

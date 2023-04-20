@@ -8,10 +8,10 @@ class Settings extends React.Component {
 
     constructor(props) {
         super(props);
+        this.settings = this.props.currentObject.settings;
         this.state = {
             popup: true
         }
-
     }
 
     closePopup () {
@@ -20,26 +20,24 @@ class Settings extends React.Component {
         })
     }
 
-    showPopup (event) {
+    showPopup (element, value) {
         this.setState({
-            popup: true
-        })
+            popup: <SettingsPopup closeHandler={this.closePopup.bind(this)} settingElement={element} settingValue={value} />
+        });
     }
 
 
     render() {
 
         // props
-        const state = this.props.state;
+        const currentObject = this.props.currentObject;
         const selectedSettings = this.props.selectedSettings;
         const global = this.props.global;
 
         //var
-        const settings = state.settings;
-        const readings = state.readings;
+        const settings = currentObject.settings;
+        const readings = currentObject.readings;
         const environment = settingsScheme.environment;
-        let display = {};
-        let counter = 0;
 
         // var title
         let title;
@@ -50,16 +48,10 @@ class Settings extends React.Component {
             title = readings[selectedSettings]['fullName'];
         }
 
-        // components
-        let popup;
-        if (this.state.popup) {
-            popup = <SettingsPopup closeHandler={this.closePopup.bind(this)}/>
-        }
-
         // functions
         const getSettingButton = (key, element, value, color) => {
-            return (<div key={key} className={`item ${color}`} onClick={this.showPopup.bind(this)}>
-                <span className={`title`}>{parser(element.desc)}</span>
+            return (<div key={key} className={`item ${color}`} onClick={() => {this.showPopup(element, value)}}>
+                <span className={`title`}>{parser(element.label)}</span>
                 <div className={`icon`}>
                     {element.icon.map((item, index) => {
                         return (<i key={index} className={`gf ${item}`}></i>);
@@ -75,6 +67,8 @@ class Settings extends React.Component {
 
 
         //logic
+        let buttonList = {};
+        let counter = 0;
         if (selectedSettings !== false && settingsScheme[selectedSettings] !== undefined) {
             let value;
             let color = settingsScheme.arrangement.default;
@@ -91,12 +85,12 @@ class Settings extends React.Component {
                     // boolean
                     if (element.bool !== undefined) {
                         settings[key] === true ? value = 1 : value = 0;
-                        display[counter] = getSettingButton(key, element, element.values[value], settingsScheme.arrangement.bool[value]);
+                        buttonList[counter] = getSettingButton(key, element, element.values[value], settingsScheme.arrangement.bool[value]);
                     }
 
                     // range
                     else {
-                        if (readings[element.rel] || environment[element.rel]) display[counter] = getSettingButton(key, element, settings[key], color);
+                        if (readings[element.rel] || environment[element.rel]) buttonList[counter] = getSettingButton(key, element, settings[key], color);
                     }
                     counter++;
                 }
@@ -104,13 +98,13 @@ class Settings extends React.Component {
                 // global settings
                 else if (global[key]) {
                     if (environment[element.rel]) {
-                        display[counter] = getSettingButton(key, element, global[key], color);
+                        buttonList[counter] = getSettingButton(key, element, global[key], color);
                     }
                     counter++;
                 }
 
                 if (element.separator) {
-                    display[counter] = getNewRow();
+                    buttonList[counter] = getNewRow();
                     counter++;
                 }
             }
@@ -125,12 +119,12 @@ class Settings extends React.Component {
                 <div className={`container mx-auto`}>
                     <div className={`box flex rounded-b`}>
                         <div id={`js-settings-content`} className={`box-content flex flex-grow`}>
-                            {Object.values(display)}
+                            {Object.values(buttonList)}
                         </div>
                     </div>
                 </div>
             </div>
-            { popup }
+            { this.state.popup }
         </article>)
     }
 }

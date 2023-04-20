@@ -39,9 +39,6 @@ export default class FacilityApp extends Component {
         //const
         this.refreshInterval = 5000;
         this.carousel = carousel;
-        this.facilitySettings = {
-            settings: true, time: true, global: true, alerts: false,
-        }
         this.sensors = structuredClone(sensors);
 
         // var
@@ -74,7 +71,8 @@ export default class FacilityApp extends Component {
         fetch('/api/objects', {
             method: "POST", headers: {
                 "Content-Type": "application/json",
-            }, body: JSON.stringify(this.facilitySettings),
+            },
+            // body: JSON.stringify(),
         })
             .then((response) => response.json())
             .then(data => {
@@ -205,7 +203,7 @@ export default class FacilityApp extends Component {
             // ======= SETTINGS =======
             // settings container
             if (currentObject !== false && currentObject !== null && currentObjectState['settings'] && selectedSettings) {
-                settings = <Settings state={currentObjectState} selectedSettings={selectedSettings} global={global} />;
+                settings = <Settings currentObject={currentObjectState} selectedSettings={selectedSettings} global={global} />;
             }
         }
         // =======================================================================

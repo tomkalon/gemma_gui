@@ -78,6 +78,7 @@ $popup-shadow: -4px 4px 10px #000000;
 
         .settings-range {
           width: 100%;
+          padding: 0 1rem;
 
           input[type="range"] {
             -webkit-appearance: none;
@@ -85,38 +86,31 @@ $popup-shadow: -4px 4px 10px #000000;
             cursor: pointer;
             background: transparent;
           }
-
-          // track style
-          input[type="range"]::-webkit-slider-runnable-track  {
-            background: $blue-950;
-            height: 0.75rem;
-          }
-
-          input[type="range"]::-webkit-slider-runnable-track  {
-            background: $blue-950;
-            height: 0.75rem;
-          }
-
-          input[type="range"]::-moz-range-track {
-            background: $blue-950;
-            height: 0.75rem;
-          }
-
-
-
-
-          // pointer
           input[type="range"]:focus {
             outline: none;
             border: none;
           }
 
+          //--- opera, chrome, etc...
+          // track style
+          input[type="range"]::-webkit-slider-runnable-track  {
+            background-color: $blue-950;
+            height: 0.75rem;
+            border-radius: 0.5rem;
+            transition: background-color 0.5s;
+          }
+
+          input[type="range"]:hover::-webkit-slider-runnable-track {
+            background-color: $blue-450;
+          }
+
+          // pointer
           input[type="range"]::-webkit-slider-thumb {
-            -webkit-appearance: none; /* Override default look */
+            -webkit-appearance: none;
             appearance: none;
-            margin-top: -5px; /* Centers thumb on the track */
+            margin-top: -14px;
             background-color: $dark-0;
-            height: 1.25rem;
+            height: 2.5rem;
             width: 1.25rem;
             border-radius: 1rem;
             border: 0;
@@ -127,12 +121,21 @@ $popup-shadow: -4px 4px 10px #000000;
             outline-offset: 0.125rem;
           }
 
+          //--- firefox
+          // track style
+          input[type="range"]::-moz-range-track {
+            background-color: $blue-950;
+            height: 0.75rem;
+            border-radius: 0.5rem;
+          }
+
+          // pointer
           input[type="range"]::-moz-range-thumb {
-            -webkit-appearance: none; /* Override default look */
+            -webkit-appearance: none;
             appearance: none;
-            margin-top: -5px; /* Centers thumb on the track */
+            margin-top: -14px;
             background-color: $dark-0;
-            height: 1.25rem;
+            height: 2.5rem;
             width: 1.25rem;
             border-radius: 1rem;
             border: 0;
@@ -143,6 +146,43 @@ $popup-shadow: -4px 4px 10px #000000;
             outline-offset: 0.125rem;
           }
 
+          .select-bar {
+            top: -15px;
+            position: relative;
+            margin: 0 0.5rem;
+          }
+
+          .range-caption {
+            position: relative;
+            z-index: 50;
+            text-align: center;
+            height: 1.5rem;
+            font-size: 1rem;
+            width: 100%;
+            padding: 0 0.625rem;
+            top: -20px;
+            .value {
+              margin-left: -1.75rem;
+            }
+          }
+          .range-footer {
+            position: relative;
+            z-index: 50;
+            height: 1.5rem;
+            font-size: 1rem;
+            width: 100%;
+            padding-right: 1rem;
+          }
+          .threshold {
+            font-size: 0.75rem;
+            position: absolute;
+            ins {
+              display: block;
+              position: relative;
+              left: -0.5rem;
+              text-decoration: none;
+            }
+          }
         }
       }
     }
@@ -155,6 +195,7 @@ $popup-shadow: -4px 4px 10px #000000;
     text-align: center;
     box-shadow: 0 2px 5px 0 #00000080;
   }
+
   @mixin item-default-bg {
     border-bottom: 1px solid $blue-450;
     background: linear-gradient(to bottom right, $blue-950, $blue-960);

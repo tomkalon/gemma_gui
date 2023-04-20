@@ -16,25 +16,3 @@ class CarouselSensor extends React.Component {
 }
 
 export default CarouselSensor;
-
-
-// {Object.entries(readings).map(([key, item]) => {
-//     if(Array.isArray(item.value)) {
-//         if (item.value.length > 1) {
-//
-//         } else {
-//             return (<div key={key}>
-//                 <i className={`gf ${item.calculated[0].icon}`}></i>
-//                 <p><span>°C</span></p>
-//             </div>)
-//         }
-//     }
-//     else {
-//         return (<div key={key}>
-//             <i className={`gf ${item.calculated[0].icon}`}></i>
-//             <p><span>°C</span></p>
-//         </div>)
-//     }
-//
-//
-// })}
