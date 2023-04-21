@@ -37,6 +37,7 @@ export default class FacilityApp extends Component {
         super(props);
 
         //const
+        this.apiAdress = '/api/objects';
         this.refreshInterval = 5000;
         this.carousel = carousel;
         this.sensors = structuredClone(sensors);
@@ -56,6 +57,7 @@ export default class FacilityApp extends Component {
         this.scrollPosition = 0;
 
         // function
+        this.saveSettingsData = commonFunctions.saveSettingsData;
         this.assignValues = commonFunctions.assignValues;
         this.isSensorActive = commonFunctions.isSensorActive;
         this.getObjectInfo = commonFunctions.getObjectInfo;
@@ -68,8 +70,8 @@ export default class FacilityApp extends Component {
     }
 
     getFacility() {
-        fetch('/api/objects', {
-            method: "POST", headers: {
+        fetch(this.apiAdress, {
+            method: "GET", headers: {
                 "Content-Type": "application/json",
             },
             // body: JSON.stringify(),
@@ -85,6 +87,7 @@ export default class FacilityApp extends Component {
                 // initial function which filters sensors used by specific object
                 // and adds icons scheme for each sensor
                 // RUN ONCE
+
                 if (facility) {
                     if (this.isInitialFetch) {
                         this.carousel.numberOfObjects = facility.length;
@@ -102,8 +105,12 @@ export default class FacilityApp extends Component {
                         // update SCHEME by the fetched data -> VALUES and setup icons
                         for (const [key, value] of Object.entries(facility)) {
                             this.assignValues(value.readings, this.stateScheme[key].readings);
+                            if (this.stateScheme[key].settings) {
+                                this.stateScheme[key].settings = value.settings;
+                            }
                         }
                     }
+
 
                     console.log('-----------------------------------------------');
                     console.log('====FACILITY====');
@@ -203,7 +210,8 @@ export default class FacilityApp extends Component {
             // ======= SETTINGS =======
             // settings container
             if (currentObject !== false && currentObject !== null && currentObjectState['settings'] && selectedSettings) {
-                settings = <Settings currentObject={currentObjectState} selectedSettings={selectedSettings} global={global} />;
+                settings = <Settings currentObject={currentObjectState} selectedSettings={selectedSettings} global={global}
+                                     saveHandler={this.saveSettingsData.bind(this)} />;
             }
         }
         // =======================================================================

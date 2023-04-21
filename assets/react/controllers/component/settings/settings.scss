@@ -23,6 +23,8 @@ $blue-960: #0e2029;
 $blue-970: #020f16;
 
 $alarm-red: #501414;
+$false-red: #a32c2c;
+$true-green: #33741c;
 
 $popup-cover: #000000d0;
 
@@ -70,9 +72,29 @@ $popup-shadow: -4px 4px 10px #000000;
         background: #254b5e;
         border-radius: 0.25rem;
       }
-
       .content {
-        margin: 4rem 0 1rem;
+
+        &.radio {
+          margin: 2rem;
+        }
+
+        .settings-radio {
+          .value {
+            padding: 0.5rem;
+            margin: 0.25rem;
+            border-radius: 0.25rem;
+            &.true {
+              background: $true-green;
+            }
+            &.false {
+              background: $false-red;
+            }
+          }
+        }
+
+        &.range {
+          margin: 4rem 0 1rem;
+        }
 
         .settings-range {
           width: 100%;

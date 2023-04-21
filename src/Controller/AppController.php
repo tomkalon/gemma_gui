@@ -40,12 +40,18 @@ class AppController extends AbstractController
     #[Route('/api/objects', name: 'app_api_objects', priority: 10)]
     public function apiObjects(ObjectManager $objectManager, Request $request): Response
     {
-        if ($request->isMethod('post')) {
-            $js_request = json_decode($request->getContent(), true);
+        if ($request->isMethod('get')) {
+            $external_request = json_decode($request->getContent(), true);
             $data['facility'] = $objectManager->getAllObjectsData(true);
             $data['time'] = $objectManager->getTime();
             $data['global'] = $objectManager->getGlobalSettings();
         }
+
+        if ($request->isMethod('post')) {
+            $external_request = json_decode($request->getContent(), true);
+            dd('test');
+        }
+
         return new JsonResponse($data);
     }
 

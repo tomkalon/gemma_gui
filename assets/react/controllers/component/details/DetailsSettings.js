@@ -1,5 +1,5 @@
 import React from 'react';
-import settingsScheme from '../../common/settings.json'
+import settingsDisplay from '../../common/settings-display.json'
 
 class DetailsSettings extends React.Component {
 
@@ -13,8 +13,6 @@ class DetailsSettings extends React.Component {
 
         // object
         let display = {};
-        const environment = settingsScheme.environment;
-
         for (const key of Object.keys(readings)) {
             let active = '';
             if (selectedSettings === key) {
@@ -32,7 +30,7 @@ class DetailsSettings extends React.Component {
                 }
                 else {
                     if (key === "shadow") {
-                        if (environment['sun']) {
+                        if (settingsDisplay.environment['sun']) {
                             display[key] = <div onClick={() => handler(key, 300)} key={key} className={`element${active}`}>
                                 <i className={`gf ${readings[key]['settingsStyle']}`}></i>
                                 <p>{readings[key]['fullName']}</p>

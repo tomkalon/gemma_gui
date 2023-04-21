@@ -65,6 +65,7 @@ function assignValues(readings, stateScheme) {
     }
 }
 
+
 // initial function which filters sensors used by specific object and adds icons stateScheme for each sensor
 function isSensorActive(data, num, stateScheme, icons) {
     stateScheme[num] = {
@@ -151,7 +152,19 @@ function getCarouselDisplaySettings(sensorsCount, num, carousel, scheme) {
     }
 }
 
+
+function sendDataAPI (data) {
+
+}
+
 // ========= HANDLERS ==========
+// ===  sava data handler ===
+function saveSettingsData(data, name) {
+    this.stateScheme[this.currentObject].settings[name] = data;
+    this.setState({
+        facility: this.stateScheme
+    });
+}
 
 // ===  pagination ===
 function carouselPaginationPageIndex(index, timeout) {
@@ -215,7 +228,7 @@ function selectSettingsHandler (name, timeout) {
 // export functions
 const commonFunctions = {
     isSensorActive, assignValues, getObjectInfo, getCarouselDisplaySettings, carouselPaginationPageIndex, carouselSidebarPageIndex,
-    carouselSetActiveElement, selectSettingsHandler
+    carouselSetActiveElement, selectSettingsHandler, saveSettingsData
 }
 
 export default commonFunctions;

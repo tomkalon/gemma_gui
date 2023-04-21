@@ -7,16 +7,18 @@ class SettingsPopupRange extends React.Component {
         this.range = this.props.range;
         this.thresholds = this.props.thresholds;
         this.step = Number.parseFloat(this.props.step);
-        this.state = {
-            value: this.props.settingValue
-        };
         this.totalRange = this.range[1] - this.range[0];
         this.position = ((this.props.settingValue - this.range[0]) / this.totalRange * 100) + '%';
         this.thresholds = this.getThresholds();
     }
 
+    state = {
+        value: this.props.settingValue
+    }
+
     changeValue (event) {
         this.position = ((event.target.value - this.range[0]) / this.totalRange * 100) + '%';
+        this.props.sendData(event.target.value);
         this.setState({
             value: event.target.value
         });
@@ -30,6 +32,7 @@ class SettingsPopupRange extends React.Component {
         else {
             calculateValue = (Number.parseFloat(this.state.value) - this.step).toFixed(1);
         }
+        this.props.sendData(calculateValue);
         this.position = ((calculateValue - this.range[0]) / this.totalRange * 100) + '%';
         this.setState({
             value: calculateValue

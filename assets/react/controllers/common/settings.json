@@ -1,15 +1,4 @@
 {
-  "arrangement": {
-    "bool": ["false", "true"],
-    "default": "",
-    "otherTitle": "Pozostałe"
-  },
-  "environment": {
-    "rain": true,
-    "wind": true,
-    "sun": true,
-    "time": true
-  },
   "temp": {
     "temp_day": {
       "label": "Temperatura w dzień",
@@ -17,7 +6,7 @@
       "icon": ["gf-temp2", "gf-day"],
       "range": [-20, 120],
       "step": 0.1,
-      "thresholds": [0, 15, 30],
+      "thresholds": [-10, 0, 10, 20, 30, 50, 100],
       "si": "°C",
       "rel": "temp"
     },

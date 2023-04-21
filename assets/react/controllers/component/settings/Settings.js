@@ -2,15 +2,16 @@ import React from 'react';
 import SettingsPopup from "./SettingsPopup";
 import './settings.scss'
 import settingsScheme from '../../common/settings.json'
+import settingsDisplay from '../../common/settings-display.json'
 
 class Settings extends React.Component {
 
     constructor(props) {
         super(props);
-        this.settings = this.props.currentObject.settings;
-        this.state = {
-            popup: true
-        }
+    }
+
+    state = {
+        popup: false,
     }
 
     closePopup () {
@@ -19,37 +20,40 @@ class Settings extends React.Component {
         })
     }
 
-    showPopup (element, value) {
+    showPopup (key, element, value, bool, saveHandler) {
         this.setState({
-            popup: <SettingsPopup closeHandler={this.closePopup.bind(this)} settingElement={element} settingValue={value} />
+            popup: <SettingsPopup name={key} closeHandler={this.closePopup.bind(this)} settingElement={element} settingValue={value} settingBool={bool}
+                                  saveHandler={saveHandler}/>,
         });
     }
 
+    getUpdatedValue (data) {
+        console.log(data);
+    }
 
     render() {
-
         // props
         const currentObject = this.props.currentObject;
         const selectedSettings = this.props.selectedSettings;
+        const saveHandler = this.props.saveHandler;
         const global = this.props.global;
 
         //var
         const settings = currentObject.settings;
         const readings = currentObject.readings;
-        const environment = settingsScheme.environment;
 
         // var title
         let title;
         if (selectedSettings === "other") {
-            title = settingsScheme.arrangement.otherTitle;
+            title = settingsDisplay.arrangement.otherTitle;
         }
         else {
             title = readings[selectedSettings]['fullName'];
         }
 
         // functions
-        const getSettingButton = (key, element, value, color) => {
-            return (<div key={key} className={`item ${color}`} onClick={() => {this.showPopup(element, value)}}>
+        const getSettingButton = (key, element, value, color, handler) => {
+            return (<div key={key} className={`item ${color}`} onClick={() => {this.showPopup(key, element, value, color, handler)}}>
                 <span className={`title`}>{element.label}</span>
                 <div className={`icon`}>
                     {element.icon.map((item, index) => {
@@ -70,7 +74,7 @@ class Settings extends React.Component {
         let counter = 0;
         if (selectedSettings !== false && settingsScheme[selectedSettings] !== undefined) {
             let value;
-            let color = settingsScheme.arrangement.default;
+            let color = settingsDisplay.arrangement.default;
             for (const [key, element] of Object.entries(settingsScheme[selectedSettings])) {
 
                 // if there is color saved in scheme use it
@@ -84,20 +88,22 @@ class Settings extends React.Component {
                     // boolean
                     if (element.bool !== undefined) {
                         settings[key] === true ? value = 1 : value = 0;
-                        buttonList[counter] = getSettingButton(key, element, element.values[value], settingsScheme.arrangement.bool[value]);
+                        buttonList[counter] = getSettingButton(key, element, element.values[value], settings[key], saveHandler);
                     }
 
                     // range
                     else {
-                        if (readings[element.rel] || environment[element.rel]) buttonList[counter] = getSettingButton(key, element, settings[key], color);
+                        if (readings[element.rel] || settingsDisplay.environment[element.rel]) {
+                            buttonList[counter] = getSettingButton(key, element, settings[key], color, saveHandler);
+                        }
                     }
                     counter++;
                 }
 
                 // global settings
                 else if (global[key]) {
-                    if (environment[element.rel]) {
-                        buttonList[counter] = getSettingButton(key, element, global[key], color);
+                    if (settingsDisplay.environment[element.rel]) {
+                        buttonList[counter] = getSettingButton(key, element, global[key], color, saveHandler);
                     }
                     counter++;
                 }
