@@ -40,8 +40,6 @@ $popup-shadow: -4px 4px 10px #000000;
 
     .settings-popup {
       width: 40rem;
-      max-width: 90vw;
-      max-height: 90vh;
       filter: drop-shadow($popup-shadow);
       background: $blue-550;
 
@@ -74,7 +72,7 @@ $popup-shadow: -4px 4px 10px #000000;
       }
 
       .content {
-        margin: 2rem 0;
+        margin: 4rem 0 1rem;
 
         .settings-range {
           width: 100%;
@@ -116,7 +114,7 @@ $popup-shadow: -4px 4px 10px #000000;
             border: 0;
           }
 
-          input[type="range"]:focus::-webkit-slider-thumb {
+          input[type="range"]:hover::-webkit-slider-thumb {
             outline: 2px solid $dark-0;
             outline-offset: 0.125rem;
           }
@@ -127,6 +125,11 @@ $popup-shadow: -4px 4px 10px #000000;
             background-color: $blue-950;
             height: 0.75rem;
             border-radius: 0.5rem;
+            transition: background-color 0.5s;
+          }
+
+          input[type="range"]:hover::-moz-range-track {
+            background-color: $blue-450;
           }
 
           // pointer
@@ -141,7 +144,7 @@ $popup-shadow: -4px 4px 10px #000000;
             border: 0;
           }
 
-          input[type="range"]:focus::-moz-range-thumb {
+          input[type="range"]:hover::-moz-range-thumb {
             outline: 2px solid $dark-0;
             outline-offset: 0.125rem;
           }
@@ -156,13 +159,24 @@ $popup-shadow: -4px 4px 10px #000000;
             position: relative;
             z-index: 50;
             text-align: center;
-            height: 1.5rem;
-            font-size: 1rem;
+            height: 1.75rem;
+            font-size: 1.25rem;
             width: 100%;
             padding: 0 0.625rem;
-            top: -20px;
+            top: -30px;
             .value {
               margin-left: -1.75rem;
+              height: 2rem;
+
+              &:after {
+                content: "";
+                width: 0.5rem;
+                height: 0.5rem;
+                background-color: $blue-450;
+                display: block;
+                margin: -3px auto 0;
+                transform: rotate(45deg);
+              }
             }
           }
           .range-footer {
@@ -170,8 +184,8 @@ $popup-shadow: -4px 4px 10px #000000;
             z-index: 50;
             height: 1.5rem;
             font-size: 1rem;
-            width: 100%;
-            padding-right: 1rem;
+            width: 27.75rem;
+            left: 8px;
           }
           .threshold {
             font-size: 0.75rem;
@@ -179,7 +193,6 @@ $popup-shadow: -4px 4px 10px #000000;
             ins {
               display: block;
               position: relative;
-              left: -0.5rem;
               text-decoration: none;
             }
           }

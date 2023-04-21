@@ -17,6 +17,7 @@
       "icon": ["gf-temp2", "gf-day"],
       "range": [-20, 120],
       "step": 0.1,
+      "thresholds": [0, 15, 30],
       "si": "°C",
       "rel": "temp"
     },
@@ -46,7 +47,7 @@
       "separator": true
     },
     "temp_control_day": {
-      "label": "Sterowanie temperaturą<br/> w dzień",
+      "label": "Sterowanie temperaturą w dzień",
       "icon": ["gf-day"],
       "range": [-20, 120],
       "step": 0.1,
@@ -55,7 +56,7 @@
       "rel": "temp"
     },
     "temp_control_night": {
-      "label": "Sterowanie temperaturą<br/> w nocy",
+      "label": "Sterowanie temperaturą w nocy",
       "icon": ["gf-night"],
       "range": [-20, 120],
       "step": 0.1,

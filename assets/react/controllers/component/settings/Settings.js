@@ -2,7 +2,6 @@ import React from 'react';
 import SettingsPopup from "./SettingsPopup";
 import './settings.scss'
 import settingsScheme from '../../common/settings.json'
-import parser from 'html-react-parser';
 
 class Settings extends React.Component {
 
@@ -51,7 +50,7 @@ class Settings extends React.Component {
         // functions
         const getSettingButton = (key, element, value, color) => {
             return (<div key={key} className={`item ${color}`} onClick={() => {this.showPopup(element, value)}}>
-                <span className={`title`}>{parser(element.label)}</span>
+                <span className={`title`}>{element.label}</span>
                 <div className={`icon`}>
                     {element.icon.map((item, index) => {
                         return (<i key={index} className={`gf ${item}`}></i>);

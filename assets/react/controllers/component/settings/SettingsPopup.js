@@ -1,7 +1,5 @@
 import React from 'react';
 import SettingsPopupRange from "./SettingsPopupRange";
-import settingsScheme from '../../common/settings.json'
-import {element} from "prop-types";
 
 class SettingsPopup extends React.Component {
 
@@ -20,7 +18,8 @@ class SettingsPopup extends React.Component {
 
         let settingsForm;
         if (settingElement.bool === undefined) {
-            settingsForm = <SettingsPopupRange settingValue={settingValue} step={settingElement.step} range={settingElement.range}/>;
+            settingsForm = <SettingsPopupRange settingValue={settingValue} step={settingElement.step} range={settingElement.range}
+                                               thresholds={settingElement.thresholds}/>;
         }
 
         return (<div className={`js-settings-popup-cover z-40 fixed flex justify-center items-center top-0`}>
