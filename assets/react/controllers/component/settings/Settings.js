@@ -2,6 +2,7 @@ import React from 'react';
 import SettingsPopup from "./SettingsPopup";
 import './settings.scss'
 import settingsScheme from '../../common/settings.json'
+import settingsData from '../../common/settings-data.json'
 import settingsDisplay from '../../common/settings-display.json'
 
 class Settings extends React.Component {
@@ -86,15 +87,15 @@ class Settings extends React.Component {
                 if (settings[key] !== undefined) {
 
                     // boolean
-                    if (element.bool !== undefined) {
+                    if (settingsData[key].bool !== undefined) {
                         settings[key] === true ? value = 1 : value = 0;
-                        buttonList[counter] = getSettingButton(key, element, element.values[value], settings[key], saveHandler);
+                        buttonList[counter] = getSettingButton(key, settingsData[key], settingsData[key].values[value], settings[key], saveHandler);
                     }
 
                     // range
                     else {
                         if (readings[element.rel] || settingsDisplay.environment[element.rel]) {
-                            buttonList[counter] = getSettingButton(key, element, settings[key], color, saveHandler);
+                            buttonList[counter] = getSettingButton(key, settingsData[key], settings[key], color, saveHandler);
                         }
                     }
                     counter++;
@@ -103,7 +104,7 @@ class Settings extends React.Component {
                 // global settings
                 else if (global[key]) {
                     if (settingsDisplay.environment[element.rel]) {
-                        buttonList[counter] = getSettingButton(key, element, global[key], color, saveHandler);
+                        buttonList[counter] = getSettingButton(key, settingsData[key], global[key], color, saveHandler);
                     }
                     counter++;
                 }

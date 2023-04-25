@@ -1,384 +1,147 @@
 {
   "temp": {
     "temp_day": {
-      "label": "Temperatura w dzień",
-      "description": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab ad animi eligendi esse, est nam nihil quas quod tempora vero!",
-      "icon": ["gf-temp2", "gf-day"],
-      "range": [-20, 120],
-      "step": 0.1,
-      "thresholds": [-10, 0, 10, 20, 30, 50, 100],
-      "si": "°C",
       "rel": "temp"
     },
     "temp_night": {
-      "label": "Temperatura w nocy",
-      "icon": ["gf-temp2", "gf-night"],
-      "range": [-20, 120],
-      "step": 0.1,
-      "si": "°C",
       "rel": "temp"
     },
     "temp_hysteresis": {
-      "label": "Histereza temperatury",
-      "icon": ["gf-hysteresis"],
-      "range": [-20, 120],
-      "step": 0.1,
-      "si": "°C",
       "rel": "temp"
     },
     "temp_vent_close": {
-      "label": "Temp. bezwzględnego zamknięcia wietrznika",
-      "icon": ["gf-warning"],
-      "range": [-20, 120],
-      "step": 0.1,
-      "si": "°C",
       "rel": "vent",
       "separator": true
     },
     "temp_control_day": {
-      "label": "Sterowanie temperaturą w dzień",
-      "icon": ["gf-day"],
-      "range": [-20, 120],
-      "step": 0.1,
-      "bool": true,
-      "values": ["NIE", "TAK"],
       "rel": "temp"
     },
     "temp_control_night": {
-      "label": "Sterowanie temperaturą w nocy",
-      "icon": ["gf-night"],
-      "range": [-20, 120],
-      "step": 0.1,
-      "bool": true,
-      "values": ["NIE", "TAK"],
       "rel": "temp"
     },
     "day_begin": {
-      "label": "Początek dnia",
-      "icon": ["gf-day-begin"],
-      "color": "global",
-      "range": [0, 23],
-      "step": 1,
-      "si": ":00",
-      "global": true,
       "rel": "time"
     },
     "night_begin": {
-      "label": "Początek nocy",
-      "icon": ["gf-night-begin"],
-      "color": "global",
-      "range": [0, 23],
-      "step": 1,
-      "si": ":00",
-      "global": true,
       "rel": "time"
     }
   },
   "humid": {
     "humid_day": {
-      "label": "Wilgotność w dzień",
-      "icon": ["gf-temp2", "gf-day"],
-      "range": [-20, 120],
-      "step": 0.1,
-      "si": "%",
       "rel": "humid"
     },
     "humid_night": {
-      "label": "Wilgotność w nocy",
-      "icon": ["gf-temp2", "gf-day"],
-      "range": [-20, 120],
-      "step": 0.1,
-      "si": "%",
       "rel": "humid"
     },
     "humid_hysteresis": {
-      "label": "Histereza wilgotności",
-      "icon": ["gf-temp2", "gf-day"],
-      "range": [-20, 120],
-      "step": 0.1,
-      "si": "%",
       "rel": "humid"
     },
     "humid_vent_step": {
-      "label": "Krok wietrznika",
-      "icon": ["gf-temp2", "gf-day"],
-      "range": [-20, 120],
-      "step": 0.1,
-      "si": "-",
       "rel": "vent"
     },
     "humid_vent_pause": {
-      "label": "Przerwa wietrznika",
-      "icon": ["gf-temp2", "gf-day"],
-      "range": [-20, 120],
-      "step": 0.1,
-      "si": "s",
       "rel": "vent"
     },
     "humid_vent_pause_open": {
-      "label": "Opóźnienie otwarcia wietrznika",
-      "icon": ["gf-temp2", "gf-day"],
-      "range": [-20, 120],
-      "step": 0.1,
-      "si": "s",
       "rel": "vent",
       "separator": true
     },
     "humid_vent_max_open": {
-      "label": "Maks. otwarcie wietrznika",
-      "icon": ["gf-temp2", "gf-day"],
-      "range": [-20, 120],
-      "step": 0.1,
-      "si": "%",
       "rel": "vent"
     },
     "humid_control_day": {
-      "label": "Steruj wilgotnością w dzień",
-      "icon": ["gf-temp2", "gf-day"],
-      "bool": true,
-      "values": ["NIE", "TAK"],
       "rel": "humid"
     },
     "humid_control_night": {
-      "label": "Steruj wilgotnością w nocy",
-      "icon": ["gf-temp2", "gf-day"],
-      "bool": true,
-      "values": ["NIE", "TAK"],
       "rel": "humid"
     },
     "day_begin": {
-      "label": "Początek dnia",
-      "icon": ["gf-day-begin"],
-      "color": "global",
-      "range": [0, 23],
-      "step": 0.1,
-      "si": ":00",
-      "global": true,
       "rel": "time"
     },
     "night_begin": {
-      "label": "Początek nocy",
-      "icon": ["gf-night-begin"],
-      "color": "global",
-      "range": [0, 23],
-      "step": 0.1,
-      "si": ":00",
-      "global": true,
       "rel": "time"
     }
   },
   "vent": {
     "vent_step_time": {
-      "label": "Czas kroku",
-      "icon": ["gf-temp2", "gf-day"],
-      "range": [-20, 120],
-      "step": 0.1,
-      "si": "%",
       "rel": "vent"
     },
     "vent_pause": {
-      "label": "Czas przerwy",
-      "icon": ["gf-temp2", "gf-day"],
-      "range": [-20, 120],
-      "step": 0.1,
-      "si": "%",
       "rel": "vent"
     },
     "vent_open_close_time": {
-      "label": "Czas otwarcia/zamknięcia",
-      "icon": ["gf-temp2", "gf-day"],
-      "range": [-20, 120],
-      "step": 0.1,
-      "si": "%",
       "rel": "vent"
     },
     "vent_min_temp": {
-      "label": "Dopuszczalne obniżenie temperatury",
-      "icon": ["gf-temp2", "gf-day"],
-      "range": [-20, 120],
-      "step": 0.1,
-      "si": "%",
       "rel": "temp"
     },
     "vent_rain_delay": {
-      "label": "Opóźnienie reakcji na deszcz",
-      "icon": ["gf-temp2", "gf-day"],
-      "range": [-20, 120],
-      "step": 0.1,
-      "si": "%",
       "rel": "rain"
     },
     "vent_max_open_rain": {
-      "label": "Maks. otwarcie podczas deszczu",
-      "icon": ["gf-temp2", "gf-day"],
-      "range": [-20, 120],
-      "step": 0.1,
-      "si": "%",
       "rel": "rain",
       "separator": true
     },
     "vent_wind_delay": {
-      "label": "Opóźnienie reakcji na wiatr",
-      "icon": ["gf-temp2", "gf-day"],
-      "range": [-20, 120],
-      "step": 0.1,
-      "si": "%",
       "rel": "wind"
     },
     "vent_weak_wind_max": {
-      "label": "Maks. otwarcie przy słabym wietrze",
-      "icon": ["gf-temp2", "gf-day"],
-      "range": [-20, 120],
-      "step": 0.1,
-      "si": "%",
       "rel": "wind"
     },
     "vent_strong_wind_max": {
-      "label": "Maks. otwarcie przy silnym wietrze",
-      "icon": ["gf-temp2", "gf-day"],
-      "range": [-20, 120],
-      "step": 0.1,
-      "si": "%",
       "rel": "wind"
     },
     "weak_wind": {
-      "label": "Słaby wiatr",
-      "icon": ["gf-day-begin"],
-      "color": "global",
-      "range": [0, 23],
-      "step": 0.1,
-      "global": true,
       "rel": "wind"
     },
     "strong_wind": {
-      "label": "Silny wiatr",
-      "icon": ["gf-night-begin"],
-      "color": "global",
-      "range": [0, 23],
-      "step": 0.1,
-      "global": true,
       "rel": "wind"
     }
   },
   "shadow": {
     "shadow1": {
-      "label": "Cieniówka dla I progu",
-      "icon": ["gf-night-begin"],
-      "range": [0, 23],
-      "step": 0.1,
-      "si": "%",
       "rel": "sun"
     },
     "shadow2": {
-      "label": "Cieniówka dla II progu",
-      "icon": ["gf-night-begin"],
-      "range": [0, 23],
-      "step": 0.1,
-      "si": "%",
       "rel": "sun"
     },
     "shadow3": {
-      "label": "Cieniówka dla III progu",
-      "icon": ["gf-night-begin"],
-      "range": [0, 23],
-      "step": 0.1,
-      "si": "%",
       "rel": "sun"
     },
     "shadow4": {
-      "label": "Cieniówka dla IV progu",
-      "icon": ["gf-night-begin"],
-      "range": [0, 23],
-      "step": 0.1,
-      "si": "%",
       "rel": "sun"
     },
     "shadow5": {
-      "label": "Cieniówka dla V progu",
-      "icon": ["gf-night-begin"],
-      "range": [0, 23],
-      "step": 0.1,
-      "si": "%",
       "rel": "sun",
       "separator": true
     },
     "sun_threshold1": {
-      "label": "I próg nasłonecznienia",
-      "icon": ["gf-night-begin"],
-      "color": "global",
-      "range": [0, 23],
-      "step": 0.1,
-      "global": true,
       "rel": "sun"
     },
     "sun_threshold2": {
-      "label": "II próg nasłonecznienia",
-      "icon": ["gf-night-begin"],
-      "color": "global",
-      "range": [0, 23],
-      "step": 0.1,
-      "global": true,
       "rel": "sun"
     },
     "sun_threshold3": {
-      "label": "III próg nasłonecznienia",
-      "icon": ["gf-night-begin"],
-      "color": "global",
-      "range": [0, 23],
-      "step": 0.1,
-      "global": true,
       "rel": "sun"
     },
     "sun_threshold4": {
-      "label": "IV próg nasłonecznienia",
-      "icon": ["gf-night-begin"],
-      "color": "global",
-      "range": [0, 23],
-      "step": 0.1,
-      "global": true,
       "rel": "sun"
     },
     "sun_threshold5": {
-      "label": "V próg nasłonecznienia",
-      "icon": ["gf-night-begin"],
-      "color": "global",
-      "range": [0, 23],
-      "step": 0.1,
-      "global": true,
       "rel": "sun"
     }
   },
   "other": {
     "heat": {
-      "label": "Ogrzewanie",
-      "icon": ["gf-night-begin"],
-      "range": [0, 23],
-      "step": 0.1,
-      "si": "%",
       "rel": "heat"
     },
     "heat_hysteresis": {
-      "label": "Histereza ogrzewania",
-      "icon": ["gf-night-begin"],
-      "range": [0, 23],
-      "step": 0.1,
-      "si": "%",
       "rel": "heat"
     },
     "blow": {
-      "label": "Czas pracy nadmuchu",
-      "icon": ["gf-night-begin"],
-      "range": [0, 23],
-      "step": 0.1,
-      "si": "%",
       "rel": "blow"
     },
     "blow_pause": {
-      "label": "Czas przerwy nadmuchu",
-      "icon": ["gf-night-begin"],
-      "range": [0, 23],
-      "step": 0.1,
-      "si": "%",
       "rel": "blow"
     }
   }
