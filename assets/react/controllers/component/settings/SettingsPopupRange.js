@@ -24,14 +24,23 @@ class SettingsPopupRange extends React.Component {
         });
     }
 
+    calculateTheLogarithm (x, y) {
+        return Math.log(y) / Math.log(x);
+    }
+
     btnChangeValue (adding) {
         let calculateValue;
+        let fraction;
+
+        fraction = this.calculateTheLogarithm(10, 1 / this.step);
+
         if (adding) {
-            calculateValue = (Number.parseFloat(this.state.value) + this.step).toFixed(1);
+            calculateValue = (Number.parseFloat(this.state.value) + this.step).toFixed(fraction);
         }
         else {
-            calculateValue = (Number.parseFloat(this.state.value) - this.step).toFixed(1);
+            calculateValue = (Number.parseFloat(this.state.value) - this.step).toFixed(fraction);
         }
+
         this.props.sendData(calculateValue);
         this.position = ((calculateValue - this.range[0]) / this.totalRange * 100) + '%';
         this.setState({
@@ -63,7 +72,7 @@ class SettingsPopupRange extends React.Component {
     render() {
         return (<div className={`settings-range flex`}>
             <div className={`btn btn-side w-16 flex flex-col justify-center`}>
-                <button className={`btn btn-change`} onClick={() => {this.btnChangeValue(false)}}><i className={`gf gf-minus`} ></i></button>
+                <button className={`btn btn-empty`} onClick={() => {this.btnChangeValue(false)}}><i className={`gf gf-minus`} ></i></button>
             </div>
             <div className={`select-bar flex-grow flex flex-col justify-center`}>
                 <div className={`range-caption`}><div className={'value w-14 dark:bg-blue-450 rounded relative'} style={{left: this.position}}>{this.state.value}</div></div>
@@ -82,7 +91,7 @@ class SettingsPopupRange extends React.Component {
                 </div>
             </div>
             <div className={`btn btn-side w-16 flex flex-col justify-center`}>
-                <button className={`btn btn-change`} onClick={() => {this.btnChangeValue(true)}}><i className={`gf gf-plus`}></i></button>
+                <button className={`btn btn-empty`} onClick={() => {this.btnChangeValue(true)}}><i className={`gf gf-plus`}></i></button>
             </div>
         </div>)
     }

@@ -1,5 +1,5 @@
 import React from 'react';
-import settingsDisplay from '../../common/settings-display.json'
+import settingsDisplay from '../../../common/settings-display.json'
 
 class SettingsPopupRadio extends React.Component {
 

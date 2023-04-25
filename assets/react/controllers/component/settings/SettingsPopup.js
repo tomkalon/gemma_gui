@@ -1,7 +1,8 @@
 import React from 'react';
 import SettingsPopupRange from "./SettingsPopupRange";
 import SettingsPopupRadio from "./SettingsPopupRadio";
-import settingsDisplay from '../../common/settings-display.json'
+import settingsDisplay from '../../../common/settings-display.json'
+import settings from "./Settings";
 
 class SettingsPopup extends React.Component {
     constructor(props) {
@@ -19,12 +20,12 @@ class SettingsPopup extends React.Component {
         this.setState({value: data});
     }
 
-    saveData (name, data, saveHandler, closeHandler) {
+    saveData (name, data, saveHandler, closeHandler, isGlobal) {
         if (this.type === 'range') {
-            saveHandler(data, name);
+            saveHandler(data, name, isGlobal);
         }
         else if (this.type === 'radio') {
-            saveHandler(!this.bool, name);
+            saveHandler(!this.bool, name, isGlobal);
         }
         closeHandler();
     }
@@ -71,9 +72,9 @@ class SettingsPopup extends React.Component {
                     <div className={`mt-2 float-left`}>
                         Aktualne wartość: <span className={`p-2 dark:bg-blue-950 rounded-lg`}>{this.value}{settingElement['si']}</span>
                     </div>
-                    <button className={`btn btn-save float-right ml-4`}
-                            onClick={() => {this.saveData(name, this.state.value, saveHandler, closeHandler)}}>{saveCaption}</button>
-                    <button className={`btn btn-cancel float-right`} onClick={closeHandler}>Zamknij</button>
+                    <button className={`btn btn-green float-right ml-4`}
+                            onClick={() => {this.saveData(name, this.state.value, saveHandler, closeHandler, settingElement.global)}}>{saveCaption}</button>
+                    <button className={`btn btn-empty float-right`} onClick={closeHandler}>Zamknij</button>
                 </div>
             </div>
         </div>)

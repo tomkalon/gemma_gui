@@ -1,8 +1,8 @@
 import React, {Component} from 'react';
 import WeatherItem from "./component/weather/WeatherItem"
 import './component/weather/weather.scss'
-import sensors from "./common/sensors.js";
-import commonFunctions from "./common/funtions";
+import sensors from "./../common/sensors.js";
+import commonFunctions from "./../common/funtions";
 
 export default class WeatherBar extends Component {
     constructor(props) {

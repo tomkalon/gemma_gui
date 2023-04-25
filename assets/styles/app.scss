@@ -166,7 +166,7 @@ footer {
     height: 100%;
   }
 
-  &-save {
+  &-green {
     background: $dark-400;
     border: 1px solid $dark-400;
     &:hover {
@@ -176,20 +176,22 @@ footer {
     }
   }
 
-  &-cancel {
+  &-blue {
+    background: $blue-950;
+    border: 1px solid $blue-450;
+    &:hover {
+      background: $dark-100;
+      border: 1px solid $blue-450;
+      color: $blue-950;
+    }
+  }
+
+  &-empty {
     border: 1px solid $blue-450;
     &:hover {
       background: $dark-100;
       border: 1px solid $dark-100;
       color: $blue-450;
-    }
-  }
-
-  &-change {
-    border: 1px solid $blue-450;
-
-    &:hover {
-      background: $blue-450;
     }
   }
 }

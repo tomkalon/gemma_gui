@@ -1,4 +1,5 @@
 import React from 'react';
+import setup from './functions.json'
 import $ from 'jquery'
 
 // update stateSCHEME by the fetched data -> VALUES and setup icons
@@ -152,18 +153,44 @@ function getCarouselDisplaySettings(sensorsCount, num, carousel, scheme) {
     }
 }
 
-
-function sendDataAPI (data) {
-
+function sendDataAPI (method, object, send) {
+    let apiAddress = setup.apiAddress + object;
+    fetch(apiAddress, {
+        method: method,
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify(send),
+    })
+    .then((response) => response.json())
+    .then(data => {
+        console.log(data);
+    })
+    .catch((error) => {
+        console.log("API communication error!");
+        console.error("Error:", error);
+    });
 }
 
 // ========= HANDLERS ==========
 // ===  sava data handler ===
-function saveSettingsData(data, name) {
-    this.stateScheme[this.currentObject].settings[name] = data;
-    this.setState({
-        facility: this.stateScheme
-    });
+function saveSettingsData(data, name, isGlobal) {
+    let send = {};
+    send[name] = data;
+    sendDataAPI('put', this.currentObject, send);
+
+    if (isGlobal) {
+        this.global[name] = data;
+        console.log(this.global);
+        this.setState({
+            global: this.global
+        });
+    } else {
+        this.stateScheme[this.currentObject].settings[name] = data;
+        this.setState({
+            facility: this.stateScheme
+        });
+    }
 }
 
 // ===  pagination ===

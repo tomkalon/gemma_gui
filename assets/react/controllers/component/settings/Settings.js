@@ -1,9 +1,9 @@
 import React from 'react';
 import SettingsPopup from "./SettingsPopup";
 import './settings.scss'
-import settingsScheme from '../../common/settings.json'
-import settingsData from '../../common/settings-data.json'
-import settingsDisplay from '../../common/settings-display.json'
+import settingsScheme from '../../../common/settings.json'
+import settingsData from '../../../common/settings-data.json'
+import settingsDisplay from '../../../common/settings-display.json'
 
 class Settings extends React.Component {
 
@@ -26,10 +26,6 @@ class Settings extends React.Component {
             popup: <SettingsPopup name={key} closeHandler={this.closePopup.bind(this)} settingElement={element} settingValue={value} settingBool={bool}
                                   saveHandler={saveHandler}/>,
         });
-    }
-
-    getUpdatedValue (data) {
-        console.log(data);
     }
 
     render() {
@@ -79,8 +75,8 @@ class Settings extends React.Component {
             for (const [key, element] of Object.entries(settingsScheme[selectedSettings])) {
 
                 // if there is color saved in scheme use it
-                if (element.color) {
-                    color = element.color;
+                if (settingsData[key].color) {
+                    color = settingsData[key].color;
                 }
 
                 // specific sensor settings
@@ -117,9 +113,12 @@ class Settings extends React.Component {
         }
 
         return (<article id={`js-settings`} className={`setup`}>
-            <div
-                className={`container mx-auto flex bg-gradient-to-br dark:from-darker-700 dark:to-darker-900 dark:text-darker-100 rounded-md shadow-md relative dark:shadow-gray-900/30`}>
-                <div className={`label px-4 h-8`}>Ustawienia: {title}</div>
+            <div className={`container mx-auto h-16 p-2 bg-gradient-to-br dark:from-darker-700 dark:to-darker-900 dark:text-darker-100 rounded-md shadow-md`}>
+                <div className={`px-4 float-left uppercase`}>
+                    <span className={`dark:bg-blue-460 rounded-md mr-2 px-2`}>Profil</span>{settings['name']}
+                    <div className={`mt-1 text-sm`}>{title}</div>
+                </div>
+                <div className={`float-right mt-1 mr-2`}><button className={`btn btn-blue`}>Zmień profil</button></div>
             </div>
             <div className={`dark:text-darker-100`}>
                 <div className={`container mx-auto`}>

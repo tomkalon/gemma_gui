@@ -2,9 +2,9 @@ import React, {Component} from 'react';
 import Carousel from "./component/carousel/Carousel";
 import Details from "./component/details/Details";
 import Settings from "./component/settings/Settings";
-import sensors from "./common/sensors.js"
-import carousel from "./common/carousel";
-import commonFunctions from "./common/funtions";
+import sensors from "./../common/sensors.js"
+import carousel from "./../common/carousel";
+import commonFunctions from "./../common/funtions";
 
 // ================================================================================
 //  CLASS STRUCTURE & DESCRIPTION OF THE ACTION
@@ -37,7 +37,7 @@ export default class FacilityApp extends Component {
         super(props);
 
         //const
-        this.apiAdress = '/api/objects';
+        this.apiAddress = '/api/objects';
         this.refreshInterval = 5000;
         this.carousel = carousel;
         this.sensors = structuredClone(sensors);
@@ -45,6 +45,7 @@ export default class FacilityApp extends Component {
         // var
         this.stateScheme = [];
         this.scheme = [];
+        this.global = {};
         this.isInitialFetch = true;
 
         this.currentObject = 0; // current Object
@@ -70,8 +71,9 @@ export default class FacilityApp extends Component {
     }
 
     getFacility() {
-        fetch(this.apiAdress, {
-            method: "GET", headers: {
+        fetch(this.apiAddress, {
+            method: "GET",
+            headers: {
                 "Content-Type": "application/json",
             },
             // body: JSON.stringify(),
@@ -82,7 +84,7 @@ export default class FacilityApp extends Component {
                 let facility, time, global;
                 data.facility ? facility = data.facility : facility = false;
                 data.time ? time = data.time : time = 0;
-                data.global ? global = data.global : global = 0;
+                data.global ? this.global = data.global : this.global = 0;
 
                 // initial function which filters sensors used by specific object
                 // and adds icons scheme for each sensor
@@ -132,7 +134,7 @@ export default class FacilityApp extends Component {
                             current: this.currentObject,
                             selectedSettings: this.selectedSettings,
                             isDay: time['isDay'],
-                            global: global
+                            global: this.global
                         },
                         function () {
                         });
@@ -172,7 +174,7 @@ export default class FacilityApp extends Component {
         let global;
 
         // stats
-        let stats = true;
+        let stats = false;
 
         // =======================================================================
         // render if there isn't initial rendering

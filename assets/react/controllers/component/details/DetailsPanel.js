@@ -19,6 +19,7 @@ class DetailsPanel extends React.Component {
         let controlDay, controlNight, setupDay, setupNight;
         let day, night;
         let diff = [];
+        let icons;
 
         // components
         let setpoints;
@@ -70,19 +71,26 @@ class DetailsPanel extends React.Component {
             valueBox = <DetailsValueBox sensor={sensor} diff={diff} si={sensor['si']}/>;
         } else {
             valueBox = <DetailsValueBox sensor={sensor} diff={false} si={sensor['si']}/>;
+
         }
 
-        if (stats) {
+        if (stats && isDay) {
+            if (sensor.name === 'temp') {
+                icons = ['gf-temp2', 'gf-temp6'];
+            }
+            else if (sensor.name === 'humid') {
+                icons = ['gf-dry', 'gf-humidity'];
+            }
             amplitude = <div className={`amplitude flex dark:bg-blue-550 border-t dark:border-blue-950`}>
                 <div className={`box`}>
-                    <div className={`value`}><span><i className={`gf gf-temp2`}></i>-{sensor['si']}</span></div>
+                    <div className={`value`}><span><i className={`gf ${icons[0]}`}></i>-{sensor['si']}</span></div>
                     <div className={`label text-left`}>
                         <span>{shortName}</span>
                         <p className={`dark:text-blue-300`}>min</p>
                     </div>
                 </div>
                 <div className={`box`}>
-                    <div className={`value`}><span><i className={`gf gf-temp6`}></i>-{sensor['si']}</span></div>
+                    <div className={`value`}><span><i className={`gf ${icons[1]}`}></i>-{sensor['si']}</span></div>
                     <div className={`label text-left`}>
                         <span>{shortName}</span>
                         <p className={`dark:text-red-300`}>max</p>
