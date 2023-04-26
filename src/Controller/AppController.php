@@ -29,6 +29,13 @@ class AppController extends AbstractController
         ]);
     }
 
+    #[Route('/test', name: 'app_test', priority: 10)]
+    public function test(ObjectManager $objectManager): Response
+    {
+        $test = $objectManager->getAllObjectsData(false);
+        dd($test);
+    }
+
     #[Route('/api/objects', name: 'app_api_objects', priority: 5)]
     public function apiObjects(ObjectManager $objectManager, GlobalSettingsManager $globalSettingsManager, Request $request): Response
     {

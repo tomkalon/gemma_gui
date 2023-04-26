@@ -49,6 +49,12 @@ class Objects
     #[ORM\OneToMany(mappedBy: 'object', targetEntity: Alerts::class, orphanRemoval: true)]
     private Collection $alerts;
 
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $type = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $image = null;
+
     public function __construct()
     {
         $this->stats = new ArrayCollection();
@@ -222,6 +228,30 @@ class Objects
                 $alert->setObject(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getType(): ?string
+    {
+        return $this->type;
+    }
+
+    public function setType(string $type): self
+    {
+        $this->type = $type;
+
+        return $this;
+    }
+
+    public function getImage(): ?string
+    {
+        return $this->image;
+    }
+
+    public function setImage(string $image): self
+    {
+        $this->image = $image;
 
         return $this;
     }

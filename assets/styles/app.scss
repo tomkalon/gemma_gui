@@ -32,6 +32,9 @@ $alarm-red: #501414;
 $text-shadow: -2px 2px 2px #00000050;
 $light-shadow: 0 0 5px #ffffff80;
 
+$popup-shadow: -4px 4px 10px #000000;
+$popup-cover: #000000d0;
+
 @import 'fonts.css';
 @import 'gemma-fonts.css';
 
@@ -192,6 +195,39 @@ footer {
       background: $dark-100;
       border: 2px solid $dark-100;
       color: $blue-450;
+    }
+  }
+}
+
+.js-settings-popup-cover {
+  width: 100%;
+  height: 100%;
+  background: $popup-cover;
+
+  .settings-popup {
+    width: 40rem;
+    filter: drop-shadow($popup-shadow);
+    background: $blue-550;
+
+    .label {
+      justify-content: space-between;
+      text-transform: unset !important;
+      font-size: 1.2rem;
+
+      .js-btn-close {
+        font-size: 1.25rem;
+        width: 1.75rem;
+        height: 1.75rem;
+        text-align: center;
+        color: $blue-250;
+
+        &:hover {
+          background: $blue-250;
+          color: $blue-950;
+          cursor: pointer;
+          border-radius: 0.25rem;
+        }
+      }
     }
   }
 }

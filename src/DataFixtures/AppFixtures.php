@@ -125,10 +125,10 @@ class AppFixtures extends Fixture
             $shadow[$n] = ($n) ? rand(0, 15) + $shadow[$n - 1] : rand(0, 10);
         }
         $obj->setShadow1($shadow[0]);
-        $obj->setShadow1($shadow[1]);
-        $obj->setShadow1($shadow[2]);
-        $obj->setShadow1($shadow[3]);
-        $obj->setShadow1($shadow[4]);
+        $obj->setShadow2($shadow[1]);
+        $obj->setShadow3($shadow[2]);
+        $obj->setShadow4($shadow[3]);
+        $obj->setShadow5($shadow[4]);
 
         $manager->persist($obj);
     }
@@ -258,7 +258,6 @@ class AppFixtures extends Fixture
         for ($i = 0; $i < count($list); $i++) {
             $alerts[$i] = new Alerts();
             $alerts[$i]->setObject($obj);
-
             $alerts[$i]->setAttribute($list[$i]['attr']);
             $alerts[$i]->setValue($list[$i]['value']);
             $alerts[$i]->setType($list[$i]['type']);

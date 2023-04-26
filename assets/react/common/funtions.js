@@ -96,14 +96,13 @@ function isSensorActive(data, num, stateScheme, icons) {
             }
         }
     }
-
     stateScheme[num].readings = readings;
 }
 
 // save to scheme -> object ID & NAME
 function getObjectInfo(data, num, scheme) {
     scheme[num] = {
-        id: data.id, name: data.name, description: data.description
+        id: data.id, name: data.name, description: data.description, type: data.type, image: data.image
     }
 }
 

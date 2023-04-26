@@ -56,6 +56,8 @@ class ObjectManager
         $arr['id'] = $obj->getId();
         $arr['name'] = $obj->getName();
         $arr['description'] = $obj->getDescription();
+        $arr['type'] = $obj->getType();
+        $arr['image'] = $obj->getImage();
 
         count($obj->getTemp()) === 0 ?: $arr['readings']['temp'] = $obj->getTemp();
         count($obj->getHumid()) === 0 ?: $arr['readings']['humid'] = $obj->getHumid();
@@ -139,10 +141,14 @@ class ObjectManager
             }
         }
 
-
-        if (isset($request_data['alerts']) and $request_data['alerts'] === true) {
-            if ($obj->getAlerts()) {
-
+        if ($obj->getAlerts()) {
+            $alerts = $obj->getAlerts();
+            foreach ($alerts as $i => $item) {
+                $arr['alerts'][$i]['attribute'] = $item->getAttribute();
+                $arr['alerts'][$i]['value'] = $item->getValue();
+                $arr['alerts'][$i]['type'] = $item->getType();
+                $arr['alerts'][$i]['importance'] = $item->getImportance();
+                $arr['alerts'][$i]['active'] = $item->getActive();
             }
         }
 

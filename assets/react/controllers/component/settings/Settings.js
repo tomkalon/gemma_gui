@@ -130,7 +130,6 @@ class Settings extends React.Component {
                     </div>
                 </div>
             </div>
-
             { this.state.popup }
         </article>)
     }

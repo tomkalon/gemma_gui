@@ -43,6 +43,10 @@ $light-shadow: 0 0 5px #ffffff80;
         .img {
           background-position: center !important;
           background-size: cover !important;
+
+          &:hover {
+            opacity: 0.85;
+          }
         }
 
         .desc {

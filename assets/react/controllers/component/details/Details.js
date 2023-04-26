@@ -6,6 +6,7 @@ import DetailsModules from "./DetailsModules";
 import DetailsStats from "./DetailsStats";
 import './details.scss'
 import DetailsProgress from "./DetailsProgress";
+import SettingsPopup from "../settings/SettingsPopup";
 
 class Details extends React.Component {
 
@@ -19,6 +20,10 @@ class Details extends React.Component {
         const selectedSettings = this.props.selectedSettings; // Selected Settings
         const isDay = this.props.isDay; // time of day
         const stats = this.props.stats; // statistics & charts
+
+        // VAR
+        let img = 'default';
+        const imagesSrc = '/build/images/';
 
         // readings
         let readings = state.readings;
@@ -87,7 +92,7 @@ class Details extends React.Component {
                     <div className={`image-box float-left hidden xl:block`}>
                         <div
                             className={`image dark:bg-darker-900 rounded-md border dark:border-darker-500 shadow-md dark:shadow-gray-900/50`}>
-                            <div className={`img h-32 mt-2 mx-2`}></div>
+                            <div className={`img h-32 mt-2 mx-2 cursor-pointer`} style={{backgroundImage: `url("${imagesSrc}${img}.webp")` }}></div>
                             <div className={`desc text-center uppercase`}>
                                 <span className={`text-sm dark:text-darker-200`}>Typ obiektu:</span>
                                 <p className={`dark:text-darker-100`}>developer</p>

@@ -26,198 +26,170 @@ $alarm-red: #501414;
 $false-red: #a32c2c;
 $true-green: #33741c;
 
-$popup-cover: #000000d0;
-
 $text-shadow: -2px 2px 2px #00000050;
 $shadow: -4px 4px 10px 0px #07262880;
 $light-shadow: 0 0 5px #ffffff80;
-$popup-shadow: -4px 4px 10px #000000;
 
 .setup {
 
-  .js-settings-popup-cover {
-    width: 100%;
-    height: 100%;
-    background: $popup-cover;
+  .description {
+    padding: 1rem;
+    margin: 1rem;
+    background: #254b5e;
+    border-radius: 0.25rem;
+  }
 
-    .settings-popup {
-      width: 40rem;
-      filter: drop-shadow($popup-shadow);
-      background: $blue-550;
+  .content {
 
-      .label {
-        justify-content: space-between;
-        text-transform: unset !important;
-        font-size: 1.2rem;
+    &.radio {
+      margin: 2rem;
+    }
 
-        .js-btn-close {
-          font-size: 1.25rem;
-          width: 1.75rem;
-          height: 1.75rem;
-          text-align: center;
-          color: $blue-250;
-
-          &:hover {
-            background: $blue-250;
-            color: $blue-950;
-            cursor: pointer;
-            border-radius: 0.25rem;
-          }
-        }
-      }
-
-      .description {
-        padding: 1rem;
-        margin: 1rem;
-        background: #254b5e;
+    .settings-radio {
+      .value {
+        padding: 0.5rem;
+        margin: 0.25rem;
         border-radius: 0.25rem;
+
+        &.true {
+          background: $true-green;
+        }
+
+        &.false {
+          background: $false-red;
+        }
       }
-      .content {
+    }
 
-        &.radio {
-          margin: 2rem;
-        }
+    &.range {
+      margin: 4rem 0 1rem;
+    }
 
-        .settings-radio {
-          .value {
-            padding: 0.5rem;
-            margin: 0.25rem;
-            border-radius: 0.25rem;
-            &.true {
-              background: $true-green;
-            }
-            &.false {
-              background: $false-red;
-            }
-          }
-        }
+    .settings-range {
+      width: 100%;
+      padding: 0 1rem;
 
-        &.range {
-          margin: 4rem 0 1rem;
-        }
+      input[type="range"] {
+        -webkit-appearance: none;
+        appearance: none;
+        cursor: pointer;
+        background: transparent;
+      }
 
-        .settings-range {
-          width: 100%;
-          padding: 0 1rem;
+      input[type="range"]:focus {
+        outline: none;
+        border: none;
+      }
 
-          input[type="range"] {
-            -webkit-appearance: none;
-            appearance: none;
-            cursor: pointer;
-            background: transparent;
-          }
-          input[type="range"]:focus {
-            outline: none;
-            border: none;
-          }
+      //--- opera, chrome, etc...
+      // track style
+      input[type="range"]::-webkit-slider-runnable-track {
+        background-color: $blue-950;
+        height: 0.75rem;
+        border-radius: 0.5rem;
+        transition: background-color 0.5s;
+      }
 
-          //--- opera, chrome, etc...
-          // track style
-          input[type="range"]::-webkit-slider-runnable-track  {
-            background-color: $blue-950;
-            height: 0.75rem;
-            border-radius: 0.5rem;
-            transition: background-color 0.5s;
-          }
+      input[type="range"]:hover::-webkit-slider-runnable-track {
+        background-color: $blue-450;
+      }
 
-          input[type="range"]:hover::-webkit-slider-runnable-track {
+      // pointer
+      input[type="range"]::-webkit-slider-thumb {
+        -webkit-appearance: none;
+        appearance: none;
+        margin-top: -14px;
+        background-color: $dark-0;
+        height: 2.5rem;
+        width: 1.25rem;
+        border-radius: 1rem;
+        border: 0;
+      }
+
+      input[type="range"]:hover::-webkit-slider-thumb {
+        outline: 2px solid $dark-0;
+        outline-offset: 0.125rem;
+      }
+
+      //--- firefox
+      // track style
+      input[type="range"]::-moz-range-track {
+        background-color: $blue-950;
+        height: 0.75rem;
+        border-radius: 0.5rem;
+        transition: background-color 0.5s;
+      }
+
+      input[type="range"]:hover::-moz-range-track {
+        background-color: $blue-450;
+      }
+
+      // pointer
+      input[type="range"]::-moz-range-thumb {
+        -webkit-appearance: none;
+        appearance: none;
+        margin-top: -14px;
+        background-color: $dark-0;
+        height: 2.5rem;
+        width: 1.25rem;
+        border-radius: 1rem;
+        border: 0;
+      }
+
+      input[type="range"]:hover::-moz-range-thumb {
+        outline: 2px solid $dark-0;
+        outline-offset: 0.125rem;
+      }
+
+      .select-bar {
+        top: -15px;
+        position: relative;
+        margin: 0 0.5rem;
+      }
+
+      .range-caption {
+        position: relative;
+        z-index: 50;
+        text-align: center;
+        height: 1.75rem;
+        font-size: 1.25rem;
+        width: 100%;
+        padding: 0 0.625rem;
+        top: -30px;
+
+        .value {
+          margin-left: -1.75rem;
+          height: 2rem;
+
+          &:after {
+            content: "";
+            width: 0.5rem;
+            height: 0.5rem;
             background-color: $blue-450;
+            display: block;
+            margin: -3px auto 0;
+            transform: rotate(45deg);
           }
+        }
+      }
 
-          // pointer
-          input[type="range"]::-webkit-slider-thumb {
-            -webkit-appearance: none;
-            appearance: none;
-            margin-top: -14px;
-            background-color: $dark-0;
-            height: 2.5rem;
-            width: 1.25rem;
-            border-radius: 1rem;
-            border: 0;
-          }
+      .range-footer {
+        position: relative;
+        z-index: 50;
+        height: 1.5rem;
+        font-size: 1rem;
+        width: 27.75rem;
+        left: 8px;
+      }
 
-          input[type="range"]:hover::-webkit-slider-thumb {
-            outline: 2px solid $dark-0;
-            outline-offset: 0.125rem;
-          }
+      .threshold {
+        font-size: 0.75rem;
+        position: absolute;
 
-          //--- firefox
-          // track style
-          input[type="range"]::-moz-range-track {
-            background-color: $blue-950;
-            height: 0.75rem;
-            border-radius: 0.5rem;
-            transition: background-color 0.5s;
-          }
-
-          input[type="range"]:hover::-moz-range-track {
-            background-color: $blue-450;
-          }
-
-          // pointer
-          input[type="range"]::-moz-range-thumb {
-            -webkit-appearance: none;
-            appearance: none;
-            margin-top: -14px;
-            background-color: $dark-0;
-            height: 2.5rem;
-            width: 1.25rem;
-            border-radius: 1rem;
-            border: 0;
-          }
-
-          input[type="range"]:hover::-moz-range-thumb {
-            outline: 2px solid $dark-0;
-            outline-offset: 0.125rem;
-          }
-
-          .select-bar {
-            top: -15px;
-            position: relative;
-            margin: 0 0.5rem;
-          }
-
-          .range-caption {
-            position: relative;
-            z-index: 50;
-            text-align: center;
-            height: 1.75rem;
-            font-size: 1.25rem;
-            width: 100%;
-            padding: 0 0.625rem;
-            top: -30px;
-            .value {
-              margin-left: -1.75rem;
-              height: 2rem;
-
-              &:after {
-                content: "";
-                width: 0.5rem;
-                height: 0.5rem;
-                background-color: $blue-450;
-                display: block;
-                margin: -3px auto 0;
-                transform: rotate(45deg);
-              }
-            }
-          }
-          .range-footer {
-            position: relative;
-            z-index: 50;
-            height: 1.5rem;
-            font-size: 1rem;
-            width: 27.75rem;
-            left: 8px;
-          }
-          .threshold {
-            font-size: 0.75rem;
-            position: absolute;
-            ins {
-              display: block;
-              position: relative;
-              text-decoration: none;
-            }
-          }
+        ins {
+          display: block;
+          position: relative;
+          text-decoration: none;
         }
       }
     }

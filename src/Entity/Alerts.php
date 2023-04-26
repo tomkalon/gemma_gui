@@ -28,7 +28,7 @@ class Alerts
     #[ORM\Column(length: 255)]
     private ?string $active = null;
 
-    #[ORM\ManyToOne(inversedBy: 'alerts')]
+    #[ORM\ManyToOne(targetEntity: Objects::class, inversedBy: 'alerts')]
     #[ORM\JoinColumn(nullable: false)]
     private ?objects $object = null;
 
