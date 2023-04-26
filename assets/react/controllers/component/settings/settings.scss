@@ -29,11 +29,11 @@ $true-green: #33741c;
 $popup-cover: #000000d0;
 
 $text-shadow: -2px 2px 2px #00000050;
+$shadow: -4px 4px 10px 0px #07262880;
 $light-shadow: 0 0 5px #ffffff80;
 $popup-shadow: -4px 4px 10px #000000;
 
 .setup {
-  margin: 1rem auto 2rem;
 
   .js-settings-popup-cover {
     width: 100%;
@@ -236,11 +236,16 @@ $popup-shadow: -4px 4px 10px #000000;
     background: linear-gradient(to bottom right, $blue-950, $blue-960);
   }
 
+  .title {
+    box-shadow: $shadow;
+  }
+
   .box {
     margin: 0 0.5rem;
     height: 19rem;
     background: linear-gradient(to bottom right, $dark-300, $dark-500);
     padding: 1rem 1rem;
+    box-shadow: $shadow;
 
     &-content {
       flex-wrap: wrap;

@@ -113,22 +113,23 @@ class Settings extends React.Component {
         }
 
         return (<article id={`js-settings`} className={`setup`}>
-            <div className={`container mx-auto h-16 p-2 bg-gradient-to-br dark:from-darker-700 dark:to-darker-900 dark:text-darker-100 rounded-md shadow-md`}>
-                <div className={`px-4 float-left uppercase`}>
-                    <span className={`dark:bg-blue-460 rounded-md mr-2 px-2`}>Profil</span>{settings['name']}
-                    <div className={`mt-1 text-sm`}>{title}</div>
+            <div className={`container mx-auto py-4 px-2 dark:bg-blue-960 rounded-b-md`}>
+                <div className={`title h-16 p-2 dark:text-darker-100 rounded-md shadow-md`}>
+                    <div className={`px-2 float-left uppercase`}>
+                        <span className={`dark:bg-blue-450 rounded-md mr-2 px-2`}>Profil</span>{settings['name']}
+                        <div className={`text-sm px-2 bg-gradient-to-r rounded-md dark:from-blue-470 dark:to-transparent-0`}>{title}</div>
+                    </div>
+                    <div className={`float-right mt-1 mr-2`}><button className={`btn btn-blue`}>Zmień profil</button></div>
                 </div>
-                <div className={`float-right mt-1 mr-2`}><button className={`btn btn-blue`}>Zmień profil</button></div>
-            </div>
-            <div className={`dark:text-darker-100`}>
-                <div className={`container mx-auto`}>
-                    <div className={`box flex rounded-b`}>
+                <div className={`dark:text-darker-100`}>
+                    <div className={`box flex rounded`}>
                         <div id={`js-settings-content`} className={`box-content flex flex-grow`}>
                             {Object.values(buttonList)}
                         </div>
                     </div>
                 </div>
             </div>
+
             { this.state.popup }
         </article>)
     }

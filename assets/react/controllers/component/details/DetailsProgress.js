@@ -12,10 +12,15 @@ class DetailsProgress extends React.Component {
 
         // vars
         let descriptionBlock;
+        let rounded = '';
         if (description) {
             descriptionBlock = <div className={`p-4`}>
                 <div className={`p-4 rounded dark:bg-blue-950`}>{description}</div>
             </div>;
+        }
+
+        if (settings) {
+            rounded = '-t';
         }
 
         function renderProgressBar(value, si, indicator) {
@@ -58,7 +63,7 @@ class DetailsProgress extends React.Component {
         if (shadow) progressRows[1] = renderProgressRow(shadow, settings);
 
         return (<div
-            className={`readings stripe dark:bg-blue-960 dark:border-darker-200 dark:text-blue-100 rounded shadow-md dark:shadow-gray-900/30`}>
+            className={`readings stripe dark:bg-blue-960 dark:border-darker-200 dark:text-blue-100 rounded${rounded} shadow-md dark:shadow-gray-900/30`}>
             <div className={`container mx-auto px-4 flex text-blue-100 text-center`}>
                 {progressRows.map((element, index) => (
                     <div key={index} className={`box flex w-full`}>
