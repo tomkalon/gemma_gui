@@ -53,6 +53,7 @@ class AppController extends AbstractController
             $objectManager->updateByArray($external_request, $object_number);
             $data = true;
         } else {
+            dd($objectManager->updateByArray(array('test' => 'test'), $object_number));
             $data = false;
         }
 

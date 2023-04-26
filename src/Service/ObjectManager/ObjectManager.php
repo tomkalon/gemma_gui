@@ -10,12 +10,14 @@ use Symfony\Component\Yaml\Yaml;
 class ObjectManager
 {
     protected object $object;
+    protected object $entity_manager;
     protected array $config;
     protected array $data;
 
     public function __construct(EntityManagerInterface $entityManager)
     {
         $this->object = $entityManager->getRepository(Objects::class);
+        $this->entity_manager = $entityManager;
         $configDirectories = [__DIR__ . '/config'];
         $fileLocator = new FileLocator($configDirectories);
         $config_location = $fileLocator->locate('config.yaml');
@@ -169,10 +171,115 @@ class ObjectManager
         return $settings;
     }
 
+    // update DATABASE by single array pair :: column_name -> value
     public function updateByArray(array $data, int $id): void
     {
         $key = array_key_first($data);
         $value = $data[$key];
-        $query = $this->object->find($id);
+        $query = $this->object->find($id)->getSettings();
+
+        switch ($key) {
+            case 'temp_day':
+                $query->setTempDay($value);
+                break;
+            case 'temp_night':
+                $query->setTempNight($value);
+                break;
+            case 'temp_hysteresis':
+                $query->setTempHysteresis($value);
+                break;
+            case 'temp_vent_close':
+                $query->setTempVentClose($value);
+                break;
+            case 'temp_control_day':
+                $query->setTempControlDay($value);
+                break;
+            case 'temp_control_night':
+                $query->setTempControlNight($value);
+                break;
+            case 'humid_day':
+                $query->setHumidDay($value);
+                break;
+            case 'humid_night':
+                $query->setHumidNight($value);
+                break;
+            case 'humid_hysteresis':
+                $query->setHumidHysteresis($value);
+                break;
+            case 'humid_vent_step':
+                $query->setHumidVentStep($value);
+                break;
+            case 'humid_vent_pause':
+                $query->setHumidVentPause($value);
+                break;
+            case 'humid_vent_pause_open':
+                $query->setHumidVentPauseOpen($value);
+                break;
+            case 'humid_vent_max_open':
+                $query->setHumidVentMaxOpen($value);
+                break;
+            case 'humid_control_day':
+                $query->setHumidControlDay($value);
+                break;
+            case 'humid_control_night':
+                $query->setHumidControlNight($value);
+                break;
+            case 'vent_step_time':
+                $query->setVentStepTime($value);
+                break;
+            case 'vent_pause':
+                $query->setVentPause($value);
+                break;
+            case 'vent_open_close_time':
+                $query->setVentOpenCloseTime($value);
+                break;
+            case 'vent_min_temp':
+                $query->setVentMinTemp($value);
+                break;
+            case 'vent_rain_delay':
+                $query->setVentRainDelay($value);
+                break;
+            case 'vent_max_open_rain':
+                $query->setVentMaxOpenRain($value);
+                break;
+            case 'vent_wind_delay':
+                $query->setVentWindDelay($value);
+                break;
+            case 'vent_weak_wind_max':
+                $query->setVentWeakWindMax($value);
+                break;
+            case 'vent_strong_wind_max':
+                $query->setVentStrongWindMax($value);
+                break;
+            case 'shadow1':
+                $query->setShadow1($value);
+                break;
+            case 'shadow2':
+                $query->setShadow2($value);
+                break;
+            case 'shadow3':
+                $query->setShadow3($value);
+                break;
+            case 'shadow4':
+                $query->setShadow4($value);
+                break;
+            case 'shadow5':
+                $query->setShadow5($value);
+                break;
+            case 'heat':
+                $query->setHeat($value);
+                break;
+            case 'heat_hysteresis':
+                $query->setHeatHysteresis($value);
+                break;
+            case 'blow':
+                $query->setblow($value);
+                break;
+            case 'blow_pause':
+                $query->setBlowPause($value);
+                break;
+        }
+
+        $this->entity_manager->flush();
     }
 }

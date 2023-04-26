@@ -56,6 +56,7 @@ class GlobalSettingsManager
         return $time;
     }
 
+    // update DATABASE by single array pair :: column_name -> value
     public function updateByArray(array $data): void
     {
         $key = array_key_first($data);
