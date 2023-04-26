@@ -168,29 +168,29 @@ footer {
 
   &-green {
     background: $dark-400;
-    border: 1px solid $dark-400;
+    border: 2px solid $dark-400;
     &:hover {
       background: $dark-100;
-      border: 1px solid $dark-100;
+      border: 2px solid $dark-100;
       color: $blue-450;
     }
   }
 
   &-blue {
     background: $blue-950;
-    border: 1px solid $blue-450;
+    border: 2px solid $blue-450;
     &:hover {
       background: $dark-100;
-      border: 1px solid $blue-450;
+      border: 2px solid $blue-450;
       color: $blue-950;
     }
   }
 
   &-empty {
-    border: 1px solid $blue-450;
+    border: 2px solid $blue-450;
     &:hover {
       background: $dark-100;
-      border: 1px solid $dark-100;
+      border: 2px solid $dark-100;
       color: $blue-450;
     }
   }

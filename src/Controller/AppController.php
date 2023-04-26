@@ -2,8 +2,8 @@
 
 namespace App\Controller;
 
-use App\Entity\Objects;
 use App\Service\ObjectManager\ObjectManager;
+use App\Service\GlobalSettingsManager\GlobalSettingsManager;
 use App\Service\Weather\WeatherManager;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -17,55 +17,66 @@ class AppController extends AbstractController
     public function index(): Response
     {
         return $this->render('test.html.twig', [
-        ]);
-    }
-
-    #[Route('/app/{objects<\d+>}', name: 'app_show_one', priority: 1)]
-    public function showOne(Objects $objects): Response
-    {
-        return $this->render('app/index.html.twig', [
-            'reactApp' => false,
-            'data' => $objects
+            'test' => 'test'
         ]);
     }
 
     #[Route('/app', name: 'app_show_all', priority: 10)]
-    public function showAll(ObjectManager $objectManager): Response
+    public function showAll(): Response
     {
         return $this->render('app/index.html.twig', [
             'reactApp' => true
         ]);
     }
 
-    #[Route('/api/objects', name: 'app_api_objects', priority: 10)]
-    public function apiObjects(ObjectManager $objectManager, Request $request): Response
+    #[Route('/api/objects', name: 'app_api_objects', priority: 5)]
+    public function apiObjects(ObjectManager $objectManager, GlobalSettingsManager $globalSettingsManager, Request $request): Response
     {
-        $data = [];
+        $data = array();
         if ($request->isMethod('get')) {
             $data['facility'] = $objectManager->getAllObjectsData(true);
-            $data['time'] = $objectManager->getTime();
-            $data['global'] = $objectManager->getGlobalSettings();
+            $data['time'] = $globalSettingsManager->getTime();
+            $data['global'] = $globalSettingsManager->getGlobalSettings();
         }
+        else {
+            $data = false;
+        }
+
         return new JsonResponse($data);
     }
 
-    #[Route('/api/objects/{object<\d+>}', name: 'app_api_object_number', priority: 10)]
-    public function apiObjectNumber(ObjectManager $objectManager, Request $request): Response
+    #[Route('/api/objects/{object_number<\d+>}', name: 'app_api_object_number', priority: 5)]
+    public function apiObjectNumber(ObjectManager $objectManager, Request $request, $object_number): Response
     {
-        $data = [];
         if ($request->isMethod('put')) {
             $external_request = json_decode($request->getContent(), true);
-            $data = $external_request;
+            $objectManager->updateByArray($external_request, $object_number);
+            $data = true;
+        } else {
+            $data = false;
         }
 
         return new JsonResponse($data);
     }
 
-    #[Route('/api/weather', name: 'app_api_weather', priority: 10)]
+    #[Route('/api/weather', name: 'app_api_weather', priority: 5)]
     public function apiWeather(WeatherManager $weatherManager): Response
     {
         $data = $weatherManager->getWeatherData();
-//        dd($data);
+        return new JsonResponse($data);
+    }
+
+    #[Route('/api/objects/global', name: 'app_api_global', priority: 10)]
+    public function apiGlobal(Request $request, GlobalSettingsManager $globalSettingsManager): Response
+    {
+        if ($request->isMethod('put')) {
+            $external_request = json_decode($request->getContent(), true);
+            $globalSettingsManager->updateByArray($external_request);
+            $data = true;
+        } else {
+            $data = false;
+        }
+
         return new JsonResponse($data);
     }
 }

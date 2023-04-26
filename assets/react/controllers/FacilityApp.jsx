@@ -76,7 +76,7 @@ export default class FacilityApp extends Component {
             headers: {
                 "Content-Type": "application/json",
             },
-            // body: JSON.stringify(),
+            // body: JSON.stringify(this.query),
         })
             .then((response) => response.json())
             .then(data => {
@@ -204,7 +204,8 @@ export default class FacilityApp extends Component {
                 if (selectedSettings === false && currentObjectState.settings) {
                     selectedSettings = Object.keys(currentObjectState.readings)[0];
                 }
-                details = <Details current={currentObject} info={currentObjectInfo} selectedSettings={selectedSettings}
+                details = <Details current={currentObject} info={currentObjectInfo}
+                                   selectedSettings={selectedSettings}
                                    handler={this.selectSettingsHandler.bind(this)}
                                    state={currentObjectState} isDay={isDay} stats={stats} />;
             }
@@ -212,8 +213,9 @@ export default class FacilityApp extends Component {
             // ======= SETTINGS =======
             // settings container
             if (currentObject !== false && currentObject !== null && currentObjectState['settings'] && selectedSettings) {
-                settings = <Settings currentObject={currentObjectState} selectedSettings={selectedSettings} global={global}
-                                     saveHandler={this.saveSettingsData.bind(this)} />;
+                settings = <Settings currentObject={currentObjectState} selectedSettings={selectedSettings}
+                                     global={global}  saveHandler={this.saveSettingsData.bind(this)}
+                                     id={facilityInfo[currentObject]['id']} />;
             }
         }
         // =======================================================================

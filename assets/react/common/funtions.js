@@ -153,8 +153,16 @@ function getCarouselDisplaySettings(sensorsCount, num, carousel, scheme) {
     }
 }
 
-function sendDataAPI (method, object, send) {
-    let apiAddress = setup.apiAddress + object;
+function sendDataAPI (method, id, send, isGlobal) {
+    let apiAddress = setup.apiAddress;
+    if (isGlobal) {
+        apiAddress += '/global';
+    } else {
+        apiAddress += '/' + id
+    }
+
+    console.log(apiAddress);
+
     fetch(apiAddress, {
         method: method,
         headers: {
@@ -174,14 +182,13 @@ function sendDataAPI (method, object, send) {
 
 // ========= HANDLERS ==========
 // ===  sava data handler ===
-function saveSettingsData(data, name, isGlobal) {
+function saveSettingsData(id, data, name, isGlobal) {
     let send = {};
     send[name] = data;
-    sendDataAPI('put', this.currentObject, send);
+    sendDataAPI('put', id, send, isGlobal);
 
     if (isGlobal) {
         this.global[name] = data;
-        console.log(this.global);
         this.setState({
             global: this.global
         });

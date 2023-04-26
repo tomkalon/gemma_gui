@@ -232,7 +232,6 @@ $popup-shadow: -4px 4px 10px #000000;
   }
 
   @mixin item-default-bg {
-    border-bottom: 1px solid $blue-450;
     background: linear-gradient(to bottom right, $blue-950, $blue-960);
   }
 
@@ -243,7 +242,7 @@ $popup-shadow: -4px 4px 10px #000000;
   .box {
     margin: 0 0.5rem;
     height: 19rem;
-    background: linear-gradient(to bottom right, $dark-300, $dark-500);
+    background: #34505d;
     padding: 1rem 1rem;
     box-shadow: $shadow;
 
@@ -281,7 +280,6 @@ $popup-shadow: -4px 4px 10px #000000;
       line-height: 1.2;
       padding: 0 1rem;
       border-radius: 0.5rem 0.5rem 0 0;
-      border-top: 1px solid $blue-450;
       @include item-default-bg;
       @include setup-item;
     }
@@ -301,7 +299,6 @@ $popup-shadow: -4px 4px 10px #000000;
     .value {
       font-size: 1.25rem;
       height: 2.5rem;
-      border-top: 1px solid $blue-450;
       border-radius: 0 0 0.5rem 0.5rem;
       @include item-default-bg;
       @include setup-item;

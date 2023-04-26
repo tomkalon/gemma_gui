@@ -2,22 +2,20 @@
 
 namespace App\Service\ObjectManager;
 
-use App\Repository\GlobalSettingsRepository;
-use App\Repository\ObjectsRepository;
+use App\Entity\Objects;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\Yaml\Yaml;
 
 class ObjectManager
 {
     protected object $object;
-    protected object $global_settings;
     protected array $config;
     protected array $data;
 
-    public function __construct(ObjectsRepository $objectsRepository, GlobalSettingsRepository $globalSettingsRepository)
+    public function __construct(EntityManagerInterface $entityManager)
     {
-        $this->object = $objectsRepository;
-        $this->global_settings = $globalSettingsRepository;
+        $this->object = $entityManager->getRepository(Objects::class);
         $configDirectories = [__DIR__ . '/config'];
         $fileLocator = new FileLocator($configDirectories);
         $config_location = $fileLocator->locate('config.yaml');
@@ -171,45 +169,10 @@ class ObjectManager
         return $settings;
     }
 
-    // get time of the day
-    public function getTime(): array
+    public function updateByArray(array $data, int $id): void
     {
-        $time = array();
-
-        // global settings
-        $query= $this->global_settings->findAll()[0];
-        $day_begin = $query->getDayBegin();
-        $night_begin = $query->getNightBegin();
-
-        // current time
-        $hour = date('H');
-
-        if (($hour >= $day_begin) and ($hour < $night_begin)) {
-            $time['isDay'] = true;
-        }
-        else {
-            $time['isDay'] = false;
-        }
-        return $time;
-    }
-
-    // get global settings
-    public function getGlobalSettings(): array {
-
-        $global = array();
-
-        // global settings
-        $query= $this->global_settings->findAll()[0];
-        $global['day_begin'] = $query->getDayBegin();
-        $global['night_begin'] = $query->getNightBegin();
-        $global['weak_wind'] = $query->getWeakWind();
-        $global['strong_wind'] = $query->getStrongWind();
-        $global['sun_threshold1'] = $query->getSunThreshold1();
-        $global['sun_threshold2'] = $query->getSunThreshold2();
-        $global['sun_threshold3'] = $query->getSunThreshold3();
-        $global['sun_threshold4'] = $query->getSunThreshold4();
-        $global['sun_threshold5'] = $query->getSunThreshold5();
-
-        return $global;
+        $key = array_key_first($data);
+        $value = $data[$key];
+        $query = $this->object->find($id);
     }
 }

@@ -20,7 +20,7 @@ class DetailsProgress extends React.Component {
         }
 
         if (settings) {
-            rounded = '-t';
+            rounded = '-t-md';
         }
 
         function renderProgressBar(value, si, indicator) {

@@ -9,6 +9,7 @@ class SettingsPopup extends React.Component {
         super(props);
         this.value = this.props.settingValue;
         this.bool = this.props.settingBool;
+        this.id = this.props.id;
         this.type = false;
     }
 
@@ -22,10 +23,10 @@ class SettingsPopup extends React.Component {
 
     saveData (name, data, saveHandler, closeHandler, isGlobal) {
         if (this.type === 'range') {
-            saveHandler(data, name, isGlobal);
+            saveHandler(this.id, data, name, isGlobal);
         }
         else if (this.type === 'radio') {
-            saveHandler(!this.bool, name, isGlobal);
+            saveHandler(this.id, !this.bool, name, isGlobal);
         }
         closeHandler();
     }
