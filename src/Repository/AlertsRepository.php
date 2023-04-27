@@ -39,6 +39,19 @@ class AlertsRepository extends ServiceEntityRepository
         }
     }
 
+    public function findActive(int $id): array
+    {
+        $qb = $this->createQueryBuilder('alerts')
+            ->where('alerts.object = :id')
+            ->andWhere('alerts.isActive = TRUE')
+            ->orderBy('alerts.id', 'DESC')
+            ->setParameter('id', $id);
+
+        $query = $qb->getQuery();
+        return $query->execute();
+    }
+
+
 //    /**
 //     * @return Alerts[] Returns an array of Alerts objects
 //     */

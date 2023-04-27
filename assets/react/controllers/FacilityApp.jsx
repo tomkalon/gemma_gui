@@ -81,7 +81,7 @@ export default class FacilityApp extends Component {
             .then((response) => response.json())
             .then(data => {
 
-                let facility, time, global;
+                let facility, time;
                 data.facility ? facility = data.facility : facility = false;
                 data.time ? time = data.time : time = 0;
                 data.global ? this.global = data.global : this.global = 0;
@@ -130,8 +130,8 @@ export default class FacilityApp extends Component {
                     // save SCHEME to STATE
                     this.setState({
                             facility: this.stateScheme,
-                            page: this.carousel.page,
-                            current: this.currentObject,
+                            currentPage: this.carousel.page,
+                            currentObject: this.currentObject,
                             selectedSettings: this.selectedSettings,
                             isDay: time['isDay'],
                             global: this.global
@@ -152,36 +152,34 @@ export default class FacilityApp extends Component {
 
 
     render() {
-        // carousel
-        const pageState = this.state.page;
-        let display;
-        let carousel;
+        // carousel component
+        const pageState = this.state.currentPage; // selected carousel page
+        let display; // carousel display settings
+        let carousel; // component
+
+        // details component
+        let details; // component
+        let stats = false; // stats button
+
+        // settings component
+        let settings; // component
+        let global; // global settings data
 
         // objects DATA // FACILITY
-        let facilityState; //
-        let facilityInfo;
-        let currentObject;
-        let currentObjectInfo;
-        let currentObjectState;
-        let selectedSettings;
-        let isDay;
-
-        // details
-        let details;
-
-        // settings
-        let settings;
-        let global;
-
-        // stats
-        let stats = false;
+        let facilityState; // objects sensors data
+        let facilityInfo; // objects information
+        let currentObject; // selected object
+        let currentObjectInfo; // selected object information
+        let currentObjectState; // selected object sensors data
+        let selectedSettings; // selected objects settings
+        let isDay; // current daytime
 
         // =======================================================================
         // render if there isn't initial rendering
         if (!this.isInitialFetch) {
             facilityState = this.state.facility;
             facilityInfo = this.scheme;
-            currentObject = this.state.current;
+            currentObject = this.state.currentObject;
             isDay = this.state.isDay;
             global = this.state.global;
 

@@ -57,42 +57,10 @@ class GlobalSettingsManager
     }
 
     // update DATABASE by single array pair :: column_name -> value
-    public function updateByArray(array $data): void
+    public function updateByArray(array $data): int
     {
         $key = array_key_first($data);
         $value = $data[$key];
-        $query = $this->global_settings->findAll()[0];
-
-        switch ($key) {
-            case 'day_begin':
-                $query->setDayBegin($value);
-                break;
-            case 'night_begin':
-                $query->setNightBegin($value);
-                break;
-            case 'weak_wind':
-                $query->setWeakWind($value);
-                break;
-            case 'strong_wind':
-                $query->setStrongWind($value);
-                break;
-            case 'sun_threshold1':
-                $query->setSunThreshold1($value);
-                break;
-            case 'sun_threshold2':
-                $query->setSunThreshold2($value);
-                break;
-            case 'sun_threshold3':
-                $query->setSunThreshold3($value);
-                break;
-            case 'sun_threshold4':
-                $query->setSunThreshold4($value);
-                break;
-            case 'sun_threshold5':
-                $query->setSunThreshold5($value);
-                break;
-        }
-
-        $this->entity_manager->flush();
+        return $this->global_settings->update($key, $value);
     }
 }

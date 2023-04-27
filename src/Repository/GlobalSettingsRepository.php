@@ -39,6 +39,19 @@ class GlobalSettingsRepository extends ServiceEntityRepository
         }
     }
 
+    public function update(string $key, $value): int
+    {
+        $id = $this->findAll()[0]->getId();
+        $qb = $this->createQueryBuilder('global_settings')
+            ->update('App:GlobalSettings', 'p')
+            ->set("p.$key", $value)
+            ->where('p.id = :id')
+            ->setParameter('id', $id);
+
+        $query = $qb->getQuery();
+        return $query->execute();
+    }
+
 //    /**
 //     * @return GlobalSettings[] Returns an array of GlobalSettings objects
 //     */

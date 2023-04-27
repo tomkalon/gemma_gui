@@ -240,20 +240,20 @@ class AppFixtures extends Fixture
             'attr' => 'temp',
             'value' => '3',
             'type' => 'sensor',
-            'importance' => 2,
-            'active' => 1
+            'active' => true,
+            'read' => false
         ], [
             'attr' => 'temp',
             'value' => '#100',
             'type' => 'hardware',
-            'importance' => 3,
-            'active' => 1
+            'active' => true,
+            'read' => true
         ], [
             'attr' => 'humid',
             'value' => '5',
             'type' => 'sensor',
-            'importance' => 1,
-            'active' => 0
+            'active' => true,
+            'read' => false
         ]];
         for ($i = 0; $i < count($list); $i++) {
             $alerts[$i] = new Alerts();
@@ -261,8 +261,8 @@ class AppFixtures extends Fixture
             $alerts[$i]->setAttribute($list[$i]['attr']);
             $alerts[$i]->setValue($list[$i]['value']);
             $alerts[$i]->setType($list[$i]['type']);
-            $alerts[$i]->setImportance($list[$i]['importance']);
-            $alerts[$i]->setActive($list[$i]['active']);
+            $alerts[$i]->setIsActive($list[$i]['active']);
+            $alerts[$i]->setIsRead($list[$i]['read']);
 
             $manager->persist($alerts[$i]);
         }

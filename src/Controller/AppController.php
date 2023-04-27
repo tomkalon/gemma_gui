@@ -57,10 +57,8 @@ class AppController extends AbstractController
     {
         if ($request->isMethod('put')) {
             $external_request = json_decode($request->getContent(), true);
-            $objectManager->updateByArray($external_request, $object_number);
-            $data = true;
+            $data = $objectManager->updateByArray($external_request, $object_number);
         } else {
-            dd($objectManager->updateByArray(array('test' => 'test'), $object_number));
             $data = false;
         }
 
@@ -79,8 +77,7 @@ class AppController extends AbstractController
     {
         if ($request->isMethod('put')) {
             $external_request = json_decode($request->getContent(), true);
-            $globalSettingsManager->updateByArray($external_request);
-            $data = true;
+            $data = $globalSettingsManager->updateByArray($external_request);
         } else {
             $data = false;
         }

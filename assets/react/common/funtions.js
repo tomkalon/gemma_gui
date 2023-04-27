@@ -204,7 +204,7 @@ function carouselPaginationPageIndex(index, timeout) {
     this.carousel.page = index;
     $('#js-carousel-content').fadeOut(timeout);
     setTimeout(() => {
-        this.setState({page: this.carousel.page}, () => {
+        this.setState({currentPage: this.carousel.page}, () => {
             $('#js-carousel-content').fadeIn(timeout);
         });
     }, timeout);
@@ -221,7 +221,7 @@ function carouselSidebarPageIndex(index, timeout) {
     }
     $('#js-carousel-content').fadeOut(timeout);
     setTimeout(() => {
-        this.setState({page: this.carousel.page}, () => {
+        this.setState({currentPage: this.carousel.page}, () => {
             $('#js-carousel-content').fadeIn(timeout);
         });
     }, timeout);
@@ -240,7 +240,7 @@ function carouselSetActiveElement(index, timeout) {
     $('#js-settings').fadeOut(timeout / 2);
     $('#js-object-detail').fadeOut(timeout);
     setTimeout(() => {
-        this.setState({current: this.currentObject}, () => {
+        this.setState({currentObject: this.currentObject}, () => {
             $('#js-object-detail').fadeIn(timeout);
             $('#js-settings').fadeIn(timeout * 2);
         });

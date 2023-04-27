@@ -22,15 +22,15 @@ class Alerts
     #[ORM\Column(length: 255)]
     private ?string $type = null;
 
-    #[ORM\Column(length: 255)]
-    private ?string $importance = null;
-
-    #[ORM\Column(length: 255)]
-    private ?string $active = null;
-
     #[ORM\ManyToOne(targetEntity: Objects::class, inversedBy: 'alerts')]
     #[ORM\JoinColumn(nullable: false)]
     private ?objects $object = null;
+
+    #[ORM\Column]
+    private ?bool $isRead = null;
+
+    #[ORM\Column]
+    private ?bool $isActive = null;
 
     public function getId(): ?int
     {
@@ -73,30 +73,6 @@ class Alerts
         return $this;
     }
 
-    public function getImportance(): ?string
-    {
-        return $this->importance;
-    }
-
-    public function setImportance(string $importance): self
-    {
-        $this->importance = $importance;
-
-        return $this;
-    }
-
-    public function getActive(): ?string
-    {
-        return $this->active;
-    }
-
-    public function setActive(string $active): self
-    {
-        $this->active = $active;
-
-        return $this;
-    }
-
     public function getObject(): ?objects
     {
         return $this->object;
@@ -105,6 +81,30 @@ class Alerts
     public function setObject(?objects $object): self
     {
         $this->object = $object;
+
+        return $this;
+    }
+
+    public function isIsRead(): ?bool
+    {
+        return $this->isRead;
+    }
+
+    public function setIsRead(bool $isRead): self
+    {
+        $this->isRead = $isRead;
+
+        return $this;
+    }
+
+    public function isIsActive(): ?bool
+    {
+        return $this->isActive;
+    }
+
+    public function setIsActive(bool $isActive): self
+    {
+        $this->isActive = $isActive;
 
         return $this;
     }
