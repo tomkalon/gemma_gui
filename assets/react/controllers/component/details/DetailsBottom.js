@@ -14,13 +14,24 @@ class DetailsBottom extends React.Component {
 
         // component
         const counter = (number, blink) => {
-            return (
-                <div className={`btn-counter float-right ${blink}`}>{number}</div>
-            )
+            if (number) {
+                return (
+                    <div className={`btn-counter float-right ${blink}`}>{number}</div>
+                )
+            }
+            else {
+                return '';
+            }
         }
 
         // vars
-        let malfunction, warning;
+        let sensor, hardware, sensorCounter, hardwareCounter;
+        if (alerts.sensor) {
+            sensorCounter = alerts.sensor.length;
+        }
+        if (alerts.hardware) {
+            hardwareCounter = alerts.hardware.length;
+        }
 
         let descriptionBlock;
         if (description) {
@@ -32,17 +43,17 @@ class DetailsBottom extends React.Component {
         let rounded = '';
         if (settings) {
             rounded = '-t-md';
-            warning = <button className={`btn-red btn ml-2 float-right`}>
-                <i className={`gf gf-warning`}></i>Ostrzeżenia{counter(2, indicators.sensor.new)}
+            sensor = <button className={`btn-red btn ml-2 float-right`}>
+                <i className={`gf gf-warning`}></i>Ostrzeżenia{counter(sensorCounter, indicators.sensor.new)}
             </button>;
         }
 
         let otherOptions = <div className={`container h-14 mt-2 px-8`}>
             <button className={`btn-empty btn ml-2 float-right`}>Opis</button>
             <button className={`btn-red btn ml-2 float-right`}>
-                <i className={`gf gf-damage`}></i>Awarie{counter(4, indicators.hardware.new)}
+                <i className={`gf gf-damage`}></i>Awarie{counter(hardwareCounter, indicators.hardware.new)}
             </button>
-            {warning}
+            {sensor}
 
         </div>;
 

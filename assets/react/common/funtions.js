@@ -152,23 +152,26 @@ function getAlertsIndicators(stateScheme, alerts) {
     let indicators = {
         "sensor": {
             "active": false, "new": ''
-        }, "hardware": {
+        },
+        "hardware": {
             "active": false, "new": ''
         },
     };
 
-    if (alerts.length) {
-        alerts.map((item) => {
-            if (item.type === 'sensor' && !indicators['sensor']['active'] && !indicators['sensor']['new']) {
-                if (!indicators['sensor']['active']) indicators['sensor']['active'] = true;
-                if (!item.isRead && !indicators['sensor']['new']) indicators['sensor']['new'] = 'blink';
-            }
-            if (item.type === 'hardware' && !indicators['hardware']['active'] && !indicators['hardware']['active']) {
-                if (!indicators['hardware']['active']) indicators['hardware']['active'] = true;
-                if (!item.isRead && !indicators['hardware']['new']) indicators['hardware']['new'] = 'blink';
-            }
-        });
+    if (alerts.sensor) {
+        indicators.sensor.active = true;
+        alerts.sensor.map((item) => {
+            if (!item.isRead) indicators.sensor.new = 'blink';
+        })
     }
+
+    if (alerts.hardware) {
+        indicators.hardware.active = true;
+        alerts.hardware.map((item) => {
+            if (!item.isRead) indicators.hardware.new = 'blink';
+        })
+    }
+
     stateScheme['indicators'] = indicators;
 }
 

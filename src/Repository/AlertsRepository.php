@@ -51,6 +51,20 @@ class AlertsRepository extends ServiceEntityRepository
         return $query->execute();
     }
 
+    public function findActiveByType(int $id, string $type): array
+    {
+        $qb = $this->createQueryBuilder('alerts')
+            ->where('alerts.object = :id')
+            ->andWhere('alerts.isActive = TRUE')
+            ->andWhere('alerts.type = :type')
+            ->orderBy('alerts.id', 'DESC')
+            ->setParameter('id', $id)
+            ->setParameter('type', $type);
+
+        $query = $qb->getQuery();
+        return $query->execute();
+    }
+
 
 //    /**
 //     * @return Alerts[] Returns an array of Alerts objects

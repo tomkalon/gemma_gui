@@ -194,7 +194,7 @@ footer {
     background: $alarm-red;
     border: 2px solid $alarm-red-light;
     &:hover {
-      background: $dark-0;
+      background: $dark-100;
       color: $dark-900;
     }
   }
@@ -207,6 +207,7 @@ footer {
     }
   }
   &-counter {
+    border-radius: 1rem;
     margin:0 0 0 0.5rem;
     width: 1.75rem;
     height: 1.75rem;

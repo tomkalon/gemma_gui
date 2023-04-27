@@ -124,20 +124,31 @@ class ObjectManager
         }
 
         if ($obj->getAlerts()) {
-            $alerts = $this->alerts->findActive($arr['id']);
-            foreach ($alerts as $key => $item) {
-                $arr['alerts'][$key]['type'] = $item->getType();
-
-                $arr['alerts'][$key]['id'] = $item->getId();
-                $arr['alerts'][$key]['attribute'] = $item->getAttribute();
-                $arr['alerts'][$key]['value'] = $item->getValue();
-                $arr['alerts'][$key]['isRead'] = $item->isIsRead();
-                $arr['alerts'][$key]['isActive'] = $item->isisActive();
+            $sensor_alerts = $this->alerts->findActiveByType($arr['id'], 'sensor');
+            $hardware_alerts = $this->alerts->findActiveByType($arr['id'], 'hardware');
+            if (count($sensor_alerts)) {
+                $arr['alerts']['sensor'] = $this->getAlertsData($sensor_alerts);
+            }
+            if (count($hardware_alerts)) {
+                $arr['alerts']['hardware'] = $this->getAlertsData($hardware_alerts);
             }
         }
 
         if ($sensor_count) $arr['sensors_count'] = $this->getSensorsCountSettings($arr);
 
+        return $arr;
+    }
+
+    private function getAlertsData ($alerts): array
+    {
+        $arr = array();
+        foreach ($alerts as $key => $item) {
+            $arr[$key]['id'] = $item->getId();
+            $arr[$key]['attribute'] = $item->getAttribute();
+            $arr[$key]['value'] = $item->getValue();
+            $arr[$key]['isRead'] = $item->isIsRead();
+            $arr[$key]['isActive'] = $item->isisActive();
+        }
         return $arr;
     }
 
