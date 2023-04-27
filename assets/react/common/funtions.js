@@ -151,25 +151,34 @@ function getCarouselDisplaySettings(sensorsCount, num, carousel, scheme) {
 function getAlertsIndicators(stateScheme, alerts) {
     let indicators = {
         "sensor": {
-            "active": false, "new": ''
+            "active": false, "new": '',
+            "icon": ''
         },
         "hardware": {
-            "active": false, "new": ''
+            "active": false, "new": '',
+            "icon": ''
         },
     };
+    if (alerts) {
+        if (alerts.sensor) {
+            indicators.sensor.active = true;
+            alerts.sensor.map((item) => {
+                if (!item.isRead) indicators.sensor.new = 'blink';
+            })
+            indicators.sensor.icon = <i className={`gf gf-warning ${indicators.sensor.new}`}></i>;
+        } else {
+            indicators.sensor.active = false;
+        }
 
-    if (alerts.sensor) {
-        indicators.sensor.active = true;
-        alerts.sensor.map((item) => {
-            if (!item.isRead) indicators.sensor.new = 'blink';
-        })
-    }
-
-    if (alerts.hardware) {
-        indicators.hardware.active = true;
-        alerts.hardware.map((item) => {
-            if (!item.isRead) indicators.hardware.new = 'blink';
-        })
+        if (alerts.hardware) {
+            indicators.hardware.active = true;
+            alerts.hardware.map((item) => {
+                if (!item.isRead) indicators.hardware.new = 'blink';
+            })
+            indicators.hardware.icon = <i className={`gf gf-damage ${indicators.hardware.new}`}></i>;
+        } else {
+            indicators.hardware.active = false;
+        }
     }
 
     stateScheme['indicators'] = indicators;

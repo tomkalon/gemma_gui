@@ -1,5 +1,4 @@
 import React from 'react';
-import DetailsLabel from "./DetailsLabel";
 import DetailsPanel from "./DetailsPanel";
 import DetailsSettings from "./DetailsSettings";
 import DetailsModules from "./DetailsModules";
@@ -23,6 +22,17 @@ class Details extends React.Component {
         // VAR
         let img = 'default';
         const imagesSrc = '/build/images/';
+
+        // indicators
+        let alertSensor, alertHardware;
+        if (state.indicators) {
+            if (state.indicators.sensor.active) {
+                alertSensor = state.indicators.sensor.icon;
+            }
+            if (state.indicators.hardware.active) {
+                alertHardware = state.indicators.hardware.icon;
+            }
+        }
 
         // readings
         let readings = state.readings;
@@ -86,7 +96,15 @@ class Details extends React.Component {
         }
 
         const component = <div id={`js-object-detail`}>
-            <DetailsLabel name={name} sequenceNumber={sequenceNumber}/>
+            <div
+                className={`h-8 bg-gradient-to-br dark:from-blue-950 dark:to-blue-960 border-b border-t dark:border-blue-450 flex rounded-md shadow-md relative dark:shadow-gray-900/30`}>
+                <div className={`label w-full px-4 container mx-auto text-sm`}>
+                    <span className={`dark:text-darker-0 pr-4`}>Obiekt #{sequenceNumber}</span>
+                    <span className={`dark:text-sky-200 border-l dark:border-darker-100 pl-4`}>{name}</span>
+                    <span className={`dark:text-sky-200 pl-4`}>{alertSensor}</span>
+                    <span className={`dark:text-sky-200 pl-4`}>{alertHardware}</span>
+                </div>
+            </div>
             <div className={`data`}>
                 <div className={`container mx-auto block justify-center px-2`}>
                     <div className={`image-box float-left hidden xl:block`}>

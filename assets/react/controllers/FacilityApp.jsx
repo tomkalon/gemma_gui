@@ -110,10 +110,15 @@ export default class FacilityApp extends Component {
                         // update SCHEME by the fetched data -> VALUES and setup icons
                         for (const [key, value] of Object.entries(facility)) {
                             this.assignValues(value.readings, this.stateScheme[key].readings);
-                            this.getAlertsIndicator(this.stateScheme[key], this.stateScheme[key].alerts);
                             if (this.stateScheme[key].settings) {
                                 this.stateScheme[key].settings = value.settings;
                             }
+                            if (this.stateScheme[key].alerts) {
+                                this.stateScheme[key].alerts = value.alerts;
+                            } else {
+                                this.stateScheme[key].alerts = [];
+                            }
+                            this.getAlertsIndicator(this.stateScheme[key], this.stateScheme[key].alerts);
                         }
                     }
 
@@ -238,7 +243,7 @@ export default class FacilityApp extends Component {
     }
 
     componentDidMount() {
-        // setInterval(() => this.getFacility(), this.refreshInterval);
+        setInterval(() => this.getFacility(), this.refreshInterval);
     }
 
     componentWillUnmount() {

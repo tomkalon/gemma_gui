@@ -19,13 +19,12 @@ class CarouselObject extends React.Component {
         let alertSensor, alertHardware;
 
         if (state.indicators) {
-
-        }
-        if (state.indicators.sensor.active) {
-            alertSensor = <i className={`gf gf-warning ${state.indicators.sensor.new}`}></i>;
-        }
-        if (state.indicators.hardware.active) {
-            alertHardware = <i className={`gf gf-damage ${state.indicators.hardware.new}`}></i>;
+            if (state.indicators.sensor.active) {
+                alertSensor = state.indicators.sensor.icon;
+            }
+            if (state.indicators.hardware.active) {
+                alertHardware = state.indicators.hardware.icon;
+            }
         }
 
         // <i className={`gf gf-warning`}></i>
