@@ -10,7 +10,7 @@ export default class WeatherBar extends Component {
 
         //const
         this.refreshInterval = 5000;
-        this.sensors = structuredClone(sensors);
+        this.sensors = sensors;
 
         // var
         this.stateScheme = [];

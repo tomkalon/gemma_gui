@@ -28,6 +28,7 @@ $blue-960: #0e2029;
 $blue-970: #020f16;
 
 $alarm-red: #501414;
+$alarm-red-light: #693131;
 
 $text-shadow: -2px 2px 2px #00000050;
 $light-shadow: 0 0 5px #ffffff80;
@@ -158,12 +159,13 @@ footer {
 }
 
 // buttons
-
 .btn {
   height: 2.5rem;
   border-radius: 0.5rem;
   padding: 0 0.75rem;
   font-size: 1.1rem;
+  display: flex;
+  align-items: center;
 
   &-side {
     height: 100%;
@@ -175,7 +177,7 @@ footer {
     &:hover {
       background: $dark-100;
       border: 2px solid $dark-100;
-      color: $blue-450;
+      color: $dark-900;
     }
   }
 
@@ -184,8 +186,16 @@ footer {
     border: 2px solid $blue-450;
     &:hover {
       background: $dark-100;
-      border: 2px solid $blue-450;
       color: $blue-950;
+    }
+  }
+
+  &-red {
+    background: $alarm-red;
+    border: 2px solid $alarm-red-light;
+    &:hover {
+      background: $dark-0;
+      color: $dark-900;
     }
   }
 
@@ -193,10 +203,27 @@ footer {
     border: 2px solid $blue-450;
     &:hover {
       background: $dark-100;
-      border: 2px solid $dark-100;
-      color: $blue-450;
+      color: $dark-900;
     }
   }
+  &-counter {
+    margin:0 0 0 0.5rem;
+    width: 1.75rem;
+    height: 1.75rem;
+    background: #ffffff30;
+  }
+}
+
+// indicators
+
+@keyframes blinker {
+  50% {
+    opacity: 0;
+  }
+}
+
+.blink {
+  animation: blinker 3s ease-out infinite;
 }
 
 .js-settings-popup-cover {

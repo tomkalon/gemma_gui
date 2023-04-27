@@ -6,7 +6,6 @@ class DetailsSettings extends React.Component {
     render() {
 
         // props
-        const settings = this.props.settings;
         const selectedSettings = this.props.selectedSettings;
         const readings = this.props.readings;
         const handler = this.props.handler;
@@ -18,7 +17,7 @@ class DetailsSettings extends React.Component {
             if (selectedSettings === key) {
                 active = ' active';
             }
-            if (settings[key + '_enable']) {
+            if (settingsDisplay.enable[key]) {
                 if (key === 'heat' || key === 'blow') {
                     if (!display['other']) {
                         if (selectedSettings === 'other') active = ' active';

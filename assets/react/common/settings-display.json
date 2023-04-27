@@ -11,5 +11,13 @@
     "wind": true,
     "sun": true,
     "time": true
+  },
+  "enable": {
+    "temp": true,
+    "humid": true,
+    "vent": true,
+    "shadow": true,
+    "heat": true,
+    "blow": true
   }
 }

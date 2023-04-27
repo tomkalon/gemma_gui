@@ -4,9 +4,8 @@ import DetailsPanel from "./DetailsPanel";
 import DetailsSettings from "./DetailsSettings";
 import DetailsModules from "./DetailsModules";
 import DetailsStats from "./DetailsStats";
+import DetailsBottom from "./DetailsBottom";
 import './details.scss'
-import DetailsProgress from "./DetailsProgress";
-import SettingsPopup from "../settings/SettingsPopup";
 
 class Details extends React.Component {
 
@@ -57,7 +56,8 @@ class Details extends React.Component {
         // PROGRESS BAR
         let progressBar;
         if (vent || shadow || info['description']) {
-            progressBar = <DetailsProgress vent={vent} shadow={shadow} settings={settings} description={info['description']} />;
+            progressBar = <DetailsBottom vent={vent} shadow={shadow} settings={settings} description={info['description']} indicators={state.indicators}
+                                         alerts={state.alerts}/>;
         }
 
 

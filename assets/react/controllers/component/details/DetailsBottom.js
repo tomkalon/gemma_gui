@@ -1,6 +1,6 @@
 import React from 'react';
 
-class DetailsProgress extends React.Component {
+class DetailsBottom extends React.Component {
 
     render() {
 
@@ -9,19 +9,42 @@ class DetailsProgress extends React.Component {
         const shadow = this.props.shadow;
         const settings = this.props.settings;
         const description = this.props.description;
+        const indicators = this.props.indicators;
+        const alerts = this.props.alerts;
+
+        // component
+        const counter = (number, blink) => {
+            return (
+                <div className={`btn-counter float-right ${blink}`}>{number}</div>
+            )
+        }
 
         // vars
+        let malfunction, warning;
+
         let descriptionBlock;
-        let rounded = '';
         if (description) {
             descriptionBlock = <div className={`p-4`}>
                 <div className={`p-4 rounded dark:bg-blue-950`}>{description}</div>
             </div>;
         }
 
+        let rounded = '';
         if (settings) {
             rounded = '-t-md';
+            warning = <button className={`btn-red btn ml-2 float-right`}>
+                <i className={`gf gf-warning`}></i>Ostrzeżenia{counter(2, indicators.sensor.new)}
+            </button>;
         }
+
+        let otherOptions = <div className={`container h-14 mt-2 px-8`}>
+            <button className={`btn-empty btn ml-2 float-right`}>Opis</button>
+            <button className={`btn-red btn ml-2 float-right`}>
+                <i className={`gf gf-damage`}></i>Awarie{counter(4, indicators.hardware.new)}
+            </button>
+            {warning}
+
+        </div>;
 
         function renderProgressBar(value, si, indicator) {
 
@@ -71,9 +94,9 @@ class DetailsProgress extends React.Component {
                     </div>
                 ))}
             </div>
-            {descriptionBlock}
+            {otherOptions}
         </div>)
     }
 }
 
-export default DetailsProgress;
+export default DetailsBottom;

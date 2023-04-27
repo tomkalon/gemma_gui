@@ -40,7 +40,7 @@ export default class FacilityApp extends Component {
         this.apiAddress = '/api/objects';
         this.refreshInterval = 5000;
         this.carousel = carousel;
-        this.sensors = structuredClone(sensors);
+        this.sensors = sensors;
 
         // var
         this.stateScheme = [];
@@ -62,6 +62,7 @@ export default class FacilityApp extends Component {
         this.assignValues = commonFunctions.assignValues;
         this.isSensorActive = commonFunctions.isSensorActive;
         this.getObjectInfo = commonFunctions.getObjectInfo;
+        this.getAlertsIndicator = commonFunctions.getAlertsIndicators;
         this.getCarouselDisplaySettings = commonFunctions.getCarouselDisplaySettings;
         this.carouselPaginationPageIndex = commonFunctions.carouselPaginationPageIndex;
         this.carouselSidebarPageIndex = commonFunctions.carouselSidebarPageIndex;
@@ -82,6 +83,7 @@ export default class FacilityApp extends Component {
             .then(data => {
 
                 let facility, time;
+
                 data.facility ? facility = data.facility : facility = false;
                 data.time ? time = data.time : time = 0;
                 data.global ? this.global = data.global : this.global = 0;
@@ -99,6 +101,7 @@ export default class FacilityApp extends Component {
                             this.getObjectInfo(value, key, this.scheme);
                             this.isSensorActive(value, key, this.stateScheme, this.sensors);
                             this.assignValues(value.readings, this.stateScheme[key].readings);
+                            this.getAlertsIndicator(this.stateScheme[key], this.stateScheme[key].alerts);
                             this.getCarouselDisplaySettings(value['sensors_count'], key, this.carousel, this.scheme[key]);
                         }
                         this.isInitialFetch = false;
@@ -107,6 +110,7 @@ export default class FacilityApp extends Component {
                         // update SCHEME by the fetched data -> VALUES and setup icons
                         for (const [key, value] of Object.entries(facility)) {
                             this.assignValues(value.readings, this.stateScheme[key].readings);
+                            this.getAlertsIndicator(this.stateScheme[key], this.stateScheme[key].alerts);
                             if (this.stateScheme[key].settings) {
                                 this.stateScheme[key].settings = value.settings;
                             }

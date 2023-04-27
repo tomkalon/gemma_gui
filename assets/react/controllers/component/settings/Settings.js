@@ -114,7 +114,7 @@ class Settings extends React.Component {
         }
 
         return (<article id={`js-settings`} className={`setup`}>
-            <div className={`container mx-auto py-4 px-2 dark:bg-blue-960 rounded-b-md`}>
+            <div className={`container mx-auto pb-4 px-2 dark:bg-blue-960 rounded-b-md`}>
                 <div className={`title h-16 p-2 mx-2 mb-2 dark:text-darker-100 border-y dark:border-blue-450 shadow-md`}>
                     <div className={`px-2 float-left uppercase`}>
                         <span className={`dark:bg-blue-450 rounded-md mr-2 px-2`}>Profil</span>{settings['name']}

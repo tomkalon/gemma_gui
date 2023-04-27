@@ -21,7 +21,7 @@ function assignValues(readings, stateScheme) {
             }
         }
 
-        // icons if THRESHOLD is not an integer array
+            // icons if THRESHOLD is not an integer array
         // WIND_DIRECTION
         else {
             let result = null;
@@ -44,8 +44,7 @@ function assignValues(readings, stateScheme) {
             if (val[0] === '0') {
                 stateScheme[key].boolValue = false;
                 stateScheme[key].value = [stateScheme[key].desc_arr[1]];
-            }
-            else {
+            } else {
                 stateScheme[key].boolValue = true;
                 stateScheme[key].value = [stateScheme[key].desc_arr[0]];
             }
@@ -53,9 +52,9 @@ function assignValues(readings, stateScheme) {
             val[0] === '0' ? stateScheme[key].value = [stateScheme[key].desc_arr[0]] : stateScheme[key].value = [stateScheme[key].desc_arr[1]];
         }
 
-        // Display TEMP as FLOAT rounded to decimal place
-        // else if (key === 'temp'){
-        //     stateScheme[key].value = val.map((element) => Number.parseFloat(element).toFixed(1));
+            // Display TEMP as FLOAT rounded to decimal place
+            // else if (key === 'temp'){
+            //     stateScheme[key].value = val.map((element) => Number.parseFloat(element).toFixed(1));
         // }
 
         else if (key === 'sun') {
@@ -74,14 +73,10 @@ function isSensorActive(data, num, stateScheme, icons) {
     };
 
     if (data.settings) {
-        stateScheme[num] = {
-            settings: data.settings,
-        };
+        stateScheme[num]['settings'] = data.settings;
     }
-    if (data.time) {
-        stateScheme[num] = {
-            time: data.time,
-        };
+    if (data.alerts) {
+        stateScheme[num]['alerts'] = data.alerts;
     }
 
     // array with sensors names as KEY and array with values as VALUES
@@ -152,7 +147,33 @@ function getCarouselDisplaySettings(sensorsCount, num, carousel, scheme) {
     }
 }
 
-function sendDataAPI (method, id, send, isGlobal) {
+// prepare alerts indicators - isActive and isRead checking (once)
+function getAlertsIndicators(stateScheme, alerts) {
+    let indicators = {
+        "sensor": {
+            "active": false, "new": ''
+        }, "hardware": {
+            "active": false, "new": ''
+        },
+    };
+
+    if (alerts.length) {
+        alerts.map((item) => {
+            if (item.type === 'sensor' && !indicators['sensor']['active'] && !indicators['sensor']['new']) {
+                if (!indicators['sensor']['active']) indicators['sensor']['active'] = true;
+                if (!item.isRead && !indicators['sensor']['new']) indicators['sensor']['new'] = 'blink';
+            }
+            if (item.type === 'hardware' && !indicators['hardware']['active'] && !indicators['hardware']['active']) {
+                if (!indicators['hardware']['active']) indicators['hardware']['active'] = true;
+                if (!item.isRead && !indicators['hardware']['new']) indicators['hardware']['new'] = 'blink';
+            }
+        });
+    }
+    stateScheme['indicators'] = indicators;
+}
+
+// send data to API
+function sendDataAPI(method, id, send, isGlobal) {
     let apiAddress = setup.apiAddress;
     if (isGlobal) {
         apiAddress += '/global';
@@ -163,20 +184,18 @@ function sendDataAPI (method, id, send, isGlobal) {
     console.log(apiAddress);
 
     fetch(apiAddress, {
-        method: method,
-        headers: {
+        method: method, headers: {
             "Content-Type": "application/json",
-        },
-        body: JSON.stringify(send),
+        }, body: JSON.stringify(send),
     })
-    .then((response) => response.json())
-    .then(data => {
-        console.log(data);
-    })
-    .catch((error) => {
-        console.log("API communication error!");
-        console.error("Error:", error);
-    });
+        .then((response) => response.json())
+        .then(data => {
+            console.log(data);
+        })
+        .catch((error) => {
+            console.log("API communication error!");
+            console.error("Error:", error);
+        });
 }
 
 // ========= HANDLERS ==========
@@ -231,8 +250,7 @@ function carouselSidebarPageIndex(index, timeout) {
 function carouselSetActiveElement(index, timeout) {
 
     // if, when changing an object, another has no currently selected settings, the settings menu selection is reset
-    if (!this.state.facility[index].readings[this.state.selectedSettings])
-    {
+    if (!this.state.facility[index].readings[this.state.selectedSettings]) {
         this.state.selectedSettings = false;
     }
 
@@ -248,7 +266,7 @@ function carouselSetActiveElement(index, timeout) {
 }
 
 // === select Current Settings ===
-function selectSettingsHandler (name, timeout) {
+function selectSettingsHandler(name, timeout) {
     this.selectedSettings = name;
     $('#js-settings-content').fadeOut(timeout);
     setTimeout(() => {
@@ -260,8 +278,16 @@ function selectSettingsHandler (name, timeout) {
 
 // export functions
 const commonFunctions = {
-    isSensorActive, assignValues, getObjectInfo, getCarouselDisplaySettings, carouselPaginationPageIndex, carouselSidebarPageIndex,
-    carouselSetActiveElement, selectSettingsHandler, saveSettingsData
+    isSensorActive,
+    assignValues,
+    getObjectInfo,
+    getCarouselDisplaySettings,
+    carouselPaginationPageIndex,
+    carouselSidebarPageIndex,
+    carouselSetActiveElement,
+    selectSettingsHandler,
+    saveSettingsData,
+    getAlertsIndicators
 }
 
 export default commonFunctions;
