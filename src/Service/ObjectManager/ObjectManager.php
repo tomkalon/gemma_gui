@@ -5,15 +5,12 @@ namespace App\Service\ObjectManager;
 use App\Entity\Alerts;
 use App\Entity\Objects;
 use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Component\Config\FileLocator;
-use Symfony\Component\Yaml\Yaml;
 
 class ObjectManager
 {
     protected object $object;
     protected object $alerts;
     protected object $entity_manager;
-    protected array $config;
     protected array $data;
 
     public function __construct(EntityManagerInterface $entityManager)
@@ -21,10 +18,6 @@ class ObjectManager
         $this->object = $entityManager->getRepository(Objects::class);
         $this->alerts = $entityManager->getRepository(Alerts::class);
         $this->entity_manager = $entityManager;
-        $configDirectories = [__DIR__ . '/config'];
-        $fileLocator = new FileLocator($configDirectories);
-        $config_location = $fileLocator->locate('config.yaml');
-        $this->config = Yaml::parse(file_get_contents($config_location));
     }
 
     // get ALL OBJECTS DATA
