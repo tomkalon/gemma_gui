@@ -50,6 +50,8 @@ const sensors = {
         color: ['text-sky-300'],
         desc: 'nadmuch',
         desc_arr: ['Wł.', 'Wył.'],
+        fullName: 'Nadmuch',
+        settingsStyle: "gf-blow text-cyan-500"
     },
     heat: {
         name: 'heat',
@@ -58,6 +60,8 @@ const sensors = {
         color: ['text-sky-300'],
         desc: 'ogrzewanie',
         desc_arr: ['Wł.', 'Wył.'],
+        fullName: 'Ogrzewanie',
+        settingsStyle: "gf-heat text-amber-500"
     },
     sun: {
         si: 'lx',

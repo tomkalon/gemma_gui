@@ -131,13 +131,15 @@
       "rel": "sun"
     }
   },
-  "other": {
+  "heat": {
     "heat": {
       "rel": "heat"
     },
     "heat_hysteresis": {
       "rel": "heat"
-    },
+    }
+  },
+  "blow": {
     "blow": {
       "rel": "blow"
     },

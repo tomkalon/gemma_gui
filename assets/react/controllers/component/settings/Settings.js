@@ -4,6 +4,7 @@ import './settings.scss'
 import settingsScheme from '../../../common/settings.json'
 import settingsData from '../../../common/settings-data.json'
 import settingsDisplay from '../../../common/settings-display.json'
+import DetailsSettings from "./SettingsMenu";
 
 class Settings extends React.Component {
 
@@ -28,6 +29,7 @@ class Settings extends React.Component {
         });
     }
 
+
     render() {
         // props
         const currentObject = this.props.currentObject;
@@ -36,18 +38,21 @@ class Settings extends React.Component {
         const global = this.props.global;
         const id = this.props.id;
 
-        //var
-        const settings = currentObject.settings;
-        const readings = currentObject.readings;
-
-        // var title
+        // title
         let title;
         if (selectedSettings === "other") {
+            if (currentObject.readings['heat'] === undefined && currentObject.readings['blow'] === undefined) {
+
+            }
             title = settingsDisplay.arrangement.otherTitle;
         }
         else {
-            title = readings[selectedSettings]['fullName'];
+            title = currentObject.readings[selectedSettings]['fullName'];
         }
+
+        // settings
+        const selectSettings = <DetailsSettings settings={currentObject.settings} selectedSettings={selectedSettings} handler={this.props.settingsHandler}
+                                                readings={currentObject.readings} />;
 
         // functions
         const getSettingButton = (id, key, element, value, color, handler) => {
@@ -81,18 +86,18 @@ class Settings extends React.Component {
                 }
 
                 // specific sensor settings
-                if (settings[key] !== undefined) {
+                if (currentObject.settings[key] !== undefined) {
 
                     // boolean
                     if (settingsData[key].bool !== undefined) {
-                        settings[key] === true ? value = 1 : value = 0;
-                        buttonList[counter] = getSettingButton(id, key, settingsData[key], settingsData[key].values[value], settings[key], saveHandler);
+                        currentObject.settings[key] === true ? value = 1 : value = 0;
+                        buttonList[counter] = getSettingButton(id, key, settingsData[key], settingsData[key].values[value], currentObject.settings[key], saveHandler);
                     }
 
                     // range
                     else {
-                        if (readings[element.rel] || settingsDisplay.environment[element.rel]) {
-                            buttonList[counter] = getSettingButton(id, key, settingsData[key], settings[key], color, saveHandler);
+                        if (currentObject.readings[element.rel] || settingsDisplay.environment[element.rel]) {
+                            buttonList[counter] = getSettingButton(id, key, settingsData[key], currentObject.settings[key], color, saveHandler);
                         }
                     }
                     counter++;
@@ -113,14 +118,15 @@ class Settings extends React.Component {
             }
         }
 
-        return (<article id={`js-settings`} className={`setup`}>
+        return (<article id={`js-settings`} className={`setup mb-8`}>
             <div className={`container mx-auto pb-4 px-2 dark:bg-blue-960 rounded-b-md`}>
-                <div className={`title h-16 p-2 mx-2 mb-2 dark:text-darker-100 border-y dark:border-blue-450 shadow-md`}>
-                    <div className={`px-2 float-left uppercase`}>
-                        <span className={`dark:bg-blue-450 rounded-md mr-2 px-2`}>Profil</span>{settings['name']}
+                <div className={`title h-16 px-2 mx-2 mb-2 dark:text-darker-100 border-y dark:border-blue-450 shadow-md`}>
+                    <div className={`px-2 mt-2 float-left uppercase`}>
+                        <span className={`dark:bg-blue-450 rounded-md mr-2 px-2`}>Profil</span>{currentObject.settings['name']}
                         <div className={`text-sm px-2 bg-gradient-to-r rounded-md dark:from-blue-470 dark:to-transparent-0`}>{title}</div>
                     </div>
-                    <div className={`float-right mt-1 mr-2`}><button className={`btn btn-blue`}>Zmień profil</button></div>
+                    <div className={`float-right mt-3 mr-2`}><button className={`btn btn-blue`}>Zmień profil</button></div>
+                    {selectSettings}
                 </div>
                 <div className={`dark:text-darker-100 mt-4`}>
                     <div className={`box flex rounded`}>

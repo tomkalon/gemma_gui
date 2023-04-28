@@ -1,6 +1,5 @@
 import React from 'react';
 import DetailsPanel from "./DetailsPanel";
-import DetailsSettings from "./DetailsSettings";
 import DetailsModules from "./DetailsModules";
 import DetailsStats from "./DetailsStats";
 import DetailsBottom from "./DetailsBottom";
@@ -13,9 +12,7 @@ class Details extends React.Component {
         // props
         const info = this.props.info; // object: id, name, description
         const state = this.props.state; // object: state -> settings, readings etc.
-        const handler = this.props.handler; // select settings handler
         const sequenceNumber = this.props.current + 1; // Object number: starting with 1
-        const selectedSettings = this.props.selectedSettings; // Selected Settings
         const isDay = this.props.isDay; // time of day
         const stats = this.props.stats; // statistics & charts
 
@@ -52,8 +49,6 @@ class Details extends React.Component {
             isSettings = true;
             settings = state.settings;
         }
-        let selectSettings;
-        if (isSettings) selectSettings = <DetailsSettings settings={settings} selectedSettings={selectedSettings} handler={handler} readings={readings} />;
 
         // HEAT, BLOW: modules
         let detailsModules;
@@ -63,12 +58,50 @@ class Details extends React.Component {
         let detailsStats;
         if (stats) detailsStats = <DetailsStats stats={stats} />;
 
+        // DETAILS BOTTOM
+        const detailsBottom = <DetailsBottom settings={settings} description={info['description']} indicators={state.indicators} alerts={state.alerts} />;
+
         // PROGRESS BAR
-        let progressBar;
-        if (vent || shadow || info['description']) {
-            progressBar = <DetailsBottom vent={vent} shadow={shadow} settings={settings} description={info['description']} indicators={state.indicators}
-                                         alerts={state.alerts}/>;
+        function renderProgressBar(value, si, indicator) {
+
+            let arr = value.map((element, index) => {
+                let leftMargin = '';
+                if (index) leftMargin = 'ml-3';
+                return (<div key={index} className={`bar w-full dark:bg-blue-550 h-6 ${leftMargin}`}>
+                    <div className={`value flex dark:bg-darker-350 leading-none h-6`}
+                         style={{width: `${element}%`}}>{element}{si}
+                    </div>
+                    <div
+                        className={`indicator flex bg-gradient-to-r dark:from-transparent-0 dark:to-darker-100/20
+                             leading-none h-6`}
+                        style={{width: `${indicator}%`}}>
+                    </div>
+                </div>)
+            })
+            return (<div className={`row flex w-full`}>{arr}</div>);
         }
+
+        function renderProgressRow(type, settings) {
+            let indicatorValue;
+            let name = type.desc;
+            if (type.name === 'vent' && settings) {
+                indicatorValue = settings.vent;
+            } else if (type.name === 'shadow' && settings) {
+                indicatorValue = settings.shadow;
+            }
+
+            let progressArray = renderProgressBar(type.value, type.si, indicatorValue);
+
+            return (<div className={`box flex flex-col w-full`}>
+                <div className={`w-full uppercase mb-1`}><span>{name}</span></div>
+                {progressArray}
+            </div>);
+        }
+
+        // var
+        let progressRows = [];
+        if (vent) progressRows[0] = renderProgressRow(vent, settings);
+        if (shadow) progressRows[1] = renderProgressRow(shadow, settings);
 
 
         // OBJECT INFO
@@ -95,47 +128,51 @@ class Details extends React.Component {
             }
         }
 
-        const component = <div id={`js-object-detail`}>
-            <div
-                className={`h-8 bg-gradient-to-br dark:from-blue-950 dark:to-blue-960 border-b border-t dark:border-blue-450 flex rounded-md shadow-md relative dark:shadow-gray-900/30`}>
-                <div className={`label w-full px-4 container mx-auto text-sm`}>
-                    <span className={`dark:text-darker-0 pr-4`}>Obiekt #{sequenceNumber}</span>
-                    <span className={`dark:text-sky-200 border-l dark:border-darker-100 pl-4`}>{name}</span>
-                    <span className={`dark:text-sky-200 pl-4`}>{alertSensor}</span>
-                    <span className={`dark:text-sky-200 pl-4`}>{alertHardware}</span>
+        return (<div className={`detail`}>
+            <div id={`js-object-detail`}>
+                <div
+                    className={`h-8 bg-gradient-to-br dark:from-blue-950 dark:to-blue-960 border-b border-t dark:border-blue-450 flex rounded-md shadow-md relative dark:shadow-gray-900/30`}>
+                    <div className={`label w-full px-4 container mx-auto text-sm`}>
+                        <span className={`dark:text-darker-0 pr-4`}>Obiekt #{sequenceNumber}</span>
+                        <span className={`dark:text-sky-200 border-l dark:border-darker-100 pl-4`}>{name}</span>
+                        <span className={`dark:text-sky-200 pl-4`}>{alertSensor}</span>
+                        <span className={`dark:text-sky-200 pl-4`}>{alertHardware}</span>
+                    </div>
                 </div>
-            </div>
-            <div className={`data`}>
-                <div className={`container mx-auto block justify-center px-2`}>
-                    <div className={`image-box float-left hidden xl:block`}>
-                        <div
-                            className={`image dark:bg-darker-900 rounded-md border dark:border-darker-500 shadow-md dark:shadow-gray-900/50`}>
-                            <div className={`img h-32 mt-2 mx-2 cursor-pointer`} style={{backgroundImage: `url("${imagesSrc}${img}.webp")` }}></div>
-                            <div className={`desc text-center uppercase`}>
-                                <span className={`text-sm dark:text-darker-200`}>Typ obiektu:</span>
-                                <p className={`dark:text-darker-100`}>developer</p>
+                <div className={`data`}>
+                    <div className={`container mx-auto block justify-center px-2`}>
+                        <div className={`image-box float-left hidden xl:block`}>
+                            <div
+                                className={`image dark:bg-darker-900 rounded-md border dark:border-darker-500 shadow-md dark:shadow-gray-900/50`}>
+                                <div className={`img h-32 mt-2 mx-2 cursor-pointer`} style={{backgroundImage: `url("${imagesSrc}${img}.webp")` }}></div>
+                                <div className={`desc text-center uppercase`}>
+                                    <span className={`text-sm dark:text-darker-200`}>Typ obiektu:</span>
+                                    <p className={`dark:text-darker-100`}>developer</p>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div className={`flex`}>
-                        {panels.map((element) => {
-                            return element;
-                        })}
-                    </div>
-                    <div
-                        className={`additional text-center bg-gradient-to-t dark:from-blue-950 dark:to-blue-960 dark:text-blue-100 border-b-2 dark:border-blue-450 h-14`}>
-                        <div>
-                            {selectSettings}
-                            {detailsStats}
-                            {detailsModules}
+                        <div className={`flex`}>
+                            {panels.map((element) => {
+                                return element;
+                            })}
+                        </div>
+                        <div
+                            className={`additional text-center bg-gradient-to-t dark:from-blue-950 dark:to-blue-960 dark:text-blue-100 border-b-2 dark:border-blue-450 h-14`}>
+                                <div className={`progress mt-2 float-left flex`}>
+                                    {progressRows.map((element, index) => (
+                                        <div key={index} className={`box flex w-full ml-3`}>
+                                            {element}
+                                        </div>
+                                    ))}
+                                </div>
+                                {detailsStats}
+                                {detailsModules}
                         </div>
                     </div>
+                    {detailsBottom}
                 </div>
-                {progressBar}
             </div>
-        </div>;
-
-        return (<div className={`detail`}>{component}</div>);
+        </div>);
     }
 }
 

@@ -123,18 +123,19 @@ export default class FacilityApp extends Component {
                     }
 
 
-                    console.log('-----------------------------------------------');
-                    console.log('====FACILITY====');
-                    console.log('-----------------------------------------------');
-                    console.log("API data:");
-                    console.log(data);
-                    console.log("state:");
-                    console.log(this.stateScheme);
-                    console.log("scheme:");
-                    console.log(this.scheme);
-                    console.log("display:");
-                    console.log(this.carousel);
-                    console.log('-----------------------------------------------');
+                    // console.log('-----------------------------------------------');
+                    // console.log('====FACILITY====');
+                    // console.log('-----------------------------------------------');
+                    // console.log("API data:");
+                    // console.log(data);
+                    // console.log("state:");
+                    // console.log(this.stateScheme);
+                    // console.log("scheme:");
+                    // console.log(this.scheme);
+                    // console.log("display:");
+                    // console.log(this.carousel);
+                    // console.log('-----------------------------------------------');
+
 
                     // save SCHEME to STATE
                     this.setState({
@@ -208,20 +209,24 @@ export default class FacilityApp extends Component {
             // ======= DETAILS =======
             // details container
             if (currentObject !== false && currentObject !== null) {
-                if (selectedSettings === false && currentObjectState.settings) {
-                    selectedSettings = Object.keys(currentObjectState.readings)[0];
-                }
-                details = <Details current={currentObject} info={currentObjectInfo}
-                                   selectedSettings={selectedSettings}
-                                   handler={this.selectSettingsHandler.bind(this)}
-                                   state={currentObjectState} isDay={isDay} stats={stats} />;
+                details = <Details current={currentObject} info={currentObjectInfo} state={currentObjectState} isDay={isDay}
+                                   stats={stats} />;
             }
 
             // ======= SETTINGS =======
             // settings container
+            if (currentObjectState.settings) {
+                if (selectedSettings === false) {
+                    selectedSettings = Object.keys(currentObjectState.readings)[0];
+                } else if (currentObjectState.readings[selectedSettings] === undefined) {
+                    selectedSettings = Object.keys(currentObjectState.readings)[0];
+                    this.selectedSettings = selectedSettings;
+                }
+            }
             if (currentObject !== false && currentObject !== null && currentObjectState['settings'] && selectedSettings) {
                 settings = <Settings currentObject={currentObjectState} selectedSettings={selectedSettings}
                                      global={global}  saveHandler={this.saveSettingsData.bind(this)}
+                                     settingsHandler={this.selectSettingsHandler.bind(this)}
                                      id={facilityInfo[currentObject]['id']} />;
             }
         }

@@ -32,6 +32,42 @@ $light-shadow: 0 0 5px #ffffff80;
 
 .setup {
 
+  .menu {
+    max-width: 34rem;
+    text-align: center;
+
+    .title {
+      line-height: 1.3;
+      font-size: 0.85rem;
+      max-width: 5.5rem;
+    }
+
+    .element {
+      border-left: 1px solid $blue-550;
+      height: 4rem;
+      width: 6rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      font-size: 1.5rem;
+      cursor: pointer;
+
+      &:hover {
+        background: $blue-450;
+      }
+
+      &.active {
+        background: #1f475a;
+        color: $dark-0;
+      }
+
+      p {
+        font-size: 0.80rem;
+        margin-top: 0.3rem;
+      }
+    }
+  }
+
   .description {
     padding: 1rem;
     margin: 1rem;

@@ -1,6 +1,4 @@
 import React from 'react';
-import DetailsSetpoint from "./panel/DetailsSetpoint";
-import DetailsValueBox from "./panel/DetailsValueBox";
 
 class DetailsPanel extends React.Component {
 
@@ -31,6 +29,49 @@ class DetailsPanel extends React.Component {
             array.map((element, index) => {
                 diff[index] = (Number.parseFloat(element) - Number.parseFloat(setup)).toFixed(1);
             });
+        }
+
+        function showSetpoints (day, night, isDay) {
+            if (isDay) {
+                return (<div className={`border-l dark:border-darker-100`}>
+                    <span className={`pre px-4`}>Zadana</span>
+                    {day}
+                    {night}
+                </div>)
+            }
+            else {
+                return (<div className={`border-l dark:border-darker-100`}>
+                    <span className={`pre px-4`}>Zadana</span>
+                    {night}
+                    {day}
+                </div>)
+            }
+        }
+
+        function showValue (sensor, diff, si) {
+            let valueList;
+            let active;
+            if (diff.length) {
+                valueList = sensor.value.map((element, index) =>
+                    <div key={index} className={`box`}>
+                        <span><i className={`gf ${sensor.calculated[index].icon}`}></i>{element}{si}</span>
+                        <p className={`diff`}>{diff[index]}{si}</p>
+                    </div>
+                );
+            }
+            else {
+                valueList = sensor.value.map((element, index) =>
+                    <div key={index} className={`box`}>
+                        <span><i className={`gf ${sensor.calculated[index].icon}`}></i>{element}{si}</span>
+                    </div>
+                );
+            }
+
+            return (
+                <div className={`value flex dark:bg-blue-550`}>
+                    {valueList}
+                </div>
+            )
         }
 
         // logic
@@ -66,12 +107,11 @@ class DetailsPanel extends React.Component {
                             className={`gf gf-night`}></i>{setupNight}{sensor['si']}</span>;
                     }
                 }
-                setpoints = <DetailsSetpoint day={day} night={night} isDay={isDay}/>;
+                setpoints = showSetpoints(day, night, isDay);
             }
-            valueBox = <DetailsValueBox sensor={sensor} diff={diff} si={sensor['si']}/>;
+            valueBox = showValue(sensor, diff, sensor['si']);
         } else {
-            valueBox = <DetailsValueBox sensor={sensor} diff={false} si={sensor['si']}/>;
-
+            valueBox = showValue(sensor, false, sensor['si']);
         }
 
         if (stats && isDay) {
@@ -98,7 +138,7 @@ class DetailsPanel extends React.Component {
                 </div>
             </div>;
         }
-        return (<div className={`readings chunk flex-wrap`}>
+        return (<div className={`readings flex-wrap`}>
             <div className={`flex flex-col dark:text-blue-100 text-center uppercase`}>
                 <div className={`heading label text-sm px-4 h-10 dark:bg-blue-950 border-t dark:border-blue-450`}>
                     <span className={`title pr-4`}>{fullName}</span>

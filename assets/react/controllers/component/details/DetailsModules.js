@@ -20,7 +20,6 @@ class DetailsModules extends React.Component {
         }
 
         return (<div className={`label other px-4 float-right`}>
-            <div className={`title mr-3`}>Moduły:</div>
             {blowBlock}
             {heatBlock}
         </div>)
