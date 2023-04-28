@@ -42,8 +42,8 @@ PHP VERSION - min.8.1; recommended 8.2
 ================APPS==================
 1. POLECENIA:
 Zainstaluj:
-- composer (php)
-- node.js
+- composer (php) - >=2.5
+- node.js >= 18
 ================APPS==================
 
 
@@ -54,9 +54,10 @@ php bin/console secrets:generate-keys
 php bin/console doctrine:migrations:migrate
 ================DATABASE==================
 
-
 ================BUILD==================
 npm update
+npm install
+npm fund
 npm run dev
 ================BUILD==================
 
