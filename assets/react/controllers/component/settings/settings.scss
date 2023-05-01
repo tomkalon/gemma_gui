@@ -232,7 +232,6 @@ $light-shadow: 0 0 5px #ffffff80;
   }
 
   @mixin setup-item {
-    display: flex;
     align-items: center;
     justify-content: center;
     text-align: center;
@@ -283,7 +282,6 @@ $light-shadow: 0 0 5px #ffffff80;
     }
 
     .title {
-      height: 2.5rem;
       font-size: 0.85rem;
       line-height: 1.2;
       padding: 0 1rem;

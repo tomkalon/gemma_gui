@@ -57,13 +57,14 @@ class Settings extends React.Component {
         // functions
         const getSettingButton = (id, key, element, value, color, handler) => {
             return (<div key={key} className={`item ${color}`} onClick={() => {this.showPopup(id, key, element, value, color, handler)}}>
-                <span className={`title`}>{element.label}</span>
-                <div className={`icon`}>
+                <span className={`title h-20 xl:h-10 flex`}>{element.label}</span>
+                <div className={`icon hidden lg:block xl:hidden`}></div>
+                <div className={`icon hidden xl:flex`}>
                     {element.icon.map((item, index) => {
                         return (<i key={index} className={`gf ${item}`}></i>);
                     })}
                 </div>
-                <p className={`value`}>{value}{element.si}</p>
+                <p className={`value flex`}>{value}{element.si}</p>
             </div>)
         }
 

@@ -33,7 +33,7 @@ class CarouselObject extends React.Component {
         const sensors = (key, icon, value, si, desc) => {
             return (<div key={key}>
             <i className={`gf ${icon}`}></i>
-            <p><span>{value}{si}</span></p>
+            <p>{value}{si}</p>
             <p className="desc">{desc}</p>
             </div>);
         }

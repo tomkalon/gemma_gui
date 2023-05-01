@@ -3,7 +3,7 @@
 {% block body %}
     <div id="content" class="block bg-gradient-to-b dark:from-darker-300 dark:to-darker-700">
         {% if reactApp == true %}
-            <div {{ react_component('FacilityApp') }}></div>
+            <div {{ react_component('FacilityApp', {'currentObject': selectedObject }) }}></div>
         {% else %}
             <article class="detail container mx-auto">
                 {% include('app/_detail.html.twig') %}

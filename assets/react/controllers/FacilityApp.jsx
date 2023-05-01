@@ -1,5 +1,8 @@
 import React, {Component} from 'react';
+import "./../common/common.scss";
+
 import Carousel from "./component/carousel/Carousel";
+import SimpleMenu from "./component/simpleMenu/SimpleMenu";
 import Details from "./component/details/Details";
 import Settings from "./component/settings/Settings";
 import sensors from "./../common/sensors.js"
@@ -51,9 +54,8 @@ export default class FacilityApp extends Component {
         this.global = {};
         this.isInitialFetch = true;
 
-        this.currentObject = 0; // current Object
+        this.currentObject = this.props.currentObject; // current Object
         this.selectedSettings = false; // selected settings of current object
-        this.menuType = false;
 
         // state
         this.state = {}
@@ -80,8 +82,7 @@ export default class FacilityApp extends Component {
 
         // events
         this.display = {
-            resolution: false,
-            menuType: false
+            resolution: false, menuType: false
         }
 
         this.checkResolution(this.display);
@@ -90,11 +91,9 @@ export default class FacilityApp extends Component {
 
     getFacility() {
         fetch(this.apiAddress, {
-            method: "GET",
-            headers: {
+            method: "GET", headers: {
                 "Content-Type": "application/json",
-            },
-            // body: JSON.stringify(this.query),
+            }, // body: JSON.stringify(this.query),
         })
             .then((response) => response.json())
             .then(data => {
@@ -109,8 +108,11 @@ export default class FacilityApp extends Component {
 
                 if (this.facility) {
                     if (this.isInitialFetch) {
-                        this.carousel.numberOfObjects = this.facility.length;
-                        this.carousel.colPerPage = this.display.colPerPage;
+
+                        if (this.display.menuType === 'carousel') {
+                            this.carousel.numberOfObjects = this.facility.length;
+                            this.carousel.colPerPage = this.display.colPerPage;
+                        }
 
                         // key -> object number; value -> object data (id, name, readings)
                         for (const [key, value] of Object.entries(this.facility)) {
@@ -118,7 +120,9 @@ export default class FacilityApp extends Component {
                             this.isSensorActive(value, key, this.stateScheme, this.sensors);
                             this.assignValues(value.readings, this.stateScheme[key].readings);
                             this.getAlertsIndicator(this.stateScheme[key], this.stateScheme[key].alerts);
-                            this.getCarouselDisplaySettings(value['sensors_count'], key, this.carousel, this.scheme[key]);
+                            if (this.display.menuType === 'carousel') {
+                                this.getCarouselDisplaySettings(value['sensors_count'], key, this.carousel, this.scheme[key]);
+                            }
                         }
                         this.isInitialFetch = false;
                     } else {
@@ -146,25 +150,23 @@ export default class FacilityApp extends Component {
                     // console.log(this.stateScheme);
                     // console.log("scheme:");
                     // console.log(this.scheme);
-                    console.log("display:");
-                    console.log(this.carousel);
-                    console.log('-----------------------------------------------');
+                    // console.log("display:");
+                    // console.log(this.carousel);
+                    // console.log('-----------------------------------------------');
 
                     // save SCHEME to STATE
                     this.setState({
-                            facility: this.stateScheme,
-                            currentPage: this.carousel.page,
-                            currentObject: this.currentObject,
-                            selectedSettings: this.selectedSettings,
-                            isDay: this.time['isDay'],
-                            global: this.global,
-                            carousel: this.carousel,
-                            display: this.display
-                        },
-                        function () {
-                        });
-                }
-                else {
+                        facility: this.stateScheme,
+                        currentPage: this.carousel.page,
+                        currentObject: this.currentObject,
+                        selectedSettings: this.selectedSettings,
+                        isDay: this.time['isDay'],
+                        global: this.global,
+                        carousel: this.carousel,
+                        display: this.display
+                    }, function () {
+                    });
+                } else {
                     console.log('Facility data is empty! There is no any objects to display!');
                 }
             })
@@ -174,7 +176,7 @@ export default class FacilityApp extends Component {
             });
     }
 
-    adjustMenuTypeToResolution (resolution, menuType, carousel) {
+    adjustMenuTypeToResolution(resolution, menuType, carousel) {
         if (resolution === 'xxl') {
             menuType = 'carousel';
             carousel.colPerPage = 15;
@@ -189,10 +191,13 @@ export default class FacilityApp extends Component {
 
 
     render() {
+
+        // select object component
+        let objectMenu;
+
         // carousel component
         const pageState = this.state.currentPage; // selected carousel page
         let carouselData; // carousel display settings
-        let carousel; // component
 
         // details component
         let details; // component
@@ -225,50 +230,47 @@ export default class FacilityApp extends Component {
             selectedSettings = this.state.selectedSettings;
 
             // ======= CAROUSEL =======
-
-
             // carousel container
             if (this.state.display.menuType === 'carousel') {
                 carouselData = this.state.carousel;
-                carousel = <Carousel display={carouselData} state={facilityState} info={facilityInfo} page={pageState}
-                                     current={currentObject} sidebarHandler={this.carouselSidebarPageIndex.bind(this)}
-                                     paginationHandler={this.carouselPaginationPageIndex.bind(this)}
-                                     activeHandler={this.carouselSetActiveElement.bind(this)} />;
-            }
+                objectMenu = <Carousel display={carouselData} state={facilityState} info={facilityInfo} page={pageState}
+                                       current={currentObject} sidebarHandler={this.carouselSidebarPageIndex.bind(this)}
+                                       paginationHandler={this.carouselPaginationPageIndex.bind(this)}
+                                       activeHandler={this.carouselSetActiveElement.bind(this)}/>;
 
-            // ======= DETAILS =======
-            // details container
-            if (currentObject !== false && currentObject !== null) {
-                details = <Details current={currentObject} info={currentObjectInfo} state={currentObjectState} isDay={isDay}
-                                   stats={stats} />;
-            }
 
-            // ======= SETTINGS =======
-            // settings container
-            if (currentObjectState.settings) {
-                if (selectedSettings === false) {
-                    selectedSettings = Object.keys(currentObjectState.readings)[0];
-                } else if (currentObjectState.readings[selectedSettings] === undefined) {
-                    selectedSettings = Object.keys(currentObjectState.readings)[0];
-                    this.selectedSettings = selectedSettings;
+                // ======= DETAILS =======
+                // details container
+                if (currentObject !== false && currentObject !== null) {
+                    details = <Details current={currentObject} info={currentObjectInfo} state={currentObjectState} isDay={isDay}
+                                       stats={stats}/>;
                 }
-            }
-            if (currentObject !== false && currentObject !== null && currentObjectState['settings'] && selectedSettings) {
-                settings = <Settings currentObject={currentObjectState} selectedSettings={selectedSettings}
-                                     global={global}  saveHandler={this.saveSettingsData.bind(this)}
-                                     settingsHandler={this.selectSettingsHandler.bind(this)}
-                                     id={facilityInfo[currentObject]['id']} />;
+
+                // ======= SETTINGS =======
+                // settings container
+                if (currentObjectState.settings) {
+                    if (selectedSettings === false) {
+                        selectedSettings = Object.keys(currentObjectState.readings)[0];
+                    } else if (currentObjectState.readings[selectedSettings] === undefined) {
+                        selectedSettings = Object.keys(currentObjectState.readings)[0];
+                        this.selectedSettings = selectedSettings;
+                    }
+                }
+                if (currentObject !== false && currentObject !== null && currentObjectState['settings'] && selectedSettings) {
+                    settings = <Settings currentObject={currentObjectState} selectedSettings={selectedSettings}
+                                         global={global} saveHandler={this.saveSettingsData.bind(this)}
+                                         settingsHandler={this.selectSettingsHandler.bind(this)}
+                                         id={facilityInfo[currentObject]['id']}/>;
+                }
+            } else {
+                objectMenu = <SimpleMenu state={facilityState} info={facilityInfo}/>
             }
         }
         // =======================================================================
 
         return (<div>
-            <article className="carousel-bg w-full border-b-4 dark:border-darker-450">
-                <div className="container mx-auto">
-                    <div id="carousel" className="w-full pt-4">
-                        {carousel}
-                    </div>
-                </div>
+            <article className="object-menu-cover w-full border-b-4 dark:border-darker-450">
+                {objectMenu}
             </article>
             <article className="container mx-auto">
                 {details}
@@ -278,11 +280,14 @@ export default class FacilityApp extends Component {
     }
 
     componentDidMount() {
-        setTimeout(() => this.getFacility(), this.refreshInterval);
+        setInterval(() => this.getFacility(), this.refreshInterval);
         window.addEventListener('resize', () => {
             if (this.checkResolution(this.display)) {
-                this.carousel = structuredClone(carousel);
-                this.updateCarouselColPerPage(this.carousel, this.facility, this.scheme, this.display.colPerPage);
+                if (this.display.menuType === 'carousel') {
+                    this.carousel = structuredClone(carousel);
+                    this.updateCarouselColPerPage(this.carousel, this.facility, this.scheme, this.display.colPerPage);
+                }
+                this.getFacility();
             }
         });
     }

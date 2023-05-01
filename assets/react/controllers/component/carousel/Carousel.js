@@ -22,6 +22,7 @@ class Carousel extends React.Component {
         let prevIsActive = "hidden";
         let nextIsActive = "hidden";
 
+        let carouselPagination = <div className={'mt-6'}></div>;
         if (display.pageCount) {
             if (pageState === 0) {
                 prevIsActive = "hidden";
@@ -36,6 +37,10 @@ class Carousel extends React.Component {
             } else {
                 nextIsActive = "block";
             }
+
+            // carousel pagination block
+            carouselPagination = <CarouselPagination
+                pagination={display.pagination} active={pageState} handler={paginationHandler}/>;
         }
 
         // === CAROUSEL
@@ -43,10 +48,6 @@ class Carousel extends React.Component {
         const carouselShowPage = <CarouselPage
             page={pageState} pages={display.pages} objectsState={state} current={current}
             objectsInfo={info} maxRow={display.maxRows} handler={activeHandler}/>;
-
-        // carousel pagination block
-        const carouselPagination = <CarouselPagination
-            pagination={display.pagination} active={pageState} handler={paginationHandler}/>;
 
         // carousel navigations blocks
         const prevCarouselSideBar = <CarouselSidebar
@@ -58,15 +59,17 @@ class Carousel extends React.Component {
 
 
         return (
-            <div className={`row flex`}>
-                {prevCarouselSideBar}
-                <div className={`flex flex-grow flex-col justify-center`}>
-                    {carouselShowPage}
-                    <div className={`row carousel-pagination`}>
-                        {carouselPagination}
+            <div className={`container mx-auto pt-4`}>
+                <div className={`row flex`}>
+                    {prevCarouselSideBar}
+                    <div className={`flex flex-grow flex-col justify-center`}>
+                        {carouselShowPage}
+                        <div className={`row carousel-pagination`}>
+                            {carouselPagination}
+                        </div>
                     </div>
+                    {nextCarouselSideBar}
                 </div>
-                {nextCarouselSideBar}
             </div>
         )
     }

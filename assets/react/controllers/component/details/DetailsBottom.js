@@ -38,9 +38,9 @@ class DetailsBottom extends React.Component {
             }
         }
 
-        let rounded = '';
+        let rounded = 'rounded-b';
         if (settings) {
-            rounded = '-t-md';
+            rounded = '';
             sensor = <button className={`btn-red btn ml-2 float-right`}>
                 <i className={`gf gf-warning`}></i>Ostrzeżenia{counter(sensorCounter, sensorIndicatorNew)}
             </button>;
@@ -56,7 +56,7 @@ class DetailsBottom extends React.Component {
         </div>;
 
         return (<div
-            className={`options dark:bg-blue-960 dark:border-darker-200 dark:text-blue-100 rounded${rounded} shadow-md dark:shadow-gray-900/30`}>
+            className={`options dark:bg-blue-960 dark:border-darker-200 dark:text-blue-100 xl:rounded-t ${rounded} shadow-md dark:shadow-gray-900/30`}>
             {otherOptions}
         </div>)
     }

@@ -69,7 +69,7 @@ export default class WeatherBar extends Component {
         return (<div
             className="weather-bar shadow-md dark:shadow-gray-900/30 bg-gradient-to-b bg-amber-100
              dark:from-darker-900 dark:to-darker-800 border-b border-amber-300 dark:border-darker-500">
-            <div className={`container mx-auto px-2 flex`}>
+            <div className={`md:container mx-auto px-2 flex`}>
                 <div className={`js-weather`}>
                     <div className={`item item-label text-center pr-4 mt-0.5 hidden lg:block`}>
                         <span className={`text-darker-200`}>Odczyty</span>

@@ -21,9 +21,14 @@ function checkResolution (display) {
         } else if (display.resolution === 'xl') {
             display.menuType = 'carousel';
             display.colPerPage = 12;
+        } else if (display.resolution === 'lg') {
+            display.menuType = 'carousel';
+            display.colPerPage = 9;
         } else {
             display.menuType = 'other';
+            display.colPerPage = null;
         }
+        console.log(display.resolution);
         return true;
     }
     return false;

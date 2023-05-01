@@ -1,0 +1,10 @@
+$shadow: -4px 4px 8px 0 #000000a0;
+
+
+.simple-menu {
+  height: 100vh;
+  .item {
+    min-height: 5rem;
+    box-shadow: $shadow;
+  }
+}
