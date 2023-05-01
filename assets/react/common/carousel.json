@@ -1,0 +1,39 @@
+{
+  "blockSize": {
+    "sm": 4,
+    "md": 6,
+    "lg": 9,
+    "xl": 12,
+    "xxl": 16,
+    "x2l": 20,
+    "x3l": 24
+  },
+  "blockColumn": {
+    "sm": 2,
+    "md": 2,
+    "lg": 3,
+    "xl": 4,
+    "xxl": 4,
+    "x2l": 5,
+    "x3l": 6
+  },
+  "blockRows": {
+    "sm": 2,
+    "md": 3,
+    "lg": 3,
+    "xl": 3,
+    "xxl": 4,
+    "x2l": 4,
+    "x3l": 4
+  },
+  "maxRows": "sm",
+  "pageCount": 0,
+  "pages": {
+    "0": []
+  },
+  "page": 0,
+  "adder": 0,
+  "numberOfObjects": null,
+  "pagination": [],
+  "paginationPageStart": 1
+}

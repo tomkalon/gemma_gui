@@ -1,6 +1,33 @@
 import React from 'react';
-import setup from './functions.json'
 import $ from 'jquery'
+import display from './display.json'
+
+const apiAddressSrc = "/api";
+const displaySettings = display;
+
+// resolution check
+function checkResolution (display) {
+    let width = window.innerWidth;
+    let resolution = display.resolution;
+    for (const [key, value] of Object.entries(displaySettings.width)) {
+        if (width > value) {
+            display.resolution = key;
+        }
+    }
+    if (resolution !== display.resolution) {
+        if (display.resolution === 'xxl') {
+            display.menuType = 'carousel';
+            display.colPerPage = 15;
+        } else if (display.resolution === 'xl') {
+            display.menuType = 'carousel';
+            display.colPerPage = 12;
+        } else {
+            display.menuType = 'other';
+        }
+        return true;
+    }
+    return false;
+}
 
 // update stateSCHEME by the fetched data -> VALUES and setup icons
 function assignValues(readings, stateScheme) {
@@ -84,10 +111,12 @@ function isSensorActive(data, num, stateScheme, icons) {
     for (const [key, val] of Object.entries(icons)) {
         if (data.readings[key]) {
             readings[key] = {};
-            for (const [index, element] of Object.entries(val)) {
-                let sensorProperty = {};
-                sensorProperty[index] = element;
-                Object.assign(readings[key], sensorProperty);
+            if (typeof val === 'object') {
+                for (const [index, element] of Object.entries(val)) {
+                    let sensorProperty = {};
+                    sensorProperty[index] = element;
+                    Object.assign(readings[key], sensorProperty);
+                }
             }
         }
     }
@@ -147,6 +176,19 @@ function getCarouselDisplaySettings(sensorsCount, num, carousel, scheme) {
     }
 }
 
+// update colPerPage
+function updateCarouselColPerPage(carousel, facility, scheme, colPerPageMax) {
+    carousel.numberOfObjects = facility.length;
+    carousel.colPerPage = colPerPageMax;
+    for (const [key, value] of Object.entries(facility)) {
+        getCarouselDisplaySettings(value['sensors_count'], key, carousel, scheme[key]);
+    }
+    this.setState({
+        carousel: carousel
+    });
+}
+
+
 // prepare alerts indicators - isActive and isRead checking (once)
 function getAlertsIndicators(stateScheme, alerts) {
     let indicators = {
@@ -186,11 +228,11 @@ function getAlertsIndicators(stateScheme, alerts) {
 
 // send data to API
 function sendDataAPI(method, id, send, isGlobal) {
-    let apiAddress = setup.apiAddress;
+    let apiAddress = apiAddressSrc;
     if (isGlobal) {
-        apiAddress += '/global';
+        apiAddress += '/objects/global';
     } else {
-        apiAddress += '/' + id
+        apiAddress += '/objects/' + id
     }
 
     console.log(apiAddress);
@@ -290,6 +332,7 @@ function selectSettingsHandler(name, timeout) {
 
 // export functions
 const commonFunctions = {
+    checkResolution,
     isSensorActive,
     assignValues,
     getObjectInfo,
@@ -299,7 +342,8 @@ const commonFunctions = {
     carouselSetActiveElement,
     selectSettingsHandler,
     saveSettingsData,
-    getAlertsIndicators
+    getAlertsIndicators,
+    updateCarouselColPerPage
 }
 
 export default commonFunctions;

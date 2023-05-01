@@ -52,10 +52,10 @@ export default class WeatherBar extends Component {
                 // update SCHEME by the fetched data -> VALUES and setup icons
                 this.assignValues(data[0].readings, this.stateScheme[0].readings);
 
-                console.log('-----------------------------------------------');
-                console.log('====WEATHER====');
-                console.log('-----------------------------------------------');
-                console.log(this.stateScheme[0]);
+                // console.log('-----------------------------------------------');
+                // console.log('====WEATHER====');
+                // console.log('-----------------------------------------------');
+                // console.log(this.stateScheme[0]);
 
                 // save SCHEME to STATE
                 this.setState({weather: this.stateScheme[0].readings});

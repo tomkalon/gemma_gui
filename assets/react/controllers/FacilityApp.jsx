@@ -3,7 +3,7 @@ import Carousel from "./component/carousel/Carousel";
 import Details from "./component/details/Details";
 import Settings from "./component/settings/Settings";
 import sensors from "./../common/sensors.js"
-import carousel from "./../common/carousel";
+import carousel from "./../common/carousel.json";
 import commonFunctions from "./../common/funtions";
 
 // ================================================================================
@@ -39,10 +39,13 @@ export default class FacilityApp extends Component {
         //const
         this.apiAddress = '/api/objects';
         this.refreshInterval = 5000;
-        this.carousel = carousel;
+        this.carousel = structuredClone(carousel);
         this.sensors = sensors;
 
         // var
+        this.facility = [];
+        this.time = {};
+
         this.stateScheme = [];
         this.scheme = [];
         this.global = {};
@@ -50,6 +53,7 @@ export default class FacilityApp extends Component {
 
         this.currentObject = 0; // current Object
         this.selectedSettings = false; // selected settings of current object
+        this.menuType = false;
 
         // state
         this.state = {}
@@ -58,16 +62,29 @@ export default class FacilityApp extends Component {
         this.scrollPosition = 0;
 
         // function
+        this.checkResolution = commonFunctions.checkResolution;
+
         this.saveSettingsData = commonFunctions.saveSettingsData;
         this.assignValues = commonFunctions.assignValues;
         this.isSensorActive = commonFunctions.isSensorActive;
         this.getObjectInfo = commonFunctions.getObjectInfo;
         this.getAlertsIndicator = commonFunctions.getAlertsIndicators;
         this.getCarouselDisplaySettings = commonFunctions.getCarouselDisplaySettings;
+        this.updateCarouselColPerPage = commonFunctions.updateCarouselColPerPage;
+
+        // handlers
         this.carouselPaginationPageIndex = commonFunctions.carouselPaginationPageIndex;
         this.carouselSidebarPageIndex = commonFunctions.carouselSidebarPageIndex;
         this.carouselSetActiveElement = commonFunctions.carouselSetActiveElement;
         this.selectSettingsHandler = commonFunctions.selectSettingsHandler;
+
+        // events
+        this.display = {
+            resolution: false,
+            menuType: false
+        }
+
+        this.checkResolution(this.display);
         this.getFacility();
     }
 
@@ -82,22 +99,21 @@ export default class FacilityApp extends Component {
             .then((response) => response.json())
             .then(data => {
 
-                let facility, time;
-
-                data.facility ? facility = data.facility : facility = false;
-                data.time ? time = data.time : time = 0;
+                data.facility ? this.facility = data.facility : this.facility = false;
+                data.time ? this.time = data.time : this.time = 0;
                 data.global ? this.global = data.global : this.global = 0;
 
                 // initial function which filters sensors used by specific object
                 // and adds icons scheme for each sensor
                 // RUN ONCE
 
-                if (facility) {
+                if (this.facility) {
                     if (this.isInitialFetch) {
-                        this.carousel.numberOfObjects = facility.length;
+                        this.carousel.numberOfObjects = this.facility.length;
+                        this.carousel.colPerPage = this.display.colPerPage;
 
                         // key -> object number; value -> object data (id, name, readings)
-                        for (const [key, value] of Object.entries(facility)) {
+                        for (const [key, value] of Object.entries(this.facility)) {
                             this.getObjectInfo(value, key, this.scheme);
                             this.isSensorActive(value, key, this.stateScheme, this.sensors);
                             this.assignValues(value.readings, this.stateScheme[key].readings);
@@ -106,9 +122,8 @@ export default class FacilityApp extends Component {
                         }
                         this.isInitialFetch = false;
                     } else {
-
                         // update SCHEME by the fetched data -> VALUES and setup icons
-                        for (const [key, value] of Object.entries(facility)) {
+                        for (const [key, value] of Object.entries(this.facility)) {
                             this.assignValues(value.readings, this.stateScheme[key].readings);
                             if (this.stateScheme[key].settings) {
                                 this.stateScheme[key].settings = value.settings;
@@ -122,7 +137,6 @@ export default class FacilityApp extends Component {
                         }
                     }
 
-
                     // console.log('-----------------------------------------------');
                     // console.log('====FACILITY====');
                     // console.log('-----------------------------------------------');
@@ -132,10 +146,9 @@ export default class FacilityApp extends Component {
                     // console.log(this.stateScheme);
                     // console.log("scheme:");
                     // console.log(this.scheme);
-                    // console.log("display:");
-                    // console.log(this.carousel);
-                    // console.log('-----------------------------------------------');
-
+                    console.log("display:");
+                    console.log(this.carousel);
+                    console.log('-----------------------------------------------');
 
                     // save SCHEME to STATE
                     this.setState({
@@ -143,8 +156,10 @@ export default class FacilityApp extends Component {
                             currentPage: this.carousel.page,
                             currentObject: this.currentObject,
                             selectedSettings: this.selectedSettings,
-                            isDay: time['isDay'],
-                            global: this.global
+                            isDay: this.time['isDay'],
+                            global: this.global,
+                            carousel: this.carousel,
+                            display: this.display
                         },
                         function () {
                         });
@@ -159,12 +174,24 @@ export default class FacilityApp extends Component {
             });
     }
 
+    adjustMenuTypeToResolution (resolution, menuType, carousel) {
+        if (resolution === 'xxl') {
+            menuType = 'carousel';
+            carousel.colPerPage = 15;
+        } else if (resolution === 'xl') {
+            menuType = 'carousel';
+            carousel.colPerPage = 12;
+        } else {
+            menuType = 'other';
+        }
+        return menuType;
+    }
 
 
     render() {
         // carousel component
         const pageState = this.state.currentPage; // selected carousel page
-        let display; // carousel display settings
+        let carouselData; // carousel display settings
         let carousel; // component
 
         // details component
@@ -198,13 +225,16 @@ export default class FacilityApp extends Component {
             selectedSettings = this.state.selectedSettings;
 
             // ======= CAROUSEL =======
-            display = this.carousel;
+
 
             // carousel container
-            carousel = <Carousel display={display} state={facilityState} info={facilityInfo} page={pageState}
-                                 current={currentObject} sidebarHandler={this.carouselSidebarPageIndex.bind(this)}
-                                 paginationHandler={this.carouselPaginationPageIndex.bind(this)}
-                                 activeHandler={this.carouselSetActiveElement.bind(this)} />;
+            if (this.state.display.menuType === 'carousel') {
+                carouselData = this.state.carousel;
+                carousel = <Carousel display={carouselData} state={facilityState} info={facilityInfo} page={pageState}
+                                     current={currentObject} sidebarHandler={this.carouselSidebarPageIndex.bind(this)}
+                                     paginationHandler={this.carouselPaginationPageIndex.bind(this)}
+                                     activeHandler={this.carouselSetActiveElement.bind(this)} />;
+            }
 
             // ======= DETAILS =======
             // details container
@@ -248,7 +278,13 @@ export default class FacilityApp extends Component {
     }
 
     componentDidMount() {
-        setInterval(() => this.getFacility(), this.refreshInterval);
+        setTimeout(() => this.getFacility(), this.refreshInterval);
+        window.addEventListener('resize', () => {
+            if (this.checkResolution(this.display)) {
+                this.carousel = structuredClone(carousel);
+                this.updateCarouselColPerPage(this.carousel, this.facility, this.scheme, this.display.colPerPage);
+            }
+        });
     }
 
     componentWillUnmount() {
