@@ -54,7 +54,11 @@ export default class FacilityApp extends Component {
         this.global = {};
         this.isInitialFetch = true;
 
-        this.currentObject = this.props.currentObject; // current Object
+        if (this.props.currentObject !== false) {
+            this.currentObject = Number.parseInt(this.props.currentObject); // current Object
+        } else {
+            this.currentObject = null;
+        }
         this.selectedSettings = false; // selected settings of current object
 
         // state
@@ -65,6 +69,7 @@ export default class FacilityApp extends Component {
 
         // function
         this.checkResolution = commonFunctions.checkResolution;
+        this.checkMenuType = commonFunctions.checkMenuType;
 
         this.saveSettingsData = commonFunctions.saveSettingsData;
         this.assignValues = commonFunctions.assignValues;
@@ -86,6 +91,7 @@ export default class FacilityApp extends Component {
         }
 
         this.checkResolution(this.display);
+        this.checkMenuType(this.display, this.currentObject);
         this.getFacility();
     }
 
@@ -262,8 +268,10 @@ export default class FacilityApp extends Component {
                                          settingsHandler={this.selectSettingsHandler.bind(this)}
                                          id={facilityInfo[currentObject]['id']}/>;
                 }
-            } else {
+            } else if (this.state.display.menuType === 'list') {
                 objectMenu = <SimpleMenu state={facilityState} info={facilityInfo}/>
+            } else if (this.state.display.menuType === 'single') {
+                objectMenu = '';
             }
         }
         // =======================================================================
@@ -283,6 +291,7 @@ export default class FacilityApp extends Component {
         setInterval(() => this.getFacility(), this.refreshInterval);
         window.addEventListener('resize', () => {
             if (this.checkResolution(this.display)) {
+                this.checkMenuType(this.display, this.currentObject);
                 if (this.display.menuType === 'carousel') {
                     this.carousel = structuredClone(carousel);
                     this.updateCarouselColPerPage(this.carousel, this.facility, this.scheme, this.display.colPerPage);

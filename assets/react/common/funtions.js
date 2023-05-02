@@ -15,23 +15,33 @@ function checkResolution (display) {
         }
     }
     if (resolution !== display.resolution) {
-        if (display.resolution === 'xxl') {
-            display.menuType = 'carousel';
-            display.colPerPage = 15;
-        } else if (display.resolution === 'xl') {
-            display.menuType = 'carousel';
-            display.colPerPage = 12;
-        } else if (display.resolution === 'lg') {
-            display.menuType = 'carousel';
-            display.colPerPage = 9;
-        } else {
-            display.menuType = 'other';
-            display.colPerPage = null;
-        }
         console.log(display.resolution);
         return true;
     }
     return false;
+}
+
+function checkMenuType(display, current) {
+    if (display.resolution === 'xxl') {
+        display.menuType = 'carousel';
+        display.colPerPage = 15;
+    } else if (display.resolution === 'xl') {
+        display.menuType = 'carousel';
+        display.colPerPage = 12;
+    } else if (display.resolution === 'lg') {
+        display.menuType = 'carousel';
+        display.colPerPage = 9;
+    } else {
+        if (current) {
+            display.menuType = 'single';
+            display.colPerPage = null;
+        } else {
+            display.menuType = 'list';
+            display.colPerPage = null;
+        }
+    }
+    console.log(current);
+    console.log(display);
 }
 
 // update stateSCHEME by the fetched data -> VALUES and setup icons
@@ -338,6 +348,7 @@ function selectSettingsHandler(name, timeout) {
 // export functions
 const commonFunctions = {
     checkResolution,
+    checkMenuType,
     isSensorActive,
     assignValues,
     getObjectInfo,
