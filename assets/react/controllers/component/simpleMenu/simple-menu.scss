@@ -1,10 +1,54 @@
-$shadow: -4px 4px 8px 0 #000000a0;
 
+$dark-0: #dbeeee;
+$dark-100: #b4d3d3;
+$dark-200: #9bc3c7;
+$dark-250: #87c2c7;
+$dark-300: #377d84;
+$dark-350: #0a707a;
+$dark-400: #2b7279;
+$dark-450: #1a6066;
+$dark-500: #104e54;
+$dark-600: #0d3d42;
+$dark-650: #16393b;
+$dark-700: #042e32;
+$dark-800: #032427;
+$dark-850: #031e21;
+$dark-900: #101111;
+
+$blue-250: #b2d3d5;
+$blue-450: #426272;
+$blue-470: #425660;
+$blue-550: #143c50;
+$blue-950: #07293a;
+$blue-960: #0e2029;
+$blue-970: #020f16;
+
+$alarm-red: #501414;
+$false-red: #a32c2c;
+$true-green: #33741c;
+
+$shadow: -4px 4px 8px 0 #000000a0;
+$text-shadow: -2px 2px 2px #00000050;
+$shadow: -4px 4px 10px 0px #07262880;
+$light-shadow: 0 0 5px #ffffff80;
 
 .simple-menu {
   height: 100vh;
   .item {
     min-height: 5rem;
     box-shadow: $shadow;
+    overflow: auto;
+    .sensor {
+      background: #FFFFFF;
+      .value {
+        background: $dark-500;
+      }
+    }
+    .img {
+      height: 21rem;
+      width: 15rem;
+      background-size: cover;
+      border-radius: 0.5rem;
+    }
   }
 }
