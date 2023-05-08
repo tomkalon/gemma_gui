@@ -34,9 +34,9 @@ $light-shadow: 0 0 5px #ffffff80;
 
 .simple-menu {
   padding: 2rem 0 5rem;
-  .item {
+  .object {
     min-height: 5rem;
-    box-shadow: 0px 0px 5px 5px #000000;
+    box-shadow: 0 0 5px 5px #000000;
     overflow: auto;
 
     .sensor {
@@ -54,5 +54,6 @@ $light-shadow: 0 0 5px #ffffff80;
   }
   .bottom-menu {
     box-shadow: 0 0 6px 0 #000000;
+
   }
 }

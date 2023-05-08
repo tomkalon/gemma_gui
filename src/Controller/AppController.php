@@ -22,11 +22,11 @@ class AppController extends AbstractController
     {
         return $this->render('app/index.html.twig', [
             'reactApp' => true,
-            'selectedObject' => 0
+            'selectedObject' => false
         ]);
     }
 
-    #[Route('/app/{object_number<\d+>}', name: 'app_show_selected', priority: 10)]
+    #[Route('/app/{object_number<\d+>}', name: 'app_show_selected', priority: 5)]
     public function showSelectedObject($object_number): Response
     {
         return $this->render('app/index.html.twig', [

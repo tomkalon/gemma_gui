@@ -1,9 +1,9 @@
 import React from 'react';
 import $ from 'jquery'
 import display from './display.json'
-import {bool} from "prop-types";
 
 const apiAddressSrc = "/api";
+const appAddressSrc = "/app";
 const displaySettings = display;
 
 // resolution check
@@ -33,7 +33,7 @@ function checkMenuType(display, current) {
         display.menuType = 'carousel';
         display.colPerPage = 9;
     } else {
-        if (current) {
+        if (current !== false) {
             display.menuType = 'single';
             display.colPerPage = null;
         } else {
@@ -142,7 +142,7 @@ function isSensorActive(data, num, stateScheme, icons) {
 // save to scheme -> object ID & NAME
 function getObjectInfo(data, num, scheme) {
     scheme[num] = {
-        id: data.id, name: data.name, description: data.description, type: data.type, image: data.image
+        id: data.id, name: data.name, order: num + 1, description: data.description, type: data.type, image: data.image
     }
 }
 
@@ -350,6 +350,12 @@ function selectSettingsHandler(name, timeout) {
     }, timeout);
 }
 
+function selectObjectHandler (number) {
+    let target = appAddressSrc + '/' + number;
+    window.location.href = target;
+    console.log(target);
+}
+
 // export functions
 const commonFunctions = {
     checkResolution,
@@ -364,7 +370,8 @@ const commonFunctions = {
     selectSettingsHandler,
     saveSettingsData,
     getAlertsIndicators,
-    updateCarouselColPerPage
+    updateCarouselColPerPage,
+    selectObjectHandler
 }
 
 export default commonFunctions;

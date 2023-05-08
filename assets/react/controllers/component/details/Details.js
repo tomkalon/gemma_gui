@@ -12,7 +12,6 @@ class Details extends React.Component {
         // props
         const info = this.props.info; // object: id, name, description
         const state = this.props.state; // object: state -> settings, readings etc.
-        const sequenceNumber = Number.parseInt(this.props.current) + 1; // Object number: starting with 1
         const isDay = this.props.isDay; // time of day
         const stats = this.props.stats; // statistics & charts
 
@@ -133,7 +132,7 @@ class Details extends React.Component {
                 <div
                     className={`h-8 bg-gradient-to-br dark:from-blue-950 dark:to-blue-960 border-b border-t dark:border-blue-450 flex rounded-t xl:rounded-md shadow-md relative dark:shadow-gray-900/30`}>
                     <div className={`label w-full px-4 container mx-auto text-sm`}>
-                        <span className={`dark:text-darker-0 pr-4`}>Obiekt #{sequenceNumber}</span>
+                        <span className={`dark:text-darker-0 pr-4`}>Obiekt #{info.order}</span>
                         <span className={`dark:text-sky-200 border-l dark:border-darker-100 pl-4`}>{name}</span>
                         <span className={`dark:text-sky-200 pl-4`}>{alertSensor}</span>
                         <span className={`dark:text-sky-200 pl-4`}>{alertHardware}</span>

@@ -8,6 +8,7 @@ import Settings from "./component/settings/Settings";
 import sensors from "./../common/sensors.js"
 import carousel from "./../common/carousel.json";
 import commonFunctions from "./../common/funtions";
+import SimpleSettings from "./component/simpleMenu/SimpleSettings";
 
 // ================================================================================
 //  CLASS STRUCTURE & DESCRIPTION OF THE ACTION
@@ -54,10 +55,10 @@ export default class FacilityApp extends Component {
         this.global = {};
         this.isInitialFetch = true;
 
-        if (this.props.currentObject !== false) {
-            this.currentObject = Number.parseInt(this.props.currentObject); // current Object
+        if (props.currentObject !== false) {
+            this.currentObject = Number.parseInt(props.currentObject); // current Object
         } else {
-            this.currentObject = null;
+            this.currentObject = props.currentObject;
         }
         this.selectedSettings = false; // selected settings of current object
 
@@ -84,6 +85,7 @@ export default class FacilityApp extends Component {
         this.carouselSidebarPageIndex = commonFunctions.carouselSidebarPageIndex;
         this.carouselSetActiveElement = commonFunctions.carouselSetActiveElement;
         this.selectSettingsHandler = commonFunctions.selectSettingsHandler;
+        this.selectObjectHandler = commonFunctions.selectObjectHandler;
 
         // events
         this.display = {
@@ -122,7 +124,7 @@ export default class FacilityApp extends Component {
 
                         // key -> object number; value -> object data (id, name, readings)
                         for (const [key, value] of Object.entries(this.facility)) {
-                            this.getObjectInfo(value, key, this.scheme);
+                            this.getObjectInfo(value, Number.parseInt(key), this.scheme);
                             this.isSensorActive(value, key, this.stateScheme, this.sensors);
                             this.assignValues(value.readings, this.stateScheme[key].readings);
                             this.getAlertsIndicator(this.stateScheme[key], this.stateScheme[key].alerts);
@@ -202,6 +204,8 @@ export default class FacilityApp extends Component {
         // objects DATA // FACILITY
         let facilityState; // objects sensors data
         let facilityInfo; // objects information
+        let objectState = []; // single object sensors data
+        let objectInfo = []; // single objects information
         let currentObject; // selected object
         let currentObjectInfo; // selected object information
         let currentObjectState; // selected object sensors data
@@ -221,6 +225,17 @@ export default class FacilityApp extends Component {
             currentObjectState = facilityState[Object.keys(facilityState)[currentObject]];
             selectedSettings = this.state.selectedSettings;
 
+            if (this.currentObject !== false) {
+                if (currentObjectState.settings) {
+                    if (selectedSettings === false) {
+                        selectedSettings = Object.keys(currentObjectState.readings)[0];
+                    } else if (currentObjectState.readings[selectedSettings] === undefined) {
+                        selectedSettings = Object.keys(currentObjectState.readings)[0];
+                        this.selectedSettings = selectedSettings;
+                    }
+                }
+            }
+
             // ======= CAROUSEL =======
             // carousel container
             if (this.state.display.menuType === 'carousel') {
@@ -234,20 +249,12 @@ export default class FacilityApp extends Component {
                 // ======= DETAILS =======
                 // details container
                 if (currentObject !== false && currentObject !== null) {
-                    details = <Details current={currentObject} info={currentObjectInfo} state={currentObjectState} isDay={isDay}
+                    details = <Details info={currentObjectInfo} state={currentObjectState} isDay={isDay}
                                        stats={stats}/>;
                 }
 
                 // ======= SETTINGS =======
                 // settings container
-                if (currentObjectState.settings) {
-                    if (selectedSettings === false) {
-                        selectedSettings = Object.keys(currentObjectState.readings)[0];
-                    } else if (currentObjectState.readings[selectedSettings] === undefined) {
-                        selectedSettings = Object.keys(currentObjectState.readings)[0];
-                        this.selectedSettings = selectedSettings;
-                    }
-                }
                 if (currentObject !== false && currentObject !== null && currentObjectState['settings'] && selectedSettings) {
                     settings = <Settings currentObject={currentObjectState} selectedSettings={selectedSettings}
                                          global={global} saveHandler={this.saveSettingsData.bind(this)}
@@ -255,9 +262,18 @@ export default class FacilityApp extends Component {
                                          id={facilityInfo[currentObject]['id']}/>;
                 }
             } else if (this.state.display.menuType === 'list') {
-                objectMenu = <SimpleMenu state={facilityState} info={facilityInfo}/>
+                objectMenu = <SimpleMenu state={facilityState} info={facilityInfo} handler={this.selectObjectHandler.bind(this)}/>
             } else if (this.state.display.menuType === 'single') {
-                objectMenu = '';
+                objectState[0] = facilityState[currentObject];
+                objectInfo[0] = facilityInfo[currentObject];
+                objectMenu = <SimpleMenu state={objectState} info={objectInfo} numberOfObjects={this.facility.length}
+                                         handler={this.selectObjectHandler.bind(this)} single={true}/>
+                if (currentObject !== false && currentObject !== null && currentObjectState['settings'] && selectedSettings) {
+                    settings = <SimpleSettings currentObject={currentObjectState} selectedSettings={selectedSettings}
+                                         global={global} saveHandler={this.saveSettingsData.bind(this)}
+                                         settingsHandler={this.selectSettingsHandler.bind(this)}
+                                         id={facilityInfo[currentObject]['id']}/>;
+                }
             }
         }
         // =======================================================================
