@@ -59,8 +59,6 @@ class GlobalSettingsManager
     // update DATABASE by single array pair :: column_name -> value
     public function updateByArray(array $data): int
     {
-        $key = array_key_first($data);
-        $value = $data[$key];
-        return $this->global_settings->update($key, $value);
+        return $this->global_settings->update($data['name'], $data['value']);
     }
 }

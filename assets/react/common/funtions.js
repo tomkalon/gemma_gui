@@ -275,7 +275,6 @@ function sendDataAPI(method, id, send, isGlobal) {
 // ===  sava data handler ===
 function saveSettingsData(id, data, name, isGlobal) {
     let send = {};
-    send[name] = data;
     send['name'] = name;
     send['value'] = data;
     sendDataAPI('put', id, send, isGlobal);
