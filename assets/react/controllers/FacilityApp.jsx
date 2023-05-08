@@ -182,20 +182,6 @@ export default class FacilityApp extends Component {
             });
     }
 
-    adjustMenuTypeToResolution(resolution, menuType, carousel) {
-        if (resolution === 'xxl') {
-            menuType = 'carousel';
-            carousel.colPerPage = 15;
-        } else if (resolution === 'xl') {
-            menuType = 'carousel';
-            carousel.colPerPage = 12;
-        } else {
-            menuType = 'other';
-        }
-        return menuType;
-    }
-
-
     render() {
 
         // select object component

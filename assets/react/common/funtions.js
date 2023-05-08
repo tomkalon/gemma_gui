@@ -1,12 +1,13 @@
 import React from 'react';
 import $ from 'jquery'
 import display from './display.json'
+import {bool} from "prop-types";
 
 const apiAddressSrc = "/api";
 const displaySettings = display;
 
 // resolution check
-function checkResolution (display) {
+function checkResolution(display) {
     let width = window.innerWidth;
     let resolution = display.resolution;
     for (const [key, value] of Object.entries(displaySettings.width)) {
@@ -208,12 +209,9 @@ function updateCarouselColPerPage(carousel, facility, scheme, colPerPageMax) {
 function getAlertsIndicators(stateScheme, alerts) {
     let indicators = {
         "sensor": {
-            "active": false, "new": '',
-            "icon": ''
-        },
-        "hardware": {
-            "active": false, "new": '',
-            "icon": ''
+            "active": false, "new": '', "icon": ''
+        }, "hardware": {
+            "active": false, "new": '', "icon": ''
         },
     };
     if (alerts) {
@@ -243,14 +241,20 @@ function getAlertsIndicators(stateScheme, alerts) {
 
 // send data to API
 function sendDataAPI(method, id, send, isGlobal) {
+    if (typeof send['value'] === 'boolean') {
+        if (send['value']) {
+            send['value'] = 1;
+        } else {
+            send['value'] = 0;
+        }
+    }
+
     let apiAddress = apiAddressSrc;
     if (isGlobal) {
         apiAddress += '/objects/global';
     } else {
         apiAddress += '/objects/' + id
     }
-
-    console.log(apiAddress);
 
     fetch(apiAddress, {
         method: method, headers: {
@@ -272,6 +276,8 @@ function sendDataAPI(method, id, send, isGlobal) {
 function saveSettingsData(id, data, name, isGlobal) {
     let send = {};
     send[name] = data;
+    send['name'] = name;
+    send['value'] = data;
     sendDataAPI('put', id, send, isGlobal);
 
     if (isGlobal) {

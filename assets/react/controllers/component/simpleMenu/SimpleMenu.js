@@ -51,7 +51,7 @@ class SimpleMenu extends React.Component {
                         </div>
                     </div>);
                 })}
-            <div className={`fixed bottom-0 h-32 w-full ring-offset-8 ring-8 dark:ring-black dark:bg-darker-900`}></div>
+            <div className={`fixed bottom-menu bottom-0 h-40 w-full border-t dark:border-darker-200 bg-gradient-to-b dark:from-darker-900 dark:to-darker-800`}></div>
         </div>);
     }
 }

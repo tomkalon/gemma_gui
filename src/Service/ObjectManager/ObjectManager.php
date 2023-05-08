@@ -168,8 +168,6 @@ class ObjectManager
     // update DATABASE by single array pair :: column_name -> value
     public function updateByArray(array $data, int $id): int
     {
-        $key = array_key_first($data);
-        $value = $data[$key];
-        return $this->object->update($id, $key, $value);
+        return $this->object->update($id, $data['name'], $data['value']);
     }
 }
