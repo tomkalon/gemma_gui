@@ -25,10 +25,14 @@ $blue-970: #020f16;
 $alarm-red: #501414;
 $false-red: #a32c2c;
 $true-green: #33741c;
+$alarm-red-light: #693131;
 
 $text-shadow: -2px 2px 2px #00000050;
-$shadow: -4px 4px 10px 0px #07262880;
 $light-shadow: 0 0 5px #ffffff80;
+$shadow: -4px 4px 10px 0px #07262880;
+
+$popup-shadow: -4px 4px 10px #000000;
+$popup-cover: #000000d0;
 
 .setup {
   .menu {
@@ -67,168 +71,7 @@ $light-shadow: 0 0 5px #ffffff80;
     }
   }
 
-  .description {
-    padding: 1rem;
-    margin: 1rem;
-    background: #254b5e;
-    border-radius: 0.25rem;
-  }
 
-  .content {
-
-    &.radio {
-      margin: 2rem;
-    }
-
-    .settings-radio {
-      .value {
-        padding: 0.5rem;
-        margin: 0.25rem;
-        border-radius: 0.25rem;
-
-        &.true {
-          background: $true-green;
-        }
-
-        &.false {
-          background: $false-red;
-        }
-      }
-    }
-
-    &.range {
-      margin: 4rem 0 1rem;
-    }
-
-    .settings-range {
-      width: 100%;
-      padding: 0 1rem;
-
-      input[type="range"] {
-        -webkit-appearance: none;
-        appearance: none;
-        cursor: pointer;
-        background: transparent;
-      }
-
-      input[type="range"]:focus {
-        outline: none;
-        border: none;
-      }
-
-      //--- opera, chrome, etc...
-      // track style
-      input[type="range"]::-webkit-slider-runnable-track {
-        background-color: $blue-950;
-        height: 0.75rem;
-        border-radius: 0.5rem;
-        transition: background-color 0.5s;
-      }
-
-      input[type="range"]:hover::-webkit-slider-runnable-track {
-        background-color: $blue-450;
-      }
-
-      // pointer
-      input[type="range"]::-webkit-slider-thumb {
-        -webkit-appearance: none;
-        appearance: none;
-        margin-top: -14px;
-        background-color: $dark-0;
-        height: 2.5rem;
-        width: 1.25rem;
-        border-radius: 1rem;
-        border: 0;
-      }
-
-      input[type="range"]:hover::-webkit-slider-thumb {
-        outline: 2px solid $dark-0;
-        outline-offset: 0.125rem;
-      }
-
-      //--- firefox
-      // track style
-      input[type="range"]::-moz-range-track {
-        background-color: $blue-950;
-        height: 0.75rem;
-        border-radius: 0.5rem;
-        transition: background-color 0.5s;
-      }
-
-      input[type="range"]:hover::-moz-range-track {
-        background-color: $blue-450;
-      }
-
-      // pointer
-      input[type="range"]::-moz-range-thumb {
-        -webkit-appearance: none;
-        appearance: none;
-        margin-top: -14px;
-        background-color: $dark-0;
-        height: 2.5rem;
-        width: 1.25rem;
-        border-radius: 1rem;
-        border: 0;
-      }
-
-      input[type="range"]:hover::-moz-range-thumb {
-        outline: 2px solid $dark-0;
-        outline-offset: 0.125rem;
-      }
-
-      .select-bar {
-        top: -15px;
-        position: relative;
-        margin: 0 0.5rem;
-      }
-
-      .range-caption {
-        position: relative;
-        z-index: 50;
-        text-align: center;
-        height: 1.75rem;
-        font-size: 1.25rem;
-        width: 100%;
-        padding: 0 0.625rem;
-        top: -30px;
-
-        .value {
-          margin-left: -1.75rem;
-          height: 2rem;
-
-          &:after {
-            content: "";
-            width: 0.5rem;
-            height: 0.5rem;
-            background-color: $blue-450;
-            display: block;
-            margin: -3px auto 0;
-            transform: rotate(45deg);
-          }
-        }
-      }
-
-      .range-footer {
-        position: relative;
-        z-index: 50;
-        height: 1.5rem;
-        font-size: 1rem;
-        width: 27.75rem;
-        left: 8px;
-      }
-
-      .threshold {
-        font-size: 0.75rem;
-        position: absolute;
-
-        ins {
-          display: block;
-          position: relative;
-          text-decoration: none;
-        }
-      }
-    }
-  }
 
   @mixin setup-item {
     align-items: center;
@@ -324,6 +167,277 @@ $light-shadow: 0 0 5px #ffffff80;
     &.false {
       .icon {
         background: #62191F url("img/bg-false.png");
+      }
+    }
+  }
+}
+
+.simple-settings {
+  .item {
+    background: linear-gradient(to right, $dark-300, transparent);
+    &.global {
+      .icon {
+        background: linear-gradient(to right, #255077, transparent);
+      }
+    }
+
+    &.true {
+      .icon {
+        background: linear-gradient(to right, #1C531E, transparent);
+      }
+    }
+
+    &.false {
+      .icon {
+        background: linear-gradient(to right, #62191F, transparent);
+      }
+    }
+  }
+  .settings-menu {
+    .element {
+      &.active {
+        background: $dark-500;
+      }
+    }
+  }
+}
+
+.js-settings-popup-cover {
+  width: 100%;
+  height: 100%;
+  background: $popup-cover;
+
+  .settings-popup {
+    width: 40rem;
+    filter: drop-shadow($popup-shadow);
+    background: $blue-550;
+
+    .label {
+      justify-content: space-between;
+      text-transform: unset !important;
+
+      .js-btn-close {
+        width: 1.75rem;
+        height: 1.75rem;
+        text-align: center;
+        color: $blue-250;
+
+        &:hover {
+          background: $blue-250;
+          color: $blue-950;
+          cursor: pointer;
+          border-radius: 0.25rem;
+        }
+      }
+    }
+
+    .description {
+      padding: 1rem;
+      margin: 1rem;
+      background: #254b5e;
+      border-radius: 0.25rem;
+    }
+
+    .content {
+
+      &.radio {
+        margin: 2rem;
+      }
+
+      .settings-radio {
+        .value {
+          padding: 0.5rem;
+          margin: 0.25rem;
+          border-radius: 0.25rem;
+
+          &.true {
+            background: $true-green;
+          }
+
+          &.false {
+            background: $false-red;
+          }
+        }
+      }
+
+      &.range {
+        margin: 4rem 0 1rem;
+      }
+
+      .settings-range {
+        width: 100%;
+        padding: 0 1rem;
+
+        input[type="range"] {
+          -webkit-appearance: none;
+          appearance: none;
+          cursor: pointer;
+          background: transparent;
+        }
+
+        input[type="range"]:focus {
+          outline: none;
+          border: none;
+        }
+
+        //--- opera, chrome, etc...
+        // track style
+        input[type="range"]::-webkit-slider-runnable-track {
+          background-color: $blue-950;
+          height: 0.75rem;
+          border-radius: 0.5rem;
+          transition: background-color 0.5s;
+        }
+
+        input[type="range"]:hover::-webkit-slider-runnable-track {
+          background-color: $blue-450;
+        }
+
+        // pointer
+        input[type="range"]::-webkit-slider-thumb {
+          -webkit-appearance: none;
+          appearance: none;
+          margin-top: -14px;
+          background-color: $dark-0;
+          height: 2.5rem;
+          width: 1.25rem;
+          border-radius: 1rem;
+          border: 0;
+        }
+
+        input[type="range"]:hover::-webkit-slider-thumb {
+          outline: 2px solid $dark-0;
+          outline-offset: 0.125rem;
+        }
+
+        //--- firefox
+        // track style
+        input[type="range"]::-moz-range-track {
+          background-color: $blue-950;
+          height: 0.75rem;
+          border-radius: 0.5rem;
+          transition: background-color 0.5s;
+        }
+
+        input[type="range"]:hover::-moz-range-track {
+          background-color: $blue-450;
+        }
+
+        // pointer
+        input[type="range"]::-moz-range-thumb {
+          -webkit-appearance: none;
+          appearance: none;
+          margin-top: -14px;
+          background-color: $dark-0;
+          height: 2.5rem;
+          width: 1.25rem;
+          border-radius: 1rem;
+          border: 0;
+        }
+
+        input[type="range"]:hover::-moz-range-thumb {
+          outline: 2px solid $dark-0;
+          outline-offset: 0.125rem;
+        }
+
+        .select-bar {
+          top: -15px;
+          position: relative;
+          margin: 0 0.5rem;
+        }
+
+        .range-caption {
+          position: relative;
+          z-index: 50;
+          text-align: center;
+          height: 1.75rem;
+          width: 100%;
+          padding: 0 0.625rem;
+          top: -30px;
+
+          .value {
+            margin-left: -2.25rem;
+            height: 1.75rem;
+            width:4.5rem;
+
+            &:after {
+              content: "";
+              width: 0.5rem;
+              height: 0.5rem;
+              background-color: $blue-450;
+              display: block;
+              margin: -3px auto 0;
+              transform: rotate(45deg);
+            }
+          }
+        }
+
+        .range-footer {
+          position: relative;
+          z-index: 50;
+          height: 1.5rem;
+          font-size: 1rem;
+          width: 27.75rem;
+          left: 8px;
+        }
+
+        .threshold {
+          font-size: 0.75rem;
+          position: absolute;
+
+          ins {
+            display: block;
+            position: relative;
+            text-decoration: none;
+          }
+        }
+      }
+    }
+  }
+
+  &.simple {
+    .settings-popup {
+      width: 100%;
+      border-radius: 0;
+
+      .label {
+        font-size: 2.25rem;
+        padding: 2.5rem 1rem;
+      }
+    }
+    .content {
+      .settings-range {
+        // pointer
+        input[type="range"]::-webkit-slider-thumb {
+          height: 3rem;
+          width: 3rem;
+          border-radius: 2rem;
+          margin-top: -18px;
+        }
+
+        input[type="range"]::-moz-range-thumb {
+          height: 3rem;
+          width: 3rem;
+          border-radius: 2rem;
+          margin-top: -18px;
+        }
+
+        .range-caption {
+          height: 1.75rem;
+          padding: 0 0.625rem;
+          top: -55px;
+          .value {
+            font-size: 2.25rem;
+            margin-left: -4.75rem;
+            height: 3.25rem;
+            width:10rem;
+          }
+        }
+      }
+    }
+    .buttons {
+      .btn {
+        height: 4.5rem;
       }
     }
   }

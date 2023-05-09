@@ -8,7 +8,6 @@ import Settings from "./component/settings/Settings";
 import sensors from "./../common/sensors.js"
 import carousel from "./../common/carousel.json";
 import commonFunctions from "./../common/funtions";
-import SimpleSettings from "./component/simpleMenu/SimpleSettings";
 
 // ================================================================================
 //  CLASS STRUCTURE & DESCRIPTION OF THE ACTION
@@ -260,7 +259,8 @@ export default class FacilityApp extends Component {
                     settings = <Settings currentObject={currentObjectState} selectedSettings={selectedSettings}
                                          global={global} saveHandler={this.saveSettingsData.bind(this)}
                                          settingsHandler={this.selectSettingsHandler.bind(this)}
-                                         id={facilityInfo[currentObject]['id']} displayLogic={this.prepareSettingsButton}/>;
+                                         id={facilityInfo[currentObject]['id']} displayLogic={this.prepareSettingsButton}
+                                         simple={false}/>;
                 }
             } else if (this.state.display.menuType === 'list') {
                 objectMenu = <SimpleMenu state={facilityState} info={facilityInfo} handler={this.selectObjectHandler.bind(this)}/>
@@ -270,10 +270,11 @@ export default class FacilityApp extends Component {
                 objectMenu = <SimpleMenu state={objectState} info={objectInfo} numberOfObjects={this.facility.length}
                                          handler={this.selectObjectHandler.bind(this)} single={true}/>
                 if (currentObject !== false && currentObject !== null && currentObjectState['settings'] && selectedSettings) {
-                    settings = <SimpleSettings currentObject={currentObjectState} selectedSettings={selectedSettings}
+                    settings = <Settings currentObject={currentObjectState} selectedSettings={selectedSettings}
                                          global={global} saveHandler={this.saveSettingsData.bind(this)}
                                          settingsHandler={this.selectSettingsHandler.bind(this)}
-                                         id={facilityInfo[currentObject]['id']} displayLogic={this.prepareSettingsButton}/>;
+                                         id={facilityInfo[currentObject]['id']} displayLogic={this.prepareSettingsButton}
+                                         simple={true}/>;
                 }
             }
         }

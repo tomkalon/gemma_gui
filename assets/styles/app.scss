@@ -28,10 +28,13 @@ $blue-960: #0e2029;
 $blue-970: #020f16;
 
 $alarm-red: #501414;
+$false-red: #a32c2c;
+$true-green: #33741c;
 $alarm-red-light: #693131;
 
 $text-shadow: -2px 2px 2px #00000050;
 $light-shadow: 0 0 5px #ffffff80;
+$shadow: -4px 4px 10px 0px #07262880;
 
 $popup-shadow: -4px 4px 10px #000000;
 $popup-cover: #000000d0;
@@ -161,9 +164,13 @@ footer {
   height: 2.5rem;
   border-radius: 0.5rem;
   padding: 0 0.75rem;
-  font-size: 1.1rem;
   display: flex;
   align-items: center;
+
+  &-lg {
+    height: 4rem;
+    font-size: 2rem;
+  }
 
   &-side {
     height: 100%;
@@ -172,6 +179,7 @@ footer {
   &-green {
     background: $dark-400;
     border: 2px solid $dark-400;
+
     &:hover {
       background: $dark-100;
       border: 2px solid $dark-100;
@@ -182,6 +190,7 @@ footer {
   &-blue {
     background: $blue-950;
     border: 2px solid $blue-450;
+
     &:hover {
       background: $dark-100;
       color: $blue-950;
@@ -191,6 +200,7 @@ footer {
   &-red {
     background: $alarm-red;
     border: 2px solid $alarm-red-light;
+
     &:hover {
       background: $dark-100;
       color: $dark-900;
@@ -199,14 +209,16 @@ footer {
 
   &-empty {
     border: 2px solid $blue-450;
+
     &:hover {
       background: $dark-100;
       color: $dark-900;
     }
   }
+
   &-counter {
     border-radius: 1rem;
-    margin:0 0 0 0.5rem;
+    margin: 0 0 0 0.5rem;
     width: 1.75rem;
     height: 1.75rem;
     background: #ffffff30;
@@ -223,37 +235,4 @@ footer {
 
 .blink {
   animation: blinker 3s ease-out infinite;
-}
-
-.js-settings-popup-cover {
-  width: 100%;
-  height: 100%;
-  background: $popup-cover;
-
-  .settings-popup {
-    width: 40rem;
-    filter: drop-shadow($popup-shadow);
-    background: $blue-550;
-
-    .label {
-      justify-content: space-between;
-      text-transform: unset !important;
-      font-size: 1.2rem;
-
-      .js-btn-close {
-        font-size: 1.25rem;
-        width: 1.75rem;
-        height: 1.75rem;
-        text-align: center;
-        color: $blue-250;
-
-        &:hover {
-          background: $blue-250;
-          color: $blue-950;
-          cursor: pointer;
-          border-radius: 0.25rem;
-        }
-      }
-    }
-  }
 }

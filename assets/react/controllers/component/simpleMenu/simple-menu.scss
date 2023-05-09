@@ -56,33 +56,3 @@ $light-shadow: 0 0 5px #ffffff80;
     box-shadow: 0 0 6px 0 #000000;
   }
 }
-
-.simple-settings {
-  .item {
-    background: linear-gradient(to right, $dark-300, transparent);
-    &.global {
-      .icon {
-        background: linear-gradient(to right, #255077, transparent);
-      }
-    }
-
-    &.true {
-      .icon {
-        background: linear-gradient(to right, #1C531E, transparent);
-      }
-    }
-
-    &.false {
-      .icon {
-        background: linear-gradient(to right, #62191F, transparent);
-      }
-    }
-  }
-  .settings-menu {
-    .element {
-      &.active {
-        background: $dark-500;
-      }
-    }
-  }
-}

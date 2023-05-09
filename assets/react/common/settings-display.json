@@ -1,8 +1,9 @@
 {
   "arrangement": {
     "boolQuestion": "Czy chcesz zmienić wartość ustawień na:",
-    "rangeSaveCaption": "Zapisz",
-    "radioSaveCaption": "Zmień",
+    "currentValue": "Aktualna wartość:",
+    "saveCaption": "Zapisz",
+    "changeCaption": "Zmień",
     "otherTitle": "Pozostałe"
   },
   "environment": {

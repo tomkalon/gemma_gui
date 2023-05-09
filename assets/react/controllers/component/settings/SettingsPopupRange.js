@@ -70,12 +70,22 @@ class SettingsPopupRange extends React.Component {
     }
 
     render() {
+
+        let rangeFooter;
+        if (this.props.simple) {
+            rangeFooter = <div className="range-footer relative mt-4"></div>;
+        } else {
+            rangeFooter = <div className="range-footer relative mt-4">
+                {this.thresholds.map((element) => element)}
+            </div>;
+        }
+
         return (<div className={`settings-range flex`}>
             <div className={`btn btn-side w-16 flex flex-col justify-center`}>
                 <button className={`btn btn-empty`} onClick={() => {this.btnChangeValue(false)}}><i className={`gf gf-minus`} ></i></button>
             </div>
             <div className={`select-bar flex-grow flex flex-col justify-center`}>
-                <div className={`range-caption`}><div className={'value w-14 dark:bg-blue-450 rounded relative'} style={{left: this.position}}>{this.state.value}</div></div>
+                <div className={`range-caption`}><div className={'value text-3xl lg:text-xl leading-normal w-14 dark:bg-blue-450 rounded relative'} style={{left: this.position}}>{this.state.value}</div></div>
                 <input
                     type='range'
                     onChange={this.changeValue.bind(this)}
@@ -86,9 +96,7 @@ class SettingsPopupRange extends React.Component {
                     className='range-slider'
                     id='range-slider'>
                 </input>
-                <div className="range-footer relative mt-4">
-                    {this.thresholds.map((element) => element)}
-                </div>
+                {rangeFooter}
             </div>
             <div className={`btn btn-side w-16 flex flex-col justify-center`}>
                 <button className={`btn btn-empty`} onClick={() => {this.btnChangeValue(true)}}><i className={`gf gf-plus`}></i></button>
