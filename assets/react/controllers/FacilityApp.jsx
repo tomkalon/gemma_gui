@@ -79,6 +79,7 @@ export default class FacilityApp extends Component {
         this.getAlertsIndicator = commonFunctions.getAlertsIndicators;
         this.getCarouselDisplaySettings = commonFunctions.getCarouselDisplaySettings;
         this.updateCarouselColPerPage = commonFunctions.updateCarouselColPerPage;
+        this.prepareSettingsButton = commonFunctions.prepareSettingsButton;
 
         // handlers
         this.carouselPaginationPageIndex = commonFunctions.carouselPaginationPageIndex;
@@ -259,7 +260,7 @@ export default class FacilityApp extends Component {
                     settings = <Settings currentObject={currentObjectState} selectedSettings={selectedSettings}
                                          global={global} saveHandler={this.saveSettingsData.bind(this)}
                                          settingsHandler={this.selectSettingsHandler.bind(this)}
-                                         id={facilityInfo[currentObject]['id']}/>;
+                                         id={facilityInfo[currentObject]['id']} displayLogic={this.prepareSettingsButton}/>;
                 }
             } else if (this.state.display.menuType === 'list') {
                 objectMenu = <SimpleMenu state={facilityState} info={facilityInfo} handler={this.selectObjectHandler.bind(this)}/>
@@ -272,7 +273,7 @@ export default class FacilityApp extends Component {
                     settings = <SimpleSettings currentObject={currentObjectState} selectedSettings={selectedSettings}
                                          global={global} saveHandler={this.saveSettingsData.bind(this)}
                                          settingsHandler={this.selectSettingsHandler.bind(this)}
-                                         id={facilityInfo[currentObject]['id']}/>;
+                                         id={facilityInfo[currentObject]['id']} displayLogic={this.prepareSettingsButton}/>;
                 }
             }
         }

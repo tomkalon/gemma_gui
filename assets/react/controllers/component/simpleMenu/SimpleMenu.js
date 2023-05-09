@@ -103,7 +103,7 @@ class SimpleMenu extends React.Component {
                     </div>);
                 }
             })}
-            <div className={`fixed bottom-menu bottom-0 h-36 px-10 py-5 w-full border-t dark:border-darker-200
+            <div className={`fixed bottom-menu bottom-0 h-28 px-10 py-1 w-full border-t dark:border-darker-200
              bg-gradient-to-b dark:from-darker-900 dark:to-darker-800`}>
                 <div className={`dark:text-darker-100 text-8xl float-left mr-20`} onClick={() => {this.handler('')}}><i className="gf gf-home"></i></div>
                 {prevBtn}{nextBtn}

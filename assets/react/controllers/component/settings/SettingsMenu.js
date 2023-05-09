@@ -12,7 +12,7 @@ class SettingsMenu extends React.Component {
 
         // object
         let display = {};
-        for (const key of Object.keys(readings)) {
+        for (const [key, element] of Object.entries(readings)) {
             let active = '';
             if (selectedSettings === key) {
                 active = ' active';
@@ -21,15 +21,15 @@ class SettingsMenu extends React.Component {
                 if (key === "shadow") {
                     if (settingsDisplay.environment['sun']) {
                         display[key] = <div onClick={() => handler(key, 300)} key={key} className={`element${active}`}>
-                            <i className={`gf ${readings[key]['settingsStyle']}`}></i>
-                            <p>{readings[key]['fullName']}</p>
+                            <i className={`gf ${element['settingsStyle']}`}></i>
+                            <p>{element['fullName']}</p>
                         </div>
                     }
                 }
                 else {
                     display[key] = <div onClick={() => handler(key, 300)} key={key} className={`element${active}`}>
-                        <i className={`gf ${readings[key]['settingsStyle']}`}></i>
-                        <p>{readings[key]['fullName']}</p>
+                        <i className={`gf ${element['settingsStyle']}`}></i>
+                        <p>{element['fullName']}</p>
                     </div>
                 }
             }

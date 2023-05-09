@@ -4,7 +4,7 @@ import './settings.scss'
 import settingsScheme from '../../../common/settings.json'
 import settingsData from '../../../common/settings-data.json'
 import settingsDisplay from '../../../common/settings-display.json'
-import DetailsSettings from "./SettingsMenu";
+import SettingsMenu from "./SettingsMenu";
 
 class Settings extends React.Component {
 
@@ -37,6 +37,7 @@ class Settings extends React.Component {
         const saveHandler = this.props.saveHandler;
         const global = this.props.global;
         const id = this.props.id;
+        const prepareSettingsButton = this.props.displayLogic;
 
         // title
         let title;
@@ -51,7 +52,7 @@ class Settings extends React.Component {
         }
 
         // settings
-        const selectSettings = <DetailsSettings settings={currentObject.settings} selectedSettings={selectedSettings} handler={this.props.settingsHandler}
+        const selectSettings = <SettingsMenu settings={currentObject.settings} selectedSettings={selectedSettings} handler={this.props.settingsHandler}
                                                 readings={currentObject.readings} />;
 
         // functions
@@ -73,51 +74,8 @@ class Settings extends React.Component {
         }
 
 
-        //logic
-        let buttonList = {};
-        let counter = 0;
-        if (selectedSettings !== false && settingsScheme[selectedSettings] !== undefined) {
-            let value;
-            let color = settingsDisplay.arrangement.default;
-            for (const [key, element] of Object.entries(settingsScheme[selectedSettings])) {
-
-                // if there is color saved in scheme use it
-                if (settingsData[key].color) {
-                    color = settingsData[key].color;
-                }
-
-                // specific sensor settings
-                if (currentObject.settings[key] !== undefined) {
-
-                    // boolean
-                    if (settingsData[key].bool !== undefined) {
-                        currentObject.settings[key] === true ? value = 1 : value = 0;
-                        buttonList[counter] = getSettingButton(id, key, settingsData[key], settingsData[key].values[value], currentObject.settings[key], saveHandler);
-                    }
-
-                    // range
-                    else {
-                        if (currentObject.readings[element.rel] || settingsDisplay.environment[element.rel]) {
-                            buttonList[counter] = getSettingButton(id, key, settingsData[key], currentObject.settings[key], color, saveHandler);
-                        }
-                    }
-                    counter++;
-                }
-
-                // global settings
-                else if (global[key]) {
-                    if (settingsDisplay.environment[element.rel]) {
-                        buttonList[counter] = getSettingButton(id, key, settingsData[key], global[key], color, saveHandler);
-                    }
-                    counter++;
-                }
-
-                if (element.separator) {
-                    buttonList[counter] = getNewRow();
-                    counter++;
-                }
-            }
-        }
+        let buttonList = prepareSettingsButton(id, selectedSettings, settingsScheme, settingsData,
+            currentObject, global, settingsDisplay, getSettingButton, saveHandler, getNewRow);
 
         return (<article id={`js-settings`} className={`setup mb-8`}>
             <div className={`container mx-auto pb-4 px-2 dark:bg-blue-960 rounded-b-md`}>
