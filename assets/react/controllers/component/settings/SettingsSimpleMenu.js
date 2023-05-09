@@ -35,7 +35,7 @@ class SettingsSimpleMenu extends React.Component {
             }
         }
 
-        return (<div className={`settings-menu fixed flex justify-center bottom-28 h-24 py-1 w-full
+        return (<div className={`settings-menu ring-1 dark:ring-darker-800 fixed flex bottom-28 h-24 py-1 w-full
          border-t dark:border-darker-200 bg-gradient-to-b dark:from-darker-800 dark:to-darker-700`}>
         { Object.values(display) }
         </div>)

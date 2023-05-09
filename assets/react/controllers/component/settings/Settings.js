@@ -102,16 +102,22 @@ class Settings extends React.Component {
                 currentObject, global, settingsDisplay, getSimpleSettingButton, saveHandler, getNewRow);
             return (<div className={`simple-settings dark:bg-darker-700`}>
                 <div>
-                    <div className={`label px-4 py-4 dark:bg-darker-800 border-t-2 border-b-2 dark:border-darker-500`}>
-                        <span className={`dark:text-darker-100 text-4xl`}>Ustawienia</span>
+                    <div className={`w-full overflow-auto px-4 py-4 dark:bg-darker-800 border-t-2 border-b-2 dark:border-darker-500`}>
+                        <div className={`dark:text-darker-100 float-left w-60`}>
+                            <span className={`text-2xl`}>{settingsDisplay.arrangement.settings}:</span>
+                            <p className={`text-3xl uppercase`}>{title}</p>
+                        </div>
+                        <button className={`btn btn-blue btn-lg float-right dark:text-darker-100`}>{settingsDisplay.arrangement.changeProfile}</button>
+                        <div className={`float-left dark:text-darker-100 text-2xl`}>
+                            <span>{settingsDisplay.arrangement.profile}:</span>
+                            <p className={`text-3xl uppercase`}>{currentObject.settings['name']}</p>
+                        </div>
                     </div>
                     <div className={`mb-56 mt-4 border-b-2 dark:border-darker-500`}>
                         { Object.values(buttonList) }
                     </div>
                 </div>
-                <div className={`settings-menu fixed flex justify-center bottom-28 h-24 py-1 w-full border-t dark:border-darker-200 bg-gradient-to-b dark:from-darker-800 dark:to-darker-700`}>
-                    {selectSettings}
-                </div>
+                {selectSettings}
                 { this.state.popup }
             </div>);
         } else {
@@ -121,10 +127,15 @@ class Settings extends React.Component {
                 <div className={`container mx-auto pb-4 px-2 dark:bg-blue-960 rounded-b-md`}>
                     <div className={`title h-16 px-2 mx-2 mb-2 dark:text-darker-100 border-y dark:border-blue-450 shadow-md`}>
                         <div className={`px-2 mt-2 float-left uppercase`}>
-                            <span className={`dark:bg-blue-450 rounded-md mr-2 px-2`}>Profil</span>{currentObject.settings['name']}
+                            <span className={`dark:bg-blue-450 rounded-md mr-2 px-2`}>{settingsDisplay.arrangement.profile}</span>
+                            {currentObject.settings['name']}
                             <div className={`text-sm px-2 bg-gradient-to-r rounded-md dark:from-blue-470 dark:to-transparent-0`}>{title}</div>
                         </div>
-                        <div className={`float-right mt-3 mr-2`}><button className={`btn btn-blue`}>Zmień profil</button></div>
+                        <div className={`float-right mt-3 mr-2`}>
+                            <button className={`btn btn-blue`}>
+                            {settingsDisplay.arrangement.changeProfile}
+                            </button>
+                        </div>
                         {selectSettings}
                     </div>
                     <div className={`dark:text-darker-100 mt-4`}>

@@ -79,6 +79,7 @@ export default class FacilityApp extends Component {
         this.getCarouselDisplaySettings = commonFunctions.getCarouselDisplaySettings;
         this.updateCarouselColPerPage = commonFunctions.updateCarouselColPerPage;
         this.prepareSettingsButton = commonFunctions.prepareSettingsButton;
+        this.getIndicatorsIcons = commonFunctions.getIndicatorsIcons;
 
         // handlers
         this.carouselPaginationPageIndex = commonFunctions.carouselPaginationPageIndex;
@@ -241,7 +242,8 @@ export default class FacilityApp extends Component {
             if (this.state.display.menuType === 'carousel') {
                 carouselData = this.state.carousel;
                 objectMenu = <Carousel display={carouselData} state={facilityState} info={facilityInfo} page={pageState}
-                                       current={currentObject} sidebarHandler={this.carouselSidebarPageIndex.bind(this)}
+                                       current={currentObject} indicatorIcons={this.getIndicatorsIcons}
+                                       sidebarHandler={this.carouselSidebarPageIndex.bind(this)}
                                        paginationHandler={this.carouselPaginationPageIndex.bind(this)}
                                        activeHandler={this.carouselSetActiveElement.bind(this)}/>;
 
@@ -250,7 +252,7 @@ export default class FacilityApp extends Component {
                 // details container
                 if (currentObject !== false && currentObject !== null) {
                     details = <Details info={currentObjectInfo} state={currentObjectState} isDay={isDay}
-                                       stats={stats}/>;
+                                       stats={stats} indicatorIcons={this.getIndicatorsIcons}/>;
                 }
 
                 // ======= SETTINGS =======
@@ -262,13 +264,19 @@ export default class FacilityApp extends Component {
                                          id={facilityInfo[currentObject]['id']} displayLogic={this.prepareSettingsButton}
                                          simple={false}/>;
                 }
+                // ======= SMALL DISPLAY COMPONENTS =======
+                // list -> all objects
             } else if (this.state.display.menuType === 'list') {
-                objectMenu = <SimpleMenu state={facilityState} info={facilityInfo} handler={this.selectObjectHandler.bind(this)}/>
+                objectMenu = <SimpleMenu state={facilityState} info={facilityInfo} handler={this.selectObjectHandler.bind(this)}
+                                         indicatorIcons={this.getIndicatorsIcons}/>
+                // single -> selected object
             } else if (this.state.display.menuType === 'single') {
                 objectState[0] = facilityState[currentObject];
                 objectInfo[0] = facilityInfo[currentObject];
+                // object
                 objectMenu = <SimpleMenu state={objectState} info={objectInfo} numberOfObjects={this.facility.length}
-                                         handler={this.selectObjectHandler.bind(this)} single={true}/>
+                                         indicatorIcons={this.getIndicatorsIcons} handler={this.selectObjectHandler.bind(this)} single={true}/>
+                // settings
                 if (currentObject !== false && currentObject !== null && currentObjectState['settings'] && selectedSettings) {
                     settings = <Settings currentObject={currentObjectState} selectedSettings={selectedSettings}
                                          global={global} saveHandler={this.saveSettingsData.bind(this)}

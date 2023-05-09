@@ -17,6 +17,7 @@ class Carousel extends React.Component {
         const sidebarHandler = this.props.sidebarHandler;
         const activeHandler = this.props.activeHandler;
         const current = this.props.current;
+        const indicatorIcons = this.props.indicatorIcons;
 
         // var
         let prevIsActive = "hidden";
@@ -47,7 +48,7 @@ class Carousel extends React.Component {
         // carousel content block
         const carouselShowPage = <CarouselPage
             page={pageState} pages={display.pages} objectsState={state} current={current}
-            objectsInfo={info} maxRow={display.maxRows} handler={activeHandler}/>;
+            objectsInfo={info} maxRow={display.maxRows} handler={activeHandler} indicators={indicatorIcons}/>;
 
         // carousel navigations blocks
         const prevCarouselSideBar = <CarouselSidebar

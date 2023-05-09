@@ -4,7 +4,10 @@
     "currentValue": "Aktualna wartość:",
     "saveCaption": "Zapisz",
     "changeCaption": "Zmień",
-    "otherTitle": "Pozostałe"
+    "otherTitle": "Pozostałe",
+    "settings": "Ustawienia",
+    "profile": "Profil",
+    "changeProfile": "Zmień profil"
   },
   "environment": {
     "rain": true,

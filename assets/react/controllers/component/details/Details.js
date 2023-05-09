@@ -14,21 +14,14 @@ class Details extends React.Component {
         const state = this.props.state; // object: state -> settings, readings etc.
         const isDay = this.props.isDay; // time of day
         const stats = this.props.stats; // statistics & charts
+        const indicatorIcons = this.props.indicatorIcons; // function
 
         // VAR
         let img = 'default';
         const imagesSrc = '/build/images/';
 
-        // indicators
-        let alertSensor, alertHardware;
-        if (state.indicators) {
-            if (state.indicators.sensor.active) {
-                alertSensor = state.indicators.sensor.icon;
-            }
-            if (state.indicators.hardware.active) {
-                alertHardware = state.indicators.hardware.icon;
-            }
-        }
+        // alert indicators
+        const indicators = indicatorIcons(state.indicators);
 
         // readings
         let readings = state.readings;
@@ -134,8 +127,8 @@ class Details extends React.Component {
                     <div className={`label w-full px-4 container mx-auto text-sm`}>
                         <span className={`dark:text-darker-0 pr-4`}>Obiekt #{info.order}</span>
                         <span className={`dark:text-sky-200 border-l dark:border-darker-100 pl-4`}>{name}</span>
-                        <span className={`dark:text-sky-200 pl-4`}>{alertSensor}</span>
-                        <span className={`dark:text-sky-200 pl-4`}>{alertHardware}</span>
+                        <span className={`dark:text-sky-200 pl-4`}>{indicators['sensor']}</span>
+                        <span className={`dark:text-sky-200 pl-4`}>{indicators['hardware']}</span>
                     </div>
                 </div>
                 <div className={`data`}>

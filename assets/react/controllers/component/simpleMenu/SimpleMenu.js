@@ -10,11 +10,13 @@ class SimpleMenu extends React.Component {
         this.handler = this.props.handler;
         this.numberOfObjects = this.props.numberOfObjects;
         this.single = this.props.single;
+        this.indicatorIcons = this.props.indicatorIcons;
     }
 
     getSensor(object, key) {
         let arr = [];
         let counter = 0;
+
 
         for (const [index, element] of Object.entries(object)) {
             if (element.value.length > 1) {
@@ -80,6 +82,8 @@ class SimpleMenu extends React.Component {
         return (<div className={`simple-menu pt-4 px-4`}>
             {this.info.map((element, key) => {
                 let background = 'dark:bg-darker-200';
+                const indicators = this.indicatorIcons(this.facility[key].indicators);
+
                 if (key % 2) {
                     background = 'dark:bg-darker-300';
                 }
@@ -87,6 +91,8 @@ class SimpleMenu extends React.Component {
                     return (<div key={key} className={`object mb-10 ${background} cursor-pointer`} onClick={() => {this.handler(key)}}>
                         <div className={`label px-4 py-4 dark:bg-darker-800`}>
                             <span className={`dark:text-darker-100 text-4xl`}>Obiekt# {element.order} | {element.name}</span>
+                            <span className={`dark:text-sky-200 pl-4 text-4xl`}>{indicators['sensor']}</span>
+                            <span className={`dark:text-sky-200 pl-4 text-4xl`}>{indicators['hardware']}</span>
                         </div>
                         <div className={`px-2 py-4 flex flex-wrap`}>
                             {this.getSensor(this.facility[key].readings, key)}
@@ -96,6 +102,8 @@ class SimpleMenu extends React.Component {
                     return (<div key={key} className={`object mb-10 ${background} cursor-pointer`}>
                         <div className={`label px-4 py-4 dark:bg-darker-800`}>
                             <span className={`dark:text-darker-100 text-4xl`}>Obiekt# {element.order} | {element.name}</span>
+                            <span className={`dark:text-sky-200 pl-4 text-4xl`}>{indicators['sensor']}</span>
+                            <span className={`dark:text-sky-200 pl-4 text-4xl`}>{indicators['hardware']}</span>
                         </div>
                         <div className={`px-2 py-4 flex flex-wrap`}>
                             {this.getSensor(this.facility[key].readings, key)}

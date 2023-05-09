@@ -251,7 +251,7 @@ const prepareSettingsButton = (id, selected, scheme, data, object, global, displ
             // if there is color saved in scheme use it
             if (data[key].color) {
                 color = data[key].color;
-            }
+            }``
 
             // specific sensor settings
             if (object.settings[key] !== undefined) {
@@ -286,6 +286,23 @@ const prepareSettingsButton = (id, selected, scheme, data, object, global, displ
         }
     }
     return buttonList;
+}
+
+// get string data - prepare indicators class name
+function getIndicatorsIcons (indicators) {
+    let data = {
+        hardware: undefined,
+        sensor: undefined
+    }
+    if (indicators) {
+        if (indicators.sensor.active) {
+            data['sensor'] = indicators.sensor.icon;
+        }
+        if (indicators.hardware.active) {
+            data['hardware'] = indicators.hardware.icon;
+        }
+    }
+    return data;
 }
 
 // send data to API
@@ -414,6 +431,7 @@ const commonFunctions = {
     assignValues,
     getObjectInfo,
     prepareSettingsButton,
+    getIndicatorsIcons,
     getCarouselDisplaySettings,
     carouselPaginationPageIndex,
     carouselSidebarPageIndex,
