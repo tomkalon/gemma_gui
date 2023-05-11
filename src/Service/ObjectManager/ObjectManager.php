@@ -26,7 +26,7 @@ class ObjectManager
         $query = $this->object->findAll();
         foreach ($query as $key => $value) {
             $sensors_data_array[$key] = $this->getArrayOfSensorsData($value, $sensors_count);
-            $this->data[$key] = $this->getAllSensorsData($sensors_data_array[$key]);
+            $this->data[$sensors_data_array[$key]['id']] = $this->getAllSensorsData($sensors_data_array[$key]);
         }
         return $this->data;
     }

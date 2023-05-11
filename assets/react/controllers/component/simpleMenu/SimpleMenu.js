@@ -11,12 +11,12 @@ class SimpleMenu extends React.Component {
         this.numberOfObjects = this.props.numberOfObjects;
         this.single = this.props.single;
         this.indicatorIcons = this.props.indicatorIcons;
+        this.objectsId = this.props.objectsId;
     }
 
     getSensor(object, key) {
         let arr = [];
         let counter = 0;
-
 
         for (const [index, element] of Object.entries(object)) {
             if (element.value.length > 1) {
@@ -61,28 +61,32 @@ class SimpleMenu extends React.Component {
     render() {
         let prevBtn;
         let nextBtn;
-        let order = Number.parseInt(this.info[0].order) - 1;
-
-        if (this.single) {
-            if (this.info[0].order === 1) {
-                prevBtn = this.getBtn('gf-dir-w', false);
-                if (this.info[0].order < this.numberOfObjects) {
-                    nextBtn = this.getBtn('gf-dir-e', true, order + 1, this.handler);
-                }
-            } else {
-                prevBtn = this.getBtn('gf-dir-w', true, order - 1, this.handler);
-                if (this.info[0].order < this.numberOfObjects) {
-                    nextBtn = this.getBtn('gf-dir-e', true, order + 1, this.handler);
-                } else {
-                    nextBtn = this.getBtn('gf-dir-e', false);
-                }
-            }
-        }
+        let order;
 
         return (<div className={`simple-menu pt-4 px-4`}>
             {this.info.map((element, key) => {
                 let background = 'dark:bg-darker-200';
                 const indicators = this.indicatorIcons(this.facility[key].indicators);
+                order = Number.parseInt(this.info[key].order);
+
+
+
+                if (this.single) {
+                    const currentObject = this.objectsId.indexOf(this.info[0].id);
+                    if (this.info[key].order === 1) {
+                        prevBtn = this.getBtn('gf-dir-w', false);
+                        if (this.info[key].order < this.numberOfObjects) {
+                            nextBtn = this.getBtn('gf-dir-e', true, this.objectsId[currentObject + 1], this.handler);
+                        }
+                    } else {
+                        prevBtn = this.getBtn('gf-dir-w', true, this.objectsId[currentObject - 1], this.handler);
+                        if (this.info[key].order < this.numberOfObjects) {
+                            nextBtn = this.getBtn('gf-dir-e', true, this.objectsId[currentObject + 1], this.handler);
+                        } else {
+                            nextBtn = this.getBtn('gf-dir-e', false);
+                        }
+                    }
+                }
 
                 if (key % 2) {
                     background = 'dark:bg-darker-300';

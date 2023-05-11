@@ -2,15 +2,6 @@
 {% block title %}Greenee© App{% endblock %}
 {% block body %}
     <div id="content" class="block bg-gradient-to-b dark:from-darker-300 dark:to-darker-700">
-        {% if reactApp == true %}
-            <div {{ react_component('FacilityApp', {'currentObject': selectedObject }) }}></div>
-        {% else %}
-            <article class="detail container mx-auto">
-                {% include('app/_detail.html.twig') %}
-            </article>
-            <article class="setup">
-                {% include('app/_setup.html.twig') %}
-            </article>
-        {% endif %}
+        <div {{ react_component('FacilityApp', {'currentObject': selectedObject }) }}></div>
     </div>
 {% endblock %}

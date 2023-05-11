@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Service\AlertsManager\AlertsManager;
 use App\Service\ObjectManager\ObjectManager;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -21,7 +22,6 @@ class AppController extends AbstractController
     public function showAll(): Response
     {
         return $this->render('app/index.html.twig', [
-            'reactApp' => true,
             'selectedObject' => false
         ]);
     }
@@ -30,7 +30,16 @@ class AppController extends AbstractController
     public function showSelectedObject($object_number): Response
     {
         return $this->render('app/index.html.twig', [
-            'reactApp' => true,
+            'selectedObject' => $object_number
+        ]);
+    }
+
+    #[Route('/app/{object_number<\d+>}/setup', name: 'app_show_selected_setup', priority: 5)]
+    public function showSelectedObjectSetup($object_number, AlertsManager $alertsManager): Response
+    {
+        $alerts = $alertsManager->getAlerts($object_number);
+        dd($alerts);
+        return $this->render('app/setup.html.twig', [
             'selectedObject' => $object_number
         ]);
     }

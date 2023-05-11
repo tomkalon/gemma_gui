@@ -35,5 +35,6 @@
   "adder": 0,
   "numberOfObjects": null,
   "pagination": [],
-  "paginationPageStart": 1
+  "paginationPageStart": 1,
+  "counter": 0
 }

@@ -48,6 +48,7 @@ export default class FacilityApp extends Component {
         // var
         this.facility = [];
         this.time = {};
+        this.objectsId = [];
 
         this.stateScheme = [];
         this.scheme = [];
@@ -117,15 +118,17 @@ export default class FacilityApp extends Component {
 
                 if (this.facility) {
                     if (this.isInitialFetch) {
-
                         if (this.display.menuType === 'carousel') {
-                            this.carousel.numberOfObjects = this.facility.length;
+                            this.carousel.numberOfObjects = Object.keys(this.facility).length;
                             this.carousel.colPerPage = this.display.colPerPage;
                         }
 
+                        let objectCounter = 1;
                         // key -> object number; value -> object data (id, name, readings)
                         for (const [key, value] of Object.entries(this.facility)) {
-                            this.getObjectInfo(value, Number.parseInt(key), this.scheme);
+                            this.objectsId.push(Number.parseInt(key));
+                            this.getObjectInfo(value, Number.parseInt(key), this.scheme, objectCounter);
+                            objectCounter++;
                             this.isSensorActive(value, key, this.stateScheme, this.sensors);
                             this.assignValues(value.readings, this.stateScheme[key].readings);
                             this.getAlertsIndicator(this.stateScheme[key], this.stateScheme[key].alerts);
@@ -222,9 +225,11 @@ export default class FacilityApp extends Component {
             isDay = this.state.isDay;
             global = this.state.global;
 
-            currentObjectInfo = facilityInfo[Object.keys(facilityInfo)[currentObject]];
-            currentObjectState = facilityState[Object.keys(facilityState)[currentObject]];
+            currentObjectInfo = facilityInfo[currentObject];
+            currentObjectState = facilityState[currentObject];
             selectedSettings = this.state.selectedSettings;
+
+            console.log(currentObject);
 
             if (this.currentObject !== false) {
                 if (currentObjectState.settings) {
@@ -274,8 +279,9 @@ export default class FacilityApp extends Component {
                 objectState[0] = facilityState[currentObject];
                 objectInfo[0] = facilityInfo[currentObject];
                 // object
-                objectMenu = <SimpleMenu state={objectState} info={objectInfo} numberOfObjects={this.facility.length}
-                                         indicatorIcons={this.getIndicatorsIcons} handler={this.selectObjectHandler.bind(this)} single={true}/>
+                objectMenu = <SimpleMenu state={objectState} info={objectInfo} numberOfObjects={Object.keys(this.facility).length}
+                                         indicatorIcons={this.getIndicatorsIcons} handler={this.selectObjectHandler.bind(this)}
+                                         single={true} objectsId={this.objectsId}/>
                 // settings
                 if (currentObject !== false && currentObject !== null && currentObjectState['settings'] && selectedSettings) {
                     settings = <Settings currentObject={currentObjectState} selectedSettings={selectedSettings}
@@ -300,7 +306,7 @@ export default class FacilityApp extends Component {
     }
 
     componentDidMount() {
-        setInterval(() => this.getFacility(), this.refreshInterval);
+        // setInterval(() => this.getFacility(), this.refreshInterval);
         window.addEventListener('resize', () => {
             if (this.checkResolution(this.display)) {
                 this.checkMenuType(this.display, this.currentObject);

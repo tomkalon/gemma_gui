@@ -41,8 +41,6 @@ function checkMenuType(display, current) {
             display.colPerPage = null;
         }
     }
-    console.log(current);
-    console.log(display);
 }
 
 // update stateSCHEME by the fetched data -> VALUES and setup icons
@@ -140,9 +138,9 @@ function isSensorActive(data, num, stateScheme, icons) {
 }
 
 // save to scheme -> object ID & NAME
-function getObjectInfo(data, num, scheme) {
+function getObjectInfo(data, num, scheme, counter) {
     scheme[num] = {
-        id: data.id, name: data.name, order: num + 1, description: data.description, type: data.type, image: data.image
+        id: data.id, name: data.name, order: counter, description: data.description, type: data.type, image: data.image
     }
 }
 
@@ -168,20 +166,17 @@ function getCarouselDisplaySettings(sensorsCount, num, carousel, scheme) {
     // END of Page
     if ((carousel.adder / (carousel.colPerPage * (carousel.pageCount + 1))) > 1) {
         carousel.pageCount++;
-        let paginationBtn = `${carousel.paginationPageStart} - ${num}`;
-        carousel.pagination.push(paginationBtn);
-        carousel.paginationPageStart = numInteger + 1;
+        carousel.pagination.push(`${carousel.paginationPageStart} - ${carousel.counter}`);
+        carousel.paginationPageStart = carousel.counter + 1;
         carousel.pages[carousel.pageCount] = [];
     }
     // last ELEMENT
-    if (numInteger === (carousel.numberOfObjects - 1)) {
-        let paginationBtn;
+    if (carousel.counter === (carousel.numberOfObjects - 1)) {
         if (carousel.paginationPageStart === carousel.numberOfObjects) {
-            paginationBtn = carousel.numberOfObjects;
+            carousel.pagination.push(carousel.numberOfObjects);
         } else {
-            paginationBtn = `${carousel.paginationPageStart} - ${carousel.numberOfObjects}`;
+            carousel.pagination.push(`${carousel.paginationPageStart} - ${carousel.numberOfObjects}`);
         }
-        carousel.pagination.push(paginationBtn);
     }
     carousel.pages[carousel.pageCount].push(numInteger);
 
@@ -190,6 +185,7 @@ function getCarouselDisplaySettings(sensorsCount, num, carousel, scheme) {
     scheme.display = {
         size: elementSize, page: carousel.pageCount
     }
+    carousel.counter++;
 }
 
 // update colPerPage
