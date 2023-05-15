@@ -16,12 +16,17 @@ class AlertsManager
         $this->entity_manager = $entityManager;
     }
 
-    public function getAlerts($object_id): array
+    public function getAlerts($object_id, $page, $limit): array
     {
         $arr = array();
-        $alerts = $this->alerts->findBy(array(
-            'type' => 'sensor'
-        ));
+        $alerts = $this->alerts->findBy(
+            [
+                'type' => 'sensor',
+                'object' => $object_id
+            ],
+            ['id' => 'DESC'],
+            $limit
+        );
 
 
 

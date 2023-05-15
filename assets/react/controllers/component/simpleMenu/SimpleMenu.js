@@ -68,11 +68,9 @@ class SimpleMenu extends React.Component {
                 let background = 'dark:bg-darker-200';
                 const indicators = this.indicatorIcons(this.facility[key].indicators);
                 order = Number.parseInt(this.info[key].order);
-
-
-
                 if (this.single) {
                     const currentObject = this.objectsId.indexOf(this.info[0].id);
+                    console.log(element);
                     if (this.info[key].order === 1) {
                         prevBtn = this.getBtn('gf-dir-w', false);
                         if (this.info[key].order < this.numberOfObjects) {

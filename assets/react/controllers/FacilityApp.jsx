@@ -229,8 +229,6 @@ export default class FacilityApp extends Component {
             currentObjectState = facilityState[currentObject];
             selectedSettings = this.state.selectedSettings;
 
-            console.log(currentObject);
-
             if (this.currentObject !== false) {
                 if (currentObjectState.settings) {
                     if (selectedSettings === false) {

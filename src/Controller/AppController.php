@@ -3,7 +3,6 @@
 namespace App\Controller;
 
 use App\Service\AlertsManager\AlertsManager;
-use App\Service\ObjectManager\ObjectManager;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -35,19 +34,14 @@ class AppController extends AbstractController
     }
 
     #[Route('/app/{object_number<\d+>}/setup', name: 'app_show_selected_setup', priority: 5)]
-    public function showSelectedObjectSetup($object_number, AlertsManager $alertsManager): Response
+    public function showSelectedObjectSetup(AlertsManager $alertsManager, int $object_number): Response
     {
-        $alerts = $alertsManager->getAlerts($object_number);
-        dd($alerts);
+        $limit = 15;
+        $alerts = $alertsManager->getAlerts($object_number, 0, $limit);
+//        dd($alerts);
         return $this->render('app/setup.html.twig', [
-            'selectedObject' => $object_number
+            'selectedObject' => $object_number,
+            'alerts' => $alerts
         ]);
-    }
-
-    #[Route('/test', name: 'app_test', priority: 10)]
-    public function test(ObjectManager $objectManager): Response
-    {
-        $test = $objectManager->getAllObjectsData(false);
-        dd($test);
     }
 }
