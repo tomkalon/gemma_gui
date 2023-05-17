@@ -37,11 +37,12 @@ class AppController extends AbstractController
     public function showSelectedObjectSetup(AlertsManager $alertsManager, int $object_number): Response
     {
         $limit = 15;
-        $alerts = $alertsManager->getAlerts($object_number, 0, $limit);
-//        dd($alerts);
+        $alerts = $alertsManager->getAlerts($object_number, 0, 0, $limit);
         return $this->render('app/setup.html.twig', [
             'selectedObject' => $object_number,
-            'alerts' => $alerts
+            'alerts' => $alerts['alerts'],
+            'numberOfAlerts' => $alerts['numberOfAlerts'],
+            'numberOfPages' => $alerts['numberOfPages']
         ]);
     }
 }

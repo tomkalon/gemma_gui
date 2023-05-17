@@ -5044,7 +5044,7 @@
         },
         {
             "name": "symfony/ux-react",
-            "version": "v2.8.0",
+            "version": "v2.8.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/ux-react.git",
@@ -5097,7 +5097,7 @@
                 "symfony-ux"
             ],
             "support": {
-                "source": "https://github.com/symfony/ux-react/tree/v2.8.0"
+                "source": "https://github.com/symfony/ux-react/tree/v2.8.1"
             },
             "funding": [
                 {

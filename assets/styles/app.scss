@@ -28,6 +28,10 @@ $blue-960: #0e2029;
 $blue-970: #020f16;
 
 $alarm-red: #501414;
+$alert-high-light: #dc969b;
+$alert-high: #542b36;
+$alert-low-light: #d8be9c;
+$alert-low: #39333a;
 $false-red: #a32c2c;
 $true-green: #33741c;
 $alarm-red-light: #693131;
@@ -143,6 +147,41 @@ header {
   padding-bottom: 1rem;
 
   #setup-select {
+    .alerts {
+      .item {
+        padding: 1rem;
+        margin: 1rem 0;
+        background: #335465;
+        &.hardware {
+          background: $alert-high;
+          border: 1px solid $alert-high-light;
+          .icon {
+            border: 3px solid $alert-high-light;
+            i {
+              color: $alert-high-light;
+            }
+          }
+        }
+        &.sensor {
+          background: $alert-low;
+          border: 1px solid $alert-low-light;
+          .icon {
+            border: 3px solid $alert-low-light;
+            i {
+              color: $alert-low-light;
+            }
+          }
+        }
+      }
+      button {
+        border: 3px solid #ffffff;
+        &:hover {
+          background: #ffffff60;
+        }
+      }
+    }
+
+
   }
 
   .label {

@@ -16,22 +16,34 @@ class AlertsManager
         $this->entity_manager = $entityManager;
     }
 
-    public function getAlerts($object_id, $page, $limit): array
+    public function getAlerts($object_id, $type, $page, $limit): array
     {
         $arr = array();
-        $alerts = $this->alerts->findBy(
-            [
-                'type' => 'sensor',
-                'object' => $object_id
-            ],
-            ['id' => 'DESC'],
-            $limit
-        );
+        $offset = $page * $limit;
 
+        if ($type) {
+            $arr['alerts_active'] = $this->alerts->findBy(
+                [
+                    'type' => $type,
+                    'object' => $object_id
+                ],
+                ['id' => 'DESC'],
+                $limit,
+                $offset
+            );
+        } else {
+            $arr['alerts'] = $this->alerts->findBy(
+                [
+                    'object' => $object_id
+                ],
+                ['id' => 'DESC'],
+                $limit,
+                $offset
+            );
+        }
 
-
-
-
-        return $alerts;
+        $arr['numberOfAlerts'] = count($arr['alerts']);
+        $arr['numberOfPages'] = $arr['numberOfAlerts'] / $limit;
+        return $arr;
     }
 }

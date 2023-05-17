@@ -154,6 +154,14 @@
     content: "\f036";
 }
 
+.gf-priority:before {
+    content: "\f038";
+}
+
+.gf-read:before {
+    content: "\f039";
+}
+
 .gf-day-begin:before {
     content: "\f040";
 }

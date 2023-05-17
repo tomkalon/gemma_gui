@@ -3,25 +3,90 @@
 {% block body %}
     <div id="content" class="block bg-gradient-to-b dark:from-darker-300 dark:to-darker-700">
         <div class="lg:container mx-auto mt-1">
-            <div class="w-full dark:text-darker-0 lg:rounded dark:bg-blue-550 border-l border-r dark:border-blue-450">
+            <div class="w-full dark:text-darker-0 lg:rounded dark:bg-blue-550 lg:border-l lg:border-r dark:border-blue-450">
                 <div class="label lg:rounded-t px-4 py-1 dark:bg-blue-950">Obiekt #2</div>
                 <div id="setup-select" class="px-4 py-2">
                     <div class="py-4">
                         <h2 class="text-2xl pb-2 dark:text-white uppercase">Opis</h2>
-                        <div class="p-4 rounded-lg dark:bg-blue-450">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Enim inventore omnis pariatur voluptate!
-                            Alias aliquam corporis, cupiditate dolorem dolorum ex hic id mollitia nam nobis pariatur quae quaerat ratione, voluptatum?</div>
+                        <div class="p-4 rounded-lg dark:bg-blue-450">Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                            Enim inventore omnis pariatur voluptate!
+                            Alias aliquam corporis, cupiditate dolorem dolorum ex hic id mollitia nam nobis pariatur quae quaerat
+                            ratione, voluptatum?
+                        </div>
                     </div>
                     <div class="py-4">
                         <h2 class="text-2xl pb-2 dark:text-white uppercase">Ustawienia</h2>
-                        <div class="">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Enim inventore omnis pariatur voluptate!
-                            Alias aliquam corporis, cupiditate dolorem dolorum ex hic id mollitia nam nobis pariatur quae quaerat ratione, voluptatum?</div>
+                        <div class="">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Enim inventore omnis pariatur
+                            voluptate!
+                            Alias aliquam corporis, cupiditate dolorem dolorum ex hic id mollitia nam nobis pariatur quae quaerat
+                            ratione, voluptatum?
+                        </div>
                     </div>
-                    <div class="py-4">
+                    <div class="alerts py-4">
                         <h2 class="text-2xl pb-2 dark:text-white uppercase">Historia Alertów</h2>
-                        <div class="">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Enim inventore omnis pariatur voluptate!
-                            Alias aliquam corporis, cupiditate dolorem dolorum ex hic id mollitia nam nobis pariatur quae quaerat ratione, voluptatum?
-                            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ea eos explicabo facere natus nesciunt nihil nisi officiis sed.
-                            A deserunt impedit libero odit optio vero voluptatem? Assumenda ea officiis temporibus.</div>
+                        {% if numberOfAlerts %}
+                            {% for alerts in alerts %}
+                                {% if alerts.isActive == true %}
+                                    <div class="item grid grid-cols-12 gap-4 rounded {% if alerts.type == 'sensor' %}sensor{% elseif alerts.type == 'hardware' %}hardware{% endif %}">
+                                        <div class="col-span-3 flex gap-2 items-center">
+                                            <div class="w-10 text-3xl">
+                                                {% if alerts.isRead == true %}
+                                                    <i class="gf gf-read"></i>
+                                                {% endif %}
+                                            </div>
+                                            <div class="w-10 text-3xl">
+                                                {% if alerts.type == 'sensor' %}
+                                                    <i class="gf gf-warning"></i>
+                                                {% elseif alerts.type == 'hardware' %}
+                                                    <i class="gf gf-damage"></i>
+                                                {% endif %}
+                                            </div>
+                                            <div class="w-16 h-16 p-2 rounded icon text-center">
+                                                <i class="gf gf-temp3 text-3xl"></i>
+                                            </div>
+                                        </div>
+                                        <div class="col-span-7">
+                                            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Deleniti doloribus ex exercitationem harum in mollitia nam nemo placeat quas quisquam!
+                                        </div>
+                                        <div class="col-span-2">
+                                            {% if alerts.isRead == true %}
+                                                <button class="w-16 h-16 p-2 rounded text-center float-right">
+                                                    <i class="gf gf-yes text-3xl"></i>
+                                                </button>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                {% endif %}
+                            {% endfor %}
+                            {% for alerts in alerts %}
+                                {% if alerts.isActive == false %}
+                                    <div class="item rounded grid grid-cols-12 gap-4 items-center">
+                                        <div class="col-span-3 flex gap-2 items-center">
+                                            <div class="w-10 text-3xl">
+                                                {% if alerts.isRead == true %}
+                                                    <i class="gf gf-priority"></i>
+                                                {% endif %}
+                                            </div>
+                                            <div class="w-10 text-3xl">
+                                                {% if alerts.type == 'sensor' %}
+                                                    <i class="gf gf-warning"></i>
+                                                {% elseif alerts.type == 'hardware' %}
+                                                    <i class="gf gf-damage"></i>
+                                                {% endif %}
+                                            </div>
+                                            <div class="w-16 p-2 rounded icon text-center">
+                                                <i class="gf gf-temp3 text-3xl"></i>
+                                            </div>
+                                        </div>
+                                        <div class="col-span-7">
+                                            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Deleniti doloribus ex exercitationem harum in mollitia nam nemo placeat quas quisquam!
+                                        </div>
+                                    </div>
+                                {% endif %}
+                            {% endfor %}
+                        {% else %}
+                            <div class="item rounded">Brak alertów.</div>
+                        {% endif %}
                     </div>
                 </div>
             </div>
