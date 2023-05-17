@@ -35,19 +35,26 @@ class AppController extends AbstractController
         ]);
     }
 
-    #[Route('/app/{objects<\d+>}/setup', name: 'app_show_selected_setup', priority: 5)]
-    public function showSelectedObjectSetup(AlertsManager $alertsManager, SettingsRepository $settingsRepository, Objects $objects): Response
+    #[Route('/app/{object<\d+>}/setup', name: 'app_show_selected_setup', priority: 5)]
+    public function showSelectedObjectSetup(AlertsManager $alertsManager, SettingsRepository $settingsRepository, Objects $object): Response
     {
+        $form = $this->createFormBuilder($object)
+            ->add('name')
+            ->getForm();
+
+
+
         $limit = 10;
-        $alerts = $alertsManager->getAlerts($objects, 0, 0, $limit);
+        $alerts = $alertsManager->getAlerts($object, 0, 0, $limit);
         $settings_names = $settingsRepository->getAllNames();
         return $this->render('app/setup.html.twig', [
-            'selectedObject' => $objects,
-            'object' => $objects,
+            'selectedObject' => $object,
+            'object' => $object,
             'settings_names' => $settings_names,
             'alerts' => $alerts['alerts'],
             'numberOfAlerts' => $alerts['numberOfAlerts'],
-            'numberOfPages' => $alerts['numberOfPages']
+            'numberOfPages' => $alerts['numberOfPages'],
+            'select_profile_form' => $form
         ]);
     }
 }
