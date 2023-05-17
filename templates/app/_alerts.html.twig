@@ -1,0 +1,74 @@
+<div class="alerts py-4">
+    <h2 class="text-2xl pb-2 dark:text-white uppercase">Historia Alertów</h2>
+    {% if alerts|length %}
+        <h3 class="text-lg pt-4 dark:text-white">Aktywne problemy:</h3>
+        {% set active = false %}
+        {% for alerts in alerts %}
+            {% if alerts.isActive == true %}
+                {% set active = true %}
+                <div class="item rounded {% if alerts.type == 'sensor' %} sensor
+                    {% elseif alerts.type == 'hardware' %} hardware
+                    {% endif %}">
+                    <div class="flex items-center gap-4 ">
+                        <div class="icons flex items-center gap-x-2">
+                            <div class="w-10 text-center text-3xl">
+                                {% if alerts.type == 'sensor' %}
+                                    <i class="gf gf-warning"></i>
+                                {% elseif alerts.type == 'hardware' %}
+                                    <i class="gf gf-damage"></i>
+                                {% endif %}
+                            </div>
+                            <div class="w-16 h-16 p-2 rounded icon text-center">
+                                <i class="gf gf-{{ alerts.attribute }} text-3xl"></i>
+                            </div>
+                        </div>
+                        <div class="px-4">
+                            {{ alerts.value }}
+                            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ducimus, libero vero. A accusamus aut autem corporis deleniti dolore doloremque dolores dolorum nemo nulla optio praesentium qui quia, sunt veritatis voluptate.
+                        </div>
+                        <div class="is-read">
+                            {% if alerts.isRead == true %}
+                                <button class="w-16 h-16 p-2 rounded text-center float-right">
+                                    <i class="gf gf-read text-3xl"></i>
+                                </button>
+                            {% endif %}
+                        </div>
+                    </div>
+                    <div class="date mt-8 pt-2 text-right">
+                        <p>Utworzono: {{ alerts.date|date('Y/m/d - H:m') }}</p>
+                    </div>
+                </div>
+            {% endif %}
+        {% endfor %}
+        {% if active == false %}
+            <div>Brak elementów do wyświetlenia.</div>
+        {% endif %}
+        <h3 class="text-lg pt-4 dark:text-white">Rozwiązane problemy:</h3>
+        {% set non_active = false %}
+        {% for alerts in alerts %}
+            {% if alerts.isActive == false %}
+                {% set non_active = true %}
+                <div class="item rounded flex items-center gap-4 items-center">
+                    <div class="w-10 text-center text-3xl">
+                        {% if alerts.type == 'sensor' %}
+                            <i class="gf gf-warning"></i>
+                        {% elseif alerts.type == 'hardware' %}
+                            <i class="gf gf-damage"></i>
+                        {% endif %}
+                    </div>
+                    <div class="w-16 p-2 rounded icon text-center">
+                        <i class="gf gf-{{ alerts.attribute }} text-3xl"></i>
+                    </div>
+                    <div class="grow">
+                        {{ alerts.value }}
+                    </div>
+                </div>
+            {% endif %}
+        {% endfor %}
+        {% if non_active == false %}
+            <div>Brak elementów do wyświetlenia.</div>
+        {% endif %}
+    {% else %}
+        <div class="item rounded">Brak alertów.</div>
+    {% endif %}
+</div>

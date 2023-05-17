@@ -39,6 +39,14 @@ class SettingsRepository extends ServiceEntityRepository
         }
     }
 
+    public function getAllNames (): array
+    {
+        $db = $qb = $this->createQueryBuilder('settings')
+            ->select(['settings.id', 'settings.name']);
+        $query = $qb->getQuery();
+        return $query->execute();
+    }
+
 //    /**
 //     * @return Settings[] Returns an array of Settings objects
 //     */

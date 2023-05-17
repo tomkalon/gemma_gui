@@ -132,7 +132,7 @@ class ObjectManager
         return $arr;
     }
 
-    private function getAlertsData ($alerts): array
+    private function getAlertsData($alerts): array
     {
         $arr = array();
         foreach ($alerts as $key => $item) {

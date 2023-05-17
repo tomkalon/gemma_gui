@@ -241,19 +241,22 @@ class AppFixtures extends Fixture
             'value' => '3',
             'type' => 'sensor',
             'active' => true,
-            'read' => false
+            'read' => false,
+            'date' => new DateTime()
         ], [
             'attr' => 'temp',
             'value' => '#100',
             'type' => 'hardware',
             'active' => true,
-            'read' => true
+            'read' => true,
+            'date' => new DateTime()
         ], [
             'attr' => 'humid',
             'value' => '5',
             'type' => 'sensor',
             'active' => true,
-            'read' => false
+            'read' => false,
+            'date' => new DateTime()
         ]];
         for ($i = 0; $i < count($list); $i++) {
             $alerts[$i] = new Alerts();
@@ -263,6 +266,7 @@ class AppFixtures extends Fixture
             $alerts[$i]->setType($list[$i]['type']);
             $alerts[$i]->setIsActive($list[$i]['active']);
             $alerts[$i]->setIsRead($list[$i]['read']);
+            $alerts[$i]->setDate($list[$i]['date']);
 
             $manager->persist($alerts[$i]);
         }

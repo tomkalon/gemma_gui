@@ -435,3 +435,22 @@
 .gf-arrow-w:before {
     content: "\f121";
 }
+
+.gf-temp_low:before {
+    content: "\f130";
+}
+.gf-temp_high:before {
+    content: "\f131";
+}
+.gf-humid_low:before {
+    content: "\f132";
+}
+.gf-humid_high:before {
+    content: "\f133";
+}
+.gf-temp:before {
+    content: "\f135";
+}
+.gf-humid:before {
+    content: "\f136";
+}

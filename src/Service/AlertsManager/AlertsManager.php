@@ -22,10 +22,10 @@ class AlertsManager
         $offset = $page * $limit;
 
         if ($type) {
-            $arr['alerts_active'] = $this->alerts->findBy(
+            $arr['alerts'] = $this->alerts->findBy(
                 [
-                    'type' => $type,
-                    'object' => $object_id
+                    'object' => $object_id,
+                    'type' => $type
                 ],
                 ['id' => 'DESC'],
                 $limit,
@@ -34,7 +34,7 @@ class AlertsManager
         } else {
             $arr['alerts'] = $this->alerts->findBy(
                 [
-                    'object' => $object_id
+                    'object' => $object_id,
                 ],
                 ['id' => 'DESC'],
                 $limit,

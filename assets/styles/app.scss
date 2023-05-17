@@ -155,28 +155,43 @@ header {
         &.hardware {
           background: $alert-high;
           border: 1px solid $alert-high-light;
-          .icon {
-            border: 3px solid $alert-high-light;
-            i {
-              color: $alert-high-light;
+          .icons{
+            min-width: 7rem;
+            .icon {
+              border: 3px solid $alert-high-light;
+              i {
+                color: $alert-high-light;
+              }
             }
+          }
+          .date {
+            border-top: 1px solid $alert-high-light;
           }
         }
         &.sensor {
           background: $alert-low;
           border: 1px solid $alert-low-light;
-          .icon {
-            border: 3px solid $alert-low-light;
-            i {
-              color: $alert-low-light;
+          .date {
+            border-top: 1px solid $alert-low-light;
+          }
+          .icons {
+            min-width: 7rem;
+            .icon {
+              border: 3px solid $alert-low-light;
+              i {
+                color: $alert-low-light;
+              }
             }
           }
         }
       }
-      button {
-        border: 3px solid #ffffff;
-        &:hover {
-          background: #ffffff60;
+      .is-read {
+        min-width: 5rem;
+        button {
+          border: 3px solid #ffffff;
+          &:hover {
+            background: #ffffff60;
+          }
         }
       }
     }
