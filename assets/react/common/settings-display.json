@@ -1,5 +1,7 @@
 {
   "arrangement": {
+    "objectNo": "Object #",
+    "objectType": "Typ obiektu",
     "boolQuestion": "Czy chcesz zmienić wartość ustawień na:",
     "currentValue": "Aktualna wartość:",
     "saveCaption": "Zapisz",
@@ -7,7 +9,11 @@
     "otherTitle": "Pozostałe",
     "settings": "Ustawienia",
     "profile": "Profil",
-    "changeProfile": "Wybierz profil"
+    "changeProfile": "Wybierz profil",
+    "objectSetup": "Wszystkie opcje",
+    "description": "Opis",
+    "warning": "Ostrzeżenia",
+    "malfunction": "Awarie"
   },
   "environment": {
     "rain": true,

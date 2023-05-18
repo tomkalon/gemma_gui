@@ -1,10 +1,22 @@
-<div class="py-4">
-    <h2 class="text-2xl pb-2 dark:text-white uppercase">Opis</h2>
-    {% if object.description %}
-        <div class="p-4 rounded-lg dark:bg-blue-450">
-            {{ object.description }}
+<div class="py-4 overflow-auto">
+    <h2 class="text-2xl pb-2 dark:text-white uppercase">Informacje</h2>
+    <div class="grid grid-cols-12 gap-4">
+        <div class="img col-span-2 "><img src="{{ asset('build/images/default.webp') }}" alt="image"/></div>
+        <div class="col-span-10">
+            {% if object.description %}
+                <div class="p-4 mb-8 rounded-lg dark:bg-blue-450">
+                    {{ object.description }}
+                </div>
+            {% else %}
+                <div class="p-4 mb-8 rounded-lg dark:bg-blue-450">Brak opisu.</div>
+            {% endif %}
+            {% if object.description %}
+                <span class="p-4 rounded dark:bg-darker-300">Rodzaj obiektu: {{ object.type }}</span>
+            {% endif %}
+            <a href="{{ path('app_show_selected_setup_edit',{'object': object.id}) }}">
+                <button class="btn btn-green mt-4 float-right">Edytuj informacje</button>
+            </a>
         </div>
-    {% else %}
-        <div class="p-4 rounded-lg dark:bg-blue-450">Brak opisu.</div>
-    {% endif %}
+    </div>
+
 </div>

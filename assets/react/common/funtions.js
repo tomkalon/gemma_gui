@@ -413,10 +413,9 @@ function selectSettingsHandler(name, timeout) {
     }, timeout);
 }
 
-function selectObjectHandler(number) {
-    let target = appAddressSrc + '/' + number;
-    window.location.href = target;
-    console.log(target);
+function selectObjectHandler(number, target) {
+    let address = appAddressSrc + '/' + number + '/' + target;
+    window.location.href = address;
 }
 
 // export functions

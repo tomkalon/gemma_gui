@@ -1,5 +1,6 @@
 import React from 'react';
 import "./simple-menu.scss"
+import display from '../../../common/settings-display.json'
 
 class SimpleMenu extends React.Component {
 
@@ -39,7 +40,6 @@ class SimpleMenu extends React.Component {
                 counter++;
             }
         }
-
         return (arr);
     }
 
@@ -51,11 +51,10 @@ class SimpleMenu extends React.Component {
                 <i className={`gf ${icon}`}></i>
             </button>;
         } else {
-            return <button className={`item w-28 text-8xl float-left mx-4 mt-2 ${color}`} onClick={() => {handler(target)}}>
+            return <button className={`item w-28 text-8xl float-left mx-4 mt-2 ${color}`} onClick={() => {handler(target, '')}}>
                 <i className={`gf ${icon}`}></i>
             </button>;
         }
-
     }
 
     render() {
@@ -90,9 +89,9 @@ class SimpleMenu extends React.Component {
                     background = 'dark:bg-darker-300';
                 }
                 if (this.single !== true) {
-                    return (<div key={key} className={`object mb-10 ${background} cursor-pointer`} onClick={() => {this.handler(key)}}>
+                    return (<div key={key} className={`object mb-10 ${background} cursor-pointer`} onClick={() => {this.handler(key, '')}}>
                         <div className={`label px-4 py-4 dark:bg-darker-800`}>
-                            <span className={`dark:text-darker-100 text-4xl`}>Obiekt# {element.order} | {element.name}</span>
+                            <span className={`dark:text-darker-100 text-4xl`}>{display.arrangement.objectNo} {element.order} | {element.name}</span>
                             <span className={`dark:text-sky-200 pl-4 text-4xl`}>{indicators['sensor']}</span>
                             <span className={`dark:text-sky-200 pl-4 text-4xl`}>{indicators['hardware']}</span>
                         </div>
@@ -101,9 +100,9 @@ class SimpleMenu extends React.Component {
                         </div>
                     </div>);
                 } else {
-                    return (<div key={key} className={`object mb-10 ${background} cursor-pointer`}>
+                    return (<div key={key} className={`object ${background} cursor-pointer`}>
                         <div className={`label px-4 py-4 dark:bg-darker-800`}>
-                            <span className={`dark:text-darker-100 text-4xl`}>Obiekt# {element.order} | {element.name}</span>
+                            <span className={`dark:text-darker-100 text-4xl`}>{display.arrangement.objectNo} {element.order} | {element.name}</span>
                             <span className={`dark:text-sky-200 pl-4 text-4xl`}>{indicators['sensor']}</span>
                             <span className={`dark:text-sky-200 pl-4 text-4xl`}>{indicators['hardware']}</span>
                         </div>
@@ -113,9 +112,12 @@ class SimpleMenu extends React.Component {
                     </div>);
                 }
             })}
+            <div className={`w-full dark:bg-darker-600 p-4`}>
+                <button className={`btn btn-lg btn-green dark:text-darker-100`}>{display.arrangement.objectSetup}</button>
+            </div>
             <div className={`fixed bottom-menu bottom-0 h-28 px-10 py-1 w-full border-t dark:border-darker-200
              bg-gradient-to-b dark:from-darker-900 dark:to-darker-800`}>
-                <div className={`dark:text-darker-100 text-8xl float-left mr-20`} onClick={() => {this.handler('')}}><i className="gf gf-home"></i></div>
+                <div className={`dark:text-darker-100 text-8xl float-left mr-20`} onClick={() => {this.handler('', '')}}><i className="gf gf-home"></i></div>
                 {prevBtn}{nextBtn}
             </div>
         </div>);

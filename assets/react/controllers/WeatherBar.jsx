@@ -82,7 +82,7 @@ export default class WeatherBar extends Component {
     }
 
     componentDidMount() {
-        // setInterval(() => this.getData(), this.refreshInterval);
+        setInterval(() => this.getData(), this.refreshInterval);
     }
 
     componentWillUnmount() {

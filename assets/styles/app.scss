@@ -111,6 +111,12 @@ body {
   background: #000;
 }
 
+hr {
+  background: $blue-450;
+  height: 2px;
+  border: none;
+}
+
 header {
   nav.big-screen {
     .item {
@@ -152,32 +158,42 @@ header {
         padding: 1rem;
         margin: 1rem 0;
         background: #335465;
+
         &.hardware {
           background: $alert-high;
           border: 1px solid $alert-high-light;
-          .icons{
+
+          .icons {
             min-width: 7rem;
+
             .icon {
               border: 3px solid $alert-high-light;
+
               i {
                 color: $alert-high-light;
               }
             }
           }
+
           .date {
             border-top: 1px solid $alert-high-light;
           }
         }
+
         &.sensor {
           background: $alert-low;
           border: 1px solid $alert-low-light;
+
           .date {
             border-top: 1px solid $alert-low-light;
           }
+
           .icons {
             min-width: 7rem;
+
             .icon {
               border: 3px solid $alert-low-light;
+
               i {
                 color: $alert-low-light;
               }
@@ -185,10 +201,13 @@ header {
           }
         }
       }
+
       .is-read {
         min-width: 5rem;
+
         button {
           border: 3px solid #ffffff;
+
           &:hover {
             background: #ffffff60;
           }
@@ -203,6 +222,11 @@ header {
     display: flex;
     align-items: center;
     text-transform: uppercase;
+  }
+
+  .img {
+    border: 3px solid $blue-450;
+    border-radius: 5px;
   }
 }
 
@@ -304,6 +328,7 @@ footer {
     cursor: pointer;
     position: relative;
     width: 20rem;
+
     span {
       display: block;
       margin: 0;
@@ -312,43 +337,41 @@ footer {
       transition: 0.4s ease;
       z-index: 9;
       position: relative;
-      background: $blue-450;
+      background: $dark-400;
+      border: 2px solid $dark-200;
     }
-  }
 
-  .select_wrapper.openSelect span {
-    display: block;
-    margin: 0;
-    transform: scale(1.04);
-    box-shadow: 0 15px 35px rgba(50, 50, 93, .1), 0 5px 15px rgba(0, 0, 0, .07);
-    -webkit-box-shadow: 0 15px 35px rgba(50, 50, 93, .1), 0 5px 15px rgba(0, 0, 0, .07);
-    box-shadow: 0 15px 35px rgba(50, 50, 93, .1), 0 5px 15px rgba(0, 0, 0, .07);
-  }
+    &.openSelect span {
+      display: block;
+      margin: 0;
+      transform: scale(1.04);
+      box-shadow: 0 15px 35px rgba(50, 50, 93, .1), 0 5px 15px rgba(0, 0, 0, .07);
+      -webkit-box-shadow: 0 15px 35px rgba(50, 50, 93, .1), 0 5px 15px rgba(0, 0, 0, .07);
+      box-shadow: 0 15px 35px rgba(50, 50, 93, .1), 0 5px 15px rgba(0, 0, 0, .07);
+    }
 
-  .select_wrapper .select_inner {
-    background: #fff;
-    color: $dark-800;
-    display: none;
-    position: absolute;
-    left: 0;
-    top: 47px;
-    width: 100%;
-  }
-
-  .select_wrapper .select_inner li {
-    border-bottom: 1px solid #eee;
-    padding: 5px 15px;
-    transition: 0.4s ease;
-  }
-
-  .select_wrapper .select_inner li:hover {
-    background: $dark-800;
-    color: #fff;
-  }
-
-  .select_wrapper .select_inner ul {
-    border-radius: 5px;
-    background: #fff;
+    .select_inner {
+      background: #fff;
+      color: $dark-800;
+      display: none;
+      position: absolute;
+      left: 0;
+      top: 47px;
+      width: 100%;
+      li {
+        border-bottom: 1px solid #eee;
+        padding: 5px 15px;
+        transition: 0.4s ease;
+        &:hover {
+          background: $dark-800;
+          color: #fff;
+        }
+      }
+      ul {
+        border-radius: 5px;
+        background: #fff;
+      }
+    }
   }
 }
 

@@ -255,7 +255,8 @@ export default class FacilityApp extends Component {
                 // details container
                 if (currentObject !== false && currentObject !== null) {
                     details = <Details info={currentObjectInfo} state={currentObjectState} isDay={isDay}
-                                       stats={stats} indicatorIcons={this.getIndicatorsIcons}/>;
+                                       stats={stats} indicatorIcons={this.getIndicatorsIcons}
+                                       handler={this.selectObjectHandler.bind(this)}/>;
                 }
 
                 // ======= SETTINGS =======

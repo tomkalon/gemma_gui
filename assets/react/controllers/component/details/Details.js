@@ -4,6 +4,7 @@ import DetailsModules from "./DetailsModules";
 import DetailsStats from "./DetailsStats";
 import DetailsBottom from "./DetailsBottom";
 import './details.scss'
+import display from '../../../common/settings-display.json'
 
 class Details extends React.Component {
 
@@ -15,6 +16,7 @@ class Details extends React.Component {
         const isDay = this.props.isDay; // time of day
         const stats = this.props.stats; // statistics & charts
         const indicatorIcons = this.props.indicatorIcons; // function
+        const handler = this.props.handler; // redirection handler
 
         // VAR
         let img = 'default';
@@ -51,7 +53,8 @@ class Details extends React.Component {
         if (stats) detailsStats = <DetailsStats stats={stats} />;
 
         // DETAILS BOTTOM
-        const detailsBottom = <DetailsBottom settings={settings} description={info['description']} indicators={state.indicators} alerts={state.alerts} />;
+        const detailsBottom = <DetailsBottom settings={settings} description={info['description']}
+                                             indicators={state.indicators} alerts={state.alerts} id={info.id} handler={handler} />;
 
         // PROGRESS BAR
         function renderProgressBar(value, si, indicator) {
@@ -125,7 +128,7 @@ class Details extends React.Component {
                 <div
                     className={`h-8 bg-gradient-to-br dark:from-blue-950 dark:to-blue-960 border-b border-t dark:border-blue-450 flex rounded-t xl:rounded-md shadow-md relative dark:shadow-gray-900/30`}>
                     <div className={`label w-full px-4 container mx-auto text-sm`}>
-                        <span className={`dark:text-darker-0 pr-4`}>Obiekt #{info.order}</span>
+                        <span className={`dark:text-darker-0 pr-4`}>{display.arrangement.objectNo}{info.order}</span>
                         <span className={`dark:text-sky-200 border-l dark:border-darker-100 pl-4`}>{name}</span>
                         <span className={`dark:text-sky-200 pl-4`}>{indicators['sensor']}</span>
                         <span className={`dark:text-sky-200 pl-4`}>{indicators['hardware']}</span>
@@ -138,7 +141,7 @@ class Details extends React.Component {
                                 className={`image dark:bg-darker-900 rounded-md border dark:border-darker-500 shadow-md dark:shadow-gray-900/50`}>
                                 <div className={`img h-32 mt-2 mx-2 cursor-pointer`} style={{backgroundImage: `url("${imagesSrc}${img}.webp")` }}></div>
                                 <div className={`desc text-center uppercase`}>
-                                    <span className={`text-sm dark:text-darker-200`}>Typ obiektu:</span>
+                                    <span className={`text-sm dark:text-darker-200`}>{display.arrangement.objectType}:</span>
                                     <p className={`dark:text-darker-100`}>developer</p>
                                 </div>
                             </div>

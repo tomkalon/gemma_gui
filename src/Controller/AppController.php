@@ -4,7 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Objects;
 use App\Form\ChangeSettingsProfileType;
-use App\Repository\SettingsRepository;
+use App\Form\ObjectInfoType;
 use App\Service\AlertsManager\AlertsManager;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -29,17 +29,16 @@ class AppController extends AbstractController
         ]);
     }
 
-    #[Route('/app/{object_number<\d+>}', name: 'app_show_selected', priority: 5)]
-    public function showSelectedObject($object_number): Response
+    #[Route('/app/{object<\d+>}', name: 'app_show_selected', priority: 5)]
+    public function showSelectedObject($object): Response
     {
         return $this->render('app/index.html.twig', [
-            'selectedObject' => $object_number
+            'selectedObject' => $object
         ]);
     }
 
     #[Route('/app/{object<\d+>}/setup', name: 'app_show_selected_setup', priority: 5)]
-    public function showSelectedObjectSetup(Request $request, AlertsManager $alertsManager, SettingsRepository $settingsRepository,
-                                            Objects $object): Response
+    public function showSelectedObjectSetup(Request $request, AlertsManager $alertsManager, Objects $object): Response
     {
         $form = $this->createForm(ChangeSettingsProfileType::class, $object);
         $form->handleRequest($request);
@@ -52,15 +51,31 @@ class AppController extends AbstractController
 
         $limit = 10;
         $alerts = $alertsManager->getAlerts($object, 0, 0, $limit);
-        $settings_names = $settingsRepository->getAllNames();
         return $this->render('app/setup.html.twig', [
-            'selectedObject' => $object,
             'object' => $object,
-            'settings_names' => $settings_names,
             'alerts' => $alerts['alerts'],
             'numberOfAlerts' => $alerts['numberOfAlerts'],
             'numberOfPages' => $alerts['numberOfPages'],
             'select_profile_form' => $form
+        ]);
+    }
+
+    #[Route('/app/{object<\d+>}/setup/edit', name: 'app_show_selected_setup_edit', priority: 5)]
+    public function showSelectedObjectSetupEdit(Request $request, Objects $object): Response
+    {
+        $form = $this->createForm(ObjectInfoType::class, $object);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $form->getData();
+            return $this->redirectToRoute('app_show_selected_setup', [
+                'object' => $object->getId()
+            ]);
+        }
+
+        return $this->render('app/edit_info.html.twig', [
+            'object' => $object,
+            'selectedObject' => $object,
+            'form' => $form
         ]);
     }
 }

@@ -1,4 +1,5 @@
 import React from 'react';
+import display from '../../../common/settings-display.json'
 
 class DetailsBottom extends React.Component {
 
@@ -9,6 +10,8 @@ class DetailsBottom extends React.Component {
         const description = this.props.description;
         const indicators = this.props.indicators;
         const alerts = this.props.alerts;
+        const id = this.props.id;
+        const handler = this.props.handler;
 
         // component
         const counter = (number, blink) => {
@@ -42,14 +45,16 @@ class DetailsBottom extends React.Component {
         if (settings) {
             rounded = '';
             sensor = <button className={`btn-red btn ml-2 float-right`}>
-                <i className={`gf gf-warning`}></i>Ostrzeżenia{counter(sensorCounter, sensorIndicatorNew)}
+                <i className={`gf gf-warning`}></i>{display.arrangement.warning}{counter(sensorCounter, sensorIndicatorNew)}
             </button>;
         }
 
         let otherOptions = <div className={`container h-12 mt-2 px-8`}>
-            <button className={`btn-empty btn ml-2 float-right`}>Opis</button>
+            <button className={`btn-green btn ml-2 float-right`}
+                    onClick={() => {handler(id, 'setup')}}>{display.arrangement.objectSetup}</button>
+            <button className={`btn-empty btn ml-2 float-right`}>{display.arrangement.description}</button>
             <button className={`btn-red btn ml-2 float-right`}>
-                <i className={`gf gf-damage`}></i>Awarie{counter(hardwareCounter, hardwareIndicatorNew)}
+                <i className={`gf gf-damage`}></i>{display.arrangement.malfunction}{counter(hardwareCounter, hardwareIndicatorNew)}
             </button>
             {sensor}
 

@@ -5,20 +5,16 @@
         <div class="lg:container mx-auto lg:mt-4">
             <div class="w-full dark:text-darker-0 lg:rounded dark:bg-blue-550 shadow-lg shadow-darker-700">
                 <div class="text-3xl uppercase overflow-auto lg:text-xl lg:rounded-t px-4 py-4 lg:py-2 dark:bg-blue-950">{{ object.name }}
-                    <span>&nbsp;-&nbsp;przegląd ustawień</span>
+                    <span>&nbsp;-&nbsp;edycja informacji</span>
                     <a href="{{ path('app_show_selected',{'object': object.id}) }}">
-                        <button class="btn btn-green text-base uppercase float-right">Odczyty</button>
+                        <button class="btn btn-green mx-2 text-base uppercase float-right">Odczyty</button>
+                    </a>
+                    <a href="{{ path('app_show_selected_setup',{'object': object.id}) }}">
+                        <button class="btn btn-red mx-2 text-base uppercase float-right">Anuluj</button>
                     </a>
                 </div>
-                <div id="setup-select" class="px-4 py-2">
-                    {% include 'app/_object_info.html.twig' %}
-                    <hr/>
-                    {% if object.settings %}
-                        {% include 'app/_select_profile.html.twig' %}
-                    {% endif %}
-                    <hr/>
-                    {% include 'app/_alerts.html.twig' %}
-                </div>
+            </div>
+            <div id="setup-select" class="px-4 py-2">
             </div>
         </div>
     </div>
