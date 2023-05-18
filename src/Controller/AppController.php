@@ -3,9 +3,11 @@
 namespace App\Controller;
 
 use App\Entity\Objects;
+use App\Form\ChangeSettingsProfileType;
 use App\Repository\SettingsRepository;
 use App\Service\AlertsManager\AlertsManager;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -36,13 +38,17 @@ class AppController extends AbstractController
     }
 
     #[Route('/app/{object<\d+>}/setup', name: 'app_show_selected_setup', priority: 5)]
-    public function showSelectedObjectSetup(AlertsManager $alertsManager, SettingsRepository $settingsRepository, Objects $object): Response
+    public function showSelectedObjectSetup(Request $request, AlertsManager $alertsManager, SettingsRepository $settingsRepository,
+                                            Objects $object): Response
     {
-        $form = $this->createFormBuilder($object)
-            ->add('name')
-            ->getForm();
-
-
+        $form = $this->createForm(ChangeSettingsProfileType::class, $object);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $form->getData();
+            return $this->redirectToRoute('app_show_selected_setup', [
+                'object' => $object->getId()
+            ]);
+        }
 
         $limit = 10;
         $alerts = $alertsManager->getAlerts($object, 0, 0, $limit);

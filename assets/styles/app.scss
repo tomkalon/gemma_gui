@@ -282,6 +282,77 @@ footer {
   }
 }
 
+// forms
+.select-profile {
+  form {
+    width: 400px;
+    padding: 25px 50px 25px 50px;
+    display: block;
+    margin: 100px auto;
+    border-radius: 3px;
+    color: #000;
+  }
+
+  form fieldset {
+    margin: 25px 0;
+    border: none;
+  }
+
+  .select_wrapper {
+    line-height: 36px;
+    border-radius: 3px;
+    cursor: pointer;
+    position: relative;
+    width: 20rem;
+    span {
+      display: block;
+      margin: 0;
+      padding: 5px 10px;
+      border-radius: 4px;
+      transition: 0.4s ease;
+      z-index: 9;
+      position: relative;
+      background: $blue-450;
+    }
+  }
+
+  .select_wrapper.openSelect span {
+    display: block;
+    margin: 0;
+    transform: scale(1.04);
+    box-shadow: 0 15px 35px rgba(50, 50, 93, .1), 0 5px 15px rgba(0, 0, 0, .07);
+    -webkit-box-shadow: 0 15px 35px rgba(50, 50, 93, .1), 0 5px 15px rgba(0, 0, 0, .07);
+    box-shadow: 0 15px 35px rgba(50, 50, 93, .1), 0 5px 15px rgba(0, 0, 0, .07);
+  }
+
+  .select_wrapper .select_inner {
+    background: #fff;
+    color: $dark-800;
+    display: none;
+    position: absolute;
+    left: 0;
+    top: 47px;
+    width: 100%;
+  }
+
+  .select_wrapper .select_inner li {
+    border-bottom: 1px solid #eee;
+    padding: 5px 15px;
+    transition: 0.4s ease;
+  }
+
+  .select_wrapper .select_inner li:hover {
+    background: $dark-800;
+    color: #fff;
+  }
+
+  .select_wrapper .select_inner ul {
+    border-radius: 5px;
+    background: #fff;
+  }
+}
+
+
 // indicators
 
 @keyframes blinker {
