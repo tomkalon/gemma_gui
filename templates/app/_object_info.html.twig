@@ -10,10 +10,10 @@
             {% else %}
                 <div class="p-4 mb-8 rounded-lg dark:bg-blue-450">Brak opisu.</div>
             {% endif %}
-            {% if object.description %}
+            {% if object.type %}
                 <span class="p-4 rounded dark:bg-darker-300">Rodzaj obiektu: {{ object.type }}</span>
             {% endif %}
-            <a href="{{ path('app_show_selected_setup_edit',{'object': object.id}) }}">
+            <a href="{{ path('app_show_selected_setup_edit_info',{'object': object.id}) }}">
                 <button class="btn btn-green mt-4 float-right">Edytuj informacje</button>
             </a>
         </div>

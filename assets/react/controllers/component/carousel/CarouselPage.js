@@ -38,10 +38,10 @@ class CarouselPage extends React.Component {
                      rounded-md cursor-pointer shadow-md dark:shadow-gray-900/30`}>
                 <div
                     className={`label w-auto rounded-t-md uppercase border-b dark:border-darker-300 dark:bg-darker-700 dark:text-darker-100`}>
-                    <span>{info.name}</span>
-                    <span className={`alert`}>
+                    <div className={`overflow-ellipsis whitespace-nowrap overflow-hidden`}>{info.name}</div>
+                    <div className={`alert min-w-max`}>
                     {indicators['sensor']}{indicators['hardware']}
-            </span>
+            </div>
                 </div>
                 <div className={`box uppercase`}>
                     <div className={`inner`}>

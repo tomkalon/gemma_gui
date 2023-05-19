@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Objects;
 use App\Form\ChangeSettingsProfileType;
 use App\Form\ObjectInfoType;
+use App\Repository\ObjectsRepository;
 use App\Service\AlertsManager\AlertsManager;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -38,15 +39,26 @@ class AppController extends AbstractController
     }
 
     #[Route('/app/{object<\d+>}/setup', name: 'app_show_selected_setup', priority: 5)]
-    public function showSelectedObjectSetup(Request $request, AlertsManager $alertsManager, Objects $object): Response
+    public function showObjectSetup(Request $request, AlertsManager $alertsManager, Objects $object, ObjectsRepository $objectsRepository): Response
     {
         $form = $this->createForm(ChangeSettingsProfileType::class, $object);
+
+        // form handling
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
-            $form->getData();
+            $object = $form->getData();
+
+            // update data
+            $objectsRepository->save($object, true);
+
+            // flash message
+            $this->addFlash('success', 'Profil ustawień został zaktualizowany!');
+
+            // redirection
             return $this->redirectToRoute('app_show_selected_setup', [
                 'object' => $object->getId()
             ]);
+
         }
 
         $limit = 10;
@@ -60,13 +72,23 @@ class AppController extends AbstractController
         ]);
     }
 
-    #[Route('/app/{object<\d+>}/setup/edit', name: 'app_show_selected_setup_edit', priority: 5)]
-    public function showSelectedObjectSetupEdit(Request $request, Objects $object): Response
+    #[Route('/app/{object<\d+>}/setup/edit_info', name: 'app_show_selected_setup_edit_info', priority: 5)]
+    public function objectSetupEditInfo(Request $request, Objects $object, ObjectsRepository $objectsRepository): Response
     {
         $form = $this->createForm(ObjectInfoType::class, $object);
         $form->handleRequest($request);
+
+        // form handling
         if ($form->isSubmitted() && $form->isValid()) {
-            $form->getData();
+            $object = $form->getData();
+
+            // update data
+            $objectsRepository->save($object, true);
+
+            // flash message
+            $this->addFlash('success', 'Dane zostały poprawnie zapisane!');
+
+            // redirection
             return $this->redirectToRoute('app_show_selected_setup', [
                 'object' => $object->getId()
             ]);
@@ -76,6 +98,34 @@ class AppController extends AbstractController
             'object' => $object,
             'selectedObject' => $object,
             'form' => $form
+        ]);
+    }
+    #[Route('/app/{object<\d+>}/setup/edit_profile', name: 'app_show_selected_setup_edit_profile', priority: 5)]
+    public function objectSetupEditProfile(Request $request, Objects $object, ObjectsRepository $objectsRepository): Response
+    {
+        $formChangeProfile = $this->createForm(ChangeSettingsProfileType::class, $object);
+        $formChangeProfile->handleRequest($request);
+
+        // form handling
+        if ($formChangeProfile->isSubmitted() && $formChangeProfile->isValid()) {
+            $object = $formChangeProfile->getData();
+
+            // update data
+            $objectsRepository->save($object, true);
+
+            // flash message
+            $this->addFlash('success', 'Dane zostały poprawnie zapisane!');
+
+            // redirection
+            return $this->redirectToRoute('app_show_selected', [
+                'object' => $object->getId()
+            ]);
+        }
+
+        return $this->render('app/edit_profile.html.twig', [
+            'object' => $object,
+            'selectedObject' => $object,
+            'select_profile_form' => $formChangeProfile
         ]);
     }
 }

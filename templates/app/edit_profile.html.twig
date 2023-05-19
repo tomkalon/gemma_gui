@@ -1,0 +1,41 @@
+{% extends 'base.html.twig' %}
+{% block title %}Greenee© App{% endblock %}
+{% block body %}
+    <div id="content" class="block bg-gradient-to-b dark:from-darker-300 dark:to-darker-700">
+        <div class="lg:container mx-auto lg:mt-4">
+            <div class="w-full dark:text-darker-0 lg:rounded dark:bg-blue-550 shadow-lg shadow-darker-700">
+                <div class="text-3xl uppercase overflow-auto lg:text-xl lg:rounded-t px-4 py-4 lg:py-2 dark:bg-blue-950">{{ object.name }}
+                    <span>&nbsp;-&nbsp;Profile ustawień</span>
+                    <a href="{{ path('app_show_selected',{'object': object.id}) }}">
+                        <button class="btn btn-red ml-2 text-base uppercase float-right">Wróć</button>
+                    </a>
+                </div>
+                <div id="setup-select" class="px-4 py-2">
+                    <h2 class="text-2xl pb-2 dark:text-white uppercase">Wybierz profil</h2>
+                </div>
+                <div class="p-4">
+                    <div class="mb-6">
+                        <span>Aktualnie wybrany profil ustawień:</span>
+                        <span class="p-1 rounded dark:bg-blue-450">{{ object.settings.name }}</span>
+                    </div>
+
+                    {{ form_start(select_profile_form) }}
+                    <div class="select-profile">
+                        <p class="uppercase">Wybierz profil:</p>
+                        {{ form_widget(select_profile_form.settings) }}
+                    </div>
+                    <div>
+                        <div class="flex mt-6 gap-2">
+                            {{ form_widget(select_profile_form.save, {
+                                'label': 'Zmień profil',
+                                'attr': {'class': 'btn btn-green pt-4'}
+                            }) }}
+                            <button class="btn btn-empty pt-4">Dodaj nowy</button>
+                        </div>
+                    </div>
+                    {{ form_end(select_profile_form) }}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

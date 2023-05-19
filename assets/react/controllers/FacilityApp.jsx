@@ -256,7 +256,7 @@ export default class FacilityApp extends Component {
                 if (currentObject !== false && currentObject !== null) {
                     details = <Details info={currentObjectInfo} state={currentObjectState} isDay={isDay}
                                        stats={stats} indicatorIcons={this.getIndicatorsIcons}
-                                       handler={this.selectObjectHandler.bind(this)}/>;
+                                       linkHandler={this.selectObjectHandler.bind(this)}/>;
                 }
 
                 // ======= SETTINGS =======
@@ -266,12 +266,12 @@ export default class FacilityApp extends Component {
                                          global={global} saveHandler={this.saveSettingsData.bind(this)}
                                          settingsHandler={this.selectSettingsHandler.bind(this)}
                                          id={facilityInfo[currentObject]['id']} displayLogic={this.prepareSettingsButton}
-                                         simple={false}/>;
+                                         simple={false} linkHandler={this.selectObjectHandler.bind(this)}/>;
                 }
                 // ======= SMALL DISPLAY COMPONENTS =======
                 // list -> all objects
             } else if (this.state.display.menuType === 'list') {
-                objectMenu = <SimpleMenu state={facilityState} info={facilityInfo} handler={this.selectObjectHandler.bind(this)}
+                objectMenu = <SimpleMenu state={facilityState} info={facilityInfo} linkHandler={this.selectObjectHandler.bind(this)}
                                          indicatorIcons={this.getIndicatorsIcons}/>
                 // single -> selected object
             } else if (this.state.display.menuType === 'single') {
@@ -279,7 +279,7 @@ export default class FacilityApp extends Component {
                 objectInfo[0] = facilityInfo[currentObject];
                 // object
                 objectMenu = <SimpleMenu state={objectState} info={objectInfo} numberOfObjects={Object.keys(this.facility).length}
-                                         indicatorIcons={this.getIndicatorsIcons} handler={this.selectObjectHandler.bind(this)}
+                                         indicatorIcons={this.getIndicatorsIcons} linkHandler={this.selectObjectHandler.bind(this)}
                                          single={true} objectsId={this.objectsId}/>
                 // settings
                 if (currentObject !== false && currentObject !== null && currentObjectState['settings'] && selectedSettings) {

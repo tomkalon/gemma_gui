@@ -36,6 +36,7 @@ class Settings extends React.Component {
         const currentObject = this.props.currentObject;
         const selectedSettings = this.props.selectedSettings;
         const saveHandler = this.props.saveHandler;
+        const linkHandler = this.props.linkHandler;
         const global = this.props.global;
         const id = this.props.id;
         const prepareSettingsButton = this.props.displayLogic;
@@ -107,7 +108,10 @@ class Settings extends React.Component {
                             <span className={`text-2xl`}>{settingsDisplay.arrangement.settings}:</span>
                             <p className={`text-3xl uppercase`}>{title}</p>
                         </div>
-                        <button className={`btn btn-blue btn-lg float-right dark:text-darker-100`}>{settingsDisplay.arrangement.changeProfile}</button>
+                        <button className={`btn btn-blue btn-lg float-right dark:text-darker-100`}
+                                onClick={() => {linkHandler(id, 'setup/edit_profile')}}>
+                            {settingsDisplay.arrangement.changeProfile}
+                        </button>
                         <div className={`float-left dark:text-darker-100 text-2xl`}>
                             <span>{settingsDisplay.arrangement.profile}:</span>
                             <p className={`text-3xl uppercase`}>{currentObject.settings['name']}</p>
@@ -132,7 +136,8 @@ class Settings extends React.Component {
                             <div className={`text-sm px-2 bg-gradient-to-r rounded-md dark:from-blue-470 dark:to-transparent-0`}>{title}</div>
                         </div>
                         <div className={`float-right mt-3 mr-2`}>
-                            <button className={`btn btn-blue`}>
+                            <button className={`btn btn-blue`}
+                                    onClick={() => {linkHandler(id, 'setup/edit_profile')}}>
                             {settingsDisplay.arrangement.changeProfile}
                             </button>
                         </div>

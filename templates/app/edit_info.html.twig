@@ -7,14 +7,85 @@
                 <div class="text-3xl uppercase overflow-auto lg:text-xl lg:rounded-t px-4 py-4 lg:py-2 dark:bg-blue-950">{{ object.name }}
                     <span>&nbsp;-&nbsp;edycja informacji</span>
                     <a href="{{ path('app_show_selected',{'object': object.id}) }}">
-                        <button class="btn btn-green mx-2 text-base uppercase float-right">Odczyty</button>
+                        <button class="btn btn-green ml-2 text-base uppercase float-right">Odczyty</button>
                     </a>
                     <a href="{{ path('app_show_selected_setup',{'object': object.id}) }}">
-                        <button class="btn btn-red mx-2 text-base uppercase float-right">Anuluj</button>
+                        <button class="btn btn-red ml-2 text-base uppercase float-right">Anuluj</button>
                     </a>
                 </div>
-            </div>
-            <div id="setup-select" class="px-4 py-2">
+                <div id="setup-select" class="px-4 py-2">
+                    <h2 class="text-2xl pb-2 dark:text-white uppercase">Informacje</h2>
+                    {{ form_start(form) }}
+                    <div class="grid grid-cols-12 gap-4 my-4">
+                        <div class="col-span-12 lg:col-span-4">
+                            {{ form_label(form.name, null, {
+                                'label': 'Nazwa obiektu:'
+                            }) }}
+                            <div class="my-2 col-span-4 border border-[2px] w-10/12 justify-center flex items-center rounded-md shadow-md">
+                                <div>
+                                    <div class="flex items-center bg-gray-100 rounded-l border border-white justify-center w-12 h-12 text-white ">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-900" viewBox="0 0 20 20"
+                                             fill="currentColor">
+                                            <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z"
+                                                  clip-rule="evenodd"/>
+                                        </svg>
+                                    </div>
+                                </div>
+                                <div class="w-full">
+                                    {{ form_widget(form.name, {
+                                        'attr': {'class': 'w-full h-12 px-4 py-1 rounded-r border border-gray-100 text-gray-800 focus:outline-none'}
+                                    }) }}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-span-12 lg:col-span-4">
+                            {{ form_label(form.type, null, {
+                                'label': 'Rodzaj obiektu:'
+                            }) }}
+                            <div class="my-2 col-span-4 border border-[2px] w-10/12 justify-center flex items-center rounded-md shadow-md">
+                                <div>
+                                    <div class="flex items-center bg-gray-100 rounded-l border border-white justify-center w-12 h-12 text-white ">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-900" viewBox="0 0 20 20"
+                                             fill="currentColor">
+                                            <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z"
+                                                  clip-rule="evenodd"/>
+                                        </svg>
+                                    </div>
+                                </div>
+                                <div class="w-full">
+                                    {{ form_widget(form.type, {
+                                        'attr': {'class': 'w-full h-12 px-4 py-1 rounded-r border border-gray-100 text-gray-800 focus:outline-none'}
+                                    }) }}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="w-full pb-4">
+                        {{ form_label(form.description, null, {
+                            'label': 'Opis:'
+                        }) }}
+                        <div class="my-2 justify-center flex items-center rounded-md shadow-md">
+                            <div class="w-full">
+                                {{ form_widget(form.description, {
+                                    'attr': {'class': 'w-full h-28 p-2 rounded border-4 border-gray-100 text-gray-800 focus:outline-none'}
+                                }) }}
+                            </div>
+                        </div>
+                    </div>
+{#                    <div class="my-4">#}
+{#                        {{ form_label(form.image, null, {#}
+{#                            'label': 'Dodaj zdjęcie:'#}
+{#                        }) }}#}
+{#                        {{ form_widget(form.image) }}#}
+{#                    </div>#}
+                    <div class="my-4">
+                        {{ form_widget(form.save, {
+                            'label': 'Zapisz zmiany',
+                            'attr': {'class': 'btn btn-green pt-4'}
+                        }) }}
+                    </div>
+                    {{ form_end(form) }}
+                </div>
             </div>
         </div>
     </div>

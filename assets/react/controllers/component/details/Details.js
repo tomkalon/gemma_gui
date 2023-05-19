@@ -16,7 +16,7 @@ class Details extends React.Component {
         const isDay = this.props.isDay; // time of day
         const stats = this.props.stats; // statistics & charts
         const indicatorIcons = this.props.indicatorIcons; // function
-        const handler = this.props.handler; // redirection handler
+        const handler = this.props.linkHandler; // redirection handler
 
         // VAR
         let img = 'default';

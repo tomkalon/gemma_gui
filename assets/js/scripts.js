@@ -27,3 +27,10 @@ $(document).ready(function (){
         selector.parent().toggleClass('openSelect');
     });
 });
+
+// alerts
+$(document).ready(function () {
+    setTimeout(() =>{
+        $('.js-alert').fadeOut(1500);
+    }, 2000);
+})

@@ -24,7 +24,9 @@
                         </div>
                         <div class="px-4">
                             {{ alerts.value }}
-                            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ducimus, libero vero. A accusamus aut autem corporis deleniti dolore doloremque dolores dolorum nemo nulla optio praesentium qui quia, sunt veritatis voluptate.
+                            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ducimus, libero vero. A accusamus aut autem
+                            corporis deleniti dolore doloremque dolores dolorum nemo nulla optio praesentium qui quia, sunt
+                            veritatis voluptate.
                         </div>
                         <div class="is-read">
                             {% if alerts.isRead == true %}
@@ -48,19 +50,29 @@
         {% for alerts in alerts %}
             {% if alerts.isActive == false %}
                 {% set non_active = true %}
-                <div class="item rounded flex items-center gap-4 items-center">
-                    <div class="w-10 text-center text-3xl">
-                        {% if alerts.type == 'sensor' %}
-                            <i class="gf gf-warning"></i>
-                        {% elseif alerts.type == 'hardware' %}
-                            <i class="gf gf-damage"></i>
-                        {% endif %}
+                <div class="item rounded">
+                    <div class="flex items-center gap-4">
+                        <div class="icons flex items-center gap-x-2">
+                            <div class="w-10 text-center text-3xl">
+                                {% if alerts.type == 'sensor' %}
+                                    <i class="gf gf-warning"></i>
+                                {% elseif alerts.type == 'hardware' %}
+                                    <i class="gf gf-damage"></i>
+                                {% endif %}
+                            </div>
+                            <div class="w-16 rounded icon text-center">
+                                <i class="gf gf-{{ alerts.attribute }} text-3xl"></i>
+                            </div>
+                        </div>
+                        <div class="grow">
+                            {{ alerts.value }}
+                            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ducimus, libero vero. A accusamus aut autem
+                            corporis deleniti dolore doloremque dolores dolorum nemo nulla optio praesentium qui quia, sunt
+                            veritatis voluptate.
+                        </div>
                     </div>
-                    <div class="w-16 p-2 rounded icon text-center">
-                        <i class="gf gf-{{ alerts.attribute }} text-3xl"></i>
-                    </div>
-                    <div class="grow">
-                        {{ alerts.value }}
+                    <div class="date mt-8 pt-2 text-right">
+                        <p>Utworzono: {{ alerts.date|date('Y/m/d - H:m') }}</p>
                     </div>
                 </div>
             {% endif %}

@@ -8,7 +8,7 @@ class SimpleMenu extends React.Component {
         super(props);
         this.facility = this.props.state;
         this.info = this.props.info;
-        this.handler = this.props.handler;
+        this.handler = this.props.linkHandler;
         this.numberOfObjects = this.props.numberOfObjects;
         this.single = this.props.single;
         this.indicatorIcons = this.props.indicatorIcons;
