@@ -174,19 +174,11 @@ header {
               }
             }
           }
-
-          .date {
-            border-top: 1px solid $alert-high-light;
-          }
         }
 
         &.sensor {
           background: $alert-low;
           border: 1px solid $alert-low-light;
-
-          .date {
-            border-top: 1px solid $alert-low-light;
-          }
 
           .icons {
             min-width: 7rem;
@@ -203,10 +195,7 @@ header {
       }
 
       .is-read {
-        min-width: 5rem;
-
         button {
-          border: 3px solid #ffffff;
 
           &:hover {
             background: #ffffff60;

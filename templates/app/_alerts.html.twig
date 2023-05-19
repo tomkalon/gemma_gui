@@ -6,7 +6,7 @@
         {% for alerts in alerts %}
             {% if alerts.isActive == true %}
                 {% set active = true %}
-                <div class="item rounded {% if alerts.type == 'sensor' %} sensor
+                <div class="item rounded cursor-pointer {% if alerts.type == 'sensor' %} sensor
                     {% elseif alerts.type == 'hardware' %} hardware
                     {% endif %}">
                     <div class="flex items-center gap-4 ">
@@ -28,16 +28,16 @@
                             corporis deleniti dolore doloremque dolores dolorum nemo nulla optio praesentium qui quia, sunt
                             veritatis voluptate.
                         </div>
+                    </div>
+                    <div class="flex items-center justify-between mt-4 border-t dark:border-darker-0">
                         <div class="is-read">
                             {% if alerts.isRead == true %}
-                                <button class="w-16 h-16 p-2 rounded text-center float-right">
-                                    <i class="gf gf-read text-3xl"></i>
-                                </button>
+                                <i class="gf gf-yes mt-2 text-2xl"></i>
                             {% endif %}
                         </div>
-                    </div>
-                    <div class="date mt-8 pt-2 text-right">
-                        <p>Utworzono: {{ alerts.date|date('Y/m/d - H:m') }}</p>
+                        <div class="date pt-2 text-right">
+                            <p>Utworzono: {{ alerts.date|date('Y/m/d - H:m') }}</p>
+                        </div>
                     </div>
                 </div>
             {% endif %}
