@@ -101,37 +101,9 @@
         </div>
     </div>
     {% for message in app.flashes('success') %}
-        <div class="js-alert flex flex-col p-8 bg-darker-100 shadow-xl dark:shadow-darker-800 rounded-2xl">
-            <div class="flex items-center justify-between">
-                <div class="flex items-center">
-                    <div class="flex flex-col ml-3">
-                        <div class="font-medium leading-none">{{ message }}</div>
-                    </div>
-                </div>
-            </div>
-        </div>
+        {{ component('form_alert', {
+            message: message
+        }) }}
     {% endfor %}
-{#    <div id="js-profile-cannot-be-deleted" class="js-popup-cover z-50 lg:z-30 fixed flex justify-center items-center top-0">#}
-{#        <div class="js-popup rounded-lg flex flex-col dark:text-blue-50">#}
-{#            <div class="flex justify-between items-center h-12 mx-1 px-2 border-b dark:border-blue-450 text-2xl lg:text-xl">#}
-{#                <div>Nie można usunąć profilu!</div>#}
-{#                <button class="js-close-me relative bottom-2 right-4 lg:bottom-0 lg:right-0">#}
-{#                    <i class="text-5xl lg:text-2xl gf gf-close"></i>#}
-{#                </button>#}
-{#            </div>#}
-{#            <div class="flex gap-4 p-4">#}
-{#                <div>#}
-{#                    <i class="text-5xl lg:text-5xl gf gf-info"></i>#}
-{#                </div>#}
-{#                <div>#}
-{#                    <p>Profil nie może zostać usunięty, gdyż jest aktualnie używany przez inne obiekty.</p>#}
-{#                    <p>Przypisz obiekty do innych profili, a następnie usuń wskazany profil.</p>#}
-{#                </div>#}
-{#            </div>#}
-{#        </div>#}
-{#    </div>#}
-    {{ component('form_alert', {
-        'message': 'Test'
-    }) }}
     </div>
 {% endblock %}
