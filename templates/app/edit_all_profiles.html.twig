@@ -1,0 +1,137 @@
+{% extends 'base.html.twig' %}
+{% block title %}Greenee© App{% endblock %}
+{% block body %}
+    <div id="content" class="block bg-gradient-to-b dark:from-darker-300 dark:to-darker-700">
+        <div class="lg:container mx-auto lg:mt-4">
+            <div class="w-full dark:text-darker-0 lg:rounded dark:bg-blue-550 shadow-lg shadow-darker-700">
+                <div class="text-3xl flex items-center justify-between uppercase lg:text-xl lg:rounded-t px-4 py-4 lg:py-2 dark:bg-blue-950">
+                    <span>Edycja profili ustawień</span>
+                    <div>
+                        <a href="{{ path('app_show_all') }}">
+                            <button class="btn btn-green ml-2 text-base uppercase float-right">Lista obiektów</button>
+                        </a>
+                    </div>
+                </div>
+                <div class="p-4">
+                    <h2 class="text-2xl uppercase">Lista profili</h2>
+                    <table class="mt-6 min-w-max w-full table-auto">
+                        <thead>
+                            <tr class="dark:bg-darker-200 text-darker-700 uppercase text-sm leading-normal">
+                                <th class="py-3 px-6 text-left">Nazwa profilu</th>
+                                <th class="py-3 px-6 text-left">Przypisane obiekty</th>
+                                <th class="py-3 px-6 text-center">Edycja</th>
+                            </tr>
+                        </thead>
+                        <tbody class="text-gray-600 text-sm font-light">
+                        {% set counter = 0 %}
+                        {% for settings in settings %}
+                            <tr class="{% if counter % 2 %} dark:bg-darker-200 {% else %} dark:bg-darker-500 {% endif %} border-b border-gray-200 hover:bg-gray-100">
+                                <td class="py-3 px-6 text-left whitespace-nowrap">
+                                    <div class="flex items-center{% if counter % 2 %} dark:text-darker-900 {% else %} dark:text-darker-100 {% endif %}">
+                                        {% if edited is defined %}
+                                            {%  if settings.id == edited %}
+                                                {{ form_start(change_name_form, {
+                                                    'attr': {'class': 'w-full flex  gap-2 items-center'}
+                                                }) }}
+                                                    <div class="my-2 border border-[2px] w-10/12 justify-center flex items-center rounded-md shadow-md dark:text-darker-900">
+                                                        <div class="w-full">
+                                                            {{ form_widget(change_name_form.name, {
+                                                                'attr': {'class': 'p-1'}
+                                                            }) }}
+                                                        </div>
+                                                    </div>
+                                                    <div>
+                                                        {{ form_widget(change_name_form.save, {
+                                                            'label': 'Ok',
+                                                            'attr': {'class': 'btn btn-green dark:text-darker-100 uppercase'}
+                                                        }) }}
+                                                    </div>
+                                                {{ form_end(change_name_form) }}
+                                            {% else %}
+                                            <span class="font-medium">{{ settings.name }}</span>
+                                            {% endif %}
+                                        {% else %}
+                                            <span class="font-medium">{{ settings.name }}</span>
+                                        {% endif %}
+                                    </div>
+                                </td>
+                                <td class="py-3 px-6 text-left">
+                                    <div class="flex items-center">
+                                        <div class="mr-2">
+                                            {% for object in settings.object %}
+                                                <a href="{{ path('app_show_selected',{'object': object.id}) }}">
+                                                    <button class="p-1 dark:bg-darker-300 dark:text-darker-100 hover:dark:bg-darker-700 rounded">{{ object.name }}</button>
+                                                </a>
+                                            {% endfor %}
+                                        </div>
+
+                                    </div>
+                                </td>
+                                <td class="py-3 px-6 text-center">
+                                    <div class="flex gap-x-2 {% if counter % 2 %} dark:text-darker-900 {% else %} dark:text-darker-200 {% endif %} item-center justify-center">
+                                        <a href="{{ path('app_edit_profile_name',{'setup': settings.id}) }}">
+                                            <button class="w-4 mr-2 {% if counter % 2 %} hover:dark:text-darker-300 {% else %} hover:dark:text-darker-0 {% endif %} transform hover:scale-150">
+                                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
+                                                </svg>
+                                            </button>
+                                        </a>
+                                        {% if settings.object|length > 0 %}
+                                            <button class="w-4 mr-2 {% if counter % 2 %} hover:dark:text-darker-300 {% else %} hover:dark:text-darker-0 {% endif %} transform hover:scale-150">
+                                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                                                </svg>
+                                            </button>
+                                        {% else %}
+                                            <button class="w-4 mr-2 {% if counter % 2 %} hover:dark:text-darker-300 {% else %} hover:dark:text-darker-0 {% endif %} transform hover:scale-150">
+                                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                                                </svg>
+                                            </button>
+                                        {% endif %}
+                                    </div>
+                                </td>
+                            </tr>
+                            {% set counter = counter + 1 %}
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% for message in app.flashes('success') %}
+        <div class="js-alert flex flex-col p-8 bg-darker-100 shadow-xl dark:shadow-darker-800 rounded-2xl">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center">
+                    <div class="flex flex-col ml-3">
+                        <div class="font-medium leading-none">{{ message }}</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+{#    <div id="js-profile-cannot-be-deleted" class="js-popup-cover z-50 lg:z-30 fixed flex justify-center items-center top-0">#}
+{#        <div class="js-popup rounded-lg flex flex-col dark:text-blue-50">#}
+{#            <div class="flex justify-between items-center h-12 mx-1 px-2 border-b dark:border-blue-450 text-2xl lg:text-xl">#}
+{#                <div>Nie można usunąć profilu!</div>#}
+{#                <button class="js-close-me relative bottom-2 right-4 lg:bottom-0 lg:right-0">#}
+{#                    <i class="text-5xl lg:text-2xl gf gf-close"></i>#}
+{#                </button>#}
+{#            </div>#}
+{#            <div class="flex gap-4 p-4">#}
+{#                <div>#}
+{#                    <i class="text-5xl lg:text-5xl gf gf-info"></i>#}
+{#                </div>#}
+{#                <div>#}
+{#                    <p>Profil nie może zostać usunięty, gdyż jest aktualnie używany przez inne obiekty.</p>#}
+{#                    <p>Przypisz obiekty do innych profili, a następnie usuń wskazany profil.</p>#}
+{#                </div>#}
+{#            </div>#}
+{#        </div>#}
+{#    </div>#}
+    {{ component('form_alert', {
+        'message': 'Test'
+    }) }}
+    </div>
+{% endblock %}

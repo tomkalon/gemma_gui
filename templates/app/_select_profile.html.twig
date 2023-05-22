@@ -5,19 +5,21 @@
         <span class="p-1 rounded dark:bg-blue-450">{{ object.settings.name }}</span>
     </div>
 
-    {{ form_start(select_profile_form) }}
-    <div class="select-profile">
-        <p class="uppercase">Wybierz profil:</p>
-        {{ form_widget(select_profile_form.settings) }}
-    </div>
-    <div>
-        <div class="flex mt-6 gap-2">
-            {{ form_widget(select_profile_form.save, {
-                'label': 'Zmień profil',
-                'attr': {'class': 'btn btn-green pt-4'}
-            }) }}
-            <button class="btn btn-empty pt-4">Dodaj nowy</button>
+        {{ form_start(select_profile_form) }}
+        <div class="select-profile">
+            <p class="uppercase">Wybierz profil:</p>
+            {{ form_widget(select_profile_form.settings) }}
         </div>
-    </div>
-    {{ form_end(select_profile_form) }}
+        <div>
+            <div class="flex mt-6 gap-2">
+                {{ form_widget(select_profile_form.save, {
+                    'label': 'Zmień profil',
+                    'attr': {'class': 'btn btn-green pt-4'}
+                }) }}
+            </div>
+        </div>
+        {{ form_end(select_profile_form) }}
+        <a href="{{ path('app_show_all_profiles') }}">
+            <button class="btn btn-empty pt-4 mt-4 ">Przegląd profili ustawień</button>
+        </a>
 </div>

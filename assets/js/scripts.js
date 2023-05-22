@@ -34,3 +34,4 @@ $(document).ready(function () {
         $('.js-alert').fadeOut(1500);
     }, 2000);
 })
+

@@ -43,9 +43,6 @@ class SimpleMenu extends React.Component {
             content[0] = data;
         }
 
-        console.log(content);
-        console.log(data);
-
         return (<div key={name} className={`js-popup-cover z-50 lg:z-30 fixed flex justify-center items-center top-0`}>
             <div className={`js-popup rounded-lg flex flex-col justify-between dark:text-blue-50`}>
                 <div className={`label h-12 mx-1 px-2 border-b dark:border-blue-450 text-2xl lg:text-xl`}>

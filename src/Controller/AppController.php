@@ -3,9 +3,12 @@
 namespace App\Controller;
 
 use App\Entity\Objects;
+use App\Entity\Settings;
+use App\Form\ChangeSettingsProfileNameType;
 use App\Form\ChangeSettingsProfileType;
 use App\Form\ObjectInfoType;
 use App\Repository\ObjectsRepository;
+use App\Repository\SettingsRepository;
 use App\Service\AlertsManager\AlertsManager;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -126,6 +129,56 @@ class AppController extends AbstractController
             'object' => $object,
             'selectedObject' => $object,
             'select_profile_form' => $formChangeProfile
+        ]);
+    }
+
+    #[Route('/app/show_all_profiles', name: 'app_show_all_profiles', priority: 5)]
+    public function showAllProfiles(SettingsRepository $settingsRepository): Response
+    {
+        $settings = $settingsRepository->findAll();
+        return $this->render('app/edit_all_profiles.html.twig', [
+            'settings' => $settings
+        ]);
+    }
+
+
+    #[Route('/app/edit_profile_name/{setup<\d+>}', name: 'app_edit_profile_name', priority: 5)]
+    public function editProfileName(Request $request, Settings $setup, SettingsRepository $settingsRepository): Response
+    {
+        $formChangeProfileName = $this->createForm(ChangeSettingsProfileNameType::class, $setup);
+        $formChangeProfileName->handleRequest($request);
+
+        // form handling
+        if ($formChangeProfileName->isSubmitted() && $formChangeProfileName->isValid()) {
+            $setup = $formChangeProfileName->getData();
+
+            // update data
+            $settingsRepository->save($setup, true);
+
+            // flash message
+            $this->addFlash('success', 'Dane zostały poprawnie zapisane!');
+
+            // redirection
+            return $this->redirectToRoute('app_show_all_profiles', [
+            ]);
+        }
+
+        $settings = $settingsRepository->findAll();
+        return $this->render('app/edit_all_profiles.html.twig', [
+            'settings' => $settings,
+            'edited' => $setup->getId(),
+            'change_name_form' => $formChangeProfileName
+        ]);
+    }
+
+    #[Route('/app/remove_profile/{setup<\d+>}', name: 'app_remove_profile', priority: 5)]
+    public function removeProfile(Request $request, Settings $setup, SettingsRepository $settingsRepository): Response
+    {
+
+        $settings = $settingsRepository->findAll();
+        return $this->render('app/edit_all_profiles.html.twig', [
+            'settings' => $settings,
+            'edited' => $setup->getId(),
         ]);
     }
 }

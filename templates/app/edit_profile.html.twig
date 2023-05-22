@@ -35,10 +35,15 @@
                                 'label': 'Zmień profil',
                                 'attr': {'class': 'btn btn-green pt-4'}
                             }) }}
-                            <button class="btn btn-empty pt-4">Dodaj nowy</button>
+
                         </div>
                     </div>
                     {{ form_end(select_profile_form) }}
+                    <div class="flex gap-4">
+                        <a href="{{ path('app_show_all_profiles') }}">
+                            <button class="btn btn-empty pt-4 mt-4 ">Przegląd profili ustawień</button>
+                        </a>
+                    </div>
                 </div>
             </div>
         </div>
