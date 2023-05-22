@@ -233,6 +233,16 @@ footer {
   }
 }
 
+// js
+
+.js-alert {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 100;
+}
+
 // buttons
 .btn {
   height: 2.5rem;
@@ -240,6 +250,9 @@ footer {
   padding: 0 0.75rem;
   display: flex;
   align-items: center;
+  &.inactive {
+    opacity: 0.4;
+  }
 
   &-lg {
     height: 4rem;

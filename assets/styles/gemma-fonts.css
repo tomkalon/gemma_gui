@@ -292,8 +292,6 @@
 
 .gf-shadow:before {
     content: "\f0b3";
-    display: block;
-    transform: rotate(90deg);
 }
 
 .gf-fog:before {

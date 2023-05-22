@@ -5,8 +5,29 @@ import DetailsStats from "./DetailsStats";
 import DetailsBottom from "./DetailsBottom";
 import './details.scss'
 import display from '../../../common/settings-display.json'
+import Popup from "../common/Popup";
 
 class Details extends React.Component {
+
+    constructor(props) {
+        super(props);
+    }
+
+    state = {
+        popup: false
+    }
+
+    closePopup() {
+        this.setState({
+            popup: false
+        })
+    }
+
+    showPopup (name, data, icon) {
+        this.setState({
+            popup: <Popup name={name} data={data} icon={icon} closeHandler={this.closePopup.bind(this)} />,
+        });
+    }
 
     render() {
 
@@ -46,15 +67,17 @@ class Details extends React.Component {
 
         // HEAT, BLOW: modules
         let detailsModules;
-        if (blow || heat) detailsModules = <DetailsModules blow={blow} heat={heat} />;
+        if (blow || heat) detailsModules = <DetailsModules blow={blow} heat={heat}/>;
 
         // STATS
         let detailsStats;
-        if (stats) detailsStats = <DetailsStats stats={stats} />;
+        if (stats) detailsStats = <DetailsStats stats={stats}/>;
 
         // DETAILS BOTTOM
-        const detailsBottom = <DetailsBottom settings={settings} description={info['description']}
-                                             indicators={state.indicators} alerts={state.alerts} id={info.id} handler={handler} />;
+        const detailsBottom = <DetailsBottom settings={settings} info={info}
+                                             indicators={state.indicators} alerts={state.alerts} id={info.id} handler={handler}
+                                             closePopupHandler={this.closePopup.bind(this)}
+                                             showPopupHandler={this.showPopup.bind(this)}/>;
 
         // PROGRESS BAR
         function renderProgressBar(value, si, indicator) {
@@ -123,51 +146,54 @@ class Details extends React.Component {
             }
         }
 
-        return (<div className={`detail`}>
-            <div id={`js-object-detail`}>
-                <div
-                    className={`h-8 bg-gradient-to-br dark:from-blue-950 dark:to-blue-960 border-b border-t dark:border-blue-450 flex rounded-t xl:rounded-md shadow-md relative dark:shadow-gray-900/30`}>
-                    <div className={`label w-full px-4 container mx-auto text-sm`}>
-                        <span className={`dark:text-darker-0 pr-4`}>{display.arrangement.objectNo}{info.order}</span>
-                        <span className={`dark:text-sky-200 border-l dark:border-darker-100 pl-4`}>{name}</span>
-                        <span className={`dark:text-sky-200 pl-4`}>{indicators['sensor']}</span>
-                        <span className={`dark:text-sky-200 pl-4`}>{indicators['hardware']}</span>
+        return (<article className="">
+            <div className={`detail container mx-auto`}>
+                <div id={`js-object-detail`}>
+                    <div
+                        className={`h-8 bg-gradient-to-br dark:from-blue-950 dark:to-blue-960 border-b border-t dark:border-blue-450 flex rounded-t xl:rounded-md shadow-md relative dark:shadow-gray-900/30`}>
+                        <div className={`label w-full px-4 container mx-auto text-sm`}>
+                            <span className={`dark:text-darker-0 pr-4`}>{display.arrangement.objectNo}{info.order}</span>
+                            <span className={`dark:text-sky-200 border-l dark:border-darker-100 pl-4`}>{name}</span>
+                            <span className={`dark:text-sky-200 pl-4`}>{indicators['sensor']}</span>
+                            <span className={`dark:text-sky-200 pl-4`}>{indicators['hardware']}</span>
+                        </div>
                     </div>
-                </div>
-                <div className={`data`}>
-                    <div className={`container mx-auto block justify-center xl:px-2`}>
-                        <div className={`image-box float-left hidden xl:block`}>
-                            <div
-                                className={`image dark:bg-darker-900 rounded-md border dark:border-darker-500 shadow-md dark:shadow-gray-900/50`}>
-                                <div className={`img h-32 mt-2 mx-2 cursor-pointer`} style={{backgroundImage: `url("${imagesSrc}${img}.webp")` }}></div>
-                                <div className={`desc text-center uppercase`}>
-                                    <span className={`text-sm dark:text-darker-200`}>{display.arrangement.objectType}:</span>
-                                    <p className={`dark:text-darker-100`}>developer</p>
+                    <div className={`data`}>
+                        <div className={`container mx-auto block justify-center xl:px-2`}>
+                            <div className={`image-box float-left hidden xl:block`}>
+                                <div
+                                    className={`image dark:bg-darker-900 rounded-md border dark:border-darker-500 shadow-md dark:shadow-gray-900/50`}>
+                                    <div className={`img h-32 mt-2 mx-2 cursor-pointer`}
+                                         style={{backgroundImage: `url("${imagesSrc}${img}.webp")`}}></div>
+                                    <div className={`desc text-center uppercase`}>
+                                            <span
+                                                className={`text-sm dark:text-darker-200`}>{display.arrangement.objectType}:</span>
+                                        <p className={`dark:text-darker-100`}>developer</p>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <div className={`flex`}>
-                            {panels.map((element) => {
-                                return element;
-                            })}
-                        </div>
-                        <div
-                            className={`additional text-center bg-gradient-to-t dark:from-blue-950 dark:to-blue-960 dark:text-blue-100 border-b-2 dark:border-blue-450 h-14`}>
+                            <div className={`flex`}>
+                                {panels.map((element) => {
+                                    return element;
+                                })}
+                            </div>
+                            <div
+                                className={`additional text-center bg-gradient-to-t dark:from-blue-950 dark:to-blue-960 dark:text-blue-100 border-b-2 dark:border-blue-450 h-14`}>
                                 <div className={`progress mt-2 float-left flex`}>
-                                    {progressRows.map((element, index) => (
-                                        <div key={index} className={`box flex w-full ml-3`}>
+                                    {progressRows.map((element, index) => (<div key={index} className={`box flex w-full ml-3`}>
                                             {element}
-                                        </div>
-                                    ))}
+                                        </div>))}
                                 </div>
                                 {detailsStats}
                                 {detailsModules}
+                            </div>
                         </div>
+                        {detailsBottom}
                     </div>
-                    {detailsBottom}
                 </div>
             </div>
-        </div>);
+            { this.state.popup }
+        </article>);
     }
 }
 

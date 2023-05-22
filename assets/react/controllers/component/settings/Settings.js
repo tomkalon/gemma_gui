@@ -30,7 +30,6 @@ class Settings extends React.Component {
         });
     }
 
-
     render() {
         // props
         const currentObject = this.props.currentObject;

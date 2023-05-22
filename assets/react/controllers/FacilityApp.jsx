@@ -297,9 +297,7 @@ export default class FacilityApp extends Component {
             <article className="object-menu-cover w-full border-b-4 dark:border-darker-450">
                 {objectMenu}
             </article>
-            <article className="container mx-auto">
-                {details}
-            </article>
+            {details}
             {settings}
         </div>)
     }

@@ -20,19 +20,17 @@
                     {% include 'app/_alerts.html.twig' %}
                 </div>
             </div>
-            {% for message in app.flashes('success') %}
-                <div class="js-alert fixed w-full h-full top-1 flex justify-center items-center">
-                    <div class="z-50 flex flex-col p-8 bg-darker-100 shadow-xl dark:shadow-darker-800 rounded-2xl">
-                        <div class="flex items-center justify-between">
-                            <div class="flex items-center">
-                                <div class="flex flex-col ml-3">
-                                    <div class="font-medium leading-none">{{ message }}</div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            {% endfor %}
         </div>
     </div>
+    {% for message in app.flashes('success') %}
+        <div class="js-alert flex flex-col p-8 bg-darker-100 shadow-xl dark:shadow-darker-800 rounded-2xl">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center">
+                    <div class="flex flex-col ml-3">
+                        <div class="font-medium leading-none">{{ message }}</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
 {% endblock %}

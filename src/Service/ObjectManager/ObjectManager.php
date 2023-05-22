@@ -139,6 +139,8 @@ class ObjectManager
             $arr[$key]['id'] = $item->getId();
             $arr[$key]['attribute'] = $item->getAttribute();
             $arr[$key]['value'] = $item->getValue();
+            $date = $item->getDate();
+            $arr[$key]['date'] = date_format($date, 'Y-m-d H:i');
             $arr[$key]['isRead'] = $item->isIsRead();
             $arr[$key]['isActive'] = $item->isisActive();
         }

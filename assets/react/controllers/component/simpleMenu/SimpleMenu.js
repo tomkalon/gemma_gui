@@ -13,6 +13,7 @@ class SimpleMenu extends React.Component {
         this.single = this.props.single;
         this.indicatorIcons = this.props.indicatorIcons;
         this.objectsId = this.props.objectsId;
+        console.log(this.info);
     }
 
     getSensor(object, key) {
@@ -109,18 +110,21 @@ class SimpleMenu extends React.Component {
                         <div className={`px-2 py-4 flex flex-wrap`}>
                             {this.getSensor(this.facility[key].readings, key)}
                         </div>
+                        <div className={`w-full dark:bg-darker-600 p-4`}>
+                            <button className={`btn btn-lg btn-green dark:text-darker-100`}
+                                    onClick={() => {this.handler(this.info[0].id, 'setup')}}>
+                                {display.arrangement.objectSetup}
+                            </button>
+                        </div>
                     </div>);
                 }
             })}
-            <div className={`w-full dark:bg-darker-600 p-4`}>
-                <button className={`btn btn-lg btn-green dark:text-darker-100`}>{display.arrangement.objectSetup}</button>
-            </div>
+
             <div className={`fixed bottom-menu bottom-0 h-28 px-10 py-1 w-full border-t dark:border-darker-200
              bg-gradient-to-b dark:from-darker-900 dark:to-darker-800`}>
                 <div className={`dark:text-darker-100 text-8xl float-left mr-20`} onClick={() => {this.handler('', '')}}><i className="gf gf-home"></i></div>
                 {prevBtn}{nextBtn}
-            </div>
-        </div>);
+            </div></div>);
     }
 }
 

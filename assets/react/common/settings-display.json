@@ -13,7 +13,10 @@
     "objectSetup": "Wszystkie opcje",
     "description": "Opis",
     "warning": "Ostrzeżenia",
-    "malfunction": "Awarie"
+    "malfunction": "Awarie",
+    "sensor-alerts": "Błędy pomiarów",
+    "hardware-alerts": "Awarie sprzętowe"
+
   },
   "environment": {
     "rain": true,
