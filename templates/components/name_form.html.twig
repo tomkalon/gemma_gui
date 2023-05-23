@@ -1,0 +1,27 @@
+<div{{ attributes }}>
+    <!-- component html -->
+    {% if form is defined %}
+        {{ form_start(form, {
+            'attr': {'class': 'w-full'}
+        }) }}
+        <div class="">
+            {{ form_label(form.name, null, {
+                'label_attr': {'class': 'w-full'},
+                'label': 'Nazwa profilu:'
+
+            }) }}
+        </div>
+        <div class="w-full my-2 border border-[2px] w-10/12 justify-center flex items-center rounded-md shadow-md dark:text-darker-900">
+            <div class="w-full">
+                {{ form_widget(form.name, {
+                    'attr': {'class': 'p-1 w-full'}
+                }) }}
+            </div>
+            {{ form_widget(form.save, {
+                'label': 'Potwierdź',
+                'attr': {'class': 'dark:text-darker-100 h-8 btn-green hover:dark:text-darker-600 px-4 uppercase'}
+            }) }}
+        </div>
+        {{ form_end(form) }}
+    {% endif %}
+</div>

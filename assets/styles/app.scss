@@ -234,13 +234,18 @@ footer {
 }
 
 // js
+[data-modal] {
+  display: none;
+}
 
-.js-alert {
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+[data-modal].open {
+  display: flex;
+}
+
+dialog.js-alert {
   z-index: 100;
+  top: 50%!important;
+  transform: translate(0%, -100%)!important;
 }
 
 // buttons

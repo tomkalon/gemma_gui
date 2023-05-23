@@ -11,6 +11,7 @@ use App\Repository\ObjectsRepository;
 use App\Repository\SettingsRepository;
 use App\Service\AlertsManager\AlertsManager;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -106,12 +107,12 @@ class AppController extends AbstractController
     #[Route('/app/{object<\d+>}/setup/edit_profile', name: 'app_show_selected_setup_edit_profile', priority: 5)]
     public function objectSetupEditProfile(Request $request, Objects $object, ObjectsRepository $objectsRepository): Response
     {
-        $formChangeProfile = $this->createForm(ChangeSettingsProfileType::class, $object);
-        $formChangeProfile->handleRequest($request);
+        $form = $this->createForm(ChangeSettingsProfileType::class, $object);
+        $form->handleRequest($request);
 
         // form handling
-        if ($formChangeProfile->isSubmitted() && $formChangeProfile->isValid()) {
-            $object = $formChangeProfile->getData();
+        if ($form->isSubmitted() && $form->isValid()) {
+            $object = $form->getData();
 
             // update data
             $objectsRepository->save($object, true);
@@ -128,16 +129,36 @@ class AppController extends AbstractController
         return $this->render('app/edit_profile.html.twig', [
             'object' => $object,
             'selectedObject' => $object,
-            'select_profile_form' => $formChangeProfile
+            'select_profile_form' => $form
         ]);
     }
 
     #[Route('/app/show_all_profiles', name: 'app_show_all_profiles', priority: 5)]
-    public function showAllProfiles(SettingsRepository $settingsRepository): Response
+    public function showAllProfiles(Request $request, SettingsRepository $settingsRepository): Response
     {
+        $settings = new Settings();
+        $form = $this->createForm(ChangeSettingsProfileNameType::class, $settings);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $settings = $form->getData();
+
+            // update data
+            $settingsRepository->save($settings, true);
+
+            // flash message
+            $this->addFlash('success', 'Dane zostały poprawnie zapisane!');
+
+            // redirection
+            return $this->redirectToRoute('app_show_all_profiles', [
+            ]);
+        }
+
         $settings = $settingsRepository->findAll();
         return $this->render('app/edit_all_profiles.html.twig', [
-            'settings' => $settings
+            'all' => true,
+            'settings' => $settings,
+            'new_profile_form' => $form
         ]);
     }
 
@@ -145,12 +166,12 @@ class AppController extends AbstractController
     #[Route('/app/edit_profile_name/{setup<\d+>}', name: 'app_edit_profile_name', priority: 5)]
     public function editProfileName(Request $request, Settings $setup, SettingsRepository $settingsRepository): Response
     {
-        $formChangeProfileName = $this->createForm(ChangeSettingsProfileNameType::class, $setup);
-        $formChangeProfileName->handleRequest($request);
+        $form = $this->createForm(ChangeSettingsProfileNameType::class, $setup);
+        $form->handleRequest($request);
 
         // form handling
-        if ($formChangeProfileName->isSubmitted() && $formChangeProfileName->isValid()) {
-            $setup = $formChangeProfileName->getData();
+        if ($form->isSubmitted() && $form->isValid()) {
+            $setup = $form->getData();
 
             // update data
             $settingsRepository->save($setup, true);
@@ -167,18 +188,58 @@ class AppController extends AbstractController
         return $this->render('app/edit_all_profiles.html.twig', [
             'settings' => $settings,
             'edited' => $setup->getId(),
-            'change_name_form' => $formChangeProfileName
+            'change_name_form' => $form
         ]);
     }
 
     #[Route('/app/remove_profile/{setup<\d+>}', name: 'app_remove_profile', priority: 5)]
     public function removeProfile(Request $request, Settings $setup, SettingsRepository $settingsRepository): Response
     {
+        $form = $this->createFormBuilder($setup)
+            ->add('remove', SubmitType::class)
+            ->getForm();
+        $form->handleRequest($request);
+
+        $settings = new Settings();
+        $new_profile_form = $this->createForm(ChangeSettingsProfileNameType::class, $settings);
+        $new_profile_form->handleRequest($request);
+
+        // form handling
+        if ($form->isSubmitted() && $form->isValid()) {
+            $setup = $form->getData();
+
+            // update data
+            $settingsRepository->remove($setup, true);
+
+            // flash message
+            $this->addFlash('success', 'Profil został usunięty!');
+
+            // redirection
+            return $this->redirectToRoute('app_show_all_profiles', [
+            ]);
+        }
+
+        if ($new_profile_form->isSubmitted() && $new_profile_form->isValid()) {
+            $settings = $new_profile_form->getData();
+
+            // update data
+            $settingsRepository->save($settings, true);
+
+            // flash message
+            $this->addFlash('success', 'Profil został dodany!');
+
+            // redirection
+            return $this->redirectToRoute('app_show_all_profiles', [
+            ]);
+        }
 
         $settings = $settingsRepository->findAll();
         return $this->render('app/edit_all_profiles.html.twig', [
+            'all' => true,
             'settings' => $settings,
-            'edited' => $setup->getId(),
+            'remove_id' => $setup->getId(),
+            'remove_profile_form' => $form,
+            'new_profile_form' => $new_profile_form
         ]);
     }
 }

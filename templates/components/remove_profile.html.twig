@@ -1,0 +1,13 @@
+<div{{ attributes }}>
+    <!-- component html -->
+    {% if form is defined %}
+        {{ form_start(form, {
+            'attr': {'class': 'w-full'}
+        }) }}
+        {{ form_widget(form.remove, {
+            'label': 'Usuń profil',
+            'attr': {'class': 'btn btn-green float-right'}
+        }) }}
+        {{ form_end(form) }}
+    {% endif %}
+</div>

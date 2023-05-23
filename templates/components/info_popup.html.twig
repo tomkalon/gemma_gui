@@ -1,8 +1,8 @@
-<div{{ attributes }} id="js-profile-cannot-be-deleted" class="js-popup-cover z-50 lg:z-30 fixed flex justify-center items-center top-0">
+<div{{ attributes }} {{ name }} data-modal class="js-popup-cover {% if open is defined and open == true %} open {% endif %} z-50 lg:z-30 fixed flex justify-center items-center top-0">
     <div class="js-popup rounded-lg flex flex-col dark:text-blue-50">
         <div class="flex justify-between items-center h-12 mx-1 px-2 border-b dark:border-blue-450 text-2xl lg:text-xl">
             <div>Nie można usunąć profilu!</div>
-            <button class="js-close-me relative bottom-2 right-4 lg:bottom-0 lg:right-0">
+            <button {{ name }}-close class="js-close-me relative bottom-2 right-4 lg:bottom-0 lg:right-0">
                 <i class="text-5xl lg:text-2xl gf gf-close"></i>
             </button>
         </div>
@@ -14,5 +14,14 @@
                 {{ message }}
             </div>
         </div>
+        {% if form is defined and form_name is defined %}
+        <div class="px-4 pb-4">
+            {{ component(form_name, {
+                form: form
+            }) }}
+            <button {{ name }}-close class="btn btn-red">Anuluj</button>
+        </div>
+
+        {% endif %}
     </div>
 </div>
