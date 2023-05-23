@@ -139,9 +139,10 @@ $light-shadow: 0 0 5px #ffffff80;
     .additional {
       font-size: 0.85rem;
       height: 4.25rem;
+      padding-right: 0.75rem;
 
       .progress {
-        width: 50rem;
+        width: 100%;
         .box {
           .row {
             align-items: center;

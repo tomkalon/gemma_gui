@@ -303,7 +303,7 @@ export default class FacilityApp extends Component {
     }
 
     componentDidMount() {
-        // setInterval(() => this.getFacility(), this.refreshInterval);
+        setInterval(() => this.getFacility(), this.refreshInterval);
         window.addEventListener('resize', () => {
             if (this.checkResolution(this.display)) {
                 this.checkMenuType(this.display, this.currentObject);

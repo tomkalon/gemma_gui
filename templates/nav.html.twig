@@ -2,13 +2,15 @@
     <div class="fixed w-full z-40">
         <nav class="big-screen hidden lg:block bg-amber-100 dark:bg-darker-800 border-b-2 border-amber-200 dark:border-darker-500">
             <div class="container mx-auto px-4 lg:flex gap-8 py-2.5">
-                <button class="item" onclick="window.location.href = '/app'">
-                    <span><i class="gf gf-home"></i></span>
-                    <span class="label">
-                        <span>Przegląd</span>
-                        <span>obiektów</span>
-                    </span>
-                </button>
+                <a href="{{ path('app_show_all') }}">
+                    <button class="item">
+                        <span><i class="gf gf-home"></i></span>
+                        <span class="label">
+                            <span>Przegląd</span>
+                            <span>obiektów</span>
+                        </span>
+                    </button>
+                </a>
                 <a href="{{ path('app_show_all_profiles') }}">
                     <button class="item">
                         <span><i class="gf gf-settings"></i></span>

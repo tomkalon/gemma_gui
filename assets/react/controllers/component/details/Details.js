@@ -178,7 +178,7 @@ class Details extends React.Component {
                                 })}
                             </div>
                             <div
-                                className={`additional text-center bg-gradient-to-t dark:from-blue-950 dark:to-blue-960 dark:text-blue-100 border-b-2 dark:border-blue-450 h-14`}>
+                                className={`additional flex text-center bg-gradient-to-t dark:from-blue-950 dark:to-blue-960 dark:text-blue-100 border-b-2 dark:border-blue-450 h-14`}>
                                 <div className={`progress mt-2 float-left flex`}>
                                     {progressRows.map((element, index) => (<div key={index} className={`box flex w-full ml-3`}>
                                             {element}
