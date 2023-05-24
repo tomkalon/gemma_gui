@@ -29,6 +29,10 @@
     "devDependencies": {
         "@babel/preset-react": "^7.18.6",
         "@popperjs/core": "^2.11.6",
+        "@swup/debug-plugin": "^1.0",
+        "@swup/fade-theme": "^1.0",
+        "@swup/forms-plugin": "^1.0",
+        "@swup/slide-theme": "^1.0",
         "@symfony/ux-react": "file:vendor/symfony/ux-react/assets",
         "autoprefixer": "^10.4.13",
         "file-loader": "^6.0.0",
@@ -39,6 +43,7 @@
         "react-dom": "^18.2.0",
         "sass": "^1.58.3",
         "sass-loader": "^13.0.0",
+        "swup": "^2.0",
         "tailwindcss": "^3.2.7",
         "webpack-notifier": "^1.15.0"
     }

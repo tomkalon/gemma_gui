@@ -1,6 +1,5 @@
 import $ from "jquery";
-import {element} from "prop-types";
-
+import api from "./api";
 
 // select form custom style
 $(document).ready(function () {
@@ -10,12 +9,12 @@ $(document).ready(function () {
     selector.css('display', 'none');
     selector.parent().append('<ul class="select_inner"></ul>');
     selector.children().each(function () {
-        var opttext = $(this).text();
-        var optval = $(this).val();
-        selector.parent().children('.select_inner').append('<li id="' + optval + '">' + opttext + '</li>');
+        let text = $(this).text();
+        let value = $(this).val();
+        selector.parent().children('.select_inner').append('<li id="' + value + '">' + text + '</li>');
     });
     selector.parent().find('li').on('click', function () {
-        var cur = $(this).attr('id');
+        let cur = $(this).attr('id');
         selector.parent().children('span').text($(this).text());
         selector.children().removeAttr('selected');
         selector.children('[value="' + cur + '"]').attr('selected', 'selected');
@@ -53,6 +52,20 @@ function modalBoxHandler (name) {
     }
 }
 
+// isRead API handler
+function isReadAlertsChanger (data, id) {
+    data.addEventListener('click', () => {
+        let info = document.querySelector("[" + `data-isread-info='${id}'` + "]");
+        let isHidden = info.classList.contains('hidden');
+        let data = {
+            'name': 'isRead'
+        }
+        isHidden ? data['value'] = true : data['value'] = false;
+        info.classList.toggle('hidden');
+        api.sendDataAPI('put', id, data, '/alerts/' + id);
+    });
+}
+
 $(document).ready(function () {
     setTimeout(() => {
         $('.js-alert').fadeOut(1500);
@@ -61,6 +74,11 @@ $(document).ready(function () {
     const modal = document.querySelectorAll('[data-modal]');
     modal.forEach(element => {
         modalBoxHandler (element.getAttributeNames()[0]);
+    })
+
+    const isRead = document.querySelectorAll('[data-isread-btn]');
+    isRead.forEach(element => {
+        isReadAlertsChanger (element, element.getAttribute('data-isread-btn'));
     })
 })
 

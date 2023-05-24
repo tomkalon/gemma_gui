@@ -13,6 +13,7 @@ class DetailsBottom extends React.Component {
     prepareAlertsData (data) {
         let content = [];
         let bgColor;
+
         data.map((element, key) => {
             if (((key + 1) % 2)) {
                 bgColor = 'dark:bg-blue-450 dark:hover:bg-blue-950'
@@ -20,11 +21,18 @@ class DetailsBottom extends React.Component {
                 bgColor = 'dark:hover:bg-blue-950';
             }
 
+
             if (element.isRead) {
-                content[key] = <div key={key} className={`cursor-pointer overflow-auto px-4 py-2 ${bgColor}`}>
+                let isRead = true;
+                content[key] = <div key={key} className={`cursor-pointer overflow-auto px-4 py-2 ${bgColor}`} onClick={() => {
+                    isRead = !isRead;
+                    this.saveHandler(element.id, 'alerts', {'name': 'isRead', 'value': isRead});
+                    document.querySelector("[" + `data-isread-visibility='${key}'` + "]").classList.toggle('hidden');
+                    document.querySelector("[" + `data-isread-blinking='${key}'` + "]").classList.toggle('blink');
+                }}>
                     <div className={`flex gap-3 px-4`}>
-                        <div className={`w-8 text-center text-3xl`}><i className={`gf gf-yes`}></i></div>
-                        <div className={`w-8 text-center text-3xl`}><i className={`gf gf-${element.attribute}`}></i>
+                        <div className={`w-8 text-center text-3xl`}><i data-isread-visibility={key} className={`gf gf-yes`}></i></div>
+                        <div className={`w-8 text-center text-3xl`}><i data-isread-blinking={key} className={`gf gf-${element.attribute}`}></i>
                         </div>
                         <div>{element.value}</div>
                     </div>
@@ -33,13 +41,16 @@ class DetailsBottom extends React.Component {
                     </div>
                 </div>;
             } else {
+                let isRead = true;
                 content[key] = <div key={key} className={`cursor-pointer overflow-auto px-4 py-2 ${bgColor}`} onClick={() => {
-                    this.saveHandler(element.id, 'alerts', {'name': 'isRead', 'value': true});
-                    document.querySelector("[" + `data-isread='${key}'` + "]").classList.remove('hidden');
+                    this.saveHandler(element.id, 'alerts', {'name': 'isRead', 'value': isRead});
+                    isRead = !isRead;
+                    document.querySelector("[" + `data-isread-visibility='${key}'` + "]").classList.toggle('hidden');
+                    document.querySelector("[" + `data-isread-blinking='${key}'` + "]").classList.toggle('blink');
                 }}>
                     <div className={`flex gap-3 px-4`}>
-                        <div className={`w-8 text-center text-3xl`}><i data-isread={key} className={`gf gf-yes hidden`}></i></div>
-                        <div className={`w-8 text-center text-3xl`}><i className={`gf gf-${element.attribute} blink`}></i>
+                        <div className={`w-8 text-center text-3xl`}><i data-isread-visibility={key} className={`gf gf-yes hidden`}></i></div>
+                        <div className={`w-8 text-center text-3xl`}><i data-isread-blinking={key} className={`gf gf-${element.attribute} blink`}></i>
                         </div>
                         <div>{element.value}</div>
                     </div>

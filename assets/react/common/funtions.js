@@ -1,8 +1,8 @@
 import React from 'react';
 import $ from 'jquery'
 import display from './display.json'
+import api from '../../js/api.js'
 
-const apiAddressSrc = "/api";
 const appAddressSrc = "/app";
 const displaySettings = display;
 
@@ -300,32 +300,6 @@ function getIndicatorsIcons (indicators) {
     return data;
 }
 
-// send data to API
-function sendDataAPI(method, id, send, target) {
-    if (typeof send['value'] === 'boolean') {
-        if (send['value']) {
-            send['value'] = 1;
-        } else {
-            send['value'] = 0;
-        }
-    }
-
-    let apiAddress = apiAddressSrc;
-    apiAddress += target;
-
-    fetch(apiAddress, {
-        method: method, headers: {
-            "Content-Type": "application/json",
-        }, body: JSON.stringify(send),
-    })
-        .then((response) => response.json())
-        .then(data => {})
-        .catch((error) => {
-            console.log("API communication error!");
-            console.error("Error:", error);
-        });
-}
-
 // ========= HANDLERS ==========
 // ===  sava data handler ===
 function saveSettingsData(id, data, name, isGlobal) {
@@ -334,13 +308,13 @@ function saveSettingsData(id, data, name, isGlobal) {
     send['value'] = data;
 
     if (isGlobal) {
-        sendDataAPI('put', id, send, '/objects/global');
+        api.sendDataAPI('put', id, send, '/objects/global');
         this.global[name] = data;
         this.setState({
             global: this.global
         });
     } else {
-        sendDataAPI('put', id, send, '/objects/' + id);
+        api.sendDataAPI('put', id, send, '/objects/' + id);
         this.stateScheme[this.currentObject].settings[name] = data;
         this.setState({
             facility: this.stateScheme
@@ -350,7 +324,7 @@ function saveSettingsData(id, data, name, isGlobal) {
 
 // ===  sava data handler ===
 function saveApiData(id, entity, data) {
-    sendDataAPI('put', id, data, '/' + entity + '/' + id);
+    api.sendDataAPI('put', id, data, '/' + entity + '/' + id);
 }
 
 // ===  pagination ===
