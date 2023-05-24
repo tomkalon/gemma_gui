@@ -39,6 +39,19 @@ class AlertsRepository extends ServiceEntityRepository
         }
     }
 
+    public function update(int $id, string $key, $value): int
+    {
+        $alert = $this->find($id)->getId();
+        $qb = $this->createQueryBuilder('alerts')
+            ->update('App:Alerts', 'p')
+            ->set("p.$key", $value)
+            ->where('p.id = :id')
+            ->setParameter('id', $alert);
+
+        $query = $qb->getQuery();
+        return $query->execute();
+    }
+
     public function findActive(int $id): array
     {
         $qb = $this->createQueryBuilder('alerts')

@@ -7,8 +7,50 @@ class DetailsBottom extends React.Component {
         super(props);
         this.closePopupHandler = this.props.closePopupHandler;
         this.showPopupHandler = this.props.showPopupHandler;
+        this.saveHandler = this.props.saveHandler;
     }
 
+    prepareAlertsData (data) {
+        let content = [];
+        let bgColor;
+        data.map((element, key) => {
+            if (((key + 1) % 2)) {
+                bgColor = 'dark:bg-blue-450 dark:hover:bg-blue-950'
+            } else {
+                bgColor = 'dark:hover:bg-blue-950';
+            }
+
+            if (element.isRead) {
+                content[key] = <div key={key} className={`cursor-pointer overflow-auto px-4 py-2 ${bgColor}`}>
+                    <div className={`flex gap-3 px-4`}>
+                        <div className={`w-8 text-center text-3xl`}><i className={`gf gf-yes`}></i></div>
+                        <div className={`w-8 text-center text-3xl`}><i className={`gf gf-${element.attribute}`}></i>
+                        </div>
+                        <div>{element.value}</div>
+                    </div>
+                    <div className={`float-right px-4 italic`}>
+                        {element.date}
+                    </div>
+                </div>;
+            } else {
+                content[key] = <div key={key} className={`cursor-pointer overflow-auto px-4 py-2 ${bgColor}`} onClick={() => {
+                    this.saveHandler(element.id, 'alerts', {'name': 'isRead', 'value': true});
+                    document.querySelector("[" + `data-isread='${key}'` + "]").classList.remove('hidden');
+                }}>
+                    <div className={`flex gap-3 px-4`}>
+                        <div className={`w-8 text-center text-3xl`}><i data-isread={key} className={`gf gf-yes hidden`}></i></div>
+                        <div className={`w-8 text-center text-3xl`}><i className={`gf gf-${element.attribute} blink`}></i>
+                        </div>
+                        <div>{element.value}</div>
+                    </div>
+                    <div className={`float-right px-4 italic`}>
+                        {element.date}
+                    </div>
+                </div>;
+            }
+        });
+        return content;
+    }
 
     render() {
 
@@ -19,6 +61,7 @@ class DetailsBottom extends React.Component {
         const alerts = this.props.alerts;
         const id = this.props.id;
         const handler = this.props.handler;
+        let data = {};
 
         // component
         const counter = (number, blink) => {
@@ -39,12 +82,15 @@ class DetailsBottom extends React.Component {
             hardwareIndicatorNew = indicators.hardware.new;
         }
 
+        // ALERTS
         if (alerts) {
             if (alerts.sensor) {
                 sensorCounter = alerts.sensor.length;
+                data['sensor'] = this.prepareAlertsData(alerts.sensor);
             }
             if (alerts.hardware) {
                 hardwareCounter = alerts.hardware.length;
+                data['hardware'] = this.prepareAlertsData(alerts.hardware);
             }
         }
 
@@ -53,7 +99,7 @@ class DetailsBottom extends React.Component {
             rounded = '';
             if (sensorCounter) {
                 sensor = <button className={`btn-red btn ml-2 float-right`}
-                                 onClick={() => {this.showPopupHandler(info.name + ' - ' + display.arrangement["sensor-alerts"], alerts.sensor, 'warning')}}>
+                                 onClick={() => {this.showPopupHandler(info.name + ' - ' + display.arrangement["sensor-alerts"], data['sensor'], 'warning')}}>
                     <i className={`gf gf-warning`}></i>{display.arrangement.warning}{counter(sensorCounter, sensorIndicatorNew)}
                 </button>;
             } else {
@@ -65,7 +111,7 @@ class DetailsBottom extends React.Component {
 
         if (hardwareCounter) {
             hardware = <button className={`btn-red btn ml-2 float-right`}
-                               onClick={() => {this.showPopupHandler(info.name + ' - ' + display.arrangement["hardware-alerts"], alerts.hardware, 'damage')}}>
+                               onClick={() => {this.showPopupHandler(info.name + ' - ' + display.arrangement["hardware-alerts"], data['hardware'], 'damage')}}>
                 <i className={`gf gf-damage`}></i>{display.arrangement.malfunction}{counter(hardwareCounter, hardwareIndicatorNew)}
             </button>;
         } else {

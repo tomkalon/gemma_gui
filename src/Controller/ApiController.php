@@ -2,6 +2,8 @@
 
 namespace App\Controller;
 
+use App\Entity\Alerts;
+use App\Service\AlertsManager\AlertsManager;
 use App\Service\GlobalSettingsManager\GlobalSettingsManager;
 use App\Service\ObjectManager\ObjectManager;
 use App\Service\Weather\WeatherManager;
@@ -42,13 +44,6 @@ class ApiController extends AbstractController
         return new JsonResponse($data);
     }
 
-    #[Route('/api/weather', name: 'app_api_weather', priority: 5)]
-    public function apiWeather(WeatherManager $weatherManager): Response
-    {
-        $data = $weatherManager->getWeatherData();
-        return new JsonResponse($data);
-    }
-
     #[Route('/api/objects/global', name: 'app_api_global', priority: 10)]
     public function apiGlobal(Request $request, GlobalSettingsManager $globalSettingsManager): Response
     {
@@ -61,4 +56,26 @@ class ApiController extends AbstractController
 
         return new JsonResponse($data);
     }
+
+    #[Route('/api/weather', name: 'app_api_weather', priority: 5)]
+    public function apiWeather(WeatherManager $weatherManager): Response
+    {
+        $data = $weatherManager->getWeatherData();
+        return new JsonResponse($data);
+    }
+
+    #[Route('/api/alerts/{alert<\d+>}', name: 'app_api_alerts', priority: 5)]
+    public function apiAlerts(Request $request, AlertsManager $alertsManager, $alert): Response
+    {
+        if ($request->isMethod('put')) {
+            $external_request = json_decode($request->getContent(), true);
+            $data = $alertsManager->updateByArray($external_request, $alert);
+        } else {
+            $data = false;
+        }
+        return new JsonResponse($data);
+    }
+
+
+
 }

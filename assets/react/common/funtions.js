@@ -16,7 +16,6 @@ function checkResolution(display) {
         }
     }
     if (resolution !== display.resolution) {
-        console.log(display.resolution);
         return true;
     }
     return false;
@@ -302,7 +301,7 @@ function getIndicatorsIcons (indicators) {
 }
 
 // send data to API
-function sendDataAPI(method, id, send, isGlobal) {
+function sendDataAPI(method, id, send, target) {
     if (typeof send['value'] === 'boolean') {
         if (send['value']) {
             send['value'] = 1;
@@ -312,11 +311,7 @@ function sendDataAPI(method, id, send, isGlobal) {
     }
 
     let apiAddress = apiAddressSrc;
-    if (isGlobal) {
-        apiAddress += '/objects/global';
-    } else {
-        apiAddress += '/objects/' + id
-    }
+    apiAddress += target;
 
     fetch(apiAddress, {
         method: method, headers: {
@@ -324,9 +319,7 @@ function sendDataAPI(method, id, send, isGlobal) {
         }, body: JSON.stringify(send),
     })
         .then((response) => response.json())
-        .then(data => {
-            console.log(data);
-        })
+        .then(data => {})
         .catch((error) => {
             console.log("API communication error!");
             console.error("Error:", error);
@@ -339,19 +332,25 @@ function saveSettingsData(id, data, name, isGlobal) {
     let send = {};
     send['name'] = name;
     send['value'] = data;
-    sendDataAPI('put', id, send, isGlobal);
 
     if (isGlobal) {
+        sendDataAPI('put', id, send, '/objects/global');
         this.global[name] = data;
         this.setState({
             global: this.global
         });
     } else {
+        sendDataAPI('put', id, send, '/objects/' + id);
         this.stateScheme[this.currentObject].settings[name] = data;
         this.setState({
             facility: this.stateScheme
         });
     }
+}
+
+// ===  sava data handler ===
+function saveApiData(id, entity, data) {
+    sendDataAPI('put', id, data, '/' + entity + '/' + id);
 }
 
 // ===  pagination ===
@@ -403,7 +402,6 @@ function carouselSetActiveElement(index, timeout) {
 
 // === select Current Settings ===
 function selectSettingsHandler(name, timeout) {
-    console.log(name);
     this.selectedSettings = name;
     $('#js-settings-content').fadeOut(timeout);
     setTimeout(() => {
@@ -432,6 +430,7 @@ const commonFunctions = {
     carouselSidebarPageIndex,
     carouselSetActiveElement,
     selectSettingsHandler,
+    saveApiData,
     saveSettingsData,
     getAlertsIndicators,
     updateCarouselColPerPage,

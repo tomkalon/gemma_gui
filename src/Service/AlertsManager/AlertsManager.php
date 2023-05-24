@@ -46,4 +46,10 @@ class AlertsManager
         $arr['numberOfPages'] = $arr['numberOfAlerts'] / $limit;
         return $arr;
     }
+
+    // update DATABASE by single array pair :: column_name -> value
+    public function updateByArray(array $data, int $id): int
+    {
+        return $this->alerts->update($id, $data['name'], $data['value']);
+    }
 }

@@ -11,6 +11,8 @@ class Details extends React.Component {
 
     constructor(props) {
         super(props);
+        this.saveHandler = this.props.saveHandler; // save API handler
+
     }
 
     state = {
@@ -25,7 +27,7 @@ class Details extends React.Component {
 
     showPopup (name, data, icon) {
         this.setState({
-            popup: <Popup name={name} data={data} icon={icon} closeHandler={this.closePopup.bind(this)} />,
+            popup: <Popup name={name} data={data} icon={icon} closeHandler={this.closePopup.bind(this)}/>,
         });
     }
 
@@ -77,7 +79,7 @@ class Details extends React.Component {
         const detailsBottom = <DetailsBottom settings={settings} info={info}
                                              indicators={state.indicators} alerts={state.alerts} id={info.id} handler={handler}
                                              closePopupHandler={this.closePopup.bind(this)}
-                                             showPopupHandler={this.showPopup.bind(this)}/>;
+                                             showPopupHandler={this.showPopup.bind(this)} saveHandler={this.saveHandler} />;
 
         // PROGRESS BAR
         function renderProgressBar(value, si, indicator) {

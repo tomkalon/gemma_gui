@@ -72,6 +72,7 @@ export default class FacilityApp extends Component {
         this.checkResolution = commonFunctions.checkResolution;
         this.checkMenuType = commonFunctions.checkMenuType;
 
+        this.saveApiData = commonFunctions.saveApiData;
         this.saveSettingsData = commonFunctions.saveSettingsData;
         this.assignValues = commonFunctions.assignValues;
         this.isSensorActive = commonFunctions.isSensorActive;
@@ -256,7 +257,8 @@ export default class FacilityApp extends Component {
                 if (currentObject !== false && currentObject !== null) {
                     details = <Details info={currentObjectInfo} state={currentObjectState} isDay={isDay}
                                        stats={stats} indicatorIcons={this.getIndicatorsIcons}
-                                       linkHandler={this.selectObjectHandler.bind(this)}/>;
+                                       linkHandler={this.selectObjectHandler.bind(this)}
+                                       saveHandler={this.saveApiData.bind(this)}/>;
                 }
 
                 // ======= SETTINGS =======

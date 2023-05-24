@@ -6,9 +6,14 @@
             <div class="w-full dark:text-darker-0 lg:rounded dark:bg-blue-550 shadow-lg shadow-darker-700">
                 <div class="text-3xl flex items-center justify-between uppercase lg:text-xl lg:rounded-t px-4 py-4 lg:py-2 dark:bg-blue-950">
                     <span>Edycja profili ustawień</span>
-                    <div>
+                    <div class="flex">
+                        {% if all is defined %}
+                            <button data-new-profile-open class="btn btn-blue text-base">Nowy profil</button>
+                        {% else %}
+                            <button class="btn btn-blue text-base inactive">Nowy profil</button>
+                        {% endif %}
                         <a href="{{ path('app_show_all') }}">
-                            <button class="btn btn-green ml-2 text-base uppercase float-right">Lista obiektów</button>
+                            <button class="btn btn-green ml-2 text-base float-right">Przegląd obiektów</button>
                         </a>
                     </div>
                 </div>
@@ -100,12 +105,15 @@
                     </table>
                 </div>
 
-                    <div class="p-4">
+                    <div class="p-4 flex justify-end">
                         {% if all is defined %}
                             <button data-new-profile-open class="btn btn-blue">Nowy profil</button>
                         {% else %}
                             <button class="btn btn-blue inactive">Nowy profil</button>
                         {% endif %}
+                        <a href="{{ path('app_show_all') }}">
+                            <button class="btn btn-green ml-2 text-base float-right">Przegląd obiektów</button>
+                        </a>
                     </div>
             </div>
         </div>
