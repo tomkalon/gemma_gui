@@ -1,35 +1,39 @@
-<header id="nav" class="w-full sm:h-48 md:h-24 lg:h-26 xl:h-26 dark:bg-darker-500">
+<header id="nav" class="w-full h-56 lg:h-26 xl:h-26 dark:bg-darker-500">
     <div class="fixed w-full z-40">
-        <nav class="big-screen hidden lg:block bg-amber-100 dark:bg-darker-800 border-b-2 border-amber-200 dark:border-darker-500">
-            <div class="container mx-auto px-4 lg:flex gap-8 py-2.5">
-                <a href="{{ path('app_show_all') }}">
-                    <button class="item">
-                        <span><i class="gf gf-home"></i></span>
-                        <span class="label">
+        <nav class="pt-8 pb-4 lg:py-0 bg-amber-100 dark:bg-darker-800 border-b-2 border-amber-200 dark:border-darker-500">
+            <div class="container mx-auto px-4 flex gap-8 py-2.5 justify-between lg:justify-normal">
+                <div>
+                    <a href="{{ path('app_show_all') }}">
+                        <button class="item over">
+                            <span><i class="gf gf-home text-8xl lg:text-3xl"></i></span>
+                            <span class="label hidden lg:block">
                             <span>Przegląd</span>
                             <span>obiektów</span>
                         </span>
-                    </button>
-                </a>
-                <a href="{{ path('app_show_all_profiles') }}">
-                    <button class="item">
-                        <span><i class="gf gf-settings"></i></span>
-                        <span class="label">
+                        </button>
+                    </a>
+                </div>
+                <div>
+                    <a href="{{ path('app_show_all_profiles') }}">
+                        <button class="item">
+                            <span><i class="gf gf-settings text-8xl lg:text-3xl"></i></span>
+                            <span class="label hidden lg:block">
                             <span>Przegląd</span>
                             <span>ustawień</span>
                         </span>
-                    </button>
-                </a>
+                        </button>
+                    </a>
+                </div>
                 <div class="item" onclick="window.location.reload()">
-                    <span><i class="gf gf-refresh"></i></span>
-                    <div class="label">
+                    <span><i class="gf gf-refresh text-8xl lg:text-3xl"></i></span>
+                    <div class="label hidden lg:block">
                         <span>Przeładuj</span>
                         <span>aplikację</span>
                     </div>
                 </div>
                 <div class="item">
-                    <span><i class="gf gf-info"></i></span>
-                    <div class="label">
+                    <span><i class="gf gf-info text-8xl lg:text-3xl"></i></span>
+                    <div class="label hidden lg:block">
                         <span>Pomoc</span>
                         <span>kontakt</span>
                     </div>

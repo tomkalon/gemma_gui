@@ -118,7 +118,7 @@ hr {
 }
 
 header {
-  nav.big-screen {
+  nav {
     .item {
       color: $dark-0;
       text-shadow: $text-shadow;
@@ -129,7 +129,7 @@ header {
       }
 
       i {
-        font-size: 2rem;
+        line-height: 1.75rem;
       }
 
       .label {

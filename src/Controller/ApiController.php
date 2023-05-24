@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Alerts;
+use App\Entity\Objects;
 use App\Service\AlertsManager\AlertsManager;
 use App\Service\GlobalSettingsManager\GlobalSettingsManager;
 use App\Service\ObjectManager\ObjectManager;
@@ -32,7 +33,7 @@ class ApiController extends AbstractController
     }
 
     #[Route('/api/objects/{object_number<\d+>}', name: 'app_api_object_number', priority: 5)]
-    public function apiObjectNumber(ObjectManager $objectManager, Request $request, $object_number): Response
+    public function apiObjectNumber(ObjectManager $objectManager, Request $request, Objects $object_number): Response
     {
         if ($request->isMethod('put')) {
             $external_request = json_decode($request->getContent(), true);
@@ -65,7 +66,7 @@ class ApiController extends AbstractController
     }
 
     #[Route('/api/alerts/{alert<\d+>}', name: 'app_api_alerts', priority: 5)]
-    public function apiAlerts(Request $request, AlertsManager $alertsManager, $alert): Response
+    public function apiAlerts(Request $request, AlertsManager $alertsManager, Alerts $alert): Response
     {
         if ($request->isMethod('put')) {
             $external_request = json_decode($request->getContent(), true);
