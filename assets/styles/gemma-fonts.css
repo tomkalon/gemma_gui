@@ -452,3 +452,7 @@
 .gf-humid:before {
     content: "\f136";
 }
+
+.gf-user:before {
+    content: "\f200";
+}

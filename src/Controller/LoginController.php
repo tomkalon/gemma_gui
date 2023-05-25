@@ -20,4 +20,8 @@ class LoginController extends AbstractController
             'lastError' => $last_error
         ]);
     }
+    #[Route('/logout', name: 'login_logout')]
+    public function logout()
+    {
+    }
 }

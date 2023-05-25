@@ -1,42 +1,47 @@
 <header id="nav" class="w-full h-56 lg:h-26 xl:h-26 dark:bg-darker-500">
     <div class="fixed w-full z-40">
         <nav class="pt-8 pb-4 lg:py-0 bg-amber-100 dark:bg-darker-800 border-b-2 border-amber-200 dark:border-darker-500">
-            <div class="container mx-auto px-4 flex gap-8 py-2.5 justify-between lg:justify-normal">
-                <div>
-                    <a href="{{ path('app_show_all') }}">
-                        <button class="item over">
-                            <span><i class="gf gf-home text-8xl lg:text-3xl"></i></span>
+            <div class="container grid grid-cols-12 mx-auto px-4 gap-8 py-2.5">
+                <div class="flex justify-between lg:justify-normal lg:gap-8 col-span-12 lg:col-span-8">
+                    <div>
+                            <button class="item over" onclick="location.href='{{ path('app_show_all') }}'">
+                                <span><i class="gf gf-home text-8xl lg:text-3xl"></i></span>
+                                <span class="label hidden lg:block">
+                                <span>Przegląd</span>
+                                <span>obiektów</span>
+                            </span>
+                            </button>
+                    </div>
+                    <div>
+                            <button class="item" onclick="location.href='{{ path('app_show_all_profiles') }}'">
+                                <span><i class="gf gf-user text-8xl lg:text-3xl"></i></span>
+                                <span class="label hidden lg:block">
+                                <span>Opcje</span>
+                                <span>Profilu</span>
+                            </span>
+                            </button>
+                    </div>
+                    <div>
+                        <button class="item" onclick="window.location.reload()">
+                            <span><i class="gf gf-refresh text-8xl lg:text-3xl"></i></span>
                             <span class="label hidden lg:block">
-                            <span>Przegląd</span>
-                            <span>obiektów</span>
+                            <span>Przeładuj</span>
+                            <span>aplikację</span>
                         </span>
                         </button>
-                    </a>
-                </div>
-                <div>
-                    <a href="{{ path('app_show_all_profiles') }}">
+                    </div>
+                    <div>
                         <button class="item">
-                            <span><i class="gf gf-settings text-8xl lg:text-3xl"></i></span>
+                            <span><i class="gf gf-info text-8xl lg:text-3xl"></i></span>
                             <span class="label hidden lg:block">
-                            <span>Przegląd</span>
-                            <span>ustawień</span>
+                            <span>Pomoc</span>
+                            <span>kontakt</span>
                         </span>
                         </button>
-                    </a>
-                </div>
-                <div class="item" onclick="window.location.reload()">
-                    <span><i class="gf gf-refresh text-8xl lg:text-3xl"></i></span>
-                    <div class="label hidden lg:block">
-                        <span>Przeładuj</span>
-                        <span>aplikację</span>
                     </div>
                 </div>
-                <div class="item">
-                    <span><i class="gf gf-info text-8xl lg:text-3xl"></i></span>
-                    <div class="label hidden lg:block">
-                        <span>Pomoc</span>
-                        <span>kontakt</span>
-                    </div>
+                <div class="hidden lg:block col-span-3 col-start-10">
+                    <button class="btn btn-empty float-right text-darker-0" onclick="location.href='{{ path('login_logout') }}'">Wyloguj się</button>
                 </div>
             </div>
         </nav>

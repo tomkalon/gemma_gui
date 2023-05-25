@@ -181,7 +181,6 @@ class AppFixtures extends Fixture
             $this->hasher->hashPassword($admin, 'password')
         );
         $admin->setDescription("NAZWA FIRMY");
-        $admin->setRoles(['ROLE_ADMIN', 'ROLE_USER']);
         $admin->setEmail("admin@email.com");
 
         $user = new User();
@@ -190,7 +189,6 @@ class AppFixtures extends Fixture
             $this->hasher->hashPassword($user, 'password')
         );
         $user->setDescription("Jan Kowalski");
-        $admin->setRoles(['ROLE_USER']);
         $user->setEmail("user@email.com");
 
         $manager->persist($admin);
