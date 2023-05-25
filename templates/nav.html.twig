@@ -14,10 +14,10 @@
                     </div>
                     <div>
                             <button class="item" onclick="location.href='{{ path('app_show_all_profiles') }}'">
-                                <span><i class="gf gf-user text-8xl lg:text-3xl"></i></span>
+                                <span><i class="gf gf-settings text-8xl lg:text-3xl"></i></span>
                                 <span class="label hidden lg:block">
-                                <span>Opcje</span>
-                                <span>Profilu</span>
+                                <span>Przegląd</span>
+                                <span>profili</span>
                             </span>
                             </button>
                     </div>
@@ -40,9 +40,18 @@
                         </button>
                     </div>
                 </div>
-                <div class="hidden lg:block col-span-3 col-start-10">
-                    <button class="btn btn-empty float-right text-darker-0" onclick="location.href='{{ path('login_logout') }}'">Wyloguj się</button>
-                </div>
+                {% if is_granted('ROLE_USER') %}
+                    <div class="hidden lg:flex justify-end items-center gap-x-4 col-span-4">
+                        <div class="item">
+                            <span><i class="gf gf-user mt-1 text-8xl lg:text-3xl"></i></span>
+                            <span class="label hidden lg:block">
+                            <span>Zalogowano</span>
+                            <span>{{ app.user.username }}</span>
+                        </span>
+                        </div>
+                        <button class="btn btn-empty float-right text-darker-0" onclick="location.href='{{ path('login_logout') }}'">Wyloguj się</button>
+                    </div>
+                {% endif %}
             </div>
         </nav>
         <div {{ react_component('WeatherBar') }}></div>

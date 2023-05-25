@@ -9,6 +9,7 @@ use App\Form\ChangeSettingsProfileType;
 use App\Form\ObjectInfoType;
 use App\Repository\ObjectsRepository;
 use App\Repository\SettingsRepository;
+use App\Repository\UserRepository;
 use App\Service\AlertsManager\AlertsManager;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
@@ -240,5 +241,13 @@ class AppController extends AbstractController
             'remove_profile_form' => $form,
             'new_profile_form' => $new_profile_form
         ]);
+    }
+
+
+    #[Route('/test', name: 'test', priority: 5)]
+    public function test(UserRepository $userRepository)
+    {
+        $user = $userRepository->findAllAttr('email');
+        dd($user);
     }
 }

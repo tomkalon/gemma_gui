@@ -15,6 +15,9 @@
 <body class="min-h-screen dark:bg-darker-500">
 <dialog class="centered flex flex-col bg-white shadow-md px-4 sm:px-6 md:px-8 lg:px-10 py-8 rounded-md w-full max-w-md">
     <div class="font-medium self-center text-xl sm:text-2xl uppercase text-gray-800">Logowanie</div>
+    {% if error %}
+        <div class="px-4 py-2 mt-2 rounded bg-red-300">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+    {% endif %}
     <div class="mt-6">
         <form action="{{ path('login_login') }}" method="post">
             <div class="flex flex-col mb-6">
@@ -47,6 +50,7 @@
                            placeholder="Hasło"/>
                 </div>
             </div>
+            <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
             <input type="hidden" name="_target_path" value="{{ path('app_show_all') }}">
             <div class="flex w-full">
                 <button type="submit"
