@@ -14,18 +14,23 @@ use DateTime;
 use DateTimeZone;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 class AppFixtures extends Fixture
 {
     private int $object_quantity = 6;
     private int $number_of_stats = 50;
+    public function __construct(private readonly UserPasswordHasherInterface $hasher)
+    {
+
+    }
 
     public function load(ObjectManager $manager): void
     {
         for ($i = 1; $i <= $this->object_quantity; $i++) {
             $object[$i] = new Objects();
             $settings[$i] = new Settings();
-            if ($i == 3) {} else {
+            if (!$i == 3) {
                 $object[$i]->setSettings($settings[$i]);
             }
             $this->setSettings($settings[$i], $manager, $i);
@@ -172,13 +177,20 @@ class AppFixtures extends Fixture
     {
         $admin = new User();
         $admin->setUsername("admin");
-        $admin->setPassword("password");
+        $admin->setPassword(
+            $this->hasher->hashPassword($admin, 'password')
+        );
         $admin->setDescription("NAZWA FIRMY");
+        $admin->setRoles(['ROLE_ADMIN', 'ROLE_USER']);
         $admin->setEmail("admin@email.com");
+
         $user = new User();
         $user->setUsername("user");
-        $user->setPassword("password");
+        $user->setPassword(
+            $this->hasher->hashPassword($user, 'password')
+        );
         $user->setDescription("Jan Kowalski");
+        $admin->setRoles(['ROLE_USER']);
         $user->setEmail("user@email.com");
 
         $manager->persist($admin);
@@ -234,7 +246,7 @@ class AppFixtures extends Fixture
         }
     }
 
-    public function setAlerts($manager, $obj)
+    public function setAlerts($manager, $obj): void
     {
         $list = [[
             'attr' => 'temp',

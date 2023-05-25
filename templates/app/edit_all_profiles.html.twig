@@ -125,14 +125,14 @@
     {% endfor %}
     {{ component('info_popup', {
         name: 'data-profile-cannot-be-deleted',
-        title: 'Nie można usunąć profilu!',
+        title: 'Informacja',
         message: 'Nie można usunąć profilu, gdyż jest używany przez co najmniej jeden z obiektów.'
     }) }}
 
     {% if new_profile_form is defined %}
     {{ component('info_popup', {
         name: 'data-new-profile',
-        title: 'Potwierdzenie',
+        title: 'Dodawanie nowego profilu ustawień',
         message: 'Potwierdzasz dodanie nowego profilu?',
         form: new_profile_form,
         form_name: 'name_form'
@@ -142,7 +142,7 @@
     {% if remove_profile_form is defined %}
     {{ component('info_popup', {
         name: 'data-remove-profile',
-        title: 'Potwierdzenie',
+        title: 'Usuwanie profilu ustawień',
         message: 'Czy potwierdzasz usunięcie profilu?',
         form: remove_profile_form,
         form_name: 'remove_profile',

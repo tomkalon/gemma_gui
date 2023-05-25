@@ -10,14 +10,12 @@ class ObjectManager
 {
     protected object $object;
     protected object $alerts;
-    protected object $entity_manager;
     protected array $data;
 
     public function __construct(EntityManagerInterface $entityManager)
     {
         $this->object = $entityManager->getRepository(Objects::class);
         $this->alerts = $entityManager->getRepository(Alerts::class);
-        $this->entity_manager = $entityManager;
     }
 
     // get ALL OBJECTS DATA

@@ -108,7 +108,6 @@ html {
 body {
   height: 100%;
   font-family: "Roboto", sans-serif;
-  background: #000;
 }
 
 hr {
@@ -239,6 +238,13 @@ footer {
   }
 }
 
+// popup
+dialog.centered {
+  z-index: 100;
+  top: 50%!important;
+  transform: translate(0%, -50%)!important;
+}
+
 // js
 [data-modal] {
   display: none;
@@ -246,12 +252,6 @@ footer {
 
 [data-modal].open {
   display: flex;
-}
-
-dialog.js-alert {
-  z-index: 100;
-  top: 50%!important;
-  transform: translate(0%, -100%)!important;
 }
 
 // buttons

@@ -47,6 +47,7 @@ class SettingsRepository extends ServiceEntityRepository
         return $query->execute();
     }
 
+
 //    /**
 //     * @return Settings[] Returns an array of Settings objects
 //     */

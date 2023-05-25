@@ -8,11 +8,9 @@ use Doctrine\ORM\EntityManagerInterface;
 class GlobalSettingsManager
 {
     protected object $global_settings;
-    protected object $entity_manager;
 
     public function __construct(EntityManagerInterface $entityManager) {
         $this->global_settings = $entityManager->getRepository(GlobalSettings::class);
-        $this->entity_manager = $entityManager;
     }
 
     public function getGlobalSettings(): array {

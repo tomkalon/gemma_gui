@@ -54,10 +54,10 @@ class AlertsRepository extends ServiceEntityRepository
 
     public function findActive(int $id): array
     {
-        $qb = $this->createQueryBuilder('alerts')
-            ->where('alerts.object = :id')
-            ->andWhere('alerts.isActive = TRUE')
-            ->orderBy('alerts.id', 'DESC')
+        $qb = $this->createQueryBuilder('a')
+            ->where('a.object = :id')
+            ->andWhere('a.isActive = TRUE')
+            ->orderBy('a.id', 'DESC')
             ->setParameter('id', $id);
 
         $query = $qb->getQuery();
@@ -66,11 +66,11 @@ class AlertsRepository extends ServiceEntityRepository
 
     public function findActiveByType(int $id, string $type): array
     {
-        $qb = $this->createQueryBuilder('alerts')
-            ->where('alerts.object = :id')
-            ->andWhere('alerts.isActive = TRUE')
-            ->andWhere('alerts.type = :type')
-            ->orderBy('alerts.id', 'DESC')
+        $qb = $this->createQueryBuilder('a')
+            ->where('a.object = :id')
+            ->andWhere('a.isActive = TRUE')
+            ->andWhere('a.type = :type')
+            ->orderBy('a.id', 'DESC')
             ->setParameter('id', $id)
             ->setParameter('type', $type);
 

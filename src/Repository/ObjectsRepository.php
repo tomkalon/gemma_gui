@@ -42,7 +42,7 @@ class ObjectsRepository extends ServiceEntityRepository
     public function update(object $entity, string $key, $value): int
     {
         $settings_id = $entity->getSettings()->getId();
-        $qb = $this->createQueryBuilder('settings')
+        $qb = $this->createQueryBuilder('s')
             ->update('App:Settings', 'p')
             ->set("p.$key", $value)
             ->where('p.id = :id')

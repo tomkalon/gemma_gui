@@ -16,7 +16,7 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class ApiController extends AbstractController
 {
-    #[Route('/api/objects', name: 'app_api_objects', priority: 5)]
+    #[Route('/api/objects', name: 'api_objects', priority: 5)]
     public function apiObjects(ObjectManager $objectManager, GlobalSettingsManager $globalSettingsManager, Request $request): Response
     {
         $data = array();
@@ -32,7 +32,7 @@ class ApiController extends AbstractController
         return new JsonResponse($data);
     }
 
-    #[Route('/api/objects/{object_number<\d+>}', name: 'app_api_object_number', priority: 5)]
+    #[Route('/api/objects/{object_number<\d+>}', name: 'api_object_number', priority: 5)]
     public function apiObjectNumber(ObjectManager $objectManager, Request $request, Objects $object_number): Response
     {
         if ($request->isMethod('put')) {
@@ -45,7 +45,7 @@ class ApiController extends AbstractController
         return new JsonResponse($data);
     }
 
-    #[Route('/api/objects/global', name: 'app_api_global', priority: 10)]
+    #[Route('/api/objects/global', name: 'api_global', priority: 10)]
     public function apiGlobal(Request $request, GlobalSettingsManager $globalSettingsManager): Response
     {
         if ($request->isMethod('put')) {
@@ -58,14 +58,14 @@ class ApiController extends AbstractController
         return new JsonResponse($data);
     }
 
-    #[Route('/api/weather', name: 'app_api_weather', priority: 5)]
+    #[Route('/api/weather', name: 'api_weather', priority: 5)]
     public function apiWeather(WeatherManager $weatherManager): Response
     {
         $data = $weatherManager->getWeatherData();
         return new JsonResponse($data);
     }
 
-    #[Route('/api/alerts/{alert<\d+>}', name: 'app_api_alerts', priority: 5)]
+    #[Route('/api/alerts/{alert<\d+>}', name: 'api_alerts', priority: 5)]
     public function apiAlerts(Request $request, AlertsManager $alertsManager, Alerts $alert): Response
     {
         if ($request->isMethod('put')) {

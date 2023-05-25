@@ -16,10 +16,11 @@
                     'label': 'Zmień profil',
                     'attr': {'class': 'btn btn-green pt-4'}
                 }) }}
+                <a href="{{ path('app_show_all_profiles') }}">
+                    <button type="button" class="btn btn-empty">Przegląd profili ustawień</button>
+                </a>
             </div>
         </div>
         {{ form_end(select_profile_form) }}
-        <a href="{{ path('app_show_all_profiles') }}">
-            <button class="btn btn-empty pt-4 mt-4 ">Przegląd profili ustawień</button>
-        </a>
+
 </div>

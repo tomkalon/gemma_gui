@@ -65,8 +65,7 @@ class AppController extends AbstractController
 
         }
 
-        $limit = 10;
-        $alerts = $alertsManager->getAlerts($object, 0, 0, $limit);
+        $alerts = $alertsManager->getAlerts($object, 0, 0, 10);
         return $this->render('app/setup.html.twig', [
             'object' => $object,
             'alerts' => $alerts['alerts'],
@@ -147,17 +146,17 @@ class AppController extends AbstractController
             $settingsRepository->save($settings, true);
 
             // flash message
-            $this->addFlash('success', 'Dane zostały poprawnie zapisane!');
+            $this->addFlash('success', 'Profil został dodany!');
 
             // redirection
             return $this->redirectToRoute('app_show_all_profiles', [
             ]);
         }
 
-        $settings = $settingsRepository->findAll();
+        $settingsAll = $settingsRepository->findAll();
         return $this->render('app/edit_all_profiles.html.twig', [
             'all' => true,
-            'settings' => $settings,
+            'settings' => $settingsAll,
             'new_profile_form' => $form
         ]);
     }
@@ -177,7 +176,7 @@ class AppController extends AbstractController
             $settingsRepository->save($setup, true);
 
             // flash message
-            $this->addFlash('success', 'Dane zostały poprawnie zapisane!');
+            $this->addFlash('success', 'Dane zostały zmienione!');
 
             // redirection
             return $this->redirectToRoute('app_show_all_profiles', [
