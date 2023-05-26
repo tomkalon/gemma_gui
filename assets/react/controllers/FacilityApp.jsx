@@ -80,7 +80,6 @@ export default class FacilityApp extends Component {
         this.getAlertsIndicator = commonFunctions.getAlertsIndicators;
         this.getCarouselDisplaySettings = commonFunctions.getCarouselDisplaySettings;
         this.updateCarouselColPerPage = commonFunctions.updateCarouselColPerPage;
-        this.prepareSettingsButton = commonFunctions.prepareSettingsButton;
         this.getIndicatorsIcons = commonFunctions.getIndicatorsIcons;
 
         // handlers
@@ -267,8 +266,8 @@ export default class FacilityApp extends Component {
                     settings = <Settings currentObject={currentObjectState} selectedSettings={selectedSettings}
                                          global={global} saveHandler={this.saveSettingsData.bind(this)}
                                          settingsHandler={this.selectSettingsHandler.bind(this)}
-                                         id={facilityInfo[currentObject]['id']} displayLogic={this.prepareSettingsButton}
-                                         simple={false} linkHandler={this.selectObjectHandler.bind(this)}/>;
+                                         id={facilityInfo[currentObject]['id']} simple={false}
+                                         linkHandler={this.selectObjectHandler.bind(this)}/>;
                 }
                 // ======= SMALL DISPLAY COMPONENTS =======
                 // list -> all objects
@@ -288,8 +287,8 @@ export default class FacilityApp extends Component {
                     settings = <Settings currentObject={currentObjectState} selectedSettings={selectedSettings}
                                          global={global} saveHandler={this.saveSettingsData.bind(this)}
                                          settingsHandler={this.selectSettingsHandler.bind(this)}
-                                         id={facilityInfo[currentObject]['id']} displayLogic={this.prepareSettingsButton}
-                                         simple={true}/>;
+                                         id={facilityInfo[currentObject]['id']}  simple={true}
+                                         linkHandler={this.selectObjectHandler.bind(this)}/>;
                 }
             }
         }

@@ -13,9 +13,9 @@
             {% if object.type %}
                 <span class="p-4 rounded dark:bg-darker-300">Rodzaj obiektu: {{ object.type }}</span>
             {% endif %}
-            <a href="{{ path('app_show_selected_setup_edit_info',{'object': object.id}) }}">
-                <button class="btn btn-green mt-4 float-right">Edytuj informacje</button>
-            </a>
+            {% if is_granted('ROLE_MANAGER') %}
+                <button onclick="location.href='{{ path('app_show_selected_setup_edit_info',{'object': object.id}) }}'" class="btn btn-green mt-4 float-right">Edytuj informacje</button>
+            {% endif %}
         </div>
     </div>
 

@@ -234,55 +234,6 @@ function getAlertsIndicators(stateScheme, alerts) {
     stateScheme['indicators'] = indicators;
 }
 
-// create settings buttons
-const prepareSettingsButton = (id, selected, scheme, data, object, global, display, renderBtn, saveHandler, newRow) => {
-    let buttonList = {};
-    let counter = 0;
-    if (selected !== false && scheme[selected] !== undefined) {
-        let value;
-        let color = '';
-        for (const [key, element] of Object.entries(scheme[selected])) {
-
-            // if there is color saved in scheme use it
-            if (data[key].color) {
-                color = data[key].color;
-            }``
-
-            // specific sensor settings
-            if (object.settings[key] !== undefined) {
-
-                // boolean
-                if (data[key].bool !== undefined) {
-                    object.settings[key] === true ? value = 1 : value = 0;
-                    buttonList[counter] = renderBtn(id, key, data[key], data[key].values[value], object.settings[key], saveHandler);
-                }
-
-                // range
-                else {
-                    if (object.readings[element.rel] || display.environment[element.rel]) {
-                        buttonList[counter] = renderBtn(id, key, data[key], object.settings[key], color, saveHandler);
-                    }
-                }
-                counter++;
-            }
-
-            // global settings
-            else if (global[key]) {
-                if (display.environment[element.rel]) {
-                    buttonList[counter] = renderBtn(id, key, data[key], global[key], color, saveHandler);
-                }
-                counter++;
-            }
-
-            if (element.separator) {
-                buttonList[counter] = newRow();
-                counter++;
-            }
-        }
-    }
-    return buttonList;
-}
-
 // get string data - prepare indicators class name
 function getIndicatorsIcons (indicators) {
     let data = {
@@ -397,7 +348,6 @@ const commonFunctions = {
     isSensorActive,
     assignValues,
     getObjectInfo,
-    prepareSettingsButton,
     getIndicatorsIcons,
     getCarouselDisplaySettings,
     carouselPaginationPageIndex,

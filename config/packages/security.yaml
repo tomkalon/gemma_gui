@@ -22,6 +22,9 @@ security:
             logout:
                 path: login_logout
                 target: login_login
+            remember_me:
+                secret: '%kernel.secret%'
+                always_remember_me: true
         secured_area:
             form_login:
                 enable_csrf: true
@@ -37,15 +40,17 @@ security:
     access_control:
           # require ROLE_ADMIN
          - { path: ^/admin, roles: ROLE_ADMIN }
-           
+         
            # require ROLE_USER
-         - { path: ^/api, roles: ROLE_USER }
+         - { path: ^/user, roles: ROLE_MANAGER }
+        
+        # require ROLE_SERVICE
+         - { path: ^/api, roles: ROLE_USER}
          - { path: ^/app, roles: ROLE_USER }
-         - { path: ^/user, roles: ROLE_USER }
-         - { path: ^/profile, roles: ROLE_USER }
     
     role_hierarchy:
-        ROLE_ADMIN: [ROLE_USER]
+        ROLE_MANAGER: [ROLE_USER]
+        ROLE_ADMIN: [ROLE_MANAGER]
 
 when@test:
     security:

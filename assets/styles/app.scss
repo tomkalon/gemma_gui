@@ -117,6 +117,9 @@ hr {
 }
 
 header {
+  &.open {
+    display: block!important;
+  }
   nav {
     .item {
       color: $dark-0;

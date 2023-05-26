@@ -1,4 +1,4 @@
-<header id="nav" class="w-full h-56 lg:h-26 xl:h-26 dark:bg-darker-500">
+<header id="nav" class="hidden lg:block w-full h-56 lg:h-26 xl:h-26 dark:bg-darker-500">
     <div class="fixed w-full z-40">
         <nav class="pt-8 pb-4 lg:py-0 bg-amber-100 dark:bg-darker-800 border-b-2 border-amber-200 dark:border-darker-500">
             <div class="container grid grid-cols-12 mx-auto px-4 gap-8 py-2.5">
@@ -40,7 +40,7 @@
                         </button>
                     </div>
                 </div>
-                {% if is_granted('ROLE_USER') %}
+                {% if is_granted('ROLE_MANAGER') %}
                     <div class="hidden lg:flex justify-end items-center gap-x-4 col-span-4">
                         <div class="item">
                             <span><i class="gf gf-user mt-1 text-8xl lg:text-3xl"></i></span>

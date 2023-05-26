@@ -14,7 +14,6 @@ class CarouselPage extends React.Component {
         const indicatorIcons = this.props.indicators;
         const handler = this.props.handler;
 
-
         function getObject(key, current, state, info, handler) {
             // var
             let isActive;
@@ -24,6 +23,11 @@ class CarouselPage extends React.Component {
 
             // alert indicators
             let indicators = indicatorIcons(state.indicators);
+            let sensorAlert;
+            if (state['settings']) {
+                sensorAlert = indicators['sensor'];
+            }
+            console.log(state);
 
             const sensors = (key, icon, value, si, desc) => {
                 return (<div key={key}>
@@ -40,7 +44,7 @@ class CarouselPage extends React.Component {
                     className={`label w-auto rounded-t-md uppercase border-b dark:border-darker-300 dark:bg-darker-700 dark:text-darker-100`}>
                     <div className={`overflow-ellipsis whitespace-nowrap overflow-hidden`}>{info.name}</div>
                     <div className={`alert min-w-max`}>
-                    {indicators['sensor']}{indicators['hardware']}
+                    {sensorAlert}{indicators['hardware']}
             </div>
                 </div>
                 <div className={`box uppercase`}>

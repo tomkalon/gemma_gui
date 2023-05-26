@@ -20,17 +20,17 @@ class SettingsSimpleMenu extends React.Component {
             if (settingsDisplay.enable[key]) {
                 if (key === "shadow") {
                     if (settingsDisplay.environment['sun']) {
-                        display[key] = <div key={key} className={`text-6xl w-32 text-center p-3 dark:bg-darker-700 mx-1 element${active}`}
+                        display[key] = <button key={key} className={`text-6xl w-32 text-center p-3 dark:bg-darker-700 mx-1 element${active}`}
                                             onClick={() => handler(key, 300)}>
                             <i className={`gf ${element['settingsStyle']}`}></i>
-                        </div>
+                        </button>
                     }
                 }
                 else {
-                    display[key] = <div key={key} className={`text-6xl w-32 text-center p-3 dark:bg-darker-700 mx-1 element${active}`}
+                    display[key] = <button key={key} className={`text-6xl w-32 text-center p-3 dark:bg-darker-700 mx-1 element${active}`}
                                         onClick={() => handler(key, 300)}>
                         <i className={`gf ${element['settingsStyle']}`}></i>
-                    </div>
+                    </button>
                 }
             }
         }

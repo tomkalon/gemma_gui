@@ -20,17 +20,17 @@ class SettingsMenu extends React.Component {
             if (settingsDisplay.enable[key]) {
                 if (key === "shadow") {
                     if (settingsDisplay.environment['sun']) {
-                        display[key] = <div onClick={() => handler(key, 300)} key={key} className={`element${active}`}>
+                        display[key] = <button onClick={() => handler(key, 300)} key={key} className={`element${active} uppercase items-center`}>
                             <i className={`gf ${element['settingsStyle']}`}></i>
                             <p>{element['fullName']}</p>
-                        </div>
+                        </button>
                     }
                 }
                 else {
-                    display[key] = <div onClick={() => handler(key, 300)} key={key} className={`element${active}`}>
+                    display[key] = <button onClick={() => handler(key, 300)} key={key} className={`element${active} uppercase items-center`}>
                         <i className={`gf ${element['settingsStyle']}`}></i>
                         <p>{element['fullName']}</p>
-                    </div>
+                    </button>
                 }
             }
         }

@@ -358,6 +358,10 @@
     content: "\f0f4";
 }
 
+.gf-menu:before {
+    content: "\f0f5";
+}
+
 .gf-empty:before {
     content: "\f011";
 }

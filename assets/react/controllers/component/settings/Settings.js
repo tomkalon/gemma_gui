@@ -38,7 +38,6 @@ class Settings extends React.Component {
         const linkHandler = this.props.linkHandler;
         const global = this.props.global;
         const id = this.props.id;
-        const prepareSettingsButton = this.props.displayLogic;
         const simple = this.props.simple;
 
         // title
@@ -61,6 +60,54 @@ class Settings extends React.Component {
         } else {
             selectSettings = <SettingsMenu settings={currentObject.settings} selectedSettings={selectedSettings} handler={this.props.settingsHandler}
                                                  readings={currentObject.readings}/>;
+        }
+
+        const prepareSettingsButton = (id, selected, scheme, data, object, global, display, renderBtn, saveHandler, newRow) => {
+            let buttonList = {};
+            let counter = 0;
+            if (selected !== false && scheme[selected] !== undefined) {
+                let value;
+                let color = '';
+                for (const [key, element] of Object.entries(scheme[selected])) {
+
+                    // if there is color saved in scheme use it
+                    if (data[key].color) {
+                        color = data[key].color;
+                    }``
+
+                    // specific sensor settings
+                    if (object.settings[key] !== undefined) {
+
+                        // boolean
+                        if (data[key].bool !== undefined) {
+                            object.settings[key] === true ? value = 1 : value = 0;
+                            buttonList[counter] = renderBtn(id, key, data[key], data[key].values[value], object.settings[key], saveHandler);
+                        }
+
+                        // range
+                        else {
+                            if (object.readings[element.rel] || display.environment[element.rel]) {
+                                buttonList[counter] = renderBtn(id, key, data[key], object.settings[key], color, saveHandler);
+                            }
+                        }
+                        counter++;
+                    }
+
+                    // global settings
+                    else if (global[key]) {
+                        if (display.environment[element.rel]) {
+                            buttonList[counter] = renderBtn(id, key, data[key], global[key], color, saveHandler);
+                        }
+                        counter++;
+                    }
+
+                    if (element.separator) {
+                        buttonList[counter] = newRow();
+                        counter++;
+                    }
+                }
+            }
+            return buttonList;
         }
 
         // functions
@@ -137,7 +184,7 @@ class Settings extends React.Component {
                         <div className={`float-right mt-3 mr-2`}>
                             <button className={`btn btn-blue`}
                                     onClick={() => {linkHandler(id, 'setup/edit_profile')}}>
-                            {settingsDisplay.arrangement.changeProfile}
+                                {settingsDisplay.arrangement.changeProfile}
                             </button>
                         </div>
                         {selectSettings}
