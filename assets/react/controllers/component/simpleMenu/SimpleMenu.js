@@ -132,9 +132,6 @@ class SimpleMenu extends React.Component {
                     this.handler('', '')
                 }}><i className="gf gf-home"></i></button>
                 {prevBtn}{nextBtn}
-                <button className={`dark:text-darker-100 text-8xl float-right`} onClick={() => {
-                    document.querySelector('#nav').classList.toggle('open');
-                }}><i className="gf gf-menu"></i></button>
             </div>
         </div>);
     }

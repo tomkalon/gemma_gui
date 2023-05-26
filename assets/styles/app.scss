@@ -117,8 +117,10 @@ hr {
 }
 
 header {
+  top: -20rem;
+  transition: top 1s;
   &.open {
-    display: block!important;
+    top: 0;
   }
   nav {
     .item {

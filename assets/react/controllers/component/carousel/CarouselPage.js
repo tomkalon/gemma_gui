@@ -27,7 +27,6 @@ class CarouselPage extends React.Component {
             if (state['settings']) {
                 sensorAlert = indicators['sensor'];
             }
-            console.log(state);
 
             const sensors = (key, icon, value, si, desc) => {
                 return (<div key={key}>

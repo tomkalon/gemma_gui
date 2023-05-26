@@ -1,4 +1,4 @@
-<header id="nav" class="hidden lg:block w-full h-56 lg:h-26 xl:h-26 dark:bg-darker-500">
+<header id="js-nav" class="absolute lg:static lg:block w-full h-56 lg:h-26 xl:h-26 dark:bg-darker-500">
     <div class="fixed w-full z-40">
         <nav class="pt-8 pb-4 lg:py-0 bg-amber-100 dark:bg-darker-800 border-b-2 border-amber-200 dark:border-darker-500">
             <div class="container grid grid-cols-12 mx-auto px-4 gap-8 py-2.5">
@@ -57,4 +57,8 @@
         <div {{ react_component('WeatherBar') }}></div>
     </div>
 </header>
+<button id="js-menu-toggle" class="flex w-36 h-36 lg:hidden items-center justify-center fixed bg-darker-650 right-4 bottom-56 rounded-2xl border-8 border-darker-200 shadow-lg shadow-darker-900"
+        onclick="document.querySelector('#js-nav').classList.toggle('open')">
+    <i class="gf gf-menu text-8xl text-darker-100"></i>
+</button>
 
