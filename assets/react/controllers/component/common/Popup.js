@@ -1,7 +1,7 @@
 import React from 'react';
 import '../../../common/common.scss'
 
-class SimpleMenu extends React.Component {
+class Popup extends React.Component {
 
     constructor(props) {
         super(props);
@@ -37,4 +37,4 @@ class SimpleMenu extends React.Component {
     }
 }
 
-export default SimpleMenu;
+export default Popup;
